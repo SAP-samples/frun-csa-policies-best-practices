@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-16"?>
+<!--
+This FRUN CSA policy contains rules derived from SAP Security Baseline Template Version 3
+Available at: http://support.sap.com/sos
+
+Target system BL_S-9 / Limit Web-Enabled Content
+
+Version: 001
+Date:    Feb 02 2018
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="Limit Web-Enabled Content" id="BL_S-9" multisql="Yes" xsi:schemaLocation="csa_policy.xsd">
+ <configstore sci_id="" name="SICF_SERVICES" name_extended="">
+  <checkitem desc="Deactivate WebService FormToRfc" id="BL_S-9.01" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/FormToRfc/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/FormToRfc/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService IDoc_XML" id="BL_S-9.02" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/IDoc_XML/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/IDoc_XML/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService bsp_veri" id="BL_S-9.03" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/bsp_veri/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/bsp_veri/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService certmap" id="BL_S-9.04" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/certmap/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/certmap/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService certreq" id="BL_S-9.05" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/certreq/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/certreq/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService icf" id="BL_S-9.06" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/icf/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/icf/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService CERTMAP" id="BL_S-9.07" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/its/CERTMAP/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/its/CERTMAP/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService CERTREQ" id="BL_S-9.08" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/its/CERTREQ/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/its/CERTREQ/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService echo" id="BL_S-9.09" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/echo/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/echo/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService error" id="BL_S-9.10" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/error/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/error/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService report" id="BL_S-9.11" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/report/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/report/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService rfc" id="BL_S-9.12" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/soap/rfc/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/soap/rfc/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService IDoc" id="BL_S-9.13" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/srt/IDoc/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/srt/IDoc/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService webrfc" id="BL_S-9.14" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/webrfc/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/webrfc/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService xrfc" id="BL_S-9.15" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/xrfc/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/xrfc/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Deactivate WebService xrfc_test" id="BL_S-9.16" operator="not_exist:URL">
+   <compliant>ICF_NAME like '%'  and URL = '/sap/bc/xrfc_test/' </compliant>
+   <complianttext/>
+   <noncompliant>ICF_NAME like '%'  and URL = '/sap/bc/xrfc_test/' </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+ </configstore>
+</targetsystem>
+

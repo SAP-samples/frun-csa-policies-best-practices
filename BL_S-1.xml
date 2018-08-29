@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-16"?>
+<!--
+This FRUN CSA policy contains rules derived from SAP Security Baseline Template Version 3
+Available at: http://support.sap.com/sos
+
+Target system BL_S-1 / ABAP Profile Parameters in general
+
+Version: 001
+Date:    Feb 02 2018
+-->
+<targetsystem desc="ABAP Profile Parameters" id="BL_S-1" multisql="Yes">
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <checkitem desc="Activate/Deactivate check start transaction" id="BL_S-1.01">
+      <compliant>
+            NAME = 'dynp/checkskip1screen'  and VALUE = 'ALL'
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'dynp/checkskip1screen'  and not ( VALUE = 'ALL'  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Set HTTPonly-Flag for Cookies" id="BL_S-1.02">
+      <compliant>
+            NAME = 'icf/set_HTTPonly_flag_on_cookies'  and not ( ( VALUE = '1'  or VALUE = '3' ))
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'icf/set_HTTPonly_flag_on_cookies'  and not ( not ( ( VALUE = '1'  or VALUE = '3' )) )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="ICM server specification" id="BL_S-1.03">
+      <compliant>( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_5' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTPS%' )
+         </compliant>
+      <complianttext/>
+      <noncompliant>( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_5' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTP%' )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Disable CPIC" id="BL_S-1.04">
+      <compliant>
+            NAME = 'login/disable_cpic'  and VALUE = '1'
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'login/disable_cpic'  and not (VALUE = '1')
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Minimum number of digits in passwords" id="BL_S-1.05">
+      <compliant>
+            NAME = 'login/min_password_digits'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 1
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'login/min_password_digits'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 1  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Minimum number of letters in passwords" id="BL_S-1.06">
+      <compliant>
+            NAME = 'login/min_password_letters'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 0
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'login/min_password_letters'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 0  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Minimum password length" id="BL_S-1.07">
+      <compliant>
+            NAME = 'login/min_password_lng'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 8
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'login/min_password_lng'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 8  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Minimum number of lower-case characters in passwords" id="BL_S-1.08">
+      <compliant>
+            NAME = 'login/min_password_lowercase'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 1
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'login/min_password_lowercase'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 1  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Minium number of special characters in passwords" id="BL_S-1.09">
+      <compliant>
+            NAME = 'login/min_password_specials'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 0
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'login/min_password_specials'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 0  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Minimum number of upper-case characters in passwords" id="BL_S-1.10">
+      <compliant>
+            NAME = 'login/min_password_uppercase'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 1
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'login/min_password_uppercase'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 1  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Password downwards compatibility" id="BL_S-1.11">
+      <compliant>
+            NAME = 'login/password_downwards_compatibility'  and VALUE = '0'
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'login/password_downwards_compatibility'  and not ( VALUE = '0'  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Maximum #days a password can be unused (idle)" id="BL_S-1.12">
+      <compliant>
+            NAME = 'login/password_max_idle_initial'  and VALUE between 1 and 14
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'login/password_max_idle_initial'  and not ( VALUE between 1 and 14 )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Generate ticket only via https" id="BL_S-1.13">
+      <compliant>
+            NAME = 'login/ticket_only_by_https'  and VALUE = '1'
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'login/ticket_only_by_https'  and not ( VALUE = '1'  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Ticket only back to creating host" id="BL_S-1.14">
+      <compliant>
+            NAME = 'login/ticket_only_to_host'  and VALUE = '1'
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'login/ticket_only_to_host'  and not ( VALUE = '1'  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Enable Security Audit" id="BL_S-1.15">
+      <compliant>
+            NAME = 'rsau/enable'  and VALUE = '1'
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'rsau/enable'  and not ( VALUE = '1'  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Number of selection slots for security audit" id="BL_S-1.16">
+      <compliant>
+            NAME = 'rsau/selection_slots'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 10
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'rsau/selection_slots'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 10 )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="User selection method" id="BL_S-1.17">
+      <compliant>
+            NAME = 'rsau/user_selection'  and VALUE = '1'
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'rsau/user_selection'  and not ( VALUE = '1'  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Limit for data protection of Secure Network Communication" id="BL_S-1.18">
+      <compliant>
+            NAME = 'snc/data_protection/max'  and VALUE = '3'
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'snc/data_protection/max'  and not ( VALUE = '3'  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Minimum required data protection for incoming connections" id="BL_S-1.19">
+      <compliant>
+            NAME = 'snc/data_protection/min'  and VALUE = '3'
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'snc/data_protection/min'  and not ( VALUE = '3'  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Level of data protection for R/3 initiated connections" id="BL_S-1.20">
+      <compliant>
+            NAME = 'snc/data_protection/use'  and ( VALUE = '3'  or VALUE = '9' )
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'snc/data_protection/use'  and not ( ( VALUE = '3'  or VALUE = '9' ) )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Enable SNC-Module" id="BL_S-1.21">
+      <compliant>
+            NAME = 'snc/enable'  and VALUE = '1'
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'snc/enable'  and not ( VALUE = '1'  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Password must fulfill the current password rules" id="BL_S-1.22">
+      <compliant>
+            NAME = 'login/password_compliance_to_current_policy'  and VALUE = '1'
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'login/password_compliance_to_current_policy'  and not ( VALUE = '1'  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="RFC reject expired password" id="BL_S-1.23">
+      <compliant>
+            NAME = 'rfc/reject_expired_passwd'  and VALUE = '1'
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'rfc/reject_expired_passwd'  and not ( VALUE = '1'  )
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

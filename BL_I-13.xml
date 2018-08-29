@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-16"?>
+<!--
+This FRUN CSA policy contains rules derived from SAP Security Baseline Template Version 3
+Available at: http://support.sap.com/sos
+
+Target system BL_1-13 / SAP HANA Security in general (only HANA Parameter checks)
+
+Version: 001
+Date:    Feb 02 2018
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="SAP HANA Security" id="BL_I-13" multisql="Yes" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="HDB_PARAMETER">
+    <checkitem desc="HANA internal communication" id="BL_I-13.01">
+      <compliant>FILE_NAME = 'global.ini'  and TENANT like '%'  and HOST like '%'  and SECT = 'communication'  and NAME = 'listeninterface'  and LAYER like '%'  and VALUE &lt;&gt; '.global' </compliant>
+      <complianttext/>
+      <noncompliant>FILE_NAME = 'global.ini'  and TENANT like '%'  and HOST like '%'  and SECT = 'communication'  and NAME = 'listeninterface'  and LAYER like '%'  and not ( VALUE &lt;&gt; '.global'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Password Policy - First Change" id="BL_I-13.02">
+      <compliant>FILE_NAME = 'indexserver.ini'  and TENANT like '%'  and HOST like '%'  and SECT = 'password policy'  and NAME = 'force_first_password_change'  and LAYER like '%'  and VALUE like 'true' </compliant>
+      <complianttext/>
+      <noncompliant>FILE_NAME = 'indexserver.ini'  and TENANT like '%'  and HOST like '%'  and SECT = 'password policy'  and NAME = 'force_first_password_change'  and LAYER like '%'  and not ( VALUE like 'true'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Password Policy - unused password lifetime" id="BL_I-13.03">
+      <compliant>FILE_NAME = 'indexserver.ini'  and TENANT like '%'  and HOST like '%'  and SECT = 'password policy'  and (NAME = 'maximum_unused_inital_password_lifetime' OR NAME = 'maximum_unused_initial_password_lifetime')  and LAYER like '%'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &lt;= 7 </compliant>
+      <complianttext/>
+      <noncompliant>FILE_NAME = 'indexserver.ini'  and TENANT like '%'  and HOST like '%'  and SECT = 'password policy'  and (NAME = 'maximum_unused_inital_password_lifetime' OR NAME = 'maximum_unused_initial_password_lifetime') and LAYER like '%'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &lt;= 7  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Password Policy - minimal password length" id="BL_I-13.04">
+      <compliant>FILE_NAME = 'indexserver.ini'  and TENANT like '%'  and HOST like '%'  and SECT = 'password policy'  and NAME = 'minimal_password_length'  and LAYER like '%'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 8 </compliant>
+      <complianttext/>
+      <noncompliant>FILE_NAME = 'indexserver.ini'  and TENANT like '%'  and HOST like '%'  and SECT = 'password policy'  and NAME = 'minimal_password_length'  and LAYER like '%'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 8 ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>
