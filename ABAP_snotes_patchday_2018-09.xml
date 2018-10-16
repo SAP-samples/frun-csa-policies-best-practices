@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-16"?>
+<!--
+This FRUN CSA policy contains rules to check the following ABAP SNotes:
+
+SAP Security Patch Day: 2018 09
+0002392860
+0002673959
+
+Version: 001
+Date:    October 16 2018
+-->
+<targetsystem desc="SNotes of PatchDay: 2018-09" id="PatchDay_2018-09" multisql="Yes">
+  <!-- BC-SRV-RM - Leveraging privileges by customer transaction code (Version 0003 ) (High)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002392860 exists" id="0002392860" operator="check_note">
+      <compliant>NOTE = '0002392860'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002392860 missing and solution with SP available" id="0002392860" operator="check_note:0002392860">
+     <compliant>(
+       ( COMPONENT = 'SAP_ABA' and VERSION = '700' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   34 )   ) <!-- SAP_ABA 700 SAPKA70034 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '701' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- SAP_ABA 701 SAPKA70119 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '702' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- SAP_ABA 702 SAPKA70219 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '710' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )   ) <!-- SAP_ABA 710 SAPKA71022 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '711' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )   ) <!-- SAP_ABA 711 SAPKA71117 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '730' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )   ) <!-- SAP_ABA 730 SAPKA73017 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '731' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_ABA 731 SAPKA73120 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '740' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )   ) <!-- SAP_ABA 740 SAPKA74017 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '750' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )   ) <!-- SAP_ABA 750 SAPK-75007INSAPABA -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '751' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )   ) <!-- SAP_ABA 751 SAPK-75102INSAPABA -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SAP_ABA' and VERSION = '700' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   34 )  <!-- SAP_ABA 700 SAPKA70034 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '701' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- SAP_ABA 701 SAPKA70119 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '702' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- SAP_ABA 702 SAPKA70219 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '710' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )  <!-- SAP_ABA 710 SAPKA71022 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '711' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )  <!-- SAP_ABA 711 SAPKA71117 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '730' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )  <!-- SAP_ABA 730 SAPKA73017 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '731' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_ABA 731 SAPKA73120 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )  <!-- SAP_ABA 740 SAPKA74017 -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )  <!-- SAP_ABA 750 SAPK-75007INSAPABA -->   or
+       ( COMPONENT = 'SAP_ABA' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )  <!-- SAP_ABA 751 SAPK-75102INSAPABA -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- PA-FIO-PRO - [CVE-2018-2461] Missing authorization check in SAP HCM Fiori app "People Profile (Version 0009 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002673959 exists" id="0002673959" operator="check_note">
+      <compliant>NOTE = '0002673959'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002673959 missing and solution with SP available" id="0002673959" operator="check_note:0002673959">
+     <compliant>( ( COMPONENT = 'GBX01HR' and VERSION = '600' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   11 )   ) <!-- GBX01HR 600 SAPK-60011INGBX01HR -->)</compliant>
+     <noncompliant>( ( COMPONENT = 'GBX01HR' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   11 )  <!-- GBX01HR 600 SAPK-60011INGBX01HR -->)</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002673959 missing and applicable using Correction Instruction" id="0002673959" operator="check_note:0002673959">
+    <compliant/>
+    <noncompliant>( ( COMPONENT = 'GBX01HR' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    2 and   10 )  <!-- GBX01HR 600 SAPK-60002INGBX01HR - SAPK-60010INGBX01HR  -->)</noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>
