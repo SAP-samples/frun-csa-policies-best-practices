@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-16"?>
+<!--
+This FRUN CSA policy contains rules derived from SAP Security Baseline Template Version 3
+Available at: http://support.sap.com/sos
+
+Target system BL_O-1 / Handling of ABAP Default Users in ABAP Systems
+
+Version: 001
+Date:    Feb 02 2018
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="ABAP Default User Handling" id="BL_O-1" multisql="Yes" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <checkitem desc="No Login with user sap*" id="BL_O-1.01">
+      <compliant>NAME = 'login/no_automatic_user_sapstar'  and VALUE = '1' </compliant>
+      <complianttext/>
+      <noncompliant>NAME = 'login/no_automatic_user_sapstar'  and not ( VALUE = '1'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <configstore name="STANDARD_USERS">
+    <checkitem desc="TMSADM password status client 000" id="BL_O-1.02">
+      <compliant>CLIENT = '000'  and USERNAME = 'TMSADM'  and PASSWORD_STATUS = 'CHANGED' </compliant>
+      <complianttext/>
+      <noncompliant>CLIENT = '000'  and USERNAME = 'TMSADM'  and not ( PASSWORD_STATUS = 'CHANGED'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="TMSADM password status in client != 000" id="BL_O-1.03" not_found="positive">
+      <compliant>CLIENT  &lt;&gt; '000' and USERNAME = 'TMSADM'  and EXISTING &lt;&gt; 'X'</compliant>
+      <complianttext/>
+      <noncompliant>CLIENT &lt;&gt; '000' and USERNAME = 'TMSADM'  and EXISTING = 'X'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <!-- in case DDIC is supposed to be locked 
+    <checkitem desc="DDIC password status in clients != 000" id="BL_O-1.04a">
+      <compliant>CLIENT &lt;&gt; '000'  and USERNAME = 'DDIC'  and ( PASSWORD_STATUS = 'CHANGED'  AND LOCKED  = 'X' )</compliant>
+      <complianttext/>
+      <noncompliant>CLIENT &lt;&gt; '000'  and USERNAME = 'DDIC'  and not ( PASSWORD_STATUS = 'CHANGED'  AND LOCKED  = 'X' )</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    -->
+    <checkitem desc="DDIC password status changed in all clients" id="BL_O-1.04" not_found="positive">
+      <compliant>CLIENT like '%'  and USERNAME = 'DDIC' and ( PASSWORD_STATUS = 'CHANGED' or EXISTING &lt;&gt; 'X'  )</compliant>
+      <complianttext/>
+      <noncompliant>CLIENT like '%' and USERNAME = 'DDIC'  and not ( PASSWORD_STATUS = 'CHANGED' or EXISTING &lt;&gt; 'X' )</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <!-- in case EARLYWATCH is supposed to be locked 
+    <checkitem desc="EARLYWATCH password status" id="BL_O-1.05" not_found="positive">
+      <compliant>CLIENT like '%'  and USERNAME = 'EARLYWATCH' and PASSWORD_STATUS = 'CHANGED' and (EXISTING &lt;&gt; 'X'  or LOCKED &lt;&gt; 'X')</compliant>
+      <complianttext/>
+      <noncompliant>CLIENT like '%'  and USERNAME = 'EARLYWATCH' and ( PASSWORD_STATUS &lt;&gt; 'CHANGED' or ( EXISTING = 'X' and LOCKED = '') or  ( EXISTING = '' ) )</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    -->
+    <checkitem desc="EARLYWATCH password status" id="BL_O-1.05" not_found="positive">
+      <compliant>CLIENT like '%'  and USERNAME = 'EARLYWATCH' and ( PASSWORD_STATUS = 'CHANGED' or EXISTING &lt;&gt; 'X')</compliant>
+      <complianttext/>
+      <noncompliant>CLIENT like '%'  and USERNAME = 'EARLYWATCH' and not ( PASSWORD_STATUS = 'CHANGED' or EXISTING &lt;&gt; 'X')</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="SAP* password status" id="BL_O-1.06">
+      <compliant>CLIENT like '%'  and USERNAME = 'SAP*'  and PASSWORD_STATUS = 'CHANGED'  and EXISTING = 'X'  and LOCKED = 'X' </compliant>
+      <complianttext/>
+      <noncompliant>CLIENT like '%'  and USERNAME = 'SAP*'  and not ( PASSWORD_STATUS = 'CHANGED'  and EXISTING = 'X'  and LOCKED = 'X'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="SAPCPIC password status" id="BL_O-1.07">
+      <compliant>CLIENT like '%'  and USERNAME = 'SAPCPIC'  and ( PASSWORD_STATUS = 'CHANGED' or EXISTING &lt;&gt; 'X' )</compliant>
+      <complianttext/>
+      <noncompliant>CLIENT like '%'  and USERNAME = 'SAPCPIC'  and not ( PASSWORD_STATUS &lt;&gt; 'CHANGED' or EXISTING = 'X' )</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

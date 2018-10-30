@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-16"?>
+<!--
+This FRUN CSA policy contains rules derived from SAP Security Baseline Template Version 3
+Available at: http://support.sap.com/sos
+
+Target system BL_S-2 / Protection of Password Hashes in ABAP Systems
+
+Version: 001
+Date:    Feb 02 2018
+-->
+<targetsystem desc="Protection of Password Hashes in ABAP Systems" id="BL_S-2" multisql="Yes">
+  <configstore name="TDDAT">
+    <checkitem desc="Access to table USH02 protected" id="BL_S-2.01">
+      <compliant>TABNAME = 'USH02'  and CCLASS = 'SPWD' </compliant>
+      <complianttext/>
+      <noncompliant>TABNAME = 'USH02'  and not ( CCLASS = 'SPWD'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Access to table USR02 protected" id="BL_S-2.02">
+      <compliant>TABNAME = 'USR02'  and CCLASS = 'SPWD' </compliant>
+      <complianttext/>
+      <noncompliant>TABNAME = 'USR02'  and not ( CCLASS = 'SPWD'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="Access to table USRPWDHISTORY protected" id="BL_S-2.03">
+      <compliant>TABNAME = 'USRPWDHISTORY'  and CCLASS = 'SPWD' </compliant>
+      <complianttext/>
+      <noncompliant>TABNAME = 'USRPWDHISTORY'  and not ( CCLASS = 'SPWD'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <configstore name="USER_PASSWD_HASH_USAGE">
+    <!--  in case a certain % of old hashing is accepted; adjust 100.0   
+    <checkitem desc="Latest password hashing mechanism (PWDSALTEDHASH) used" id="BL_S-2.04a">
+      <compliant>USER_TYPE like '%'  and BCODE like '%'  and PASSCODE like '%'  and PWDSALTEDHASH = 'USED' and PERC_USER &gt;= 100.0</compliant>
+      <complianttext/>
+      <noncompliant>USER_TYPE like '%'  and BCODE like '%'  and PASSCODE like '%'  and PWDSALTEDHASH = 'USED' and PERC_USER &lt; 100.0</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    -->
+    <checkitem desc="Latest password hashing mechanism (PWDSALTEDHASH) used" id="BL_S-2.04" not_found="positive">
+      <compliant>USER_TYPE like '%' and BCODE = 'UNUSED' and PASSCODE = 'UNUSED' and PWDSALTEDHASH like '%' and PERC_USER like '%'</compliant>
+      <complianttext/>
+      <noncompliant>USER_TYPE like '%'  and (BCODE = 'USED'  or PASSCODE = 'USED' )  and PWDSALTEDHASH like '%'  and PERC_USER like '%'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

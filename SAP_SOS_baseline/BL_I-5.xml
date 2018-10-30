@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-16"?>
+<!--
+This FRUN CSA policy contains rules derived from SAP Security Baseline Template Version 3
+Available at: http://support.sap.com/sos
+
+Target system BL_I-5 / Web Dispatcher Security
+
+Version: 001
+Date:    Feb 02 2018
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="Web Dispatcher Security" id="BL_I-5" multisql="Yes" xsi:schemaLocation="csa_policy.xsd">
+ <configstore  name="ABAP_INSTANCE_PAHI">
+  <checkitem desc="Web based administration" id="BL_I-5.01">
+   <compliant>NAME = 'icm/HTTP/admin_0'  and VALUE like_regexpr '.*CLIENTHOST=.*' </compliant>
+   <complianttext/>
+   <noncompliant>NAME = 'icm/HTTP/admin_0'  and not ( VALUE like_regexpr '.*CLIENTHOST=.*'  ) </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Directory for ICM error templates" id="BL_I-5.02">
+   <compliant>NAME = 'icm/HTTP/error_templ_path'  and VALUE like_regexpr '.*data/icmerror' </compliant>
+   <complianttext/>
+   <noncompliant>NAME = 'icm/HTTP/error_templ_path'  and not ( VALUE like_regexpr '.*data/icmerror'  ) </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="ICM server port specification" id="BL_I-5.03">
+   <compliant>( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_5' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTPS%' )
+			  or ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTPS%' )
+   </compliant>
+   <complianttext/>
+   <noncompliant>( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_5' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTP%' )
+                          and ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTP%' )
+			  and ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTP%' )
+   </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Form of HTTP error pages (short or detailed) " id="BL_I-5.05">
+   <compliant>NAME = 'is/HTTP/show_detailed_errors'  and VALUE = 'FALSE' </compliant>
+   <complianttext/>
+   <noncompliant>NAME = 'is/HTTP/show_detailed_errors'  and not ( VALUE = 'FALSE'  ) </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+ </configstore>
+</targetsystem>
+
