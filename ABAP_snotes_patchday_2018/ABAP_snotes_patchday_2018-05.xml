@@ -5,7 +5,7 @@ This FRUN CSA policy contains rules to check the following ABAP SNotes:
 SAP Security Patch Day: 2018 05
 0002588567
 0002596627
-
+0002357141
 
 Version: 001
 Date:    May 09 2018
@@ -103,6 +103,44 @@ Date:    May 09 2018
        or ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    5 )  <!-- EA-FINSERV 800 800 - SAPK-80005INEAFINSRV manual -->
        or ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    3 )  <!-- S4CORE 101 101 - SAPK-10103INS4CORE manual -->
        or ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    1 )  <!-- S4CORE 102 102 - SAPK-10201INS4CORE manual -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+    <!-- BC-DOC-TER - OS Command Injection vulnerability in Report for Terminology (Version 0007 ) (HotNews)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002357141 exists" id="0002357141" operator="check_note">
+      <compliant>NOTE = '0002357141'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002357141 missing and solution with SP available" id="0002357141" operator="check_note:0002357141">
+     <compliant>(
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- SAP_BASIS 751 SAPK-75101INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )   ) <!-- SAP_BASIS 750 SAPK-75006INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '766' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- SAP_BASIS 766 SAPK-76601INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_BASIS 731 SAPKB73120 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )   ) <!-- SAP_BASIS 740 SAPKB74017 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '765' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )   ) <!-- SAP_BASIS 765 SAPK-76505INSAPBASIS -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- SAP_BASIS 751 SAPK-75101INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )  <!-- SAP_BASIS 750 SAPK-75006INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '766' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- SAP_BASIS 766 SAPK-76601INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_BASIS 731 SAPKB73120 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )  <!-- SAP_BASIS 740 SAPKB74017 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '765' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )  <!-- SAP_BASIS 765 SAPK-76505INSAPBASIS -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002357141 missing and applicable using Correction Instruction" id="0002357141" operator="check_note:0002357141">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   19 )  <!-- SAP_BASIS 731 SAPKB73101 - SAPKB73119  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   16 )  <!-- SAP_BASIS 740 SAPKB74001 - SAPKB74016  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and    5 )  <!-- SAP_BASIS 750 SAPK-75001INSAPBASIS - SAPK-75005INSAPBASIS  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    0 )  <!-- SAP_BASIS 751 751 - 751  -->
   )</noncompliant>
     </checkitem>
   </configstore>
