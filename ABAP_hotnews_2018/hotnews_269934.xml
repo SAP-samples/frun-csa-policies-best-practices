@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem desc="Hot News 2699341" id="Hot_news_269934" multisql="Yes">
+  <!-- BW-BEX-OT-NC - Non-cumulatives: Error during update of reference point of ADSO (Version 0005 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002699341 exists" id="0002699341" operator="check_note">
+      <compliant>NOTE = '0002699341'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+    <checkitem desc="Note 0002699341 missing and solution with SP available" id="0002699341" operator="check_note:0002699341">
+      <compliant>(
+       ( COMPONENT = 'DW4CORE' and VERSION = '100' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   11 )   ) or
+       ( COMPONENT = 'SAP_BW' and VERSION = '753' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) or
+       ( COMPONENT = 'SAP_BW' and VERSION = '740' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )   ) or
+       ( COMPONENT = 'SAP_BW' and VERSION = '750' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   14 )   ) or
+       ( COMPONENT = 'SAP_BW' and VERSION = '752' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) ) </compliant>
+      <noncompliant>(
+       ( COMPONENT = 'DW4CORE' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   11 )  or
+       ( COMPONENT = 'SAP_BW' and VERSION = '753' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  or
+       ( COMPONENT = 'SAP_BW' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )  or
+       ( COMPONENT = 'SAP_BW' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   14 )  or
+       ( COMPONENT = 'SAP_BW' and VERSION = '752' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  ) </noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+    <checkitem desc="Note 0002699341 missing and applicable using Correction Instruction" id="0002699341" operator="check_note:0002699341">
+      <compliant/>
+      <noncompliant>(
+       ( COMPONENT = 'DW4CORE' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    4 and   10 )  
+       or ( COMPONENT = 'SAP_BW' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   12 and   20 )  
+       or ( COMPONENT = 'SAP_BW' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    4 and   13 )  
+       or ( COMPONENT = 'SAP_BW' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and    7 )  
+       or ( COMPONENT = 'SAP_BW' and VERSION = '752' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    3 )  
+       or ( COMPONENT = 'SAP_BW' and VERSION = '753' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    0 )  ) </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>
