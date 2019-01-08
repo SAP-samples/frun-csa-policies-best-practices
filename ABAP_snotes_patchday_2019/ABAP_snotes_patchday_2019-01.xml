@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This FRUN CSA policy contains rules to check the following ABAP SNotes:
+
+0002607692
+0002723142
+0002727623
+0002662687
+0002588763
+
+
+SAP Security Patch Day: 2019 01 
+Version: 001
+Date:    Januar 08 2019
+-->
+<targetsystem desc="SNotes of PatchDay: 2019-01" id="PatchDay_2019-01" multisql="Yes">
+  <!-- CA-WUI-UI-TAG - [CVE-2019-0244] Cross-Site Scripting (XSS) vulnerability in SAP CRM WebClient UI (Version 0003 ) (Medium)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002588763 exists" id="0002588763" operator="check_note">
+      <compliant>NOTE = '0002588763'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002588763 missing and solution with SP available" id="0002588763" operator="check_note:0002588763">
+     <compliant>(
+       ( COMPONENT = 'S4FND' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )   ) <!-- WEBCUIF 102 SAPK-10202INS4FND -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '747' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   16 )   ) <!-- WEBCUIF 747 SAPK-74716INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '748' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   10 )   ) <!-- WEBCUIF 748 SAPK-74810INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '800' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )   ) <!-- WEBCUIF 800 SAPK-80006INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '801' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) <!-- WEBCUIF 801 SAPK-80104INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '731' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )   ) <!-- WEBCUIF 731 SAPK-73122INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '746' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )   ) <!-- WEBCUIF 746 SAPK-74613INWEBCUIF -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'S4FND' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )  <!-- WEBCUIF 102 SAPK-10202INS4FND -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '747' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   16 )  <!-- WEBCUIF 747 SAPK-74716INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '748' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   10 )  <!-- WEBCUIF 748 SAPK-74810INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )  <!-- WEBCUIF 800 SAPK-80006INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '801' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- WEBCUIF 801 SAPK-80104INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '731' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )  <!-- WEBCUIF 731 SAPK-73122INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '746' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )  <!-- WEBCUIF 746 SAPK-74613INWEBCUIF -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002588763 missing and applicable using Correction Instruction" id="0002588763" operator="check_note:0002588763">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'S4FND' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    1 )  <!-- S4FND 102 102 - SAPK-10201INS4FND  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '731' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   18 and   21 )  <!-- WEBCUIF 731 SAPK-73118INWEBCUIF - SAPK-73121INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '746' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   11 and   12 )  <!-- WEBCUIF 746 SAPK-74611INWEBCUIF - SAPK-74612INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '747' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   13 and   15 )  <!-- WEBCUIF 747 SAPK-74713INWEBCUIF - SAPK-74715INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '748' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    4 and    9 )  <!-- WEBCUIF 748 SAPK-74804INWEBCUIF - SAPK-74809INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    3 and    5 )  <!-- WEBCUIF 800 SAPK-80003INWEBCUIF - SAPK-80005INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '801' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and    3 )  <!-- WEBCUIF 801 SAPK-80101INWEBCUIF - SAPK-80103INWEBCUIF  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- CA-WUI-UI - [CVE-2019-0245] Cross-Site Scripting (XSS) vulnerability in SAP CRM WebClient UI (Version 0004 ) (Medium)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002607692 exists" id="0002607692" operator="check_note">
+      <compliant>NOTE = '0002607692'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002607692 missing and solution with SP available" id="0002607692" operator="check_note:0002607692">
+     <compliant>(
+       ( COMPONENT = 'S4FND' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )   ) <!-- WEBCUIF 102 SAPK-10202INS4FND -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '731' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )   ) <!-- WEBCUIF 731 SAPK-73122INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '746' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )   ) <!-- WEBCUIF 746 SAPK-74613INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '747' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )   ) <!-- WEBCUIF 747 SAPK-74717INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '748' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   11 )   ) <!-- WEBCUIF 748 SAPK-74811INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '800' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )   ) <!-- WEBCUIF 800 SAPK-80007INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '801' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )   ) <!-- WEBCUIF 801 SAPK-80105INWEBCUIF -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'S4FND' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )  <!-- WEBCUIF 102 SAPK-10202INS4FND -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '731' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )  <!-- WEBCUIF 731 SAPK-73122INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '746' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )  <!-- WEBCUIF 746 SAPK-74613INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '747' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )  <!-- WEBCUIF 747 SAPK-74717INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '748' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   11 )  <!-- WEBCUIF 748 SAPK-74811INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )  <!-- WEBCUIF 800 SAPK-80007INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '801' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )  <!-- WEBCUIF 801 SAPK-80105INWEBCUIF -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002607692 missing and applicable using Correction Instruction" id="0002607692" operator="check_note:0002607692">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'S4FND' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    1 )  <!-- S4FND 102 102 - SAPK-10201INS4FND  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '731' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   18 and   21 )  <!-- WEBCUIF 731 SAPK-73118INWEBCUIF - SAPK-73121INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '746' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   11 and   12 )  <!-- WEBCUIF 746 SAPK-74611INWEBCUIF - SAPK-74612INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '747' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   13 and   16 )  <!-- WEBCUIF 747 SAPK-74713INWEBCUIF - SAPK-74716INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '748' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    4 and   10 )  <!-- WEBCUIF 748 SAPK-74804INWEBCUIF - SAPK-74810INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    3 and    6 )  <!-- WEBCUIF 800 SAPK-80003INWEBCUIF - SAPK-80006INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '801' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and    4 )  <!-- WEBCUIF 801 SAPK-80101INWEBCUIF - SAPK-80104INWEBCUIF  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- IS-B-BCA-MD - [CVE-2018-2484] Missing Authorization check in SAP Enterprise Financial Services (Version 0004 ) (Medium) -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002662687 exists" id="0002662687" operator="check_note">
+      <compliant>NOTE = '0002662687'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002662687 missing and solution with SP available" id="0002662687" operator="check_note:0002662687">
+     <compliant>(
+       ( COMPONENT = 'SAPSCORE' and VERSION = '114' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- BANK/CFM 114 SAPK-11401INSAPSCORE -->   or
+       ( COMPONENT = 'SAPSCORE' and VERSION = '113' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )   ) <!-- BANK/CFM 113 SAPK-11307INSAPSCORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )   ) <!-- BANK/CFM 101 SAPK-10105INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )   ) <!-- BANK/CFM 102 SAPK-10203INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- BANK/CFM 103 SAPK-10301INS4CORE -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '110' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    0 )   ) <!-- BANK/CFM 110 SAPKGPFA36 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '200' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    0 )   ) <!-- BANK/CFM 200 SAPKGPFB25 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '500' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    0 )   ) <!-- BANK/CFM 500 SAPKGPFC29 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    0 )   ) <!-- BANK/CFM 600 SAPKGPFD32 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )   ) <!-- BANK/CFM 603 SAPK-60321INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )   ) <!-- BANK/CFM 604 SAPK-60422INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- BANK/CFM 605 SAPK-60519INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )   ) <!-- BANK/CFM 616 SAPK-61613INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )   ) <!-- BANK/CFM 606 SAPK-60623INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )   ) <!-- BANK/CFM 617 SAPK-61718INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- BANK/CFM 618 SAPK-61812INEAFINSRV -->   or
+       ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    0 )   ) <!-- BANK/CFM 463_20 SAPKIPBJ43 -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SAPSCORE' and VERSION = '114' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- BANK/CFM 114 SAPK-11401INSAPSCORE -->   or
+       ( COMPONENT = 'SAPSCORE' and VERSION = '113' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )  <!-- BANK/CFM 113 SAPK-11307INSAPSCORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )  <!-- BANK/CFM 101 SAPK-10105INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )  <!-- BANK/CFM 102 SAPK-10203INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- BANK/CFM 103 SAPK-10301INS4CORE -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '110' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    0 )  <!-- BANK/CFM 110 SAPKGPFA36 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    0 )  <!-- BANK/CFM 200 SAPKGPFB25 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '500' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    0 )  <!-- BANK/CFM 500 SAPKGPFC29 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    0 )  <!-- BANK/CFM 600 SAPKGPFD32 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )  <!-- BANK/CFM 603 SAPK-60321INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )  <!-- BANK/CFM 604 SAPK-60422INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- BANK/CFM 605 SAPK-60519INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )  <!-- BANK/CFM 616 SAPK-61613INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )  <!-- BANK/CFM 606 SAPK-60623INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )  <!-- BANK/CFM 617 SAPK-61718INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- BANK/CFM 618 SAPK-61812INEAFINSRV -->   or
+       ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    0 )  <!-- BANK/CFM 463_20 SAPKIPBJ43 -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002662687 missing and applicable using Correction Instruction" id="0002662687" operator="check_note:0002662687">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and  999 )  <!-- BANK/CFM 463_20 463_20 - SAPKIPBJ42  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '110' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and  999 )  <!-- EA-FINSERV 110 110 - SAPKGPFA35  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and  999 )  <!-- EA-FINSERV 200 200 - SAPKGPFB24  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '500' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and  999 )  <!-- EA-FINSERV 500 SAPKGPFC01 - SAPKGPFC28  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and  999 )  <!-- EA-FINSERV 600 SAPKGPFD01 - SAPKGPFD31  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   20 )  <!-- EA-FINSERV 603 603 - SAPK-60320INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   21 )  <!-- EA-FINSERV 604 SAPK-60401INEAFINSRV - SAPK-60421INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    3 and   18 )  <!-- EA-FINSERV 605 SAPK-60503INEAFINSRV - SAPK-60518INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    3 and   18 )  <!-- EA-FINSERV 605 SAPK-60503INEAFINSRV - SAPK-60518INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   22 )  <!-- EA-FINSERV 606 SAPK-60601INEAFINSRV - SAPK-60622INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   12 )  <!-- EA-FINSERV 616 616 - SAPK-61612INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   17 )  <!-- EA-FINSERV 617 SAPK-61701INEAFINSRV - SAPK-61717INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   11 )  <!-- EA-FINSERV 618 618 - SAPK-61811INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and  999 )  <!-- EA-FINSERV 800 800 - ALL_SP  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    4 )  <!-- S4CORE 101 101 - SAPK-10104INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    2 )  <!-- S4CORE 102 102 - SAPK-10202INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    0 )  <!-- S4CORE 103 103 - 103  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- OPU-GW-COR - [CVE-2019-0248] Information Disclosure in SAP Gateway of ABAP Application Server (Version 0003 ) (Medium)   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002723142 exists" id="0002723142" operator="check_note">
+      <compliant>NOTE = '0002723142'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002723142 missing and solution with SP available" id="0002723142" operator="check_note:0002723142">
+     <compliant>(
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '750' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   14 )   ) <!-- SAP_BASIS 750 SAPK-75014INSAPGWFND -->   or
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '751' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    8 )   ) <!-- SAP_BASIS 751 SAPK-75108INSAPGWFND -->   or
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '752' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) <!-- SAP_BASIS 752 SAPK-75204INSAPGWFND -->   or
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '753' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )   ) <!-- SAP_BASIS 753 SAPK-75302INSAPGWFND -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   14 )  <!-- SAP_BASIS 750 SAPK-75014INSAPGWFND -->   or
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    8 )  <!-- SAP_BASIS 751 SAPK-75108INSAPGWFND -->   or
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '752' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- SAP_BASIS 752 SAPK-75204INSAPGWFND -->   or
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '753' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )  <!-- SAP_BASIS 753 SAPK-75302INSAPGWFND -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002723142 missing and applicable using Correction Instruction" id="0002723142" operator="check_note:0002723142">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'SAP_GWFND' and VERSION = '753' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    0 )  <!-- SAP_GWFND 753 753 - 753  -->
+ or ( COMPONENT = 'SAP_GWFND' and VERSION = '752' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    3 )  <!-- SAP_GWFND 752 752 - SAPK-75203INSAPGWFND  -->
+ or ( COMPONENT = 'SAP_GWFND' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    7 )  <!-- SAP_GWFND 751 751 - SAPK-75107INSAPGWFND  -->
+ or ( COMPONENT = 'SAP_GWFND' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    6 and   13 )  <!-- SAP_GWFND 750 SAPK-75006INSAPGWFND - SAPK-75013INSAPGWFND  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- BW4-DM-MD - [CVE-2019-0243] Missing Authorization check in SAP BW/4HANA (Version 0007 ) (High)   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002727623 exists" id="0002727623" operator="check_note">
+      <compliant>NOTE = '0002727623'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002727623 missing and solution with SP available" id="0002727623" operator="check_note:0002727623">
+     <compliant>(
+       ( COMPONENT = 'DW4CORE' and VERSION = '100' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- DW4CORE 100 SAPK-10012INDW4CORE -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'DW4CORE' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- DW4CORE 100 SAPK-10012INDW4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002727623 missing and applicable using Correction Instruction" id="0002727623" operator="check_note:0002727623">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'DW4CORE' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    8 and   11 )  <!-- DW4CORE 100 SAPK-10008INDW4CORE - SAPK-10011INDW4CORE  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>
