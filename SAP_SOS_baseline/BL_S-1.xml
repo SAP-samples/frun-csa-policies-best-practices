@@ -136,11 +136,11 @@ Date:    Feb 02 2018
     </checkitem>
     <checkitem desc="Maximum #days a password can be unused (idle)" id="BL_S-1.12">
       <compliant>
-            NAME = 'login/password_max_idle_initial'  and VALUE between 1 and 14
+            NAME = 'login/password_max_idle_initial'  and lpad(VALUE, 2, '0') between '01' and '14'
          </compliant>
       <complianttext/>
       <noncompliant>
-            NAME = 'login/password_max_idle_initial'  and not ( VALUE between 1 and 14 )
+            NAME = 'login/password_max_idle_initial'  and lpad(VALUE, 2, '0') between '01' and '14'
          </noncompliant>
       <noncomplianttext/>
     </checkitem>
