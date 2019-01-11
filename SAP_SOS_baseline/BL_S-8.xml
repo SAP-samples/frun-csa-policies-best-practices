@@ -19,9 +19,9 @@ Date:    Feb 02 2018
   </checkitem>
 -->
     <checkitem desc="Deactivated administration port for external clients" id="BL_S-8.02">
-      <compliant>NAME = 'ms/admin_port'  and (replace_regexpr ('^$' IN VALUE with 0) &lt;= 0) </compliant>
+      <compliant>NAME = 'ms/admin_port' and to_integer( COALESCE(NULLIF(VALUE,''),'0' ) ) &lt;= 0</compliant>
       <complianttext/>
-      <noncompliant>NAME = 'ms/admin_port'  and not ((replace_regexpr ('^$' IN VALUE with 0) &lt;= 0)) </noncompliant>
+      <noncompliant>NAME = 'ms/admin_port' and not (to_integer( COALESCE(NULLIF(VALUE,''),'0' ) ) &lt;= 0)</noncompliant>
       <noncomplianttext/>
     </checkitem>
     <checkitem desc="Prohibite external monitor" id="BL_S-8.03">
