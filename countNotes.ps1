@@ -31,8 +31,8 @@ $NotesArray=@{}
 
 # loop over all items
 Foreach ($CheckItem in $CheckItems){
-         # check if check item description match for ABAP SNote / ABAP kernel note / HANA security note
-        $match = $CheckItem.desc -match "Note .{10} exists|kernel version|Note .{10} vulnerability exists"
+         # check if check item description match for ABAP SNote / ABAP kernel note / HANA security note / Parameter recommendation
+        $match = $CheckItem.desc -match "Note .{10} exists|kernel version|Note .{10} vulnerability exists|Parameter which note .{10} recommends"
         if ($match -eq "True") {
            # increase counter via note number 
            if ( $NotesArray.Contains($Checkitem.id) -eq $True ) {
