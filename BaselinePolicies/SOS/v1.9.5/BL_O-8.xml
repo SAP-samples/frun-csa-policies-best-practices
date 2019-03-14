@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-16"?>
+<!--
+This FRUN CSA policy contains rules derived from SAP Security Baseline Template Version 3
+Available at: http://support.sap.com/sos
+
+Target system BL_O-8 / Security Audit Log
+
+Version: 001
+Date:    Feb 02 2018
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="Security Audit Log (ABAP)" id="BL_O-8" multisql="Yes" xsi:schemaLocation="csa_policy.xsd">
+ <configstore sci_id="" name="ABAP_INSTANCE_PAHI">
+  <checkitem desc="Enable Security Audit" id="BL_O-8.01">
+   <compliant>NAME = 'rsau/enable' and VALUE = '1' </compliant>
+   <complianttext/>
+   <noncompliant>NAME = 'rsau/enable' and not ( VALUE = '1'  ) </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Number of selection slots for security audit" id="BL_O-8.02">
+   <compliant>NAME = 'rsau/selection_slots' and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 10 </compliant>
+   <complianttext/>
+   <noncompliant>NAME = 'rsau/selection_slots' and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 10  ) </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Defines the user selection method" id="BL_O-8.03">
+   <compliant>NAME = 'rsau/user_selection' and VALUE = '1' </compliant>
+   <complianttext/>
+   <noncompliant>NAME = 'rsau/user_selection' and not ( VALUE = '1' ) </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+ </configstore>
+</targetsystem>

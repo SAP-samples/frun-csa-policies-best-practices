@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-16"?>
+<!--
+This FRUN CSA policy contains rules derived from SAP Security Baseline Template Version 3
+Available at: http://support.sap.com/sos
+
+Target system BL_S-6 / RFC Connectivity
+
+Version: 001
+Date:    Feb 02 2018
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="RFC Connectivity" id="BL_S-6" multisql="Yes" xsi:schemaLocation="csa_policy.xsd">
+ <configstore sci_id="" name="ABAP_INSTANCE_PAHI">
+  <checkitem desc="Execution option for the RFC authority check" id="BL_S-6.01">
+   <compliant>NAME = 'auth/rfc_authority_check' and VALUE = '1' </compliant>
+   <complianttext/>
+   <noncompliant>NAME = 'auth/rfc_authority_check' and not ( VALUE = '1'  ) </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Accept insecure SAPGUI logins to SNC-enabled Server" id="BL_S-6.02">
+   <compliant>NAME = 'snc/accept_insecure_gui' and VALUE = '0' </compliant>
+   <complianttext/>
+   <noncompliant>NAME = 'snc/accept_insecure_gui' and not ( VALUE = '0'  ) </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+  <checkitem desc="Accept insecure RFC-connections to SNC-enabled Server" id="BL_S-6.03">
+   <compliant>NAME = 'snc/accept_insecure_rfc' and VALUE = '0' </compliant>
+   <complianttext/>
+   <noncompliant>NAME = 'snc/accept_insecure_rfc' and not ( VALUE = '0'  ) </noncompliant>
+   <noncomplianttext/>
+  </checkitem>
+ </configstore>
+</targetsystem>
