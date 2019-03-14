@@ -15,7 +15,7 @@ The number of check items is not limited per policy, however, as a rule of thumb
 No known major issues
 # How to obtain support
 Please report issues in Focused Run Advanced Configuration Monitoring using SAP's product support channels.
-For questions regarding the provided policies or script please us [issue template](https://github.com/SAP/fruncsa/issues).
+For questions regarding the provided policies or script please us [issue template](https://github.wdf.sap.corp/d024870/FRUNCSA/issues).
 # To-Do (upcoming changes)
 Updates will be provided on a monthly basis to cover the security note checks
 # License
