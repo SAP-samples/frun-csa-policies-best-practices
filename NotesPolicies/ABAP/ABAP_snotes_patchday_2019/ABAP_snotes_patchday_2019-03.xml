@@ -20,7 +20,7 @@ Date:    March 13 2019
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-  <checkitem desc="Note 0002662687 missing and solution with SP available" id="2662688" operator="check_note:0002662687">
+  <checkitem desc="Note 0002662687 missing and solution with SP available" id="0002662688" operator="check_note:0002662687">
      <compliant>(
        ( COMPONENT = 'SAPSCORE' and VERSION = '114' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- BANK/CFM 114 SAPK-11401INSAPSCORE -->   or
        ( COMPONENT = 'SAPSCORE' and VERSION = '113' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )   ) <!-- BANK/CFM 113 SAPK-11307INSAPSCORE -->   or
