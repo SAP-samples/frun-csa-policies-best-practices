@@ -189,11 +189,11 @@ Date:    March 13 2019
   <configstore name="COMP_LEVEL">
   <checkitem desc="Note 0002754235 missing and solution with SP available" id="0002754235" operator="check_note:0002754235">
      <compliant>(
-       ( COMPONENT = 'S4FPSL' and VERSION = '500' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- S4FPSL 500 SAPK-50012INFSAPPL -->   or
+       ( COMPONENT = 'FSAPPL' and VERSION = '500' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- S4FPSL 500 SAPK-50012INFSAPPL -->   or
        ( COMPONENT = 'S4FPSL' and VERSION = '100' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- S4FPSL 100 SAPK-10001INS4FPSL -->
      )</compliant>
      <noncompliant>(
-       ( COMPONENT = 'S4FPSL' and VERSION = '500' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- S4FPSL 500 SAPK-50012INFSAPPL -->   or
+       ( COMPONENT = 'FSAPPL' and VERSION = '500' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- S4FPSL 500 SAPK-50012INFSAPPL -->   or
        ( COMPONENT = 'S4FPSL' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- S4FPSL 100 SAPK-10001INS4FPSL -->
      )</noncompliant>
     </checkitem>
