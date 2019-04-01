@@ -38,7 +38,7 @@ Date:    March 13 2019
        ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )   ) <!-- BANK/CFM 606 SAPK-60623INEAFINSRV -->   or
        ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )   ) <!-- BANK/CFM 617 SAPK-61718INEAFINSRV -->   or
        ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- BANK/CFM 618 SAPK-61812INEAFINSRV -->   or
-       ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    0 )   ) <!-- BANK/CFM 463_20 SAPKIPBJ43 -->
+       ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;  43 )   ) <!-- BANK/CFM 463_20 SAPKIPBJ43 -->
      )</compliant>
      <noncompliant>(
        ( COMPONENT = 'SAPSCORE' and VERSION = '114' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- BANK/CFM 114 SAPK-11401INSAPSCORE -->   or
@@ -57,7 +57,7 @@ Date:    March 13 2019
        ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )  <!-- BANK/CFM 606 SAPK-60623INEAFINSRV -->   or
        ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )  <!-- BANK/CFM 617 SAPK-61718INEAFINSRV -->   or
        ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- BANK/CFM 618 SAPK-61812INEAFINSRV -->   or
-       ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;  0 )  <!-- BANK/CFM 463_20 SAPKIPBJ43 -->
+       ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;  43 )  <!-- BANK/CFM 463_20 SAPKIPBJ43 -->
      )</noncompliant>
     </checkitem>
   </configstore>
