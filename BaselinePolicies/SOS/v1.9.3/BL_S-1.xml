@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-16"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 This FRUN CSA policy contains rules derived from SAP Security Baseline Template Version 3
 Available at: http://support.sap.com/sos
@@ -140,7 +140,7 @@ Date:    Feb 02 2018
          </compliant>
       <complianttext/>
       <noncompliant>
-            NAME = 'login/password_max_idle_initial' and lpad(VALUE, 2, '0') between '01' and '14'
+            NAME = 'login/password_max_idle_initial' and not ( lpad(VALUE, 2, '0') between '01' and '14' )
          </noncompliant>
       <noncomplianttext/>
     </checkitem>
