@@ -20,8 +20,13 @@ added support package notes
 0002307916
 0002662632
 
-Version: 002
-Date:    April 24 2019
+09.05.2019
+added checks releated to IGS version
+2644238
+2644147
+
+Version: 003
+Date:    May 09 2019
 -->
 <targetsystem desc="SNotes of PatchDay: 2018-07" id="PatchDay_2018-07" multisql="Yes">
   <!-- CA-UI5-ABA-SAR - [CVE-2018-2434] Content Spoofing vulnerability in SAP_UI com (Version 0007 )   -->
@@ -34,16 +39,16 @@ Date:    April 24 2019
   <configstore name="COMP_LEVEL">
     <checkitem desc="Note 0002633180 missing and solution with SP available" id="0002633180" operator="check_note:0002633180">
       <compliant>(
-       ( COMPONENT = 'UI_700' and VERSION = '751' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )   ) <!-- UI_700 751 SAPK-75107INSAPUI -->   or
-       ( COMPONENT = 'UI_700' and VERSION = '752' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) <!-- UI_700 752 SAPK-75204INSAPUI -->   or
+       ( COMPONENT = 'SAP_UI' and VERSION = '751' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )   ) <!-- SAP_UI 751 SAPK-75107INSAPUI -->   or
+       ( COMPONENT = 'SAP_UI' and VERSION = '752' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) <!-- SAP_UI 752 SAPK-75204INSAPUI -->   or
        ( COMPONENT = 'UI_700' and VERSION = '200' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )   ) <!-- UI_700 200 SAPK-20013INUI700 -->   or
-       ( COMPONENT = 'UI_700' and VERSION = '750' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )   ) <!-- UI_700 750 SAPK-75013INSAPUI -->
+       ( COMPONENT = 'SAP_UI' and VERSION = '750' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )   ) <!-- SAP_UI 750 SAPK-75013INSAPUI -->
      )</compliant>
       <noncompliant>(
-       ( COMPONENT = 'UI_700' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )  <!-- UI_700 751 SAPK-75107INSAPUI -->   or
-       ( COMPONENT = 'UI_700' and VERSION = '752' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- UI_700 752 SAPK-75204INSAPUI -->   or
+       ( COMPONENT = 'SAP_UI' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )  <!-- SAP_UI 751 SAPK-75107INSAPUI -->   or
+       ( COMPONENT = 'SAP_UI' and VERSION = '752' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- SAP_UI 752 SAPK-75204INSAPUI -->   or
        ( COMPONENT = 'UI_700' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )  <!-- UI_700 200 SAPK-20013INUI700 -->   or
-       ( COMPONENT = 'UI_700' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )  <!-- UI_700 750 SAPK-75013INSAPUI -->
+       ( COMPONENT = 'SAP_UI' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )  <!-- SAP_UI 750 SAPK-75013INSAPUI -->
      )</noncompliant>
     </checkitem>
   </configstore>
@@ -489,4 +494,77 @@ Date:    April 24 2019
       <noncompliant>line like '%' and not (TEXT like_regexpr  'P TP=\*')</noncompliant>
     </checkitem>
   </configstore>
+
+  <!-- BC-FES-IGS-2644147-[CVE-2018-2439] Code Injection vulnerability in SAP Internet Graphics Server (IGS) (Version 0005 )  -->
+  <configstore name="igsmanifest.mf">
+    <checkitem desc="igs version which note 0002644147 recommends" id="0002644147">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0018')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0018')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 720'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 720'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002644147 recommends" id="0002644147">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0007')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0007')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 745'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 745'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002644147 recommends" id="0002644147">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0005')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0005')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 749'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 749'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002644147 recommends" id="0002644147">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0005')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0005')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 753'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 753'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+
+  <!-- BC-FES-IGS-2644238-[CVE-2018-2438] Denial of service (DOS) in SAP Internet Graphics Server (IGS) (Version 0004 )  -->
+  <configstore name="igsmanifest.mf">
+    <checkitem desc="igs version which note 0002644238 recommends" id="0002644238">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0018')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0018')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 720'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 720'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002644238 recommends" id="0002644238">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0007')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0007')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 745'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 745'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002644238 recommends" id="0002644238">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0005')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0005')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 749'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 749'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002644238 recommends" id="0002644238">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0005')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0005')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 753'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 753'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+
 </targetsystem>

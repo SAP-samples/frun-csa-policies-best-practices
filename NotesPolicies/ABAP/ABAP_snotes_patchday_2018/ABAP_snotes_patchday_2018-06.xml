@@ -11,6 +11,7 @@ SAP Security Patch Day: 2018 06
 added support package notes / adjusted notes
 updated
 0002621121
+0002641674
 
 removed
 0002538856    ->  referres to other notes which only have manual activities
@@ -35,14 +36,14 @@ Date:    may 3 2019
   <configstore name="COMP_LEVEL">
   <checkitem desc="Note 0002546300 missing and solution with SP available" id="0002546300" operator="check_note:0002546300">
      <compliant>(
-       ( COMPONENT = 'FI-CA' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 ))  <!-- FI-CA 102 SAPK-10201INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 ))  <!-- S4CORE 102 SAPK-10201INS4CORE -->   or
        ( COMPONENT = 'FI-CA' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 ))  <!-- FI-CA 617 SAPK-61715INFICA -->   or
        ( COMPONENT = 'FI-CA' and VERSION = '618' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 ))  <!-- FI-CA 618 SAPK-61809INFICA -->   or
        ( COMPONENT = 'FI-CA' and VERSION = '800' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 ))  <!-- FI-CA 800 SAPK-80006INFICA -->   or
        ( COMPONENT = 'FI-CA' and VERSION = '801' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 ))  <!-- FI-CA 801 SAPK-80104INFICA -->
      )</compliant>
      <noncompliant>(
-       ( COMPONENT = 'FI-CA' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- FI-CA 102 SAPK-10201INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- S4CORE 102 SAPK-10201INS4CORE -->   or
        ( COMPONENT = 'FI-CA' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )  <!-- FI-CA 617 SAPK-61715INFICA -->   or
        ( COMPONENT = 'FI-CA' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 )  <!-- FI-CA 618 SAPK-61809INFICA -->   or
        ( COMPONENT = 'FI-CA' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )  <!-- FI-CA 800 SAPK-80006INFICA -->   or
@@ -78,14 +79,14 @@ Date:    may 3 2019
   <configstore name="COMP_LEVEL">
   <checkitem desc="Note 0002641674 missing and solution with SP available" id="0002641674" operator="check_note:0002641674">
      <compliant>(
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 ))  <!-- SAP_BASIS 751 SAPK-75107INSAPGWFND -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 ))  <!-- SAP_BASIS 752 SAPK-75203INSAPGWFND -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 ))  <!-- SAP_BASIS 750 SAPK-75013INSAPGWFND -->
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '751' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 ))  <!-- SAP_GWFND 751 SAPK-75107INSAPGWFND -->   or
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '752' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 ))  <!-- SAP_GWFND 752 SAPK-75203INSAPGWFND -->   or
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '750' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 ))  <!-- SAP_GWFND 750 SAPK-75013INSAPGWFND -->
      )</compliant>
      <noncompliant>(
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )  <!-- SAP_BASIS 751 SAPK-75107INSAPGWFND -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )  <!-- SAP_BASIS 752 SAPK-75203INSAPGWFND -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )  <!-- SAP_BASIS 750 SAPK-75013INSAPGWFND -->
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )  <!-- SAP_GWFND 751 SAPK-75107INSAPGWFND -->   or
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '752' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )  <!-- SAP_GWFND 752 SAPK-75203INSAPGWFND -->   or
+       ( COMPONENT = 'SAP_GWFND' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )  <!-- SAP_GWFND 750 SAPK-75013INSAPGWFND -->
      )</noncompliant>
     </checkitem>
   </configstore>
@@ -93,18 +94,9 @@ Date:    may 3 2019
   <checkitem desc="Note 0002641674 missing and applicable using Correction Instruction" id="0002641674" operator="check_note:0002641674">
     <compliant/>
     <noncompliant>(
- ( COMPONENT = 'SAP_GWFND' and VERSION = '752' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    0 )  <!-- SAP_GWFND 752 752 - 752  -->
- or ( COMPONENT = 'SAP_GWFND' and VERSION = '752' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    1 and    2 )  <!-- SAP_GWFND 752 SAPK-75201INSAPGWFND - SAPK-75202INSAPGWFND  -->
- or ( COMPONENT = 'SAP_GWFND' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    0 )  <!-- SAP_GWFND 751 751 - 751  -->
- or ( COMPONENT = 'SAP_GWFND' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    1 and    1 )  <!-- SAP_GWFND 751 SAPK-75101INSAPGWFND - SAPK-75101INSAPGWFND  -->
- or ( COMPONENT = 'SAP_GWFND' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    2 and    2 )  <!-- SAP_GWFND 751 SAPK-75102INSAPGWFND - SAPK-75102INSAPGWFND  -->
- or ( COMPONENT = 'SAP_GWFND' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    3 and    3 )  <!-- SAP_GWFND 751 SAPK-75103INSAPGWFND - SAPK-75103INSAPGWFND  -->
- or ( COMPONENT = 'SAP_GWFND' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    4 and    4 )  <!-- SAP_GWFND 751 SAPK-75104INSAPGWFND - SAPK-75104INSAPGWFND  -->
- or ( COMPONENT = 'SAP_GWFND' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    3 and    3 )  <!-- SAP_GWFND 750 SAPK-75003INSAPGWFND - SAPK-75003INSAPGWFND  -->
- or ( COMPONENT = 'SAP_GWFND' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    4 and    4 )  <!-- SAP_GWFND 750 SAPK-75004INSAPGWFND - SAPK-75004INSAPGWFND  -->
- or ( COMPONENT = 'SAP_GWFND' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    5 and   10 )  <!-- SAP_GWFND 750 SAPK-75005INSAPGWFND - SAPK-75010INSAPGWFND  -->
- or ( COMPONENT = 'SAP_GWFND' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    5 and    6 )  <!-- SAP_GWFND 751 SAPK-75105INSAPGWFND - SAPK-75106INSAPGWFND  -->
- or ( COMPONENT = 'SAP_GWFND' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between   11 and   12 )  <!-- SAP_GWFND 750 SAPK-75011INSAPGWFND - SAPK-75012INSAPGWFND  -->
+ ( COMPONENT = 'SAP_GWFND' and VERSION = '752' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    2 )  <!-- SAP_GWFND 752 752 - 752  -->
+ or ( COMPONENT = 'SAP_GWFND' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    6 )  <!-- SAP_GWFND 751 SAPK-75102INSAPGWFND - SAPK-75102INSAPGWFND  -->
+ or ( COMPONENT = 'SAP_GWFND' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    3 and   12 )  <!-- SAP_GWFND 750 SAPK-75011INSAPGWFND - SAPK-75012INSAPGWFND  -->
   )</noncompliant>
     </checkitem>
   </configstore>
@@ -174,9 +166,8 @@ Date:    may 3 2019
     <noncompliant>(
  ( COMPONENT = 'UI_INFRA' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   17 and   19 )  <!-- UI_INFRA 100 SAPK-10017INUIINFRA - SAPK-10019INUIINFRA  -->
  or ( COMPONENT = 'SAP_UI' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   17 and   19 )  <!-- SAP_UI 740 SAPK-74017INSAPUI - SAPK-74019INSAPUI  -->
- or ( COMPONENT = 'SAP_UI' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    2 and    6 )  <!-- SAP_UI 751 SAPK-75102INSAPUI - SAPK-75106INSAPUI  -->
+ or ( COMPONENT = 'SAP_UI' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and    6 )  <!-- SAP_UI 751 SAPK-75102INSAPUI - SAPK-75106INSAPUI  -->
  or ( COMPONENT = 'SAP_UI' and VERSION = '752' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    3 )  <!-- SAP_UI 752 752 - SAPK-75203INSAPUI  -->
- or ( COMPONENT = 'SAP_UI' and VERSION = '751' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and    1 )  <!-- SAP_UI 751 SAPK-75101INSAPUI - SAPK-75101INSAPUI  -->
  or ( COMPONENT = 'UI_700' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    4 and   11 )  <!-- UI_700 200 SAPK-20004INUI700 - SAPK-20011INUI700  -->
  or ( COMPONENT = 'SAP_UI' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    4 and   11 )  <!-- SAP_UI 750 SAPK-75004INSAPUI - SAPK-75011INSAPUI  -->
   )</noncompliant>

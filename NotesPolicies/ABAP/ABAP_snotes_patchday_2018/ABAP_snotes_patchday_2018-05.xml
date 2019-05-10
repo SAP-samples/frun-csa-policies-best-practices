@@ -4,11 +4,31 @@ This FRUN CSA policy contains rules to check the following ABAP SNotes:
 
 SAP Security Patch Day: 2018 05
 0002588567
-0002596627
+0002596627   
 0002357141
 
-Version: 001
-Date:    May 09 2018
+
+07.05.2019
+0002596627   adjusted
+
+added support package notes
+2497000-Missing Authorization check in XX-CSC-BR-NFEIN
+0002187594 -Code injection vulnerability in EHS-MGM-FND	
+0002081029 -Potentially false redirection of Web site content in Web Dynpro ABAP application
+kernel
+2190621 -SAP Netweaver SAL incorrect logging of addresses
+IGs
+0002620744  SAP Internet Graphic Server (IGS)   - try to use joins stor igsmanifest.ms   (for abap and java
+0002617553 - [CVE-2018-2422] Denial of Service in SAP Internet Graphic Server (IGS) Portwatcher
+0002616599 - [CVE-2018-2421] Denial of Service in SAP Internet Graphics Server (IGS) Portwatcher
+0002615635 - [CVE-2018-2420] Unrestricted File Upload in SAP Internet Graphics Server (IGS) 
+
+Not added 
+0002497027  XX-CSC-BR-NFE  not added
+
+
+Version: 002
+Date:    May 07 2019
 -->
 <targetsystem desc="SNotes of PatchDay: 2018-05" id="PatchDay_2018-05" multisql="Yes">
   <!-- CA-WUI-UI-TAG - Cross-Site Scripting (XSS) vulnerability in SAP CRM WebClient UI (Version 0001) (Medium)  -->
@@ -21,7 +41,7 @@ Date:    May 09 2018
   <configstore name="COMP_LEVEL">
   <checkitem desc="Note 0002588567 missing and solution with SP available" id="0002588567" operator="check_note:0002588567">
      <compliant>(
-       ( COMPONENT = 'WEBCUIF' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 ))  <!-- WEBCUIF 102 SAPK-10202INS4FND -->   or
+       ( COMPONENT = 'S4FND' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 ))  <!-- S4FND 102 SAPK-10202INS4FND -->   or
        ( COMPONENT = 'WEBCUIF' and VERSION = '747' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   16 ))  <!-- WEBCUIF 747 SAPK-74716INWEBCUIF -->   or
        ( COMPONENT = 'WEBCUIF' and VERSION = '748' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   10 ))  <!-- WEBCUIF 748 SAPK-74810INWEBCUIF -->   or
        ( COMPONENT = 'WEBCUIF' and VERSION = '800' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 ))  <!-- WEBCUIF 800 SAPK-80006INWEBCUIF -->   or
@@ -30,7 +50,7 @@ Date:    May 09 2018
        ( COMPONENT = 'WEBCUIF' and VERSION = '746' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 ))  <!-- WEBCUIF 746 SAPK-74613INWEBCUIF -->
      )</compliant>
      <noncompliant>(
-       ( COMPONENT = 'WEBCUIF' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )  <!-- WEBCUIF 102 SAPK-10202INS4FND -->   or
+       ( COMPONENT = 'S4FND' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )  <!-- S4FND 102 SAPK-10202INS4FND -->   or
        ( COMPONENT = 'WEBCUIF' and VERSION = '747' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   16 )  <!-- WEBCUIF 747 SAPK-74716INWEBCUIF -->   or
        ( COMPONENT = 'WEBCUIF' and VERSION = '748' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   10 )  <!-- WEBCUIF 748 SAPK-74810INWEBCUIF -->   or
        ( COMPONENT = 'WEBCUIF' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )  <!-- WEBCUIF 800 SAPK-80006INWEBCUIF -->   or
@@ -64,9 +84,9 @@ Date:    May 09 2018
   <configstore name="COMP_LEVEL">
   <checkitem desc="Note 0002596627 missing and solution with SP available" id="0002596627" operator="check_note:0002596627">
      <compliant>(
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '111' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 ))  <!-- EA-FINSERV 111 SAPK-11107INSAPSCORE -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '101' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 ))  <!-- EA-FINSERV 101 SAPK-10104INS4CORE -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 ))  <!-- EA-FINSERV 102 SAPK-10202INS4CORE -->   or
+       ( COMPONENT = 'SAPSCORE' and VERSION = '111' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 ))  <!-- SAPSCORE 111 SAPK-11107INSAPSCORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 ))  <!-- S4CORE 101 SAPK-10104INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 ))  <!-- S4CORE 102 SAPK-10202INS4CORE -->   or
        ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 ))  <!-- EA-FINSERV 616 SAPK-61612INEAFINSRV -->   or
        ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   16 ))  <!-- EA-FINSERV 617 SAPK-61716INEAFINSRV -->   or
        ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   10 ))  <!-- EA-FINSERV 618 SAPK-61810INEAFINSRV -->   or
@@ -76,9 +96,9 @@ Date:    May 09 2018
        ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 ))  <!-- EA-FINSERV 606 SAPK-60622INEAFINSRV -->
      )</compliant>
      <noncompliant>(
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '111' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )  <!-- EA-FINSERV 111 SAPK-11107INSAPSCORE -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- EA-FINSERV 101 SAPK-10104INS4CORE -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )  <!-- EA-FINSERV 102 SAPK-10202INS4CORE -->   or
+       ( COMPONENT = 'SAPSCORE' and VERSION = '111' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )  <!-- SAPSCORE 111 SAPK-11107INSAPSCORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- S4CORE 101 SAPK-10104INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )  <!-- S4CORE 102 SAPK-10202INS4CORE -->   or
        ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- EA-FINSERV 616 SAPK-61612INEAFINSRV -->   or
        ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   16 )  <!-- EA-FINSERV 617 SAPK-61716INEAFINSRV -->   or
        ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   10 )  <!-- EA-FINSERV 618 SAPK-61810INEAFINSRV -->   or
@@ -95,14 +115,14 @@ Date:    May 09 2018
     <noncompliant>(
        ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    1 )  <!-- S4CORE 102 102 - SAPK-10201INS4CORE  -->
        or ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    1 and   21 )  <!-- EA-FINSERV 604 SAPK-60401INEAFINSRV - SAPK-60421INEAFINSRV  -->
-       or ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    3 and   18 )  <!-- EA-FINSERV 605 SAPK-60503INEAFINSRV - SAPK-60518INEAFINSRV manual -->
-       or ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    1 and   21 )  <!-- EA-FINSERV 606 SAPK-60601INEAFINSRV - SAPK-60621INEAFINSRV manual -->
-       or ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and   11 )  <!-- EA-FINSERV 616 616 - SAPK-61611INEAFINSRV manual -->
+       or ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    3 and   18 )  <!-- EA-FINSERV 605 SAPK-60503INEAFINSRV - SAPK-60518INEAFINSRV  -->
+       or ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    1 and   21 )  <!-- EA-FINSERV 606 SAPK-60601INEAFINSRV - SAPK-60621INEAFINSRV  -->
+       or ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and   11 )  <!-- EA-FINSERV 616 616 - SAPK-61611INEAFINSRV -->
        or ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    1 and   15 )  <!-- EA-FINSERV 617 SAPK-61701INEAFINSRV - SAPK-61715INEAFINSRV  -->
-       or ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    9 )  <!-- EA-FINSERV 618 618 - SAPK-61809INEAFINSRV manual -->
-       or ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    5 )  <!-- EA-FINSERV 800 800 - SAPK-80005INEAFINSRV manual -->
-       or ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    3 )  <!-- S4CORE 101 101 - SAPK-10103INS4CORE manual -->
-       or ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    1 )  <!-- S4CORE 102 102 - SAPK-10201INS4CORE manual -->
+       or ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    9 )  <!-- EA-FINSERV 618 618 - SAPK-61809INEAFINSRV  -->
+       or ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    5 )  <!-- EA-FINSERV 800 800 - SAPK-80005INEAFINSRV  -->
+       or ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    3 )  <!-- S4CORE 101 101 - SAPK-10103INS4CORE -->
+       or ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) between    0 and    1 )  <!-- S4CORE 102 102 - SAPK-10201INS4CORE-->
   )</noncompliant>
     </checkitem>
   </configstore>
@@ -144,4 +164,328 @@ Date:    May 09 2018
   )</noncompliant>
     </checkitem>
   </configstore>
+
+
+  <!-- additional Support package notes -->
+
+  <!-- BC-WD-ABA - Potentially false redirection of Web site content in Web Dynpro ABAP application (Version 0002 ) (Medium) 
+       plus manual actions: check will be activated by maintenance of appropriate entries into table HTTP_WHITELIST for ENTRY_TYPE 10 and 11 -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002081029 exists" id="0002081029" operator="check_note">
+      <compliant>NOTE = '0002081029'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002081029 missing and solution with SP available" id="0002081029" operator="check_note:0002081029">
+     <compliant>(
+       ( COMPONENT = 'SAP_UI' and VERSION = '740' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   11 )   ) <!-- SAP_UI 740 SAPK-74011INSAPUI -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )   ) <!-- SAP_BASIS 731 SAPKB73115 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '710' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_BASIS 710 SAPKB71020 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )   ) <!-- SAP_BASIS 711 SAPKB71115 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   33 )   ) <!-- SAP_BASIS 700 SAPKB70033 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )   ) <!-- SAP_BASIS 701 SAPKB70118 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )   ) <!-- SAP_BASIS 702 SAPKB70218 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   14 )   ) <!-- SAP_BASIS 730 SAPKB73014 -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SAP_UI' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   11 )  <!-- SAP_UI 740 SAPK-74011INSAPUI -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )  <!-- SAP_BASIS 731 SAPKB73115 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '710' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_BASIS 710 SAPKB71020 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )  <!-- SAP_BASIS 711 SAPKB71115 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   33 )  <!-- SAP_BASIS 700 SAPKB70033 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )  <!-- SAP_BASIS 701 SAPKB70118 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )  <!-- SAP_BASIS 702 SAPKB70218 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   14 )  <!-- SAP_BASIS 730 SAPKB73014 -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002081029 missing and applicable using Correction Instruction" id="0002081029" operator="check_note:0002081029">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'SAP_UI' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   10 )  <!-- SAP_UI 740 SAPK-74000INSAPUI - SAPK-74010INSAPUI  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   14 )  <!-- SAP_BASIS 731 SAPKB73101 - SAPKB73114  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    7 and   13 )  <!-- SAP_BASIS 730 SAPKB73007 - SAPKB73013  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   12 and   14 )  <!-- SAP_BASIS 711 SAPKB71112 - SAPKB71114  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   11 and   17 )  <!-- SAP_BASIS 702 SAPKB70211 - SAPKB70217  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   12 and   17 )  <!-- SAP_BASIS 701 SAPKB70112 - SAPKB70117  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   25 and   32 )  <!-- SAP_BASIS 700 SAPKB70025 - SAPKB70032  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '710' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   16 and   19 )  <!-- SAP_BASIS 710 SAPKB71016 - SAPKB71019  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- XX-CSC-BR-NFEIN - Missing Authorization check in XX-CSC-BR-NFEIN (Version 0001 ) (Medium)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002497000 exists" id="0002497000" operator="check_note">
+      <compliant>NOTE = '0002497000'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002497000 missing and solution with SP available" id="0002497000" operator="check_note:0002497000">
+     <compliant>(
+       ( COMPONENT = 'SAP_APPL' and VERSION = '600' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   30 )   ) <!-- SAP_APPL 600 SAPKH60030 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '500' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   29 )   ) <!-- SAP_APPL 500 SAPKH50029 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '602' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_APPL 602 SAPKH60220 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '603' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- SAP_APPL 603 SAPKH60319 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '604' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_APPL 604 SAPKH60420 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '605' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )   ) <!-- SAP_APPL 605 SAPKH60517 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '606' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_APPL 606 SAPKH60620 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '616' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- SAP_APPL 616 SAPKH61612 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )   ) <!-- SAP_APPL 617 SAPKH61715 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '618' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    8 )   ) <!-- SAP_APPL 618 SAPKH61808 -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )   ) <!-- S4CORE 101 SAPK-10103INS4CORE --> or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- S4CORE 102 SAPK-10201INS4CORE --> or
+       ( COMPONENT = 'S4CORE' and VERSION = '100' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )   ) <!-- S4CORE 100 SAPK-10005INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SAP_APPL' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   30 )  <!-- SAP_APPL 600 SAPKH60030 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '500' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   29)   ) <!-- SAP_APPL 500 SAPKH50029 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '602' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_APPL 602 SAPKH60220 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- SAP_APPL 603 SAPKH60319 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_APPL 604 SAPKH60420 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )  <!-- SAP_APPL 605 SAPKH60517 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_APPL 606 SAPKH60620 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- SAP_APPL 616 SAPKH61612 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )  <!-- SAP_APPL 616 SAPKH61715 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    8 )  <!-- SAP_APPL 616 SAPKH61808 -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )  <!-- S4CORE 101 SAPK-10103INS4CORE  -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- S4CORE 102 SAPK-10201INS4CORE  -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )  <!-- S4CORE 100 SAPK-10005INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002497000 missing and applicable using Correction Instruction" id="0002497000" operator="check_note:0002497000">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'SAP_APPL' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    7 )  <!-- SAP_APPL 618 618 - SAPK-61807INSAPAPPL  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   14 )  <!-- SAP_APPL 617 SAPKH61701 - SAPKH61714  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   11 )  <!-- SAP_APPL 616 616 - SAPKH61611  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   19 )  <!-- SAP_APPL 606 SAPKH60601 - SAPKH60619  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   16 )  <!-- SAP_APPL 605 605 - SAPKH60516  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   19 )  <!-- SAP_APPL 604 SAPKH60401 - SAPKH60419  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   18 )  <!-- SAP_APPL 603 603 - SAPKH60318  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '602' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   19 )  <!-- SAP_APPL 602 602 - SAPKH60219  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   29 )  <!-- SAP_APPL 600 SAPKH60001 - SAPKH60029  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '500' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   28 )  <!-- SAP_APPL 500 SAPKH50001 - SAPKH50028  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    4 )  <!-- S4CORE 100 100 - SAPK-10004INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    2 )  <!-- S4CORE 101 101 - SAPK-10102INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   0 )  <!-- S4CORE 102 102 - 102  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- EHS-MGM-FND - Code injection vulnerability in EHS-MGM-FND (Version 0001 ) (Medium)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002187594 exists" id="0002187594" operator="check_note">
+      <compliant>NOTE = '0002187594'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002187594 missing and solution with SP available" id="0002187594" operator="check_note:0002187594">
+     <compliant>(
+       ( COMPONENT = 'EHSM' and VERSION = '600' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- EHSM 600 SAPK-60001INEHSM -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'EHSM' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- EHSM 600 SAPK-60001INEHSM -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002187594 missing and applicable using Correction Instruction" id="0002187594" operator="check_note:0002187594">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'EHSM' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   0 )  <!-- EHSM 600 600 - 600  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+      
+<!--    IGs  -->
+  <!-- BC-FES-IGS - [CVE-2018-2423] Denial of Service in SAP Internet Graphic Server (IGS) RFC listener (Version 0005 )  -->
+  <configstore name="igsmanifest.mf">
+    <checkitem desc="igs version which note 0002620744 recommends" id="0002620744">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0017')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0017')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 720'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 720'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002620744 recommends" id="0002620744">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0006')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0006')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 745'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 745'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002620744 recommends" id="0002620744">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0004')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0004')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 749'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 749'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002620744 recommends" id="0002620744">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0004')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0004')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 753'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 753'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+  <!-- BC-FES-IGS - [CVE-2018-2422] Denial of Service in SAP Internet Graphic Server (IGS) Portwatcher (Version 0004 )  -->
+  <configstore name="igsmanifest.mf">
+    <checkitem desc="igs version which note 0002617553 recommends" id="0002617553">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0017')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0017')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 720'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 720'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002617553 recommends" id="0002617553">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0006')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0006')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 745'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 745'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002617553 recommends" id="0002617553">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0004')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0004')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 749'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 749'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002617553 recommends" id="0002617553">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0004')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0004')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 753'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 753'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+  <!-- BC-FES-IGS - [CVE-2018-2421] Denial of Service in SAP Internet Graphics Server (IGS) Portwatcher (Version 0003 )  -->
+  <configstore name="igsmanifest.mf">
+    <checkitem desc="igs version which note 0002616599 recommends" id="0002616599">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0017')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0017')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 720'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 720'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002616599 recommends" id="0002616599">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0006')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0006')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 745'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 745'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002616599 recommends" id="0002616599">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0004')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0004')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 749'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 749'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002616599 recommends" id="0002616599">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0004')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0004')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 753'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 753'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+
+  <!-- BC-FES-IGS-[CVE-2018-2420] Unrestricted File Upload in SAP Internet Graphics Server (IGS) (Version 0005 )  -->
+  <configstore name="igsmanifest.mf">
+    <checkitem desc="igs version which note 0002615635 recommends" id="0002615635">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0017')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0017')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 720'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 720'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002615635 recommends" id="0002615635">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0006')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0006')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 745'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 745'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002615635 recommends" id="0002615635">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0004')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0004')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 749'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 749'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="igs version which note 0002615635 recommends" id="0002615635">
+      <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0004')</compliant>
+      <noncompliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &lt; '0004')</noncompliant>
+      <joinstore name="igsmanifest.mf" no_data_found="Yes">
+        <joincompliant>line like '%' and text = 'igs release: 753'</joincompliant>
+        <joinnoncompliant>line like '%' and text = 'igs release: 753'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+
+  <!-- BC-CST-GW - 2190621-SAP Netweaver SAL incorrect logging of addresses (Version 0004 )  -->
+  <configstore name="SAP_KERNEL">
+    <checkitem desc="kernel version which note 0002190621 recommends" id="0002190621">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0610'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0610'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '721_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '721_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="kernel version which note 0002190621 recommends" id="0002190621">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0011'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0011'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '722_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '722_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="kernel version which note 0002190621 recommends" id="0002190621">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0216'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0216'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '742_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '742_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="kernel version which note 0002190621 recommends" id="0002190621">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0011'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0011'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '745_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '745_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+
+
 </targetsystem>

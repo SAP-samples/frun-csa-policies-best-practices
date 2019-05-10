@@ -38,8 +38,8 @@ Date:    April 2019
        ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   16 )   ) <!-- SAP_BASIS 711 SAPKB71116 -->   or
        ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )   ) <!-- SAP_BASIS 730 SAPKB73015 -->   or
        ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )   ) <!-- SAP_BASIS 731 SAPKB73118 -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   16 )   ) <!-- SAP_BASIS 740 SAPK-74016INSAPUI -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) <!-- SAP_BASIS 750 SAPK-75004INSAPUI -->   
+       ( COMPONENT = 'SAP_UI' and VERSION = '740' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   16 )   ) <!-- SAP_UI 740 SAPK-74016INSAPUI -->   or
+       ( COMPONENT = 'SAP_UI' and VERSION = '750' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) <!-- SAP_UI 750 SAPK-75004INSAPUI -->   
      )</compliant>
      <noncompliant>(
        ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   34 )  <!-- SAP_BASIS 700 SAPKB70034 -->   or
@@ -49,8 +49,8 @@ Date:    April 2019
        ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   16 )  <!-- SAP_BASIS 711 SAPKB71116 -->   or
        ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )  <!-- SAP_BASIS 730 SAPKB73015 -->   or
        ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )  <!-- SAP_BASIS 731 SAPKB73118 -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   16 )  <!-- SAP_BASIS 740 SAPK-74016INSAPUI -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- SAP_BASIS 750 SAPK-75004INSAPUI -->   
+       ( COMPONENT = 'SAP_UI' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   16 )  <!-- SAP_UI 740 SAPK-74016INSAPUI -->   or
+       ( COMPONENT = 'SAP_UI' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- SAP_UI 750 SAPK-75004INSAPUI -->   
      )</noncompliant>
     </checkitem>
   </configstore>
