@@ -22,8 +22,10 @@ added support package notes
 
 09.05.2019
 added checks releated to IGS version
+commented as igsmanifest.mf needs FRUN 2.0 FP01
 2644238
 2644147
+commented as igsmanifest.mf needs FRUN 2.0 FP01
 
 Version: 003
 Date:    May 09 2019
@@ -495,7 +497,7 @@ Date:    May 09 2019
     </checkitem>
   </configstore>
 
-  <!-- BC-FES-IGS-2644147-[CVE-2018-2439] Code Injection vulnerability in SAP Internet Graphics Server (IGS) (Version 0005 )  -->
+  <!-- BC-FES-IGS-2644147-[CVE-2018-2439] Code Injection vulnerability in SAP Internet Graphics Server (IGS) (Version 0005 ) 
   <configstore name="igsmanifest.mf">
     <checkitem desc="igs version which note 0002644147 recommends" id="0002644147">
       <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0018')</compliant>
@@ -530,8 +532,8 @@ Date:    May 09 2019
       </joinstore>
     </checkitem>
   </configstore>
-
-  <!-- BC-FES-IGS-2644238-[CVE-2018-2438] Denial of service (DOS) in SAP Internet Graphics Server (IGS) (Version 0004 )  -->
+ -->
+  <!-- BC-FES-IGS-2644238-[CVE-2018-2438] Denial of service (DOS) in SAP Internet Graphics Server (IGS) (Version 0004 )  
   <configstore name="igsmanifest.mf">
     <checkitem desc="igs version which note 0002644238 recommends" id="0002644238">
       <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0018')</compliant>
@@ -566,5 +568,5 @@ Date:    May 09 2019
       </joinstore>
     </checkitem>
   </configstore>
-
+-->
 </targetsystem>

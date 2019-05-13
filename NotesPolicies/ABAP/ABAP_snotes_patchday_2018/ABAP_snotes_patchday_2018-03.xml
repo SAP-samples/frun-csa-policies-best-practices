@@ -28,7 +28,11 @@ xxxxxxxxxx
 1906841 - Potential disclosure of persisted data in XX-CSC-RU
 1696317 - Unauthorized modification of displayed content in CRM-ANA-PS
 2531131 - Switchable Authorization checks for RFC BCA_DIM_WRITE_OFF in Loans (FI-CAX-FS)	
+
+
+IGS
 2538829 - Open Source Software Security Vulnerabilities in SAP Internet Graphics Server (IGS)
+commented as igsmanifest.mf needs FRUN 2.0 FP01
 
 Version: 002
 Date:    May 10 2019
@@ -537,7 +541,7 @@ Date:    May 10 2019
     </checkitem>
   </configstore>
 
-  <!-- BC-FES-IGS - Open Source Software Security Vulnerabilities in SAP Interne (Version 0011 ) (High)  -->
+  <!-- BC-FES-IGS - Open Source Software Security Vulnerabilities in SAP Interne (Version 0011 ) (High)  
   <configstore name="igsmanifest.mf">
     <checkitem desc="igs version which note 0002538829 recommends" id="0002538829">
       <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0016')</compliant>
@@ -572,6 +576,7 @@ Date:    May 10 2019
       </joinstore>
     </checkitem>
   </configstore>
+-->
 
   <!-- CA-WUI-UI - Cross-Site Scripting (XSS) vulnerability in SAP CRM WebClient UI (Version 0001 ) (High)  -->
   <configstore name="ABAP_NOTES">

@@ -17,14 +17,15 @@ added support package notes
 0002081029 -Potentially false redirection of Web site content in Web Dynpro ABAP application
 kernel
 2190621 -SAP Netweaver SAL incorrect logging of addresses
-IGs
+
+IGS
+commented as igsmanifest.mf needs FRUN 2.0 FP01
 0002620744  SAP Internet Graphic Server (IGS)   - try to use joins stor igsmanifest.ms   (for abap and java
 0002617553 - [CVE-2018-2422] Denial of Service in SAP Internet Graphic Server (IGS) Portwatcher
 0002616599 - [CVE-2018-2421] Denial of Service in SAP Internet Graphics Server (IGS) Portwatcher
 0002615635 - [CVE-2018-2420] Unrestricted File Upload in SAP Internet Graphics Server (IGS) 
-
-Not added 
-0002497027  XX-CSC-BR-NFE  not added
+commented as igsmanifest.mf is needs FRUN 2.0 FP01
+commented as igsmanifest.mf needs FRUN 2.0 FP01
 
 
 Version: 002
@@ -309,7 +310,7 @@ Date:    May 07 2019
   </configstore>
       
 <!--    IGs  -->
-  <!-- BC-FES-IGS - [CVE-2018-2423] Denial of Service in SAP Internet Graphic Server (IGS) RFC listener (Version 0005 )  -->
+  <!-- BC-FES-IGS - [CVE-2018-2423] Denial of Service in SAP Internet Graphic Server (IGS) RFC listener (Version 0005 )  
   <configstore name="igsmanifest.mf">
     <checkitem desc="igs version which note 0002620744 recommends" id="0002620744">
       <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0017')</compliant>
@@ -344,7 +345,8 @@ Date:    May 07 2019
       </joinstore>
     </checkitem>
   </configstore>
-  <!-- BC-FES-IGS - [CVE-2018-2422] Denial of Service in SAP Internet Graphic Server (IGS) Portwatcher (Version 0004 )  -->
+-->
+  <!-- BC-FES-IGS - [CVE-2018-2422] Denial of Service in SAP Internet Graphic Server (IGS) Portwatcher (Version 0004 )  
   <configstore name="igsmanifest.mf">
     <checkitem desc="igs version which note 0002617553 recommends" id="0002617553">
       <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0017')</compliant>
@@ -379,7 +381,8 @@ Date:    May 07 2019
       </joinstore>
     </checkitem>
   </configstore>
-  <!-- BC-FES-IGS - [CVE-2018-2421] Denial of Service in SAP Internet Graphics Server (IGS) Portwatcher (Version 0003 )  -->
+-->
+  <!-- BC-FES-IGS - [CVE-2018-2421] Denial of Service in SAP Internet Graphics Server (IGS) Portwatcher (Version 0003 )  
   <configstore name="igsmanifest.mf">
     <checkitem desc="igs version which note 0002616599 recommends" id="0002616599">
       <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0017')</compliant>
@@ -414,8 +417,8 @@ Date:    May 07 2019
       </joinstore>
     </checkitem>
   </configstore>
-
-  <!-- BC-FES-IGS-[CVE-2018-2420] Unrestricted File Upload in SAP Internet Graphics Server (IGS) (Version 0005 )  -->
+-->
+  <!-- BC-FES-IGS-[CVE-2018-2420] Unrestricted File Upload in SAP Internet Graphics Server (IGS) (Version 0005 ) 
   <configstore name="igsmanifest.mf">
     <checkitem desc="igs version which note 0002615635 recommends" id="0002615635">
       <compliant>line like '%' and (text like 'igs patch number:%' and (lpad(SUBSTRING(text, 19, 4), 4,'0')) &gt;= '0017')</compliant>
@@ -450,8 +453,8 @@ Date:    May 07 2019
       </joinstore>
     </checkitem>
   </configstore>
-
-  <!-- BC-CST-GW - 2190621-SAP Netweaver SAL incorrect logging of addresses (Version 0004 )  -->
+ -->
+  <!-- BC-CST-GW - 2190621-SAP Netweaver SAL incorrect logging of addresses (Version 0004 )  
   <configstore name="SAP_KERNEL">
     <checkitem desc="kernel version which note 0002190621 recommends" id="0002190621">
       <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0610'</compliant>
@@ -486,6 +489,6 @@ Date:    May 07 2019
       </joinstore>
     </checkitem>
   </configstore>
-
+-->
 
 </targetsystem>
