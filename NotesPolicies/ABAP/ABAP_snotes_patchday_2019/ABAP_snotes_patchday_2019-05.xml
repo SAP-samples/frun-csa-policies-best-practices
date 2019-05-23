@@ -65,7 +65,7 @@ Date:    May 21 2019
   </configstore>
 <!-- no patch information for solved with, entered maually-->
   <configstore name="COMP_LEVEL">
-  <checkitem desc="Note 0002756625 missing and solution with SP available" id="0002756453" operator="check_note:0002756625"> 
+  <checkitem desc="Note 0002756625 missing and solution with SP available" id="0002756625" operator="check_note:0002756625"> 
      <compliant>(
        ( COMPONENT = 'ST-PI' and VERSION = '2008_1_700' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )   ) <!-- ST-PI 2008_1_700 SAPKITLRD9 - SAPKITLRDT -->   or
        ( COMPONENT = 'ST-PI' and VERSION = '2008_1_710' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )   ) <!-- ST-PI 2008_1_710 SAPKITLRE9 - SAPKITLRET -->   or
