@@ -13,11 +13,12 @@ Date:    Dec 12 2018
       <compliant>
       ((NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.02' AND substring(VALUE,0,14) &gt;= '2.00.024.01' 
         OR NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.03' AND substring(VALUE,0,14) &gt;= '2.00.030.00' 
+        OR NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.04' AND substring(VALUE,0,14) &gt;= '2.00.040.00' 
         OR NAME = 'VERSION' AND substring(VALUE,0,6) = '1.00.1' AND substring(VALUE,0,14) &gt;= '1.00.122.17') )
    </compliant>
       <noncompliant>
 	      ((NAME = 'VERSION' AND substring(VALUE,0,6) = '2.00.0' AND NOT(substring(VALUE,0,14) &gt;= '2.00.024.01') 
-	      OR NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.03' AND NOT(substring(VALUE,0,14) &gt;= '2.00.030.00') 
+	     OR NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.01' AND NOT(substring(VALUE,0,14) &gt;= '2.00.019.99') 
           OR NAME = 'VERSION' AND substring(VALUE,0,6) = '1.00.1' AND NOT(substring(VALUE,0,14) &gt;= '1.00.122.17') ) )
    </noncompliant>
     </checkitem>
