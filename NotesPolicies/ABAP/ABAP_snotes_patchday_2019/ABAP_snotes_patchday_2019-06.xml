@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+This FRUN CSA policy contains rules to check the following ABAP SNotes:
+
+0002524203 - FI-CA - Switchable authorization checks for RFC in SAP ERP Contract Accounts Receivable (+ manual activity)
+0002496977- PSM-GPR - Switchable Authorization checks in SAP ERP (+ manual activity)
+0002527346 - PSM-GPR - Switchable Authorization checks for SAP ERP (+ manual activity)
+0002662687- IS-B-BCA-MD - [CVE-2018-2484] Missing Authorization check in SAP Enterprise Financial Services (+ manual activity)
+0002728153 - IS-A-DP - [CVE-2019-0311] Cross Site Scripting (XSS) vulnerability in Automotive Dealer P.
+0002730227 - FI-CF-APR - Missing Authorization Check in SAP Central Payment
+0002719530 - BC-SRV-COM-FTP - [CVE-2019-0304] Code Injection vulnerability in SAP NetWeaver AS ABAP Platform (FTP Function)
+
+The policy does not check the following SNotes:
+2748699 - SV-SMG-DIA-WLY-EMS - [CVE-2019-0291] Information Disclosure in Solution Manager 7.2 / CA Introscope E.
+2793805 - MOB-SYC-SAP-IM - [CVE-2019-0314] Denial of service (DOS) in SAP Work Manager and SAP Inventory M.
+2637997- BI-BIP-ADC - [CVE-2019-0303] Cross-Site Scripting (XSS) vulnerability in SAP BusinessObjects
+2755502 - BC-XI-IBF-UI - [CVE-2019-0305] Clickjacking vulnerability in Integration Builder Framework (Administration Console)
+2755438 - BC-XI-IBF-UI - [CVE-2019-0315] Information Disclosure in Integration Builder Framework of SAP NetWeaver Process Integration
+2753595 - BC-FES-BUS-DSK - SAP Netweaver Business Client does not show warning dialog for specific invalid
+2773493 - CRM-ISA-BCS - [CVE-2019-0308] Code Injection vulnerability in SAP E-Commerce (Business-to-Consumer) Application
+2772266 - SV-SMG-DIA-SRV-AGT - [CVE-2019-0307] Information Disclosure in Solution Manager 7.2 (Diagnostics Agent)
+2771128 - BC-XS-SEC - [CVE-2019-0306] Information Disclosure in  SAP HANA Extended Application Services (advanced model)
+2745917 - BC-XI-IBF-UI - [CVE-2019-0316] Cross-Site Scripting (XSS) vulnerability in Integration Builder
+2744086 - BC-XI-IBF-UI - [CVE-2019-0312] Information Disclosure in SAP NetWeaver Process Integration
+2622660 - BC-FES-BUS-DSK - Security updates for web browser controls delivered with SAP
+
+SAP Security Patch Day: 2019 06
+Version: 001
+Date:    June 12 2019
+-->
+
+
+<targetsystem desc="SNotes of PatchDay: 2019-06" id="PatchDay_2019-06" multisql="Yes">
+  <!-- FI-CA - Switchable authorization checks for RFC in SAP ERP Contract Accounts Receivable (Version 0004 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002524203 exists" id="0002524203" operator="check_note">
+      <compliant>NOTE = '0002524203'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002524203 missing and solution with SP available" id="0002524203" operator="check_note:0002524203">
+     <compliant>(
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- S4CORE 102 SAPK-10201INS4CORE -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '600' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   30 )   ) <!-- FI-CA 600 SAPK-60030INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '800' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )   ) <!-- FI-CA 800 SAPK-80005INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '602' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- FI-CA 602 SAPK-60220INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '603' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- FI-CA 603 SAPK-60319INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '801' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )   ) <!-- FI-CA 801 SAPK-80103INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '604' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- FI-CA 604 SAPK-60420INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '605' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )   ) <!-- FI-CA 605 SAPK-60517INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '606' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- FI-CA 606 SAPK-60620INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '616' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- FI-CA 616 SAPK-61612INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )   ) <!-- FI-CA 617 SAPK-61715INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '618' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 )   ) <!-- FI-CA 618 SAPK-61809INFICA -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- S4CORE 102 SAPK-10201INS4CORE -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   30 )  <!-- FI-CA 600 SAPK-60030INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )  <!-- FI-CA 800 SAPK-80005INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '602' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- FI-CA 602 SAPK-60220INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- FI-CA 603 SAPK-60319INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '801' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )  <!-- FI-CA 801 SAPK-80103INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- FI-CA 604 SAPK-60420INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )  <!-- FI-CA 605 SAPK-60517INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- FI-CA 606 SAPK-60620INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- FI-CA 616 SAPK-61612INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )  <!-- FI-CA 617 SAPK-61715INFICA -->   or
+       ( COMPONENT = 'FI-CA' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 )  <!-- FI-CA 618 SAPK-61809INFICA -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002524203 missing and applicable using Correction Instruction" id="0002524203" operator="check_note:0002524203">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   0 )  <!-- S4CORE 102 102 - 102  -->
+ or ( COMPONENT = 'FI-CA' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   24 and   29 )  <!-- FI-CA 600 SAPK-60024INFICA - SAPK-60029INFICA  -->
+ or ( COMPONENT = 'FI-CA' and VERSION = '602' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   14 and   19 )  <!-- FI-CA 602 SAPK-60214INFICA - SAPK-60219INFICA  -->
+ or ( COMPONENT = 'FI-CA' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   13 and   18 )  <!-- FI-CA 603 SAPK-60313INFICA - SAPK-60318INFICA  -->
+ or ( COMPONENT = 'FI-CA' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   14 and   19 )  <!-- FI-CA 604 SAPK-60414INFICA - SAPK-60419INFICA  -->
+ or ( COMPONENT = 'FI-CA' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between   11 and   16 )  <!-- FI-CA 605 SAPK-60511INFICA - SAPK-60516INFICA  -->
+ or ( COMPONENT = 'FI-CA' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    7 and   19 )  <!-- FI-CA 606 SAPK-60607INFICA - SAPK-60619INFICA  -->
+ or ( COMPONENT = 'FI-CA' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    2 and   11 )  <!-- FI-CA 616 SAPK-61602INFICA - SAPK-61611INFICA  -->
+ or ( COMPONENT = 'FI-CA' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   14 )  <!-- FI-CA 617 SAPK-61701INFICA - SAPK-61714INFICA  -->
+ or ( COMPONENT = 'FI-CA' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    8 )  <!-- FI-CA 618 618 - SAPK-61808INFICA  -->
+ or ( COMPONENT = 'FI-CA' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    4 )  <!-- FI-CA 800 800 - SAPK-80004INFICA  -->
+ or ( COMPONENT = 'FI-CA' and VERSION = '801' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    2 )  <!-- FI-CA 801 801 - SAPK-80102INFICA  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- IS-B-BCA-MD - [CVE-2018-2484] Missing Authorization check in SAP Enterprise Financial Services (Version 0004 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002662687 exists" id="0002662687" operator="check_note">
+      <compliant>NOTE = '0002662687'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002662687 missing and solution with SP available" id="0002662687" operator="check_note:0002662687">
+     <compliant>(
+       ( COMPONENT = 'SAPSCORE' and VERSION = '114' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- SAPSCORE 114 SAPK-11401INSAPSCORE -->   or
+       ( COMPONENT = 'SAPSCORE' and VERSION = '113' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )   ) <!-- SAPSCORE 113 SAPK-11307INSAPSCORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )   ) <!-- S4CORE 101 SAPK-10105INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )   ) <!-- S4CORE 102 SAPK-10203INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- S4CORE 103 SAPK-10301INS4CORE -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '110' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   36 )   ) <!-- EA-FINSERV 110 SAPKGPFA36 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '200' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   25 )   ) <!-- EA-FINSERV 200 SAPKGPFB25 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '500' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   29 )   ) <!-- EA-FINSERV 500 SAPKGPFC29 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   32 )   ) <!-- EA-FINSERV 600 SAPKGPFD32 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )   ) <!-- EA-FINSERV 603 SAPK-60321INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )   ) <!-- EA-FINSERV 604 SAPK-60422INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- EA-FINSERV 605 SAPK-60519INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )   ) <!-- EA-FINSERV 616 SAPK-61613INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )   ) <!-- EA-FINSERV 606 SAPK-60623INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )   ) <!-- EA-FINSERV 617 SAPK-61718INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- EA-FINSERV 618 SAPK-61812INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    8 )   ) <!-- EA-FINSERV 800 SAPK-80008INEAFINSRV -->   or
+       ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   43 )   ) <!-- BANK/CFM 463_20 SAPKIPBJ43 -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SAPSCORE' and VERSION = '114' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- SAPSCORE 114 SAPK-11401INSAPSCORE -->   or
+       ( COMPONENT = 'SAPSCORE' and VERSION = '113' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )  <!-- SAPSCORE 113 SAPK-11307INSAPSCORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )  <!-- S4CORE 101 SAPK-10105INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )  <!-- S4CORE 102 SAPK-10203INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- S4CORE 103 SAPK-10301INS4CORE -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '110' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   36 )  <!-- EA-FINSERV 110 SAPKGPFA36 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   25 )  <!-- EA-FINSERV 200 SAPKGPFB25 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '500' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   29 )  <!-- EA-FINSERV 500 SAPKGPFC29 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   32 )  <!-- EA-FINSERV 600 SAPKGPFD32 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )  <!-- EA-FINSERV 603 SAPK-60321INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )  <!-- EA-FINSERV 604 SAPK-60422INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- EA-FINSERV 605 SAPK-60519INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )  <!-- EA-FINSERV 616 SAPK-61613INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )  <!-- EA-FINSERV 606 SAPK-60623INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )  <!-- EA-FINSERV 617 SAPK-61718INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- EA-FINSERV 618 SAPK-61812INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    8 )  <!-- EA-FINSERV 800 SAPK-80008INEAFINSRV -->   or
+       ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   43 )  <!-- BANK/CFM 463_20 SAPKIPBJ43 -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002662687 missing and applicable using Correction Instruction" id="0002662687" operator="check_note:0002662687">
+    <compliant/>
+    <noncompliant>(
+( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    2 )  <!-- S4CORE 102 102 - SAPK-10202INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    4 )  <!-- S4CORE 101 101 - SAPK-10104INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   0 )  <!-- S4CORE 103 103 - 103  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   11 )  <!-- EA-FINSERV 618 618 - SAPK-61811INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    7 )  <!-- EA-FINSERV 800 800 - SAPK-80007INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   17 )  <!-- EA-FINSERV 617 SAPK-61701INEAFINSRV - SAPK-61717INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   12 )  <!-- EA-FINSERV 616 616 - SAPK-61612INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   22 )  <!-- EA-FINSERV 606 SAPK-60601INEAFINSRV - SAPK-60622INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    3 and   18 )  <!-- EA-FINSERV 605 SAPK-60503INEAFINSRV - SAPK-60518INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   24 )  <!-- EA-FINSERV 200 200 - SAPKGPFB24  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   21 )  <!-- EA-FINSERV 604 SAPK-60401INEAFINSRV - SAPK-60421INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   20 )  <!-- EA-FINSERV 603 603 - SAPK-60320INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '500' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   28 )  <!-- EA-FINSERV 500 SAPKGPFC01 - SAPKGPFC28  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   31 )  <!-- EA-FINSERV 600 SAPKGPFD01 - SAPKGPFD31  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '110' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   35 )  <!-- EA-FINSERV 110 110 - SAPKGPFA35  -->
+ or ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   42 )  <!-- BANK/CFM 463_20 463_20 - SAPKIPBJ42  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- PSM-GPR - Switchable Authorization checks in SAP ERP (Version 0002 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002496977 exists" id="0002496977" operator="check_note">
+      <compliant>NOTE = '0002496977'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002496977 missing and solution with SP available" id="0002496977" operator="check_note:0002496977">
+     <compliant>(
+       ( COMPONENT = 'SAP_APPL' and VERSION = '602' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_APPL 602 SAPKH60220 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '603' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- SAP_APPL 603 SAPKH60319 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '604' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_APPL 604 SAPKH60420 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '605' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )   ) <!-- SAP_APPL 605 SAPKH60517 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '606' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_APPL 606 SAPKH60620 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '616' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- SAP_APPL 616 SAPKH61612 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )   ) <!-- SAP_APPL 617 SAPKH61715 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '618' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 )   ) <!-- SAP_APPL 618 SAPK-61809INSAPAPPL -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '604' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- EA-PS 604 SAPK-60420INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '605' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )   ) <!-- EA-PS 605 SAPK-60517INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '606' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- EA-PS 606 SAPK-60620INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '616' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- EA-PS 616 SAPK-61612INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )   ) <!-- EA-PS 617 SAPK-61715INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '802' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- EA-PS 802 SAPK-80201INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '618' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 )   ) <!-- EA-PS 618 SAPK-61809INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '800' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )   ) <!-- EA-PS 800 SAPK-80006INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '801' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) <!-- EA-PS 801 SAPK-80104INEAPS -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- S4CORE 102 SAPK-10201INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '100' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )   ) <!-- S4CORE 100 SAPK-10006INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) <!-- S4CORE 101 SAPK-10104INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SAP_APPL' and VERSION = '602' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_APPL 602 SAPKH60220 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- SAP_APPL 603 SAPKH60319 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_APPL 604 SAPKH60420 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )  <!-- SAP_APPL 605 SAPKH60517 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_APPL 606 SAPKH60620 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- SAP_APPL 616 SAPKH61612 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )  <!-- SAP_APPL 617 SAPKH61715 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 )  <!-- SAP_APPL 618 SAPK-61809INSAPAPPL -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- EA-PS 604 SAPK-60420INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )  <!-- EA-PS 605 SAPK-60517INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- EA-PS 606 SAPK-60620INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- EA-PS 616 SAPK-61612INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )  <!-- EA-PS 617 SAPK-61715INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '802' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- EA-PS 802 SAPK-80201INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 )  <!-- EA-PS 618 SAPK-61809INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )  <!-- EA-PS 800 SAPK-80006INEAPS -->   or
+       ( COMPONENT = 'EA-PS' and VERSION = '801' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- EA-PS 801 SAPK-80104INEAPS -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- S4CORE 102 SAPK-10201INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )  <!-- S4CORE 100 SAPK-10006INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- S4CORE 101 SAPK-10104INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002496977 missing and applicable using Correction Instruction" id="0002496977" operator="check_note:0002496977">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'SAP_APPL' and VERSION = '602' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   19 )  <!-- SAP_APPL 602 602 - SAPKH60219  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   18 )  <!-- SAP_APPL 603 603 - SAPKH60318  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   19 )  <!-- SAP_APPL 604 SAPKH60401 - SAPKH60419  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   16 )  <!-- SAP_APPL 605 605 - SAPKH60516  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   19 )  <!-- SAP_APPL 606 SAPKH60601 - SAPKH60619  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   11 )  <!-- SAP_APPL 616 616 - SAPKH61611  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   14 )  <!-- SAP_APPL 617 SAPKH61701 - SAPKH61714  -->
+ or ( COMPONENT = 'EA-PS' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   19 )  <!-- EA-PS 604 SAPK-60401INEAPS - SAPK-60419INEAPS manual -->
+ or ( COMPONENT = 'EA-PS' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    3 and   16 )  <!-- EA-PS 605 SAPK-60503INEAPS - SAPK-60516INEAPS manual -->
+ or ( COMPONENT = 'EA-PS' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   19 )  <!-- EA-PS 606 SAPK-60601INEAPS - SAPK-60619INEAPS manual -->
+ or ( COMPONENT = 'EA-PS' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   11 )  <!-- EA-PS 616 616 - SAPK-61611INEAPS manual -->
+ or ( COMPONENT = 'EA-PS' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   14 )  <!-- EA-PS 617 SAPK-61701INEAPS - SAPK-61714INEAPS manual -->
+ or ( COMPONENT = 'EA-PS' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    8 )  <!-- EA-PS 618 618 - SAPK-61808INEAPS manual -->
+ or ( COMPONENT = 'EA-PS' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    5 )  <!-- EA-PS 800 800 - SAPK-80005INEAPS manual -->
+ or ( COMPONENT = 'EA-PS' and VERSION = '801' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    3 )  <!-- EA-PS 801 801 - SAPK-80103INEAPS manual -->
+ or ( COMPONENT = 'EA-PS' and VERSION = '802' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   0 )  <!-- EA-PS 802 802 - 802 manual -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    5 )  <!-- S4CORE 100 100 - SAPK-10005INS4CORE manual -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    3 )  <!-- S4CORE 101 101 - SAPK-10103INS4CORE manual -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   0 )  <!-- S4CORE 102 102 - 102 manual -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    8 )  <!-- SAP_APPL 618 618 - SAPK-61808INSAPAPPL  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- PSM-GPR - Switchable Authorization checks for SAP ERP (Version 0002 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002527346 exists" id="0002527346" operator="check_note">
+      <compliant>NOTE = '0002527346'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002527346 missing and solution with SP available" id="0002527346" operator="check_note:0002527346">
+     <compliant>(
+       ( COMPONENT = 'SAP_APPL' and VERSION = '600' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   30 )   ) <!-- SAP_APPL 600 SAPKH60030 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '602' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_APPL 602 SAPKH60220 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '603' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- SAP_APPL 603 SAPKH60319 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '604' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_APPL 604 SAPKH60420 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '605' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )   ) <!-- SAP_APPL 605 SAPKH60517 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '606' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_APPL 606 SAPKH60620 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '616' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- SAP_APPL 616 SAPKH61612 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )   ) <!-- SAP_APPL 617 SAPKH61715 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '618' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 )   ) <!-- SAP_APPL 618 SAPK-61809INSAPAPPL -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- S4CORE 102 SAPK-10201INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '100' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )   ) <!-- S4CORE 100 SAPK-10006INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) <!-- S4CORE 101 SAPK-10104INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SAP_APPL' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   30 )  <!-- SAP_APPL 600 SAPKH60030 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '602' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_APPL 602 SAPKH60220 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- SAP_APPL 603 SAPKH60319 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_APPL 604 SAPKH60420 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )  <!-- SAP_APPL 605 SAPKH60517 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_APPL 606 SAPKH60620 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- SAP_APPL 616 SAPKH61612 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )  <!-- SAP_APPL 617 SAPKH61715 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 )  <!-- SAP_APPL 618 SAPK-61809INSAPAPPL -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- S4CORE 102 SAPK-10201INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )  <!-- S4CORE 100 SAPK-10006INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- S4CORE 101 SAPK-10104INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002527346 missing and applicable using Correction Instruction" id="0002527346" operator="check_note:0002527346">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'SAP_APPL' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    2 and   29 )  <!-- SAP_APPL 600 SAPKH60002 - SAPKH60029 manual -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '602' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   19 )  <!-- SAP_APPL 602 602 - SAPKH60219 manual -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   18 )  <!-- SAP_APPL 603 603 - SAPKH60318 manual -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   19 )  <!-- SAP_APPL 604 SAPKH60401 - SAPKH60419 manual -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   16 )  <!-- SAP_APPL 605 605 - SAPKH60516 manual -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   19 )  <!-- SAP_APPL 606 SAPKH60601 - SAPKH60619 manual -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   11 )  <!-- SAP_APPL 616 616 - SAPKH61611 manual -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   14 )  <!-- SAP_APPL 617 SAPKH61701 - SAPKH61714 manual -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    8 )  <!-- SAP_APPL 618 618 - SAPK-61808INSAPAPPL manual -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    5 )  <!-- S4CORE 100 100 - SAPK-10005INS4CORE manual -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    3 )  <!-- S4CORE 101 101 - SAPK-10103INS4CORE manual -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   0 )  <!-- S4CORE 102 102 - 102 manual -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- IS-A-DP - [CVE-2019-0311] Cross Site Scripting (XSS) vulnerability in Automotive Dealer Po (Version 0005 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002728153 exists" id="0002728153" operator="check_note">
+      <compliant>NOTE = '0002728153'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002728153 missing and solution with SP available" id="0002728153" operator="check_note:0002728153">
+     <compliant>(
+       ( COMPONENT = 'EA-APPL' and VERSION = '600' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   32 )   ) <!-- EA-APPL 600 SAPKGPAD32 -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '602' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )   ) <!-- EA-APPL 602 SAPK-60222INEAAPPL -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '603' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )   ) <!-- EA-APPL 603 SAPK-60321INEAAPPL -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '604' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )   ) <!-- EA-APPL 604 SAPK-60422INEAAPPL -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '605' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- EA-APPL 605 SAPK-60519INEAAPPL -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '606' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   24 )   ) <!-- EA-APPL 606 SAPK-60624INEAAPPL -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '616' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   14 )   ) <!-- EA-APPL 616 SAPK-61614INEAAPPL -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- EA-APPL 617 SAPK-61719INEAAPPL -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'EA-APPL' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   32 )  <!-- EA-APPL 600 SAPKGPAD32 -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '602' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )  <!-- EA-APPL 602 SAPK-60222INEAAPPL -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )  <!-- EA-APPL 603 SAPK-60321INEAAPPL -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )  <!-- EA-APPL 604 SAPK-60422INEAAPPL -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- EA-APPL 605 SAPK-60519INEAAPPL -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   24 )  <!-- EA-APPL 606 SAPK-60624INEAAPPL -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   14 )  <!-- EA-APPL 616 SAPK-61614INEAAPPL -->   or
+       ( COMPONENT = 'EA-APPL' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- EA-APPL 617 SAPK-61719INEAAPPL -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002728153 missing and applicable using Correction Instruction" id="0002728153" operator="check_note:0002728153">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'EA-APPL' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    2 and   31 )  <!-- EA-APPL 600 SAPKGPAD02 - SAPKGPAD31  -->
+ or ( COMPONENT = 'EA-APPL' and VERSION = '602' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   21 )  <!-- EA-APPL 602 602 - SAPK-60221INEAAPPL  -->
+ or ( COMPONENT = 'EA-APPL' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   20 )  <!-- EA-APPL 603 603 - SAPK-60320INEAAPPL  -->
+ or ( COMPONENT = 'EA-APPL' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   21 )  <!-- EA-APPL 604 SAPK-60401INEAAPPL - SAPK-60421INEAAPPL  -->
+ or ( COMPONENT = 'EA-APPL' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    4 and   18 )  <!-- EA-APPL 605 SAPK-60504INEAAPPL - SAPK-60518INEAAPPL  -->
+ or ( COMPONENT = 'EA-APPL' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   23 )  <!-- EA-APPL 606 SAPK-60601INEAAPPL - SAPK-60623INEAAPPL  -->
+ or ( COMPONENT = 'EA-APPL' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   13 )  <!-- EA-APPL 616 616 - SAPK-61613INEAAPPL  -->
+ or ( COMPONENT = 'EA-APPL' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   18 )  <!-- EA-APPL 617 SAPK-61701INEAAPPL - SAPK-61718INEAAPPL  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- FI-CF-APR - Missing Authorization Check in SAP Central Payment (Version 0002 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002730227 exists" id="0002730227" operator="check_note">
+      <compliant>NOTE = '0002730227'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002730227 missing and solution with SP available" id="0002730227" operator="check_note:0002730227">
+     <compliant>(
+       ( COMPONENT = 'SAP_APPL' and VERSION = '616' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )   ) <!-- SAP_APPL 616 SAPKH61613 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '606' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )   ) <!-- SAP_APPL 606 SAPKH60623 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '600' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   32 )   ) <!-- SAP_APPL 600 SAPKH60032 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '602' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )   ) <!-- SAP_APPL 602 SAPKH60222 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '603' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )   ) <!-- SAP_APPL 603 SAPKH60321 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '604' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )   ) <!-- SAP_APPL 604 SAPKH60422 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '605' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- SAP_APPL 605 SAPKH60519 -->   or
+       ( COMPONENT = 'SAP_FIN' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )   ) <!-- SAP_FIN 617 SAPK-61718INSAPFIN -->   or
+       ( COMPONENT = 'SAP_FIN' and VERSION = '700' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )   ) <!-- SAP_FIN 700 SAPK-70015INSAPFIN -->   or
+       ( COMPONENT = 'SAP_FIN' and VERSION = '720' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   11 )   ) <!-- SAP_FIN 720 SAPK-72011INSAPFIN -->   or
+       ( COMPONENT = 'SAP_FIN' and VERSION = '618' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- SAP_FIN 618 SAPK-61812INSAPFIN -->   or
+       ( COMPONENT = 'SAP_FIN' and VERSION = '730' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )   ) <!-- SAP_FIN 730 SAPK-73013INSAPFIN -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '100' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    8 )   ) <!-- S4CORE 100 SAPK-10008INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )   ) <!-- S4CORE 101 SAPK-10106INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) <!-- S4CORE 102 SAPK-10204INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )   ) <!-- S4CORE 103 SAPK-10302INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SAP_APPL' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )  <!-- SAP_APPL 616 SAPKH61613 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )  <!-- SAP_APPL 606 SAPKH60623 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   32 )  <!-- SAP_APPL 600 SAPKH60032 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '602' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )  <!-- SAP_APPL 602 SAPKH60222 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )  <!-- SAP_APPL 603 SAPKH60321 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )  <!-- SAP_APPL 604 SAPKH60422 -->   or
+       ( COMPONENT = 'SAP_APPL' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- SAP_APPL 605 SAPKH60519 -->   or
+       ( COMPONENT = 'SAP_FIN' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )  <!-- SAP_FIN 617 SAPK-61718INSAPFIN -->   or
+       ( COMPONENT = 'SAP_FIN' and VERSION = '700' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   15 )  <!-- SAP_FIN 700 SAPK-70015INSAPFIN -->   or
+       ( COMPONENT = 'SAP_FIN' and VERSION = '720' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   11 )  <!-- SAP_FIN 720 SAPK-72011INSAPFIN -->   or
+       ( COMPONENT = 'SAP_FIN' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- SAP_FIN 618 SAPK-61812INSAPFIN -->   or
+       ( COMPONENT = 'SAP_FIN' and VERSION = '730' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )  <!-- SAP_FIN 730 SAPK-73013INSAPFIN -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    8 )  <!-- S4CORE 100 SAPK-10008INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )  <!-- S4CORE 101 SAPK-10106INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- S4CORE 102 SAPK-10204INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )  <!-- S4CORE 103 SAPK-10302INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002730227 missing and applicable using Correction Instruction" id="0002730227" operator="check_note:0002730227">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'SAP_APPL' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   31 )  <!-- SAP_APPL 600 SAPKH60001 - SAPKH60031  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '602' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   21 )  <!-- SAP_APPL 602 602 - SAPKH60221  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   20 )  <!-- SAP_APPL 603 603 - SAPKH60320  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   21 )  <!-- SAP_APPL 604 SAPKH60401 - SAPKH60421  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   18 )  <!-- SAP_APPL 605 605 - SAPKH60518  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   22 )  <!-- SAP_APPL 606 SAPKH60601 - SAPKH60622  -->
+ or ( COMPONENT = 'SAP_APPL' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   12 )  <!-- SAP_APPL 616 616 - SAPKH61612  -->
+ or ( COMPONENT = 'SAP_FIN' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   17 )  <!-- SAP_FIN 617 SAPK-61701INSAPFIN - SAPK-61717INSAPFIN  -->
+ or ( COMPONENT = 'SAP_FIN' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   11 )  <!-- SAP_FIN 618 618 - SAPK-61811INSAPFIN  -->
+ or ( COMPONENT = 'SAP_FIN' and VERSION = '720' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   10 )  <!-- SAP_FIN 720 720 - SAPK-72010INSAPFIN  -->
+ or ( COMPONENT = 'SAP_FIN' and VERSION = '730' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    3 and   12 )  <!-- SAP_FIN 730 SAPK-73003INSAPFIN - SAPK-73012INSAPFIN  -->
+ or ( COMPONENT = 'SAP_FIN' and VERSION = '700' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   14 )  <!-- SAP_FIN 700 700 - SAPK-70014INSAPFIN  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    7 )  <!-- S4CORE 100 100 - SAPK-10007INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    5 )  <!-- S4CORE 101 101 - SAPK-10105INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    3 )  <!-- S4CORE 102 102 - SAPK-10203INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    1 )  <!-- S4CORE 103 103 - SAPK-10301INS4CORE  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- BC-SRV-COM-FTP - [CVE-2019-0304] Code Injection vulnerability in SAP NetWeaver AS ABAP Platform ( (Version 0003 ) -->
+  <configstore name="SAP_KERNEL">
+    <checkitem desc="kernel version which note 0002719530 recommends" id="0002719530">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1120'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL'and lpad(VALUE,4,'0') &lt; '1120'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '721_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '721_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="kernel version which note 0002719530 recommends" id="0002719530">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0810'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL'and lpad(VALUE,4,'0') &lt; '0810'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '722_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '722_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="kernel version which note 0002719530 recommends" id="0002719530">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0900'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL'and lpad(VALUE,4,'0') &lt; '0900'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '745_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '745_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>    
+    <checkitem desc="kernel version which note 0002719530 recommends" id="0002719530">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,3,'0') &gt;= '616'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL'and lpad(VALUE,3,'0') &lt; '616'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '749_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '749_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="kernel version which note 0002719530 recommends" id="0002719530">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,3,'0') &gt;= '314'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL'and lpad(VALUE,3,'0') &lt; '314'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="kernel version which note 0002719530 recommends" id="0002719530">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,3,'0') &gt;= '028'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL'and lpad(VALUE,3,'0') &lt; '028'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '773_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '773_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+</targetsystem>
