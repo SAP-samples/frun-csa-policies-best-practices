@@ -7,6 +7,9 @@ Target system BL_S-3 / Modification Protection for Production Systems
 
 Version: 001
 Date:    Feb 02 2018
+
+Version:002
+Date: July 15 2019
 -->
 <targetsystem desc="Modification Protection for Production Systems" id="BL_S-3" multisql="Yes">
   <configstore name="CLIENTS">
@@ -19,7 +22,7 @@ Date:    Feb 02 2018
   </configstore>
   <configstore name="GLOBAL">
     <checkitem desc="Global Modifiable Change Option for Production Systems" id="BL_S-3.02" system_roles="PROD:DEV:TEST:SANDBOX:QA::">
-      <compliant>(NAME = 'GLOBAL_SETTING'  and VALUE = 'NOT MODIFIABLE'  and ptree.value = 'PROD' and ptree.hier_id = '1') OR (ptree.value != 'PROD' and ptree.hier_id = '1')</compliant>
+      <compliant>((NAME = 'GLOBAL_SETTING'  and VALUE = 'NOT MODIFIABLE'  and ptree.value = 'PROD' and ptree.hier_id = '1') OR (ptree.value != 'PROD' and ptree.hier_id = '1'))</compliant>
       <complianttext/>
       <noncompliant>NAME = 'GLOBAL_SETTING'  and not ( VALUE = 'NOT MODIFIABLE'  ) and ptree.value = 'PROD' and ptree.hier_id = '1'</noncompliant>
       <noncomplianttext/>
