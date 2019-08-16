@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+SAP Security Patch Day: 2019 08
+2798243-[CVE-2019-0350] Denial of service (DOS) in SAP HANA database
+
+An unauthorized attacker can send a malformed connection request, which crashes the indexserver of an SAP HANA instance. The indexserver is automatically restarted.
+The issue has been fixed with the following revisions:
+122.26 for SAP HANA 1.00 SPS12
+24.10 for SAP HANA 2.0, SPS02
+37.02 for SAP HANA 2.0, SPS03
+
+
+This policy can only check the Hana revisions!
+
+
+Version: 001
+Date:    Aug 14 2019
+-->
+
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="HANA NOTES OF PATCHDAY: 2019-08" id="HPATCHDAY_2019-08" multisql="Yes" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="HDB_VERSION">
+    <checkitem desc="Note 0002798243 vulnerability exists" id="0002798243" operator="check_note:0002798243">
+      <compliant>
+      ((NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.02' AND substring(VALUE,0,14) &gt;= '2.00.024.10' 
+        OR NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.03' AND substring(VALUE,0,14) &gt;= '2.00.037.02' 
+        OR NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.04' 
+        OR NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' 
+        OR NAME = 'VERSION' AND substring(VALUE,0,6) = '1.00.1' AND substring(VALUE,0,14) &gt;= '1.00.122.26') )
+   </compliant>
+      <noncompliant>
+	      ((NAME = 'VERSION' AND substring(VALUE,0,6) = '2.00.0' AND NOT(substring(VALUE,0,14) &gt;= '2.00.024.10') 
+	      OR NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.03' AND NOT(substring(VALUE,0,14) &gt;= '2.00.037.02') 
+          OR NAME = 'VERSION' AND substring(VALUE,0,6) = '1.00.1' AND NOT(substring(VALUE,0,14) &gt;= '1.00.122.26') ) )
+   </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>
+
+
+
+
