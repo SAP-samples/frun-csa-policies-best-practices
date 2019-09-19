@@ -1,5 +1,5 @@
 ﻿param(  [String[]]$ExcelFilePath,
-        [string]$NewPolicy="test_merge.xml",
+        [string]$NewPolicy="CreatePolicy.xml",
         [String]$Desc="Age of ABAP SAP Basis",
         [String]$Id="AgeOfSAPBasis"
         )
@@ -14,7 +14,7 @@ if ($ExcelFilePath.Length -gt 0) {
     $ExcelFilesLocation = $ExcelFilePath
     $NotesWorkBook=$objExcel.workbooks.open($ExcelFilesLocation)
 } else {
-    $ExcelFilesLocation = 'C:\Users\D024870\Documents\'
+    $ExcelFilesLocation = 'C:\Users\<user>\Documents\'
     $NotesWorkBook=$objExcel.workbooks.open($ExcelFilesLocation + 'age_of_support_packages.xlsx')
 }
 
@@ -27,7 +27,7 @@ $intRow = 2
 $XmlHeader = '<?xml version="1.0" encoding="utf-8"?>'
 $XmlHeader =  $XmlHeader + '<targetsystem desc="'+ $Desc + '" id="' + $Id + '"' + ' multisql="Yes">'
 $XmlHeader =  $XmlHeader + '<configstore name="COMP_LEVEL">'
-$XmlHeader =  $XmlHeader + '<checkitem desc="SAP Basis Component released more than 18 months ago" id="age_of_sap_basis" operator="check_note">'
+$XmlHeader =  $XmlHeader + '<checkitem desc="SAP Basis Component released more than 24 months ago" id="age_of_sap_basis" operator="check_note">'
 $XmlHeader =  $XmlHeader + '<compliant>'
 
 $TmpLineNonComp = '<noncompliant>'
@@ -62,8 +62,9 @@ Do {
         $TmpLineComp = ' OR ' 
         $TmpLineNonComp = $TmpLineNonComp  + ' OR '
     }
-    $TmpLineComp = $TmpLineComp + "(COMPONENT = 'SAP_BASIS' and VERSION = '"+ $Basis + "' and 1 = (CASE WHEN SP = '"+ $Stack + "' THEN ( CASE WHEN DAYS_BETWEEN(TO_DATE('"+ $ReleasedOn +"','YYYY-MM-DD'),CURRENT_DATE) &lt;= 548 THEN 1 ELSE 0 END) ELSE 0 END ) ) "
-    $TmpLineNonComp = $TmpLineNonComp + "(COMPONENT = 'SAP_BASIS' and VERSION = '"+ $Basis + "' and 1 = (CASE WHEN SP = '"+ $Stack + "' THEN ( CASE WHEN DAYS_BETWEEN(TO_DATE('"+ $ReleasedOn +"','YYYY-MM-DD'),CURRENT_DATE) &gt; 548 THEN 1 ELSE 0 END) ELSE 0 END ) ) "
+    $TmpLineComp = $TmpLineComp + "(COMPONENT = 'SAP_BASIS' and VERSION = '"+ $Basis + "' and 1 = (CASE WHEN SP = '"+ $Stack + "' THEN ( CASE WHEN DAYS_BETWEEN(TO_DATE('"+ $ReleasedOn +"','YYYY-MM-DD'),CURRENT_DATE) &lt;= 730 THEN 1 ELSE 0 END) ELSE 0 END ) ) "
+    $TmpLineNonComp = $TmpLineNonComp + "(COMPONENT = 'SAP_BASIS' and VERSION = '"+ $Basis + "' and 1 = (CASE WHEN SP = '"+ $Stack + "' THEN ( CASE WHEN DAYS_BETWEEN(TO_DATE('"+ $ReleasedOn +"','YYYY-MM-DD'),CURRENT_DATE) &gt; 730 THEN 1 ELSE 0 END) ELSE 0 END ) ) `r`n"
+
     Write-Output $TmpLineComp
     $TmpLineComp = ""
 
