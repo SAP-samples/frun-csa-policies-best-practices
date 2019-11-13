@@ -26,8 +26,8 @@ $intRow = 2
 
 $XmlHeader = '<?xml version="1.0" encoding="utf-8"?>'
 $XmlHeader =  $XmlHeader + '<targetsystem desc="'+ $Desc + '" id="' + $Id + '"' + ' multisql="Yes">'
-$XmlHeader =  $XmlHeader + '<configstore name="COMP_LEVEL">'
-$XmlHeader =  $XmlHeader + '<checkitem desc="SAP Basis Component released more than 24 months ago" id="age_of_sap_basis" operator="check_note">'
+$XmlHeader =  $XmlHeader + '<configstore name="COMP_LEVEL" system_type="ABAP">'
+$XmlHeader =  $XmlHeader + '<checkitem desc="SAP Basis Component released more than 24 months ago" id="age_of_sap_basis">'
 $XmlHeader =  $XmlHeader + '<compliant>'
 
 $TmpLineNonComp = '<noncompliant>'
