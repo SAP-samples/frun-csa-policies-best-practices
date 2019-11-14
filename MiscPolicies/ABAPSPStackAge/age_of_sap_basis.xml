@@ -6,7 +6,7 @@ A release date of the Support package within the last 730 days is rated as compl
 -->
 <targetsystem desc="Age of ABAP SAP Basis 09 2019" id="AgeOfSAPBasis" multisql="Yes">
 <configstore name="COMP_LEVEL" system_type="ABAP">
-<checkitem desc="SAP Basis Component released more than 24 month s ago" id="age_of_sap_basis">
+<checkitem desc="SAP Basis Component released more than 24 months ago" id="age_of_sap_basis">
 <compliant>
 ((COMPONENT = 'SAP_BASIS' and VERSION = '752' and 1 = (CASE WHEN SP &gt; '0004' THEN ( CASE WHEN DAYS_BETWEEN(TO_DATE('2019-04-24','YYYY-MM-DD'),CURRENT_DATE) &lt;= 730 THEN 1 ELSE 0 END) ELSE 0 END ) ) 
  OR (COMPONENT = 'SAP_BASIS' and VERSION = '752' and 1 = (CASE WHEN SP = '0004' THEN ( CASE WHEN DAYS_BETWEEN(TO_DATE('2019-04-24','YYYY-MM-DD'),CURRENT_DATE) &lt;= 730 THEN 1 ELSE 0 END) ELSE 0 END ) ) 
