@@ -4,9 +4,10 @@ This FRUN CSA policy contains rules derived from SAP Security Baseline Template 
 Available at: http://support.sap.com/sos
 
 Target system BL_I-5 / Web Dispatcher Security
+   BL_I-5.03   added    server_port_0 and brackets
 
-Version: 001
-Date:    Feb 02 2018
+Version: 002
+Date:    Nov 28 2019
 -->
 <targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="Web Dispatcher Security" id="BL_I-5" multisql="Yes" xsi:schemaLocation="csa_policy.xsd">
  <configstore  name="ABAP_INSTANCE_PAHI">
@@ -23,7 +24,8 @@ Date:    Feb 02 2018
    <noncomplianttext/>
   </checkitem>
   <checkitem desc="ICM server port specification" id="BL_I-5.03">
-   <compliant>( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTPS%' )
+   <compliant>( ( NAME like 'icm/server_port_0' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTPS%' )
                           or ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTPS%' )
                           or ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTPS%' )
                           or ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTPS%' )
@@ -31,18 +33,19 @@ Date:    Feb 02 2018
                           or ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTPS%' )
                           or ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTPS%' )
                           or ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTPS%' )
-			  or ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTPS%' )
+			  or ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTPS%' ))
    </compliant>
    <complianttext/>
-   <noncompliant>( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTP%' )
-                          and ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTP%' )
-                          and ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTP%' )
-                          and ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTP%' )
-                          and ( NAME like 'icm/server_port_5' and VALUE like '%PROT=HTTP%' )
-                          and ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTP%' )
-                          and ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTP%' )
-                          and ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTP%' )
-			  and ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTP%' )
+   <noncompliant>( ( NAME like 'icm/server_port_0' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_5' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTP,%' )
+			  and ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTP,%' ))
    </noncompliant>
    <noncomplianttext/>
   </checkitem>
