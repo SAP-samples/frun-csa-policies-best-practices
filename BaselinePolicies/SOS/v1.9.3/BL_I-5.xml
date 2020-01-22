@@ -8,6 +8,10 @@ Target system BL_I-5 / Web Dispatcher Security
 
 Version: 002
 Date:    Nov 28 2019
+
+Version: 003
+Date:    Jan 22 2020
+    BL_I-5.03   removed   server_port_0
 -->
 <targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="Web Dispatcher Security" id="BL_I-5" multisql="Yes" xsi:schemaLocation="csa_policy.xsd">
  <configstore  name="ABAP_INSTANCE_PAHI">
@@ -24,8 +28,7 @@ Date:    Nov 28 2019
    <noncomplianttext/>
   </checkitem>
   <checkitem desc="ICM server port specification" id="BL_I-5.03">
-   <compliant>( ( NAME like 'icm/server_port_0' and VALUE like '%PROT=HTTPS%' )
-                          or ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTPS%' )
+   <compliant>( ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTPS%' )
                           or ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTPS%' )
                           or ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTPS%' )
                           or ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTPS%' )
@@ -36,8 +39,7 @@ Date:    Nov 28 2019
 			  or ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTPS%' ))
    </compliant>
    <complianttext/>
-   <noncompliant>( ( NAME like 'icm/server_port_0' and VALUE like '%PROT=HTTP,%' )
-                          and ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTP,%' )
+   <noncompliant>( ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTP,%' )
                           and ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTP,%' )
                           and ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTP,%' )
                           and ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTP,%' )
@@ -57,4 +59,3 @@ Date:    Nov 28 2019
   </checkitem>
  </configstore>
 </targetsystem>
-
