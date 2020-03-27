@@ -49,7 +49,6 @@ Example (ABAP password length parameter rule - compliant if greater equal 8)
 Please report issues in Focused Run Advanced Configuration Monitoring using SAP's product support channels.
 For questions regarding the provided policies or scripts please use this [issue template](https://github.com/SAP/frun-csa-policies-best-practices/issues).
 # To-Do (upcoming changes)
-Updates will be provided monthly to cover security note checks
+Updates will be provided monthly to cover security note checks.
 # License
-Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
-This file is licensed under the SAP Sample Code License except as noted otherwise in the [LICENSE file](LICENSE).
+Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. This file is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE file](LICENSE).
