@@ -4,14 +4,14 @@ This project provides policies for Focused Run - Advanced Configuration Monitori
 Besides the policies the project provides some powershell scripts which helps you to setup your policies.
 
 # Requirements
-To use those policies you need [Focused Run for SAP Solution Manager](https://support.sap.com/en/alm/focused-solutions/focused-run.html)
+To use those policies you need [SAP Focused Run](https://support.sap.com/en/alm/focused-solutions/focused-run.html)
 # Download and Installation
-Installation steps will be found at the [Focused Run for SAP Solution Manager](https://support.sap.com/en/alm/focused-solutions/focused-run.html) web site.
-Review the information in the tabs on that page titled, "Get Focused Run" and "Implement Focused Run". 
+Installation steps will be found at the [SAP Focused Run](https://support.sap.com/en/alm/focused-solutions/focused-run.html) web site.
+Review the information in the tabs on that page titled, "Get SAP Focused Run" and "Implement SAP Focused Run". 
 
-Usually a Focused Run Architecture and Project Setup Workshop is performed to install and configure the Focused Run infrastructure in close cooperation with the customer team: technical deployment, landscape discovery, as well as network settings will need to be covered in such meetings. Some managed systems will be connected to Focused Run, including activation of some use cases.
+Usually a SAP Focused Run Architecture and Project Setup Workshop is performed to install and configure the Focused Run infrastructure in close cooperation with the customer team: technical deployment, landscape discovery, as well as network settings will need to be covered in such meetings. Some managed systems will be connected to SAP Focused Run, including activation of some use cases.
 
-After connecting the managed systems to Focused Run, you can start to configure FRUN CSA Validation using policies provided in this repository. Those policies could be uploaded in FRUN CSA Policy Management (start FRUN Launchpad / Advanced Configuration Management / tile Configuration and Security Analytics then Links / Policy Management / New) and generated. When creating a new policy, you many use the Policy Id and Policy Descr of the XML policy as input (\<targetsystem desc="Policy Descr" id="Policy Id"\>) to have consistency between what is stored in FRUN CSA and the XML policy. You need to copy and paste the content of the XML policy from the repository into the text editor of FRUN CSA policy management. Navigate in GitHub until you see the content of the policy you want to copy, you may use button RAW to get only the source of the policy displayed which supports to copy the content using keyboard shourtcuts CTRL-A and CTRL-C.
+After connecting the managed systems to SAP Focused Run (FRUN), you can start to configure FRUN CSA Validation using policies provided in this repository. Those policies could be uploaded in FRUN CSA Policy Management (start FRUN Launchpad / Advanced Configuration Monitoring / tile Configuration and Security Analytics - Policy Management) and generated. When creating a new policy, you many use the Policy Id and Policy Descr of the XML policy as input (\<targetsystem desc="Policy Descr" id="Policy Id"\>) to have consistency between what is stored in FRUN CSA and the XML policy. You need to copy and paste the content of the XML policy from the repository into the text editor of FRUN CSA policy management. Navigate in GitHub until you see the content of the policy you want to copy, you may use button RAW to get only the source of the policy displayed which supports to copy the content using keyboard shourtcuts CTRL-A and CTRL-C.
 
 If you are using an editor of your choice to create and edit a policy, you may use the XSF file in Schema to support you with further XML syntax checks and input help. Also here you need to copy and paste the file content into the editor of FRUN CSA policy management finally.
   
@@ -48,7 +48,9 @@ Example (ABAP password length parameter rule - compliant if greater equal 8)
 # How to obtain support
 Please report issues in Focused Run Advanced Configuration Monitoring using SAP's product support channels.
 For questions regarding the provided policies or scripts please use this [issue template](https://github.com/SAP/frun-csa-policies-best-practices/issues).
+
 # To-Do (upcoming changes)
 Updates will be provided monthly to cover security note checks.
+
 # License
-Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved. This file is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE file](LICENSE).
+Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. This file is licensed under the Apache Software License, version 2.0 except as noted otherwise in the LICENSE.
