@@ -53,5 +53,6 @@ For questions regarding the provided policies or scripts please use this [issue 
 Updates will be provided monthly to cover security note checks.
 
 # License
-Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. This file is licensed under the Apache Software License, version 2.0 except as noted otherwise in the LICENSE.
+Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved. This file is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE](LICENSES/Apache-2.0.txt) file.
+
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/frun-csa-policies-best-practices)](https://api.reuse.software/info/github.com/SAP-samples/frun-csa-policies-best-practices)
