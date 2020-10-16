@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This FRUN CSA policy contains rules to check the following ABAP SNotes:
+
+
+0002973100 CA-ATP-SUB - Missing Authorization check in Manage Substitutions - Products and Manage Exclusions - Products
+0002963137 BC-MUS-POW - [CVE-2020-6371] Information disclosure in SAP NetWeaver AS ABAP via the POWL Test Feeder endpoint
+0002960825 EPM-BPC-NW - [CVE-2020-6368] Cross-Site Scripting (XSS) vulnerability in SAP Business Planning
+0002955963 CEC-MKT-CPG-UI - Cross-Site Request Forgery (CSRF) in SAP Marketing
+0002953212 FS-BA-SD-PO - [CVE-2020-6362] Incorrect Authorization in SAP Banking Services
+0002949196 FI-TV-COS - [CVE-2020-6301] Missing Authorization check in SAP ERP (HCM Travel Management)
+0002945581 CA-WUI-UI - Cross-Site Scripting (XSS) vulnerability in SAP CRM WebClient UI
+				(+ manual actvity)
+0002941667 BC-ABA-SC - [CVE-2020-6296] Code Injection Vulnerability in SAP NetWeaver (ABAP) and ABAP Platform
+0002883638 SRM-CAT-MDM - Information Disclosure in Supplier Relationship Management 
+0002873099 EHS-SUS-FND - Missing Authorization check in EHS Task Definition attachments 
+0002606194 CRM-IC-FRW - Cross-Site Scripting (XSS) vulnerability in CRM Interaction Center
+				(+ manual actvity)
+0002531082 FI-CAX-FS - Switchable Authorization checks for RFC BCA_DIM_LOANS_APPLOG_UPDATE in Loans (FI 
+				(+ manual actvity)
+0002429274 IS-B-BCA - Switchable Authorization checks in SAP Enterprise Financial Services 
+				(+ manual actvity)
+
+
+The policy does not check the following SNotes:
+
+0002973497 CA-VE-VEV -  [CVE-2020-6315] Multiple Vulnerabilities in SAP 3D Visual Enterprise Viewer
+0002972661 BC-DWB-JAV-CAF - [CVE-2020-6367] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver Composite Application Framework
+0002971638 XX-PART-WILY - [CVE-2020-6369] Hard-coded Credentials in CA Introscope Enterprise Manager
+0002969828 XX-PART-WILY - [CVE-2020-6364] OS Command Injection Vulnerability in CA Introscope Enterprise Manager
+0002969457 BC-JAS-ADM-MON - [CVE-2020-6366] Missing XML Validation in SAP NetWeaver (Compare Systems)
+0002965315 BC-JAS-ADM-ADM - [CVE-2020-6365] Reverse Tabnabbing vulnerability in SAP NetWeaver AS Java Start
+0002965287 CEC-COM-CPS - [CVE-2020-6363] Insufficient Session Expiration in SAP Commerce Cloud
+0002960329 EP-PIN-NAV-FFP - [CVE-2020-6323] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver Enterprise Portal (Fiori Framework Page)
+0002956398 BC-JAS-WEB - [CVE-2020-6319] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver AS Java
+0002943844 BI-DEV-JAV - [CVE-2020-6308] Server-Side Request Forgery vulnerability in SAP BusinessObjects Business Intelligence Platform (Web Services)
+0002941315 BC-ESI-WS-JAV-RT - [CVE-2020-6309] Missing Authentication check in SAP NetWeaver AS JAVA
+0002939419 BC-CTS-DTR - [CVE-2020-6370] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver (DI Design Time Repository) 
+0002917381 CEC-COM-CPS-WEB - [CVE-2020-6272] Cross-Site Scripting (XSS) vulnerability in SAP Commerce Cloud
+0002902456 BC-VCM-LVM - [CVE-2020-6236] Privilege Escalation in SAP Landscape Management (SAP Adaptive Extensions)
+0002898077 BI-DEV-WEB - [CVE-2020-6237] Information Disclosure in SAP Business Objects Business Intelligence Platform 
+		(dswsbobje Web Application)
+0002622660 BC-FES-BUS-DSK - Security updates for the browser control Google Chromium delivered with SAP Business Client
+
+
+SAP Security Patch Day: 2020 10
+Version: 001
+Date:    Oct 14 2020
+-->
+
+<targetsystem desc="SNotes of PatchDay: 2020-10" id="PatchDay_2020-10" multisql="Yes">
+
+  <!-- CA-ATP-SUB - Missing Authorization check in Manage Substitutions - Products and Manage Exclus (Version 0002 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002973100 exists" id="0002973100" operator="check_note">
+      <compliant>NOTE = '0002973100' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002973100 missing and solution with SP available" id="0002973100" operator="check_note:0002973100">
+     <compliant>(
+       ( COMPONENT = 'S4CORE' and VERSION = '105' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )   ) <!-- S4CORE 105 SAPK-10501INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'S4CORE' and VERSION = '105' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )  <!-- S4CORE 105 SAPK-10501INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002973100 missing and applicable using Correction Instruction" id="0002973100" operator="check_note:0002973100">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'S4CORE' and VERSION = '105' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) = 0 )  <!-- S4CORE 105 105 - 105  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- BC-MUS-POW - [CVE-2020-6371] Information disclosure in SAP NetWeaver AS ABAP via the POWL Tes (Version 0005 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002963137 exists" id="0002963137" operator="check_note">
+      <compliant>NOTE = '0002963137' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002963137 missing and solution with SP available" id="0002963137" operator="check_note:0002963137">
+     <compliant>(
+
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '710' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    26 )   ) <!-- SAP_BASIS 710 SAPKB71026 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )   ) <!-- SAP_BASIS 711 SAPKB71121 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )   ) <!-- SAP_BASIS 730 SAPKB73021 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    28 )   ) <!-- SAP_BASIS 731 SAPKB73128 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    25 )   ) <!-- SAP_BASIS 740 SAPKB74025 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )   ) <!-- SAP_BASIS 750 SAPK-75020INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    12 )   ) <!-- SAP_BASIS 751 SAPK-75112INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     8 )   ) <!-- SAP_BASIS 752 SAPK-75208INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     6 )   ) <!-- SAP_BASIS 753 SAPK-75306INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     4 )   ) <!-- SAP_BASIS 754 SAPK-75404INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )   ) <!-- SAP_BASIS 755 SAPK-75501INSAPBASIS -->
+     )</compliant>
+     <noncompliant>(
+
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '710' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    26 )  <!-- SAP_BASIS 710 SAPKB71026 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )  <!-- SAP_BASIS 711 SAPKB71121 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    28 )  <!-- SAP_BASIS 731 SAPKB73128 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    25 )  <!-- SAP_BASIS 740 SAPKB74025 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )  <!-- SAP_BASIS 730 SAPKB73021 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )  <!-- SAP_BASIS 750 SAPK-75020INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    12 )  <!-- SAP_BASIS 751 SAPK-75112INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     8 )  <!-- SAP_BASIS 752 SAPK-75208INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     6 )  <!-- SAP_BASIS 753 SAPK-75306INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     4 )  <!-- SAP_BASIS 754 SAPK-75404INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )  <!-- SAP_BASIS 755 SAPK-75501INSAPBASIS -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002963137 missing and applicable using Correction Instruction" id="0002963137" operator="check_note:0002963137">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   11 )  <!-- SAP_BASIS 751 751 - SAPK-75111INSAPBASIS  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   20 )  <!-- SAP_BASIS 711 SAPKB71101 - SAPKB71120  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   24 )  <!-- SAP_BASIS 740 740 - SAPKB74024  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   19 )  <!-- SAP_BASIS 750 750 - SAPK-75019INSAPBASIS  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    7 )  <!-- SAP_BASIS 752 752 - SAPK-75207INSAPBASIS  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    5 )  <!-- SAP_BASIS 753 753 - SAPK-75305INSAPBASIS  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    3 )  <!-- SAP_BASIS 754 754 - SAPK-75403INSAPBASIS  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   0 )  <!-- SAP_BASIS 755 755 - 755  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   20 )  <!-- SAP_BASIS 730 SAPKB73001 - SAPKB73020  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   27 )  <!-- SAP_BASIS 731 SAPKB73101 - SAPKB73127  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '710' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   25 )  <!-- SAP_BASIS 710 710 - SAPKB71025  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- EPM-BPC-NW - [CVE-2020-6368] Cross-Site Scripting (XSS) vulnerability in SAP Business Plannin (Version 0005 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002960825 exists" id="0002960825" operator="check_note">
+      <compliant>NOTE = '0002960825' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002960825 missing and solution with SP available" id="0002960825" operator="check_note:0002960825">
+     <compliant>(
+       ( COMPONENT = 'BPC4HANA' and VERSION = '100' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    14 )   ) <!-- BPC4HANA 100 SAPK-10014INBPC4HANA -->   or
+       ( COMPONENT = 'BPC4HANA' and VERSION = '200' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     6 )   ) <!-- BPC4HANA 200 SAPK-20006INBPC4HANA -->   or
+       ( COMPONENT = 'SAP_BW' and VERSION = '750' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )   ) <!-- SAP_BW 750 SAPK-75020INSAPBW -->   or
+       ( COMPONENT = 'SAP_BW' and VERSION = '751' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    12 )   ) <!-- SAP_BW 751 SAPK-75112INSAPBW -->   or
+       ( COMPONENT = 'SAP_BW' and VERSION = '752' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     8 )   ) <!-- SAP_BW 752 SAPK-75208INSAPBW -->   or
+       ( COMPONENT = 'SAP_BW' and VERSION = '753' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     6 )   ) <!-- SAP_BW 753 SAPK-75306INSAPBW -->   or
+       ( COMPONENT = 'SAP_BW' and VERSION = '754' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     4 )   ) <!-- SAP_BW 754 SAPK-75404INSAPBW -->   or
+       ( COMPONENT = 'SAP_BW' and VERSION = '755' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )   ) <!-- SAP_BW 755 SAPK-75501INSAPBW -->   or
+       ( COMPONENT = 'CPMBPC' and VERSION = '810' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )   ) <!-- CPMBPC 810 SAPK-81020INCPMBPC -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'BPC4HANA' and VERSION = '100' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    14 )  <!-- BPC4HANA 100 SAPK-10014INBPC4HANA -->   or
+       ( COMPONENT = 'BPC4HANA' and VERSION = '200' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     6 )  <!-- BPC4HANA 200 SAPK-20006INBPC4HANA -->   or
+       ( COMPONENT = 'SAP_BW' and VERSION = '750' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )  <!-- SAP_BW 750 SAPK-75020INSAPBW -->   or
+       ( COMPONENT = 'SAP_BW' and VERSION = '751' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    12 )  <!-- SAP_BW 751 SAPK-75112INSAPBW -->   or
+       ( COMPONENT = 'SAP_BW' and VERSION = '752' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     8 )  <!-- SAP_BW 752 SAPK-75208INSAPBW -->   or
+       ( COMPONENT = 'SAP_BW' and VERSION = '753' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     6 )  <!-- SAP_BW 753 SAPK-75306INSAPBW -->   or
+       ( COMPONENT = 'SAP_BW' and VERSION = '754' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     4 )  <!-- SAP_BW 754 SAPK-75404INSAPBW -->   or
+       ( COMPONENT = 'SAP_BW' and VERSION = '755' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )  <!-- SAP_BW 755 SAPK-75501INSAPBW -->   or
+       ( COMPONENT = 'CPMBPC' and VERSION = '810' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )  <!-- CPMBPC 810 SAPK-81020INCPMBPC -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002960825 missing and applicable using Correction Instruction" id="0002960825" operator="check_note:0002960825">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'BPC4HANA' and VERSION = '100' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   13 )  <!-- BPC4HANA 100 100 - SAPK-10013INBPC4HANA  -->
+ or ( COMPONENT = 'BPC4HANA' and VERSION = '200' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    5 )  <!-- BPC4HANA 200 200 - SAPK-20005INBPC4HANA  -->
+ or ( COMPONENT = 'SAP_BW' and VERSION = '750' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   19 )  <!-- SAP_BW 750 750 - SAPK-75019INSAPBW  -->
+ or ( COMPONENT = 'SAP_BW' and VERSION = '751' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   11 )  <!-- SAP_BW 751 751 - SAPK-75111INSAPBW  -->
+ or ( COMPONENT = 'SAP_BW' and VERSION = '752' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    7 )  <!-- SAP_BW 752 752 - SAPK-75207INSAPBW  -->
+ or ( COMPONENT = 'SAP_BW' and VERSION = '753' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    5 )  <!-- SAP_BW 753 753 - SAPK-75305INSAPBW  -->
+ or ( COMPONENT = 'SAP_BW' and VERSION = '754' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    3 )  <!-- SAP_BW 754 754 - SAPK-75403INSAPBW  -->
+ or ( COMPONENT = 'SAP_BW' and VERSION = '755' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   0 )  <!-- SAP_BW 755 755 - 755  -->
+ or ( COMPONENT = 'CPMBPC' and VERSION = '810' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     4 and   19 )  <!-- CPMBPC 810 SAPK-81004INCPMBPC - SAPK-81019INCPMBPC  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- CEC-MKT-CPG-UI - Cross-Site Request Forgery (CSRF) in SAP Marketing (Version 0002 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002955963 exists" id="0002955963" operator="check_note">
+      <compliant>NOTE = '0002955963' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002955963 missing and solution with SP available" id="0002955963" operator="check_note:0002955963">
+     <compliant>(
+       ( COMPONENT = 'SAP_CUAN' and VERSION = '150' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )   ) <!-- SAP_CUAN 150 SAPK-15001INSAPCUAN -->   or
+       ( COMPONENT = 'SAP_CUAN' and VERSION = '160' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )   ) <!-- SAP_CUAN 160 SAPK-16001INSAPCUAN -->   or
+       ( COMPONENT = 'UICUAN' and VERSION = '150' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )   ) <!-- UICUAN 150 SAPK-15001INUICUAN -->   or
+       ( COMPONENT = 'UICUAN' and VERSION = '160' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )   ) <!-- UICUAN 160 SAPK-16001INUICUAN -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SAP_CUAN' and VERSION = '150' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )  <!-- SAP_CUAN 150 SAPK-15001INSAPCUAN -->   or
+       ( COMPONENT = 'SAP_CUAN' and VERSION = '160' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )  <!-- SAP_CUAN 160 SAPK-16001INSAPCUAN -->   or
+       ( COMPONENT = 'UICUAN' and VERSION = '150' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )  <!-- UICUAN 150 SAPK-15001INUICUAN -->   or
+       ( COMPONENT = 'UICUAN' and VERSION = '160' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )  <!-- UICUAN 160 SAPK-16001INUICUAN -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002955963 missing and applicable using Correction Instruction" id="0002955963" operator="check_note:0002955963">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'SAP_CUAN' and VERSION = '150' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) = 0 )  <!-- SAP_CUAN 150 150 - 150  -->
+ or ( COMPONENT = 'SAP_CUAN' and VERSION = '160' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) = 0 )  <!-- SAP_CUAN 160 160 - 160  -->
+ or ( COMPONENT = 'UICUAN' and VERSION = '160' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) = 0 )  <!-- UICUAN 160 160 - 160  -->
+ or ( COMPONENT = 'UICUAN' and VERSION = '150' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) = 0 )  <!-- UICUAN 150 150 - 150  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- FS-BA-SD-PO - [CVE-2020-6362] Incorrect Authorization in SAP Banking Services (Version 0008 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002953212 exists" id="0002953212" operator="check_note">
+      <compliant>NOTE = '0002953212' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002953212 missing and solution with SP available" id="0002953212" operator="check_note:0002953212">
+     <compliant>(
+       ( COMPONENT = 'FSAPPL' and VERSION = '500' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    15 )   ) <!-- FSAPPL 500 SAPK-50015INFSAPPL -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'FSAPPL' and VERSION = '500' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    15 )  <!-- FSAPPL 500 SAPK-50015INFSAPPL -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002953212 missing and applicable using Correction Instruction" id="0002953212" operator="check_note:0002953212">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'FSAPPL' and VERSION = '500' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     9 and   14 )  <!-- FSAPPL 500 SAPK-50009INFSAPPL - SAPK-50014INFSAPPL  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- FI-TV-COS - [CVE-2020-6301] Missing Authorization check in SAP ERP (HCM Travel Management) (Version 0004 ) (Medium)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002949196 exists" id="0002949196" operator="check_note">
+      <compliant>NOTE = '0002949196' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002949196 missing and solution with SP available" id="0002949196" operator="check_note:0002949196">
+     <compliant>(
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '608' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    83 )   ) <!-- EA-HRGXX 608 SAPK-60883INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '605' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   132 )   ) <!-- EA-HRGXX 605 SAPK-605D2INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '604' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   155 )   ) <!-- EA-HRGXX 604 SAPK-604F5INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '600' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   189 )   ) <!-- EA-HRGXX 600 SAPK-600I9INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '602' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   168 )   ) <!-- EA-HRGXX 602 SAPK-602G8INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '603' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   163 )   ) <!-- EA-HRGXX 603 SAPK-603G3INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '606' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   117 )   ) <!-- EA-HRGXX 606 SAPK-606B7INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '607' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   106 )   ) <!-- EA-HRGXX 607 SAPK-607A6INEAHRGXX -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '608' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    83 )  <!-- EA-HRGXX 608 SAPK-60883INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '605' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   132 )  <!-- EA-HRGXX 605 SAPK-605D2INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '604' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   155 )  <!-- EA-HRGXX 604 SAPK-604F5INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '600' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   189 )  <!-- EA-HRGXX 600 SAPK-600I9INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '602' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   168 )  <!-- EA-HRGXX 602 SAPK-602G8INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '603' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   163 )  <!-- EA-HRGXX 603 SAPK-603G3INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '606' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   117 )  <!-- EA-HRGXX 606 SAPK-606B7INEAHRGXX -->   or
+       ( COMPONENT = 'EA-HRGXX' and VERSION = '607' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   106 )  <!-- EA-HRGXX 607 SAPK-607A6INEAHRGXX -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002949196 missing and applicable using Correction Instruction" id="0002949196" operator="check_note:0002949196">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'EA-HRGXX' and VERSION = '608' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   82 )  <!-- EA-HRGXX 608 608 - SAPK-60882INEAHRGXX  -->
+ or ( COMPONENT = 'EA-HRGXX' and VERSION = '607' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and  105 )  <!-- EA-HRGXX 607 607 - SAPK-607A5INEAHRGXX  -->
+ or ( COMPONENT = 'EA-HRGXX' and VERSION = '606' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     9 and  116 )  <!-- EA-HRGXX 606 SAPK-60609INEAHRGXX - SAPK-606B6INEAHRGXX  -->
+ or ( COMPONENT = 'EA-HRGXX' and VERSION = '605' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    24 and  131 )  <!-- EA-HRGXX 605 SAPK-60524INEAHRGXX - SAPK-605D1INEAHRGXX  -->
+ or ( COMPONENT = 'EA-HRGXX' and VERSION = '604' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    47 and  154 )  <!-- EA-HRGXX 604 SAPK-60447INEAHRGXX - SAPK-604F4INEAHRGXX  -->
+ or ( COMPONENT = 'EA-HRGXX' and VERSION = '603' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    55 and  162 )  <!-- EA-HRGXX 603 SAPK-60355INEAHRGXX - SAPK-603G2INEAHRGXX  -->
+ or ( COMPONENT = 'EA-HRGXX' and VERSION = '602' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    60 and  167 )  <!-- EA-HRGXX 602 SAPK-60260INEAHRGXX - SAPK-602G7INEAHRGXX  -->
+ or ( COMPONENT = 'EA-HRGXX' and VERSION = '600' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    81 and  188 )  <!-- EA-HRGXX 600 SAPK-60081INEAHRGXX - SAPK-600I8INEAHRGXX  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- CA-WUI-UI - Cross-Site Scripting (XSS) vulnerability in SAP CRM WebClient UI (Version 0003 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002945581 exists" id="0002945581" operator="check_note">
+      <compliant>NOTE = '0002945581' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002945581 missing and solution with SP available" id="0002945581" operator="check_note:0002945581">
+     <compliant>(
+       ( COMPONENT = 'S4FND' and VERSION = '102' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     7 )   ) <!-- S4FND 102 SAPK-10207INS4FND -->   or
+       ( COMPONENT = 'S4FND' and VERSION = '103' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     5 )   ) <!-- S4FND 103 SAPK-10305INS4FND -->   or
+       ( COMPONENT = 'S4FND' and VERSION = '104' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     3 )   ) <!-- S4FND 104 SAPK-10403INS4FND -->   or
+       ( COMPONENT = 'S4FND' and VERSION = '105' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )   ) <!-- S4FND 105 SAPK-10501INS4FND -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '731' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    27 )   ) <!-- WEBCUIF 731 SAPK-73127INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '747' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    22 )   ) <!-- WEBCUIF 747 SAPK-74722INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '748' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    16 )   ) <!-- WEBCUIF 748 SAPK-74816INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '800' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    12 )   ) <!-- WEBCUIF 800 SAPK-80012INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '801' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    10 )   ) <!-- WEBCUIF 801 SAPK-80110INWEBCUIF -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'S4FND' and VERSION = '102' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     7 )  <!-- S4FND 102 SAPK-10207INS4FND -->   or
+       ( COMPONENT = 'S4FND' and VERSION = '103' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     5 )  <!-- S4FND 103 SAPK-10305INS4FND -->   or
+       ( COMPONENT = 'S4FND' and VERSION = '104' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     3 )  <!-- S4FND 104 SAPK-10403INS4FND -->   or
+       ( COMPONENT = 'S4FND' and VERSION = '105' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )  <!-- S4FND 105 SAPK-10501INS4FND -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '731' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    27 )  <!-- WEBCUIF 731 SAPK-73127INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '747' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    22 )  <!-- WEBCUIF 747 SAPK-74722INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '748' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    16 )  <!-- WEBCUIF 748 SAPK-74816INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '800' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    12 )  <!-- WEBCUIF 800 SAPK-80012INWEBCUIF -->   or
+       ( COMPONENT = 'WEBCUIF' and VERSION = '801' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    10 )  <!-- WEBCUIF 801 SAPK-80110INWEBCUIF -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002945581 missing and applicable using Correction Instruction" id="0002945581" operator="check_note:0002945581">
+    <compliant/>
+    <noncompliant>(
+    ( COMPONENT = 'S4FND' and VERSION = '104' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    2 )  <!-- S4FND 104 104 - SAPK-10402INS4FND  -->
+ or ( COMPONENT = 'S4FND' and VERSION = '103' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    4 )  <!-- S4FND 103 103 - SAPK-10304INS4FND  -->
+ or ( COMPONENT = 'S4FND' and VERSION = '105' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   0 )  <!-- S4FND 105 105 - 105  -->
+ or ( COMPONENT = 'S4FND' and VERSION = '102' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    6 )  <!-- S4FND 102 102 - SAPK-10206INS4FND  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '731' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   26 )  <!-- WEBCUIF 731 SAPK-73101INWEBCUIF - SAPK-73126INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '746' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and  999 )  <!-- WEBCUIF 746 746 - ALL_SP  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '747' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   21 )  <!-- WEBCUIF 747 747 - SAPK-74721INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '748' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   15 )  <!-- WEBCUIF 748 748 - SAPK-74815INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '800' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   11 )  <!-- WEBCUIF 800 800 - SAPK-80011INWEBCUIF  -->
+ or ( COMPONENT = 'WEBCUIF' and VERSION = '801' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    9 )  <!-- WEBCUIF 801 801 - SAPK-80109INWEBCUIF  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- BC-ABA-SC - [CVE-2020-6296] Code Injection Vulnerability in SAP NetWeaver (ABAP) and ABAP Pl (Version 0007 ) (High)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002941667 exists" id="0002941667" operator="check_note">
+      <compliant>NOTE = '0002941667' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002941667 missing and solution with SP available" id="0002941667" operator="check_note:0002941667">
+     <compliant>(
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    38 )   ) <!-- SAP_BASIS 700 SAPKB70038 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    23 )   ) <!-- SAP_BASIS 701 SAPKB70123 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    23 )   ) <!-- SAP_BASIS 702 SAPKB70223 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )   ) <!-- SAP_BASIS 730 SAPKB73021 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    11 )   ) <!-- SAP_BASIS 751 SAPK-75111INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     7 )   ) <!-- SAP_BASIS 752 SAPK-75207INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     5 )   ) <!-- SAP_BASIS 753 SAPK-75305INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     3 )   ) <!-- SAP_BASIS 754 SAPK-75403INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '710' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    26 )   ) <!-- SAP_BASIS 710 SAPKB71026 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )   ) <!-- SAP_BASIS 711 SAPKB71121 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    28 )   ) <!-- SAP_BASIS 731 SAPKB73128 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    25 )   ) <!-- SAP_BASIS 740 SAPKB74025 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )   ) <!-- SAP_BASIS 755 SAPK-75501INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )   ) <!-- SAP_BASIS 750 SAPK-75020INSAPBASIS -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    38 )  <!-- SAP_BASIS 700 SAPKB70038 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    23 )  <!-- SAP_BASIS 701 SAPKB70123 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    23 )  <!-- SAP_BASIS 702 SAPKB70223 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )  <!-- SAP_BASIS 730 SAPKB73021 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    11 )  <!-- SAP_BASIS 751 SAPK-75111INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     7 )  <!-- SAP_BASIS 752 SAPK-75207INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     5 )  <!-- SAP_BASIS 753 SAPK-75305INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     3 )  <!-- SAP_BASIS 754 SAPK-75403INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '710' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    26 )  <!-- SAP_BASIS 710 SAPKB71026 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )  <!-- SAP_BASIS 711 SAPKB71121 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    28 )  <!-- SAP_BASIS 731 SAPKB73128 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    25 )  <!-- SAP_BASIS 740 SAPKB74025 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )  <!-- SAP_BASIS 755 SAPK-75501INSAPBASIS -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )  <!-- SAP_BASIS 750 SAPK-75020INSAPBASIS -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002941667 missing and applicable using Correction Instruction" id="0002941667" operator="check_note:0002941667">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    4 )  <!-- SAP_BASIS 750 750 - SAPK-75004INSAPBASIS  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     4 and   37 )  <!-- SAP_BASIS 700 SAPKB70004 - SAPKB70037  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   22 )  <!-- SAP_BASIS 701 701 - SAPKB70122  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '710' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   25 )  <!-- SAP_BASIS 710 710 - SAPKB71025  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   20 )  <!-- SAP_BASIS 711 SAPKB71101 - SAPKB71120  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and    5 )  <!-- SAP_BASIS 702 SAPKB70201 - SAPKB70205  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     6 and   22 )  <!-- SAP_BASIS 702 SAPKB70206 - SAPKB70222  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   20 )  <!-- SAP_BASIS 730 SAPKB73001 - SAPKB73020  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   27 )  <!-- SAP_BASIS 731 SAPKB73101 - SAPKB73127  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   24 )  <!-- SAP_BASIS 740 740 - SAPKB74024  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     5 and   19 )  <!-- SAP_BASIS 750 SAPK-75005INSAPBASIS - SAPK-75019INSAPBASIS  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   10 )  <!-- SAP_BASIS 751 751 - SAPK-75110INSAPBASIS  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    6 )  <!-- SAP_BASIS 752 752 - SAPK-75206INSAPBASIS  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    4 )  <!-- SAP_BASIS 753 753 - SAPK-75304INSAPBASIS  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    2 )  <!-- SAP_BASIS 754 754 - SAPK-75402INSAPBASIS  -->
+ or ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   0 )  <!-- SAP_BASIS 755 755 - 755  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- SRM-CAT-MDM - Information Disclosure in Supplier Relationship Management (Version 0003 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002883638 exists" id="0002883638" operator="check_note">
+      <compliant>NOTE = '0002883638' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002883638 missing and solution with SP available" id="0002883638" operator="check_note:0002883638">
+     <compliant>(
+       ( COMPONENT = 'SRM_SERVER' and VERSION = '714' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    14 )   ) <!-- SRM_SERVER 714 SAPK-71414INSRMSRV -->   or
+       ( COMPONENT = 'SRM_SERVER' and VERSION = '700' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    24 )   ) <!-- SRM_SERVER 700 SAPKIBKV24 -->   or
+       ( COMPONENT = 'SRM_SERVER' and VERSION = '701' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )   ) <!-- SRM_SERVER 701 SAPK-70120INSRMSRV -->   or
+       ( COMPONENT = 'SRM_SERVER' and VERSION = '702' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    26 )   ) <!-- SRM_SERVER 702 SAPK-70226INSRMSRV -->   or
+       ( COMPONENT = 'SRM_SERVER' and VERSION = '713' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )   ) <!-- SRM_SERVER 713 SAPK-71321INSRMSRV -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SRM_SERVER' and VERSION = '714' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    14 )  <!-- SRM_SERVER 714 SAPK-71414INSRMSRV -->   or
+       ( COMPONENT = 'SRM_SERVER' and VERSION = '700' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    24 )  <!-- SRM_SERVER 700 SAPKIBKV24 -->   or
+       ( COMPONENT = 'SRM_SERVER' and VERSION = '701' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )  <!-- SRM_SERVER 701 SAPK-70120INSRMSRV -->   or
+       ( COMPONENT = 'SRM_SERVER' and VERSION = '702' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    26 )  <!-- SRM_SERVER 702 SAPK-70226INSRMSRV -->   or
+       ( COMPONENT = 'SRM_SERVER' and VERSION = '713' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )  <!-- SRM_SERVER 713 SAPK-71321INSRMSRV -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002883638 missing and applicable using Correction Instruction" id="0002883638" operator="check_note:0002883638">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'SRM_SERVER' and VERSION = '714' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   13 )  <!-- SRM_SERVER 714 SAPK-71401INSRMSRV - SAPK-71413INSRMSRV  -->
+ or ( COMPONENT = 'SRM_SERVER' and VERSION = '713' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   20 )  <!-- SRM_SERVER 713 SAPK-71301INSRMSRV - SAPK-71320INSRMSRV  -->
+ or ( COMPONENT = 'SRM_SERVER' and VERSION = '702' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   25 )  <!-- SRM_SERVER 702 SAPK-70201INSRMSRV - SAPK-70225INSRMSRV  -->
+ or ( COMPONENT = 'SRM_SERVER' and VERSION = '701' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     3 and   19 )  <!-- SRM_SERVER 701 SAPK-70103INSRMSRV - SAPK-70119INSRMSRV  -->
+ or ( COMPONENT = 'SRM_SERVER' and VERSION = '700' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   23 )  <!-- SRM_SERVER 700 SAPKIBKV01 - SAPKIBKV23  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- EHS-SUS-FND - Missing Authorization check in EHS Task Definition attachments (Version 0002 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002873099 exists" id="0002873099" operator="check_note">
+      <compliant>NOTE = '0002873099' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002873099 missing and solution with SP available" id="0002873099" operator="check_note:0002873099">
+     <compliant>(
+       ( COMPONENT = 'SAPSCORE' and VERSION = '119' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     7 )   ) <!-- SAPSCORE 119 SAPK-11907INSAPSCORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     4 )   ) <!-- S4CORE 103 SAPK-10304INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '104' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     2 )   ) <!-- S4CORE 104 SAPK-10402INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'SAPSCORE' and VERSION = '119' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     7 )  <!-- SAPSCORE 119 SAPK-11907INSAPSCORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     4 )  <!-- S4CORE 103 SAPK-10304INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '104' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     2 )  <!-- S4CORE 104 SAPK-10402INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002873099 missing and applicable using Correction Instruction" id="0002873099" operator="check_note:0002873099">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    3 )  <!-- S4CORE 103 103 - SAPK-10303INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '104' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    1 )  <!-- S4CORE 104 104 - SAPK-10401INS4CORE  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- CRM-IC-FRW - Cross-Site Scripting (XSS) vulnerability in CRM Interaction Center (Version 0001 )   -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002606194 exists" id="0002606194" operator="check_note">
+      <compliant>NOTE = '0002606194' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002606194 missing and solution with SP available" id="0002606194" operator="check_note:0002606194">
+     <compliant>(
+       ( COMPONENT = 'S4CRM' and VERSION = '100' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     2 )   ) <!-- S4CRM 100 SAPK-10002INS4CRM -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '700' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )   ) <!-- BBPCRM 700 SAPKU70021 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '714' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    10 )   ) <!-- BBPCRM 714 SAPK-71410INBBPCRM -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '701' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    18 )   ) <!-- BBPCRM 701 SAPKU70118 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '702' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    22 )   ) <!-- BBPCRM 702 SAPKU70222 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '712' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    13 )   ) <!-- BBPCRM 712 SAPKU71213 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '713' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    17 )   ) <!-- BBPCRM 713 SAPKU71317 -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'S4CRM' and VERSION = '100' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     2 )  <!-- S4CRM 100 SAPK-10002INS4CRM -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '700' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )  <!-- BBPCRM 700 SAPKU70021 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '714' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    10 )  <!-- BBPCRM 714 SAPK-71410INBBPCRM -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '701' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    18 )  <!-- BBPCRM 701 SAPKU70118 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '702' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    22 )  <!-- BBPCRM 702 SAPKU70222 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '712' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    13 )  <!-- BBPCRM 712 SAPKU71213 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '713' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    17 )  <!-- BBPCRM 713 SAPKU71317 -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002606194 missing and applicable using Correction Instruction" id="0002606194" operator="check_note:0002606194">
+    <compliant/>
+    <noncompliant>(
+ ( COMPONENT = 'S4CRM' and VERSION = '100' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and    1 )  <!-- S4CRM 100 SAPK-10001INS4CRM - SAPK-10001INS4CRM  -->
+ or ( COMPONENT = 'BBPCRM' and VERSION = '700' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   20 )  <!-- BBPCRM 700 SAPKU70001 - SAPKU70020  -->
+ or ( COMPONENT = 'BBPCRM' and VERSION = '701' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     3 and   17 )  <!-- BBPCRM 701 SAPKU70103 - SAPKU70117  -->
+ or ( COMPONENT = 'BBPCRM' and VERSION = '702' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   21 )  <!-- BBPCRM 702 SAPKU70201 - SAPKU70221  -->
+ or ( COMPONENT = 'BBPCRM' and VERSION = '712' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   12 )  <!-- BBPCRM 712 712 - SAPKU71212  -->
+ or ( COMPONENT = 'BBPCRM' and VERSION = '713' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   16 )  <!-- BBPCRM 713 SAPKU71301 - SAPKU71316  -->
+ or ( COMPONENT = 'BBPCRM' and VERSION = '714' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and    9 )  <!-- BBPCRM 714 SAPK-71401INBBPCRM - SAPK-71409INBBPCRM  -->
+ or ( COMPONENT = 'BBPCRM' and VERSION = '600' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and  999 )  <!-- BBPCRM 600 SAPKU60001 - ALL_SP  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- FI-CAX-FS - Switchable Authorization checks for RFC BCA_DIM_LOANS_APPLOG_UPDATE in Loans (FI (Version 0004 ) (Medium)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002531082 exists" id="0002531082" operator="check_note">
+      <compliant>NOTE = '0002531082' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002531082 missing and solution with SP available" id="0002531082" operator="check_note:0002531082">
+     <compliant>(
+       ( COMPONENT = 'FI-CAX' and VERSION = '602' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )   ) <!-- FI-CAX 602 SAPK-60220INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '603' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    19 )   ) <!-- FI-CAX 603 SAPK-60319INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '604' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )   ) <!-- FI-CAX 604 SAPK-60420INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '605' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    17 )   ) <!-- FI-CAX 605 SAPK-60517INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '606' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )   ) <!-- FI-CAX 606 SAPK-60621INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '616' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    12 )   ) <!-- FI-CAX 616 SAPK-61612INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '617' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    15 )   ) <!-- FI-CAX 617 SAPK-61715INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '618' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     9 )   ) <!-- FI-CAX 618 SAPK-61809INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '800' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     6 )   ) <!-- FI-CAX 800 SAPK-80006INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '801' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     4 )   ) <!-- FI-CAX 801 SAPK-80104INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '802' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )   ) <!-- FI-CAX 802 SAPK-80201INFICAX -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'FI-CAX' and VERSION = '602' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )  <!-- FI-CAX 602 SAPK-60220INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '603' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    19 )  <!-- FI-CAX 603 SAPK-60319INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '604' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )  <!-- FI-CAX 604 SAPK-60420INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '605' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    17 )  <!-- FI-CAX 605 SAPK-60517INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '606' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )  <!-- FI-CAX 606 SAPK-60621INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '616' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    12 )  <!-- FI-CAX 616 SAPK-61612INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '617' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    15 )  <!-- FI-CAX 617 SAPK-61715INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '618' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     9 )  <!-- FI-CAX 618 SAPK-61809INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '800' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     6 )  <!-- FI-CAX 800 SAPK-80006INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '801' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     4 )  <!-- FI-CAX 801 SAPK-80104INFICAX -->   or
+       ( COMPONENT = 'FI-CAX' and VERSION = '802' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     1 )  <!-- FI-CAX 802 SAPK-80201INFICAX -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002531082 missing and applicable using Correction Instruction" id="0002531082" operator="check_note:0002531082">
+    <compliant/>
+    <noncompliant>(
+    ( COMPONENT = 'FI-CAX' and VERSION = '602' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   19 )  <!-- FI-CAX 602 602 - SAPK-60219INFICAX  -->
+ or ( COMPONENT = 'FI-CAX' and VERSION = '603' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   18 )  <!-- FI-CAX 603 603 - SAPK-60318INFICAX  -->
+ or ( COMPONENT = 'FI-CAX' and VERSION = '604' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   19 )  <!-- FI-CAX 604 SAPK-60401INFICAX - SAPK-60419INFICAX  -->
+ or ( COMPONENT = 'FI-CAX' and VERSION = '605' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   16 )  <!-- FI-CAX 605 605 - SAPK-60516INFICAX  -->
+ or ( COMPONENT = 'FI-CAX' and VERSION = '606' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   20 )  <!-- FI-CAX 606 SAPK-60601INFICAX - SAPK-60620INFICAX  -->
+ or ( COMPONENT = 'FI-CAX' and VERSION = '616' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   11 )  <!-- FI-CAX 616 616 - SAPK-61611INFICAX  -->
+ or ( COMPONENT = 'FI-CAX' and VERSION = '617' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   14 )  <!-- FI-CAX 617 SAPK-61701INFICAX - SAPK-61714INFICAX  -->
+ or ( COMPONENT = 'FI-CAX' and VERSION = '618' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    8 )  <!-- FI-CAX 618 618 - SAPK-61808INFICAX  -->
+ or ( COMPONENT = 'FI-CAX' and VERSION = '800' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    5 )  <!-- FI-CAX 800 800 - SAPK-80005INFICAX  -->
+ or ( COMPONENT = 'FI-CAX' and VERSION = '801' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    3 )  <!-- FI-CAX 801 801 - SAPK-80103INFICAX  -->
+ or ( COMPONENT = 'FI-CAX' and VERSION = '802' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   0 )  <!-- FI-CAX 802 802 - 802  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- IS-B-BCA - Switchable Authorization checks in SAP Enterprise Financial Services (Version 0007 ) (Medium)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="Note 0002429274 exists" id="0002429274" operator="check_note">
+      <compliant>NOTE = '0002429274' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002429274 missing and solution with SP available" id="0002429274" operator="check_note:0002429274">
+     <compliant>(
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     3 )   ) <!-- S4CORE 101 SAPK-10103INS4CORE -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    31 )   ) <!-- EA-FINSERV 600 SAPKGPFD31 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )   ) <!-- EA-FINSERV 603 SAPK-60320INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )   ) <!-- EA-FINSERV 604 SAPK-60421INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    18 )   ) <!-- EA-FINSERV 605 SAPK-60518INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )   ) <!-- EA-FINSERV 606 SAPK-60620INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    12 )   ) <!-- EA-FINSERV 616 SAPK-61612INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    15 )   ) <!-- EA-FINSERV 617 SAPK-61715INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     7 )   ) <!-- EA-FINSERV 618 SAPK-61807INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and not( to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     5 )   ) <!-- EA-FINSERV 800 SAPK-80005INEAFINSRV -->
+     )</compliant>
+     <noncompliant>(
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     3 )  <!-- S4CORE 101 SAPK-10103INS4CORE -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    31 )  <!-- EA-FINSERV 600 SAPKGPFD31 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )  <!-- EA-FINSERV 603 SAPK-60320INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )  <!-- EA-FINSERV 604 SAPK-60421INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    18 )  <!-- EA-FINSERV 605 SAPK-60518INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    20 )  <!-- EA-FINSERV 606 SAPK-60620INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    12 )  <!-- EA-FINSERV 616 SAPK-61612INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    15 )  <!-- EA-FINSERV 617 SAPK-61715INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     7 )  <!-- EA-FINSERV 618 SAPK-61807INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;     5 )  <!-- EA-FINSERV 800 SAPK-80005INEAFINSRV -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="Note 0002429274 missing and applicable using Correction Instruction" id="0002429274" operator="check_note:0002429274">
+    <compliant/>
+    <noncompliant>(
+    ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    2 )  <!-- S4CORE 101 101 - SAPK-10102INS4CORE  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   30 )  <!-- EA-FINSERV 600 SAPKGPFD01 - SAPKGPFD30  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   19 )  <!-- EA-FINSERV 603 603 - SAPK-60319INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   20 )  <!-- EA-FINSERV 604 SAPK-60401INEAFINSRV - SAPK-60420INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     3 and   17 )  <!-- EA-FINSERV 605 SAPK-60503INEAFINSRV - SAPK-60517INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   19 )  <!-- EA-FINSERV 606 SAPK-60601INEAFINSRV - SAPK-60619INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     1 and   14 )  <!-- EA-FINSERV 617 SAPK-61701INEAFINSRV - SAPK-61714INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   11 )  <!-- EA-FINSERV 616 616 - SAPK-61611INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    6 )  <!-- EA-FINSERV 618 618 - SAPK-61806INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    4 )  <!-- EA-FINSERV 800 800 - SAPK-80004INEAFINSRV  -->
+  )</noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>
