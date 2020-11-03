@@ -42,6 +42,14 @@ Date:    Sept 09 2020
     <checkitem desc="Note 0002958563 exists" id="0002958563" operator="check_note">
       <compliant>NOTE = '0002958563' and PRSTATUS = 'E'</compliant>
       <noncompliant/>
+	<joinstore name="ABAP_INSTANCE_PAHI" no_data_found="Yes">
+        	<joincompliant> NAME = 'dbms/type' and (UCASE(VALUE) = 'DB4' or UCASE(VALUE) = 'SYB') </joincompliant>
+        	<joinnoncompliant> NAME = 'dbms/type' and (UCASE(VALUE) = 'DB4' or UCASE(VALUE) = 'SYB') </joinnoncompliant>
+      	</joinstore>
+	<joinstore name="ENV_VARIABLES" no_data_found="Yes">
+        	<joincompliant> NAME = 'dbms_type' and (UCASE(VALUE) = 'DB4' or UCASE(VALUE) = 'SYB') </joincompliant>
+        	<joinnoncompliant> NAME = 'dbms_type' and (UCASE(VALUE) = 'DB4' or UCASE(VALUE) = 'SYB') </joinnoncompliant>
+      	</joinstore>
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
@@ -78,6 +86,14 @@ Date:    Sept 09 2020
        ( COMPONENT = 'SAP_BW' and VERSION = '701' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    23 )  <!-- SAP_BW 701 SAPKW70123 -->   or
        ( COMPONENT = 'SAP_BW' and VERSION = '702' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    23 )  <!-- SAP_BW 702 SAPKW70223 -->
      )</noncompliant>
+	  <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="Yes">
+        	<joincompliant> NAME = 'dbms/type' and (UCASE(VALUE) = 'DB4' or UCASE(VALUE) = 'SYB') </joincompliant>
+        	<joinnoncompliant> NAME = 'dbms/type' and (UCASE(VALUE) = 'DB4' or UCASE(VALUE) = 'SYB') </joinnoncompliant>
+          </joinstore>
+	  <joinstore name="ENV_VARIABLES" no_data_found="Yes">
+        	<joincompliant> NAME = 'dbms_type' and (UCASE(VALUE) = 'DB4' or UCASE(VALUE) = 'SYB') </joincompliant>
+        	<joinnoncompliant> NAME = 'dbms_type' and (UCASE(VALUE) = 'DB4' or UCASE(VALUE) = 'SYB') </joinnoncompliant>
+          </joinstore>
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
@@ -99,6 +115,14 @@ Date:    Sept 09 2020
  or ( COMPONENT = 'SAP_BW' and VERSION = '754' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    2 )  <!-- SAP_BW 754 754 - SAPK-75402INSAPBW  -->
  or ( COMPONENT = 'SAP_BW' and VERSION = '755' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   0 )  <!-- SAP_BW 755 755 - 755  -->
   )</noncompliant>
+	  <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="Yes">
+        	<joincompliant> NAME = 'dbms/type' and (UCASE(VALUE) = 'DB4' or UCASE(VALUE) = 'SYB') </joincompliant>
+        	<joinnoncompliant> NAME = 'dbms/type' and (UCASE(VALUE) = 'DB4' or UCASE(VALUE) = 'SYB') </joinnoncompliant>
+      	  </joinstore>
+	  <joinstore name="ENV_VARIABLES" no_data_found="Yes">
+        	<joincompliant> NAME = 'dbms_type' and (UCASE(VALUE) = 'DB4' or UCASE(VALUE) = 'SYB') </joincompliant>
+        	<joinnoncompliant> NAME = 'dbms_type' and (UCASE(VALUE) = 'DB4' or UCASE(VALUE) = 'SYB') </joinnoncompliant>
+      	  </joinstore>
     </checkitem>
   </configstore>
 
