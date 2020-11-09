@@ -30,6 +30,11 @@ The policy does not check the following SNotes:
 SAP Security Patch Day: 2020 01
 Version: 001
 Date:    January 15 2020
+
+Version: 002
+   adjusted: Sp of available solution of release 730, 731 and 740
+Date:    November 09 2020
+
 -->
 
 <targetsystem desc="SNotes of PatchDay: 2020-01" id="PatchDay_2020-01" multisql="Yes">
@@ -234,9 +239,9 @@ Date:    January 15 2020
        ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )   ) <!-- SAP_BASIS 702 SAPKB70223 -->   or
        ( COMPONENT = 'SAP_BASIS' and VERSION = '710' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   25 )   ) <!-- SAP_BASIS 710 SAPKB71025 -->   or
        ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_BASIS 711 SAPKB71120 -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )   ) <!-- SAP_BASIS 730 SAPKB73021 -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   27 )   ) <!-- SAP_BASIS 731 SAPKB73127 -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   24 )   ) <!-- SAP_BASIS 740 SAPKB74024 -->
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- SAP_BASIS 730 SAPKB73021 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   26 )   ) <!-- SAP_BASIS 731 SAPKB73127 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )   ) <!-- SAP_BASIS 740 SAPKB74024 -->
      )</compliant>
      <noncompliant>(
        ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   17 )  <!-- SAP_BASIS 750 SAPK-75017INSAPBASIS -->   or
@@ -249,9 +254,9 @@ Date:    January 15 2020
        ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )  <!-- SAP_BASIS 702 SAPKB70223 -->   or
        ( COMPONENT = 'SAP_BASIS' and VERSION = '710' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   25 )  <!-- SAP_BASIS 710 SAPKB71025 -->   or
        ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_BASIS 711 SAPKB71120 -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )  <!-- SAP_BASIS 730 SAPKB73021 -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   27 )  <!-- SAP_BASIS 731 SAPKB73127 -->   or
-       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   24 )  <!-- SAP_BASIS 740 SAPKB74024 --> 
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- SAP_BASIS 730 SAPKB73021 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   26 )  <!-- SAP_BASIS 731 SAPKB73127 -->   or
+       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )  <!-- SAP_BASIS 740 SAPKB74024 --> 
      )</noncompliant>
     </checkitem>
   </configstore>
