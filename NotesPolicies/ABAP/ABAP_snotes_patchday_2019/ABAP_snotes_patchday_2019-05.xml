@@ -30,6 +30,10 @@ This FRUN CSA policy contains rules to check the following ABAP SNotes:
 SAP Security Patch Day: 2019 05
 Version: 001
 Date:    May 21 2019
+
+Version: 002
+   replaced ( COALESCE(NULLIF(SP,''),'0') )    by  ( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with ''))
+Date:    November 11 2020
 -->
   <!-- FS-TXS - Fehlende Berechtigungspruefung in SAP Funding Management (Version 0001 )   -->
   <configstore name="ABAP_NOTES">
@@ -41,10 +45,10 @@ Date:    May 21 2019
   <configstore name="COMP_LEVEL">
   <checkitem desc="Note 0002776558 missing and solution with SP available" id="0002776558" operator="check_note:0002776558">
      <compliant>(
-       ( COMPONENT = 'FUNDMGMT' and VERSION = '300' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 )   ) <!-- FUNDMGMT 300 SAPK-30009INFUNDMGMT -->
+       ( COMPONENT = 'FUNDMGMT' and VERSION = '300' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    9 )   ) <!-- FUNDMGMT 300 SAPK-30009INFUNDMGMT -->
      )</compliant>
      <noncompliant>(
-       ( COMPONENT = 'FUNDMGMT' and VERSION = '300' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 )  <!-- FUNDMGMT 300 SAPK-30009INFUNDMGMT -->
+       ( COMPONENT = 'FUNDMGMT' and VERSION = '300' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    9 )  <!-- FUNDMGMT 300 SAPK-30009INFUNDMGMT -->
      )</noncompliant>
     </checkitem>
   </configstore>
@@ -52,7 +56,7 @@ Date:    May 21 2019
   <checkitem desc="Note 0002776558 missing and applicable using Correction Instruction" id="0002776558" operator="check_note:0002776558">
     <compliant/>
     <noncompliant>(
- ( COMPONENT = 'FUNDMGMT' and VERSION = '300' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    6 and    8 )  <!-- FUNDMGMT 300 SAPK-30006INFUNDMGMT - SAPK-30008INFUNDMGMT  -->
+ ( COMPONENT = 'FUNDMGMT' and VERSION = '300' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    6 and    8 )  <!-- FUNDMGMT 300 SAPK-30006INFUNDMGMT - SAPK-30008INFUNDMGMT  -->
   )</noncompliant>
     </checkitem>
   </configstore>
@@ -67,14 +71,14 @@ Date:    May 21 2019
   <configstore name="COMP_LEVEL">
   <checkitem desc="Note 0002756625 missing and solution with SP available" id="0002756625" operator="check_note:0002756625"> 
      <compliant>(
-       ( COMPONENT = 'ST-PI' and VERSION = '2008_1_700' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )   ) <!-- ST-PI 2008_1_700 SAPKITLRD9 - SAPKITLRDT -->   or
-       ( COMPONENT = 'ST-PI' and VERSION = '2008_1_710' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )   ) <!-- ST-PI 2008_1_710 SAPKITLRE9 - SAPKITLRET -->   or
-       ( COMPONENT = 'ST-PI' and VERSION = '740' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    11 )   ) <!-- ST-PI 740 740 - SAPK-74010INSTPI -->
+       ( COMPONENT = 'ST-PI' and VERSION = '2008_1_700' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   21 )   ) <!-- ST-PI 2008_1_700 SAPKITLRD9 - SAPKITLRDT -->   or
+       ( COMPONENT = 'ST-PI' and VERSION = '2008_1_710' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   21 )   ) <!-- ST-PI 2008_1_710 SAPKITLRE9 - SAPKITLRET -->   or
+       ( COMPONENT = 'ST-PI' and VERSION = '740' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    11 )   ) <!-- ST-PI 740 740 - SAPK-74010INSTPI -->
      )</compliant>
      <noncompliant>(
-       ( COMPONENT = 'ST-PI' and VERSION = '2008_1_700' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )  <!-- ST-PI 2008_1_700 SAPKITLRD9 - SAPKITLRDT -->   or
-       ( COMPONENT = 'ST-PI' and VERSION = '2008_1_710' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    21 )  <!-- ST-PI 2008_1_710 SAPKITLRE9 - SAPKITLRET -->   or
-       ( COMPONENT = 'ST-PI' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    11 )  <!-- ST-PI 740 740 - SAPK-74010INSTPI -->
+       ( COMPONENT = 'ST-PI' and VERSION = '2008_1_700' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   21 )  <!-- ST-PI 2008_1_700 SAPKITLRD9 - SAPKITLRDT -->   or
+       ( COMPONENT = 'ST-PI' and VERSION = '2008_1_710' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    21 )  <!-- ST-PI 2008_1_710 SAPKITLRE9 - SAPKITLRET -->   or
+       ( COMPONENT = 'ST-PI' and VERSION = '740' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    11 )  <!-- ST-PI 740 740 - SAPK-74010INSTPI -->
      )</noncompliant>
     </checkitem>
   </configstore>
@@ -82,9 +86,9 @@ Date:    May 21 2019
   <checkitem desc="Note 0002756625 missing and applicable using Correction Instruction" id="0002756625" operator="check_note:0002756625">
     <compliant/>
     <noncompliant>(
- ( COMPONENT = 'ST-PI' and VERSION = '2008_1_700' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between  9 and  20 )  <!-- ST-PI 2008_1_700 SAPKITLRD9 - SAPKITLRDT  -->
- or ( COMPONENT = 'ST-PI' and VERSION = '2008_1_710' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between  9 and  20 )  <!-- ST-PI 2008_1_710 SAPKITLRE9 - SAPKITLRET  -->
- or ( COMPONENT = 'ST-PI' and VERSION = '740' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   10 )  <!-- ST-PI 740 740 - SAPK-74010INSTPI  -->
+ ( COMPONENT = 'ST-PI' and VERSION = '2008_1_700' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between  9 and  20 )  <!-- ST-PI 2008_1_700 SAPKITLRD9 - SAPKITLRDT  -->
+ or ( COMPONENT = 'ST-PI' and VERSION = '2008_1_710' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between  9 and  20 )  <!-- ST-PI 2008_1_710 SAPKITLRE9 - SAPKITLRET  -->
+ or ( COMPONENT = 'ST-PI' and VERSION = '740' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and   10 )  <!-- ST-PI 740 740 - SAPK-74010INSTPI  -->
   )</noncompliant>
     </checkitem>
   </configstore>
@@ -98,12 +102,12 @@ Date:    May 21 2019
   <configstore name="COMP_LEVEL">
   <checkitem desc="Note 0002756453 missing and solution with SP available" id="0002756453" operator="check_note:0002756453">
      <compliant>(
-       ( COMPONENT = 'S4CRM' and VERSION = '100' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) <!-- S4CRM 100 SAPK-10004INS4CRM -->   or
-       ( COMPONENT = 'S4CRM' and VERSION = '200' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )   ) <!-- S4CRM 200 SAPK-20002INS4CRM -->
+       ( COMPONENT = 'S4CRM' and VERSION = '100' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    4 )   ) <!-- S4CRM 100 SAPK-10004INS4CRM -->   or
+       ( COMPONENT = 'S4CRM' and VERSION = '200' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    2 )   ) <!-- S4CRM 200 SAPK-20002INS4CRM -->
      )</compliant>
      <noncompliant>(
-       ( COMPONENT = 'S4CRM' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- S4CRM 100 SAPK-10004INS4CRM -->   or
-       ( COMPONENT = 'S4CRM' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )  <!-- S4CRM 200 SAPK-20002INS4CRM -->
+       ( COMPONENT = 'S4CRM' and VERSION = '100' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    4 )  <!-- S4CRM 100 SAPK-10004INS4CRM -->   or
+       ( COMPONENT = 'S4CRM' and VERSION = '200' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    2 )  <!-- S4CRM 200 SAPK-20002INS4CRM -->
      )</noncompliant>
     </checkitem>
   </configstore>
@@ -111,8 +115,8 @@ Date:    May 21 2019
   <checkitem desc="Note 0002756453 missing and applicable using Correction Instruction" id="0002756453" operator="check_note:0002756453">
     <compliant/>
     <noncompliant>(
-     ( COMPONENT = 'S4CRM' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   0 )  <!-- S4CRM 200 200 - 200  -->
- or ( COMPONENT = 'S4CRM' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and    3 )  <!-- S4CRM 100 SAPK-10001INS4CRM - SAPK-10003INS4CRM  -->
+     ( COMPONENT = 'S4CRM' and VERSION = '200' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and   0 )  <!-- S4CRM 200 200 - 200  -->
+ or ( COMPONENT = 'S4CRM' and VERSION = '100' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and    3 )  <!-- S4CRM 100 SAPK-10001INS4CRM - SAPK-10003INS4CRM  -->
   )</noncompliant>
     </checkitem>
   </configstore>
@@ -126,32 +130,32 @@ Date:    May 21 2019
   <configstore name="COMP_LEVEL">
   <checkitem desc="Note 0002744937 missing and solution with SP available" id="0002744937" operator="check_note:0002744937">
      <compliant>(
-       ( COMPONENT = 'S4CORE' and VERSION = '101' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )   ) <!-- S4CORE 101 SAPK-10106INS4CORE -->   or
-       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) <!-- S4CORE 102 SAPK-10204INS4CORE -->   or
-       ( COMPONENT = 'S4CORE' and VERSION = '103' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )   ) <!-- S4CORE 103 SAPK-10302INS4CORE -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   33 )   ) <!-- EA-FINSERV 600 SAPKGPFD33 -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )   ) <!-- EA-FINSERV 603 SAPK-60322INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )   ) <!-- EA-FINSERV 604 SAPK-60423INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )   ) <!-- EA-FINSERV 605 SAPK-60520INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   24 )   ) <!-- EA-FINSERV 606 SAPK-60624INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   14 )   ) <!-- EA-FINSERV 616 SAPK-61614INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- EA-FINSERV 617 SAPK-61719INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )   ) <!-- EA-FINSERV 618 SAPK-61813INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 )   ) <!-- EA-FINSERV 800 SAPK-80009INEAFINSRV -->
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    6 )   ) <!-- S4CORE 101 SAPK-10106INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    4 )   ) <!-- S4CORE 102 SAPK-10204INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    2 )   ) <!-- S4CORE 103 SAPK-10302INS4CORE -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   33 )   ) <!-- EA-FINSERV 600 SAPKGPFD33 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   22 )   ) <!-- EA-FINSERV 603 SAPK-60322INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   23 )   ) <!-- EA-FINSERV 604 SAPK-60423INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   20 )   ) <!-- EA-FINSERV 605 SAPK-60520INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   24 )   ) <!-- EA-FINSERV 606 SAPK-60624INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   14 )   ) <!-- EA-FINSERV 616 SAPK-61614INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   19 )   ) <!-- EA-FINSERV 617 SAPK-61719INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   13 )   ) <!-- EA-FINSERV 618 SAPK-61813INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    9 )   ) <!-- EA-FINSERV 800 SAPK-80009INEAFINSRV -->
      )</compliant>
      <noncompliant>(
-       ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    6 )  <!-- S4CORE 101 SAPK-10106INS4CORE -->   or
-       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- S4CORE 102 SAPK-10204INS4CORE -->   or
-       ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )  <!-- S4CORE 103 SAPK-10302INS4CORE -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   33 )  <!-- EA-FINSERV 600 SAPKGPFD33 -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )  <!-- EA-FINSERV 603 SAPK-60322INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )  <!-- EA-FINSERV 604 SAPK-60423INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   20 )  <!-- EA-FINSERV 605 SAPK-60520INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   24 )  <!-- EA-FINSERV 606 SAPK-60624INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   14 )  <!-- EA-FINSERV 616 SAPK-61614INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- EA-FINSERV 617 SAPK-61719INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )  <!-- EA-FINSERV 618 SAPK-61813INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    9 )  <!-- EA-FINSERV 800 SAPK-80009INEAFINSRV -->
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    6 )  <!-- S4CORE 101 SAPK-10106INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    4 )  <!-- S4CORE 102 SAPK-10204INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    2 )  <!-- S4CORE 103 SAPK-10302INS4CORE -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   33 )  <!-- EA-FINSERV 600 SAPKGPFD33 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   22 )  <!-- EA-FINSERV 603 SAPK-60322INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   23 )  <!-- EA-FINSERV 604 SAPK-60423INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   20 )  <!-- EA-FINSERV 605 SAPK-60520INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   24 )  <!-- EA-FINSERV 606 SAPK-60624INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   14 )  <!-- EA-FINSERV 616 SAPK-61614INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   19 )  <!-- EA-FINSERV 617 SAPK-61719INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   13 )  <!-- EA-FINSERV 618 SAPK-61813INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    9 )  <!-- EA-FINSERV 800 SAPK-80009INEAFINSRV -->
      )</noncompliant>
     </checkitem>
   </configstore>
@@ -159,18 +163,18 @@ Date:    May 21 2019
   <checkitem desc="Note 0002744937 missing and applicable using Correction Instruction" id="0002744937" operator="check_note:0002744937">
     <compliant/>
     <noncompliant>(
- ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    5 )  <!-- S4CORE 101 101 - SAPK-10105INS4CORE  -->
- or ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    3 )  <!-- S4CORE 102 102 - SAPK-10203INS4CORE  -->
- or ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    1 )  <!-- S4CORE 103 103 - SAPK-10301INS4CORE  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   32 )  <!-- EA-FINSERV 600 SAPKGPFD01 - SAPKGPFD32  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   21 )  <!-- EA-FINSERV 603 603 - SAPK-60321INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   22 )  <!-- EA-FINSERV 604 SAPK-60401INEAFINSRV - SAPK-60422INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    3 and   19 )  <!-- EA-FINSERV 605 SAPK-60503INEAFINSRV - SAPK-60519INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   23 )  <!-- EA-FINSERV 606 SAPK-60601INEAFINSRV - SAPK-60623INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   13 )  <!-- EA-FINSERV 616 616 - SAPK-61613INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   18 )  <!-- EA-FINSERV 617 SAPK-61701INEAFINSRV - SAPK-61718INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   12 )  <!-- EA-FINSERV 618 618 - SAPK-61812INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    8 )  <!-- EA-FINSERV 800 800 - SAPK-80008INEAFINSRV  -->
+ ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and    5 )  <!-- S4CORE 101 101 - SAPK-10105INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and    3 )  <!-- S4CORE 102 102 - SAPK-10203INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and    1 )  <!-- S4CORE 103 103 - SAPK-10301INS4CORE  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and   32 )  <!-- EA-FINSERV 600 SAPKGPFD01 - SAPKGPFD32  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and   21 )  <!-- EA-FINSERV 603 603 - SAPK-60321INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and   22 )  <!-- EA-FINSERV 604 SAPK-60401INEAFINSRV - SAPK-60422INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    3 and   19 )  <!-- EA-FINSERV 605 SAPK-60503INEAFINSRV - SAPK-60519INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and   23 )  <!-- EA-FINSERV 606 SAPK-60601INEAFINSRV - SAPK-60623INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and   13 )  <!-- EA-FINSERV 616 616 - SAPK-61613INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and   18 )  <!-- EA-FINSERV 617 SAPK-61701INEAFINSRV - SAPK-61718INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and   12 )  <!-- EA-FINSERV 618 618 - SAPK-61812INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and    8 )  <!-- EA-FINSERV 800 800 - SAPK-80008INEAFINSRV  -->
   )</noncompliant>
     </checkitem>
   </configstore>
@@ -186,7 +190,7 @@ Date:    May 21 2019
   <checkitem desc="Note 0002743011 missing and applicable using Correction Instruction" id="0002743011" operator="check_note:0002743011">
     <compliant/>
     <noncompliant>(
-    ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and  999 )  <!-- S4CORE 103 103 - ALL_SP  -->
+    ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and  999 )  <!-- S4CORE 103 103 - ALL_SP  -->
   )</noncompliant>
     </checkitem>
   </configstore>
@@ -200,44 +204,44 @@ Date:    May 21 2019
     <configstore name="COMP_LEVEL">
   <checkitem desc="Note 0002662687 missing and solution with SP available" id="0002662687" operator="check_note:0002662687">
      <compliant>(
-       ( COMPONENT = 'SAPSCORE' and VERSION = '114' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- SAPSCORE 114 SAPK-11401INSAPSCORE -->   or
-       ( COMPONENT = 'SAPSCORE' and VERSION = '113' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )   ) <!-- SAPSCORE 113 SAPK-11307INSAPSCORE -->   or
-       ( COMPONENT = 'S4CORE' and VERSION = '101' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )   ) <!-- S4CORE 101 SAPK-10105INS4CORE -->   or
-       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )   ) <!-- S4CORE 102 SAPK-10203INS4CORE -->   or
-       ( COMPONENT = 'S4CORE' and VERSION = '103' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )   ) <!-- S4CORE 103 SAPK-10301INS4CORE -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '110' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   36 )   ) <!-- EA-FINSERV 110 SAPKGPFA36 -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '200' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   25 )   ) <!-- EA-FINSERV 200 SAPKGPFB25 -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '500' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   29 )   ) <!-- EA-FINSERV 500 SAPKGPFC29 -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   32 )   ) <!-- EA-FINSERV 600 SAPKGPFD32 -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )   ) <!-- EA-FINSERV 603 SAPK-60321INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )   ) <!-- EA-FINSERV 604 SAPK-60422INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- EA-FINSERV 605 SAPK-60519INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )   ) <!-- EA-FINSERV 616 SAPK-61613INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )   ) <!-- EA-FINSERV 606 SAPK-60623INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )   ) <!-- EA-FINSERV 617 SAPK-61718INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- EA-FINSERV 618 SAPK-61812INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    8 )   ) <!-- EA-FINSERV 800 SAPK-80008INEAFINSRV -->   or
-       ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   43 )   ) <!-- BANK/CFM 463_20 SAPKIPBJ43 -->
+       ( COMPONENT = 'SAPSCORE' and VERSION = '114' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    1 )   ) <!-- SAPSCORE 114 SAPK-11401INSAPSCORE -->   or
+       ( COMPONENT = 'SAPSCORE' and VERSION = '113' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    7 )   ) <!-- SAPSCORE 113 SAPK-11307INSAPSCORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    5 )   ) <!-- S4CORE 101 SAPK-10105INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    3 )   ) <!-- S4CORE 102 SAPK-10203INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    1 )   ) <!-- S4CORE 103 SAPK-10301INS4CORE -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '110' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   36 )   ) <!-- EA-FINSERV 110 SAPKGPFA36 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '200' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   25 )   ) <!-- EA-FINSERV 200 SAPKGPFB25 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '500' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   29 )   ) <!-- EA-FINSERV 500 SAPKGPFC29 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   32 )   ) <!-- EA-FINSERV 600 SAPKGPFD32 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   21 )   ) <!-- EA-FINSERV 603 SAPK-60321INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   22 )   ) <!-- EA-FINSERV 604 SAPK-60422INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   19 )   ) <!-- EA-FINSERV 605 SAPK-60519INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   13 )   ) <!-- EA-FINSERV 616 SAPK-61613INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   23 )   ) <!-- EA-FINSERV 606 SAPK-60623INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   18 )   ) <!-- EA-FINSERV 617 SAPK-61718INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   12 )   ) <!-- EA-FINSERV 618 SAPK-61812INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    8 )   ) <!-- EA-FINSERV 800 SAPK-80008INEAFINSRV -->   or
+       ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   43 )   ) <!-- BANK/CFM 463_20 SAPKIPBJ43 -->
      )</compliant>
      <noncompliant>(
-       ( COMPONENT = 'SAPSCORE' and VERSION = '114' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- SAPSCORE 114 SAPK-11401INSAPSCORE -->   or
-       ( COMPONENT = 'SAPSCORE' and VERSION = '113' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    7 )  <!-- SAPSCORE 113 SAPK-11307INSAPSCORE -->   or
-       ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )  <!-- S4CORE 101 SAPK-10105INS4CORE -->   or
-       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )  <!-- S4CORE 102 SAPK-10203INS4CORE -->   or
-       ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    1 )  <!-- S4CORE 103 SAPK-10301INS4CORE -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '110' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   36 )  <!-- EA-FINSERV 110 SAPKGPFA36 -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   25 )  <!-- EA-FINSERV 200 SAPKGPFB25 -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '500' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   29 )  <!-- EA-FINSERV 500 SAPKGPFC29 -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   32 )  <!-- EA-FINSERV 600 SAPKGPFD32 -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   21 )  <!-- EA-FINSERV 603 SAPK-60321INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )  <!-- EA-FINSERV 604 SAPK-60422INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- EA-FINSERV 605 SAPK-60519INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   13 )  <!-- EA-FINSERV 616 SAPK-61613INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   23 )  <!-- EA-FINSERV 606 SAPK-60623INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   18 )  <!-- EA-FINSERV 617 SAPK-61718INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- EA-FINSERV 618 SAPK-61812INEAFINSRV -->   or
-       ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    8 )  <!-- EA-FINSERV 800 SAPK-80008INEAFINSRV -->   or
-       ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   43 )  <!-- BANK/CFM 463_20 SAPKIPBJ43 -->
+       ( COMPONENT = 'SAPSCORE' and VERSION = '114' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    1 )  <!-- SAPSCORE 114 SAPK-11401INSAPSCORE -->   or
+       ( COMPONENT = 'SAPSCORE' and VERSION = '113' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    7 )  <!-- SAPSCORE 113 SAPK-11307INSAPSCORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    5 )  <!-- S4CORE 101 SAPK-10105INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    3 )  <!-- S4CORE 102 SAPK-10203INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    1 )  <!-- S4CORE 103 SAPK-10301INS4CORE -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '110' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   36 )  <!-- EA-FINSERV 110 SAPKGPFA36 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '200' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   25 )  <!-- EA-FINSERV 200 SAPKGPFB25 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '500' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   29 )  <!-- EA-FINSERV 500 SAPKGPFC29 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   32 )  <!-- EA-FINSERV 600 SAPKGPFD32 -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   21 )  <!-- EA-FINSERV 603 SAPK-60321INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   22 )  <!-- EA-FINSERV 604 SAPK-60422INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   19 )  <!-- EA-FINSERV 605 SAPK-60519INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   13 )  <!-- EA-FINSERV 616 SAPK-61613INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   23 )  <!-- EA-FINSERV 606 SAPK-60623INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   18 )  <!-- EA-FINSERV 617 SAPK-61718INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   12 )  <!-- EA-FINSERV 618 SAPK-61812INEAFINSRV -->   or
+       ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    8 )  <!-- EA-FINSERV 800 SAPK-80008INEAFINSRV -->   or
+       ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   43 )  <!-- BANK/CFM 463_20 SAPKIPBJ43 -->
      )</noncompliant>
     </checkitem>
   </configstore>
@@ -245,22 +249,22 @@ Date:    May 21 2019
   <checkitem desc="Note 0002662687 missing and applicable using Correction Instruction" id="0002662687" operator="check_note:0002662687">
     <compliant/>
     <noncompliant>(
- ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    2 )  <!-- S4CORE 102 102 - SAPK-10202INS4CORE  -->
- or ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    4 )  <!-- S4CORE 101 101 - SAPK-10104INS4CORE  -->
- or ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   0 )  <!-- S4CORE 103 103 - 103  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   11 )  <!-- EA-FINSERV 618 618 - SAPK-61811INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    7 )  <!-- EA-FINSERV 800 800 - SAPK-80007INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   17 )  <!-- EA-FINSERV 617 SAPK-61701INEAFINSRV - SAPK-61717INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   12 )  <!-- EA-FINSERV 616 616 - SAPK-61612INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   22 )  <!-- EA-FINSERV 606 SAPK-60601INEAFINSRV - SAPK-60622INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    3 and   18 )  <!-- EA-FINSERV 605 SAPK-60503INEAFINSRV - SAPK-60518INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   24 )  <!-- EA-FINSERV 200 200 - SAPKGPFB24  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   21 )  <!-- EA-FINSERV 604 SAPK-60401INEAFINSRV - SAPK-60421INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   20 )  <!-- EA-FINSERV 603 603 - SAPK-60320INEAFINSRV  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '500' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   28 )  <!-- EA-FINSERV 500 SAPKGPFC01 - SAPKGPFC28  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   31 )  <!-- EA-FINSERV 600 SAPKGPFD01 - SAPKGPFD31  -->
- or ( COMPONENT = 'EA-FINSERV' and VERSION = '110' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   35 )  <!-- EA-FINSERV 110 110 - SAPKGPFA35  -->
- or ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   42 )  <!-- BANK/CFM 463_20 463_20 - SAPKIPBJ42  -->
+ ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and    2 )  <!-- S4CORE 102 102 - SAPK-10202INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '101' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and    4 )  <!-- S4CORE 101 101 - SAPK-10104INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and   0 )  <!-- S4CORE 103 103 - 103  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and   11 )  <!-- EA-FINSERV 618 618 - SAPK-61811INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and    7 )  <!-- EA-FINSERV 800 800 - SAPK-80007INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and   17 )  <!-- EA-FINSERV 617 SAPK-61701INEAFINSRV - SAPK-61717INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and   12 )  <!-- EA-FINSERV 616 616 - SAPK-61612INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and   22 )  <!-- EA-FINSERV 606 SAPK-60601INEAFINSRV - SAPK-60622INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    3 and   18 )  <!-- EA-FINSERV 605 SAPK-60503INEAFINSRV - SAPK-60518INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '200' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and   24 )  <!-- EA-FINSERV 200 200 - SAPKGPFB24  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and   21 )  <!-- EA-FINSERV 604 SAPK-60401INEAFINSRV - SAPK-60421INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and   20 )  <!-- EA-FINSERV 603 603 - SAPK-60320INEAFINSRV  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '500' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and   28 )  <!-- EA-FINSERV 500 SAPKGPFC01 - SAPKGPFC28  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and   31 )  <!-- EA-FINSERV 600 SAPKGPFD01 - SAPKGPFD31  -->
+ or ( COMPONENT = 'EA-FINSERV' and VERSION = '110' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and   35 )  <!-- EA-FINSERV 110 110 - SAPKGPFA35  -->
+ or ( COMPONENT = 'BANK/CFM' and VERSION = '463_20' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and   42 )  <!-- BANK/CFM 463_20 463_20 - SAPKIPBJ42  -->
   )</noncompliant>
     </checkitem>
   </configstore>

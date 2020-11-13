@@ -35,6 +35,10 @@ The policy does not check the following SNotes:
 SAP Security Patch Day: 2019 10
 Version: 001
 Date:    October 09 2019
+
+Version: 002
+   replaced ( COALESCE(NULLIF(SP,''),'0') )    by  ( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with ''))
+Date:    November 11 2020
 -->
 
 <targetsystem desc="SNotes of PatchDay: 2019-10" id="PatchDay_2019-10" multisql="Yes">
@@ -50,10 +54,10 @@ Date:    October 09 2019
   <configstore name="COMP_LEVEL">
     <checkitem desc="Note 0002794564 missing and solution with SP available" id="0002794564" operator="check_note:0002794564">
       <compliant>(
-       ( COMPONENT = 'ST-OST' and VERSION = '200' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   4 )   )  <!-- SAPK-20004INSTOST       --> )
+       ( COMPONENT = 'ST-OST' and VERSION = '200' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   4 )   )  <!-- SAPK-20004INSTOST       --> )
       </compliant>
       <noncompliant>(
-       ( COMPONENT = 'ST-OST' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   4 )    <!-- SAPK-20004INSTOST  -->  )
+       ( COMPONENT = 'ST-OST' and VERSION = '200' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   4 )    <!-- SAPK-20004INSTOST  -->  )
       </noncompliant>
     </checkitem>
   </configstore>
@@ -62,7 +66,7 @@ Date:    October 09 2019
   <checkitem desc="Note 0002794564 missing and applicable using Correction Instruction" id="0002794564" operator="check_note:0002794564">
     <compliant/>
     <noncompliant>(
- ( COMPONENT = 'ST-OST' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and    3 )  <!-- ST-OST 200 SAPK-20001INSTOST - SAPK-20003INSTOST  -->
+ ( COMPONENT = 'ST-OST' and VERSION = '200' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and    3 )  <!-- ST-OST 200 SAPK-20001INSTOST - SAPK-20003INSTOST  -->
   )</noncompliant>
     </checkitem>
   </configstore>
@@ -131,12 +135,12 @@ Date:    October 09 2019
   <configstore name="COMP_LEVEL">
   <checkitem desc="Note 0002784596 missing and solution with SP available" id="0002784596" operator="check_note:0002784596">
      <compliant>(
-       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )   ) <!-- S4CORE 102 SAPK-10205INS4CORE -->   or
-       ( COMPONENT = 'S4CORE' and VERSION = '103' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )   ) <!-- S4CORE 103 SAPK-10303INS4CORE -->
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    5 )   ) <!-- S4CORE 102 SAPK-10205INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    3 )   ) <!-- S4CORE 103 SAPK-10303INS4CORE -->
      )</compliant>
      <noncompliant>(
-       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    5 )  <!-- S4CORE 102 SAPK-10205INS4CORE -->   or
-       ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    3 )  <!-- S4CORE 103 SAPK-10303INS4CORE -->
+       ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    5 )  <!-- S4CORE 102 SAPK-10205INS4CORE -->   or
+       ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    3 )  <!-- S4CORE 103 SAPK-10303INS4CORE -->
      )</noncompliant>
     </checkitem>
   </configstore>
@@ -144,8 +148,8 @@ Date:    October 09 2019
   <checkitem desc="Note 0002784596 missing and applicable using Correction Instruction" id="0002784596" operator="check_note:0002784596">
     <compliant/>
     <noncompliant>(
- ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    2 )  <!-- S4CORE 103 103 - SAPK-10302INS4CORE  -->
- or ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and    4 )  <!-- S4CORE 102 SAPK-10201INS4CORE - SAPK-10204INS4CORE  -->
+ ( COMPONENT = 'S4CORE' and VERSION = '103' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and    2 )  <!-- S4CORE 103 103 - SAPK-10302INS4CORE  -->
+ or ( COMPONENT = 'S4CORE' and VERSION = '102' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and    4 )  <!-- S4CORE 102 SAPK-10201INS4CORE - SAPK-10204INS4CORE  -->
   )</noncompliant>
     </checkitem>
   </configstore>
@@ -160,24 +164,24 @@ Date:    October 09 2019
   <configstore name="COMP_LEVEL">
   <checkitem desc="Note 0002751806 missing and solution with SP available" id="0002751806" operator="check_note:0002751806">
      <compliant>(
-       ( COMPONENT = 'S4CRM' and VERSION = '100' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )   ) <!-- S4CRM 100 SAPK-10004INS4CRM -->   or
-       ( COMPONENT = 'S4CRM' and VERSION = '200' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )   ) <!-- S4CRM 200 SAPK-20002INS4CRM -->   or
-       ( COMPONENT = 'BBPCRM' and VERSION = '714' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )   ) <!-- BBPCRM 714 SAPK-71412INBBPCRM -->   or
-       ( COMPONENT = 'BBPCRM' and VERSION = '700' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )   ) <!-- BBPCRM 700 SAPKU70022 -->   or
-       ( COMPONENT = 'BBPCRM' and VERSION = '701' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- BBPCRM 701 SAPKU70119 -->   or
-       ( COMPONENT = 'BBPCRM' and VERSION = '702' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   24 )   ) <!-- BBPCRM 702 SAPKU70224 -->   or
-       ( COMPONENT = 'BBPCRM' and VERSION = '712' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   14 )   ) <!-- BBPCRM 712 SAPKU71214 -->   or
-       ( COMPONENT = 'BBPCRM' and VERSION = '713' and not( to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )   ) <!-- BBPCRM 713 SAPKU71319 -->
+       ( COMPONENT = 'S4CRM' and VERSION = '100' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    4 )   ) <!-- S4CRM 100 SAPK-10004INS4CRM -->   or
+       ( COMPONENT = 'S4CRM' and VERSION = '200' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    2 )   ) <!-- S4CRM 200 SAPK-20002INS4CRM -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '714' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   12 )   ) <!-- BBPCRM 714 SAPK-71412INBBPCRM -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '700' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   22 )   ) <!-- BBPCRM 700 SAPKU70022 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '701' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   19 )   ) <!-- BBPCRM 701 SAPKU70119 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '702' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   24 )   ) <!-- BBPCRM 702 SAPKU70224 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '712' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   14 )   ) <!-- BBPCRM 712 SAPKU71214 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '713' and not( to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   19 )   ) <!-- BBPCRM 713 SAPKU71319 -->
      )</compliant>
      <noncompliant>(
-       ( COMPONENT = 'S4CRM' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    4 )  <!-- S4CRM 100 SAPK-10004INS4CRM -->   or
-       ( COMPONENT = 'S4CRM' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;    2 )  <!-- S4CRM 200 SAPK-20002INS4CRM -->   or
-       ( COMPONENT = 'BBPCRM' and VERSION = '714' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   12 )  <!-- BBPCRM 714 SAPK-71412INBBPCRM -->   or
-       ( COMPONENT = 'BBPCRM' and VERSION = '700' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   22 )  <!-- BBPCRM 700 SAPKU70022 -->   or
-       ( COMPONENT = 'BBPCRM' and VERSION = '701' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- BBPCRM 701 SAPKU70119 -->   or
-       ( COMPONENT = 'BBPCRM' and VERSION = '702' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   24 )  <!-- BBPCRM 702 SAPKU70224 -->   or
-       ( COMPONENT = 'BBPCRM' and VERSION = '712' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   14 )  <!-- BBPCRM 712 SAPKU71214 -->   or
-       ( COMPONENT = 'BBPCRM' and VERSION = '713' and to_integer( COALESCE(NULLIF(SP,''),'0') ) &lt;   19 )  <!-- BBPCRM 713 SAPKU71319 -->
+       ( COMPONENT = 'S4CRM' and VERSION = '100' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    4 )  <!-- S4CRM 100 SAPK-10004INS4CRM -->   or
+       ( COMPONENT = 'S4CRM' and VERSION = '200' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    2 )  <!-- S4CRM 200 SAPK-20002INS4CRM -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '714' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   12 )  <!-- BBPCRM 714 SAPK-71412INBBPCRM -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '700' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   22 )  <!-- BBPCRM 700 SAPKU70022 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '701' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   19 )  <!-- BBPCRM 701 SAPKU70119 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '702' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   24 )  <!-- BBPCRM 702 SAPKU70224 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '712' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   14 )  <!-- BBPCRM 712 SAPKU71214 -->   or
+       ( COMPONENT = 'BBPCRM' and VERSION = '713' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;   19 )  <!-- BBPCRM 713 SAPKU71319 -->
      )</noncompliant>
     </checkitem>
   </configstore>
@@ -185,14 +189,14 @@ Date:    October 09 2019
   <checkitem desc="Note 0002751806 missing and applicable using Correction Instruction" id="0002751806" operator="check_note:0002751806">
     <compliant/>
     <noncompliant>(
- ( COMPONENT = 'S4CRM' and VERSION = '200' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and    1 )  <!-- S4CRM 200 200 - SAPK-20001INS4CRM  -->
- or ( COMPONENT = 'BBPCRM' and VERSION = '700' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   21 )  <!-- BBPCRM 700 SAPKU70001 - SAPKU70021  -->
- or ( COMPONENT = 'S4CRM' and VERSION = '100' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and    3 )  <!-- S4CRM 100 SAPK-10001INS4CRM - SAPK-10003INS4CRM  -->
- or ( COMPONENT = 'BBPCRM' and VERSION = '701' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    3 and   18 )  <!-- BBPCRM 701 SAPKU70103 - SAPKU70118  -->
- or ( COMPONENT = 'BBPCRM' and VERSION = '702' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   23 )  <!-- BBPCRM 702 SAPKU70201 - SAPKU70223  -->
- or ( COMPONENT = 'BBPCRM' and VERSION = '712' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    0 and   13 )  <!-- BBPCRM 712 712 - SAPKU71213  -->
- or ( COMPONENT = 'BBPCRM' and VERSION = '713' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   18 )  <!-- BBPCRM 713 SAPKU71301 - SAPKU71318  -->
- or ( COMPONENT = 'BBPCRM' and VERSION = '714' and to_integer( COALESCE(NULLIF(SP,''),'0' ) ) between    1 and   11 )  <!-- BBPCRM 714 SAPK-71401INBBPCRM - SAPK-71411INBBPCRM  -->
+ ( COMPONENT = 'S4CRM' and VERSION = '200' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and    1 )  <!-- S4CRM 200 200 - SAPK-20001INS4CRM  -->
+ or ( COMPONENT = 'BBPCRM' and VERSION = '700' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and   21 )  <!-- BBPCRM 700 SAPKU70001 - SAPKU70021  -->
+ or ( COMPONENT = 'S4CRM' and VERSION = '100' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and    3 )  <!-- S4CRM 100 SAPK-10001INS4CRM - SAPK-10003INS4CRM  -->
+ or ( COMPONENT = 'BBPCRM' and VERSION = '701' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    3 and   18 )  <!-- BBPCRM 701 SAPKU70103 - SAPKU70118  -->
+ or ( COMPONENT = 'BBPCRM' and VERSION = '702' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and   23 )  <!-- BBPCRM 702 SAPKU70201 - SAPKU70223  -->
+ or ( COMPONENT = 'BBPCRM' and VERSION = '712' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    0 and   13 )  <!-- BBPCRM 712 712 - SAPKU71213  -->
+ or ( COMPONENT = 'BBPCRM' and VERSION = '713' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and   18 )  <!-- BBPCRM 713 SAPKU71301 - SAPKU71318  -->
+ or ( COMPONENT = 'BBPCRM' and VERSION = '714' and to_integer( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between    1 and   11 )  <!-- BBPCRM 714 SAPK-71401INBBPCRM - SAPK-71411INBBPCRM  -->
   )</noncompliant>
     </checkitem>
   </configstore>
