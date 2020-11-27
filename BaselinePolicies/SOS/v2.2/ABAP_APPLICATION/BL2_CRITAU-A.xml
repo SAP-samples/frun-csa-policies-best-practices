@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] CRITICAL Authorizations - ABAP" id="BL22_CRITAU-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
 
-<!-- CRITAU-A: 1-CRITICAL Authorizations – ABAP -->
+<!-- CRITAU-A: 1-CRITICAL Authorizations – ABAP 
+   Config store name and SCI_ID need adjusted to customized store
   <configstore name="AUTH_PROFILE_USER" SCI_ID="ZAAAAA">
 
     <checkitem desc="[p1-CRITICAL] Users with profile SAP_ALL" id="CRITAU-A_a.1" >
@@ -420,6 +421,7 @@ To define users that can are OK, you may better define exemptions in the Exempti
       <noncomplianttext/>
     </checkitem>
   </configstore>
+-->
   <configstore name="TDDAT">
     <checkitem desc="[p2-STANDARD] Access to table USH02 protected" id="CRITAU-A_d.1.1">
       <compliant>TABNAME = 'USH02'  and CCLASS = 'SPWD' </compliant>
