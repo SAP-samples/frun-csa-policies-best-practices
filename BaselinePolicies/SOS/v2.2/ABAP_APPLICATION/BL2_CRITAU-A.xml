@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] CRITICAL Authorizations - ABAP" id="BL22_CRITAU-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
-
-<!-- CRITAU-A: 1-CRITICAL Authorizations – ABAP 
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] CRITICAL Authorizations - ABAP" id="BL2_CRITAU-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- CRITAU-A: 1-CRITICAL Authorizations – ABAP 
    Config store name and SCI_ID need adjusted to customized store
   <configstore name="AUTH_PROFILE_USER" SCI_ID="ZAAAAA">
 
@@ -19,7 +18,8 @@
       </noncompliant>
       <noncomplianttext/>
     </checkitem>
-<!-- Alternative check with some exempted user names:
+-->
+  <!-- Alternative check with some exempted user names:
     <checkitem desc="[p1-CRITICAL] Forbidden users with profile SAP_ALL" id="CRITAU-A_a.1" >
       <compliant>          PROFILE = 'SAP_ALL'  and not
                                      USERNAME in ( 'DDIC','SAP*') and not USERNAME like 'FF%' and
@@ -35,6 +35,7 @@
       <noncomplianttext/>
     </checkitem>
 -->
+  <!--
     <checkitem desc="[p1-CRITICAL] Users with profile SAP_NEW" id="CRITAU-A_b.1" >
       <compliant>          PROFILE = 'SAP_NEW'  and 
                                      USERNAME = '%' and
@@ -49,7 +50,8 @@
       </noncompliant>
       <noncomplianttext/>
     </checkitem>
-<!-- Alternative check with some exempted user names:
+-->
+  <!-- Alternative check with some exempted user names:
     <checkitem desc="[p1-CRITICAL] Forbidden users with profile SAP_NEW" id="CRITAU-A_b.1" >
       <compliant>          PROFILE = 'SAP_NEW'  and not
                                      USERNAME in ( 'DDIC','SAP*') and not USERNAME like 'FF%' and
@@ -64,9 +66,10 @@
       </noncompliant>
       <noncomplianttext/>
     </checkitem>
--->
+
   </configstore>
-<!--
+-->
+  <!--
   <configstore name="AUTH_ ROLE_USER" SCI_ID="ZBBBBB">
     <checkitem desc="[p1-CRITICAL] User SAP* has profile SAP_ALL" id="CRITAU-A_b.3" >
       <compliant>        
@@ -78,7 +81,7 @@
     </checkitem>
   </configstore>
 -->
-
+  <!--
   <configstore name="AUTH_PROFILE_USER_CHANGE_DOC" SCI_ID="ZCCCCC">
     <checkitem desc="[p1-CRITICAL] Profile SAP_ALL added to users" id="CRITAU-A_a.2" not_found="positive">
       <compliant>          USER like '%' and
@@ -109,9 +112,10 @@
       <noncomplianttext/>
     </checkitem>
   </configstore>
-
+-->
+  <!--
   <configstore name="AUTH_COMB_CHECK_USER" SCI_ID="ZDDDD">
-<!-- It is assumed that all managed systems have been upgraded the software component ST-A/PI to version *R* . 
+   It is assumed that all managed systems have been upgraded the software component ST-A/PI to version *R* . 
       When having systems with lower ST-A/PI version change checks like as follows:
    <checkitem desc="[p1-CRITICAL] Users with CHANGE ALL TABLES authorization" id="CRITAU-A_d.01.1">
       <compliant>         COMB_ID = 'CHANGE_ALL_TABLES' and
@@ -132,6 +136,7 @@
 
 To define users that can are OK, you may better define exemptions in the Exemptions UI, rather than adapting the check rules!
 -->
+  <!--
     <checkitem desc="[p1-CRITICAL] Users with CHANGE ALL TABLES authorization" id="CRITAU-A_d.01.1">
       <compliant>         COMB_ID = 'CHANGE_ALL_TABLES' and
                                     USER like '%' and
