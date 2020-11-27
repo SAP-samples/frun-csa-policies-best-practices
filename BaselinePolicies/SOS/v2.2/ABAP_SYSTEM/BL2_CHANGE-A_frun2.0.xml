@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Protect Production System against changes – ABAP" id="BL22_CHANGE-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- 
+-->
+  <!-- CHANGE-A: Protect Production System against changes – ABAP -->
+  <configstore name="GLOBAL">
+    <checkitem desc="[p1-CRITICAL] Global Modifiable Change Option for Production Systems" id="CHANGE-A_a" system_roles="PROD:DEV:TEST:SANDBOX:QA::">
+      <compliant>    ((NAME = 'GLOBAL_SETTING'  and VALUE = 'NOT MODIFIABLE'  and ptree.value = 'PROD' and ptree.hier_id = '1') OR (ptree.value != 'PROD' and ptree.hier_id = '1'))</compliant>
+      <complianttext/>
+      <noncompliant>   NAME = 'GLOBAL_SETTING'  and not ( VALUE = 'NOT MODIFIABLE'  ) and ptree.value = 'PROD' and ptree.hier_id = '1'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <configstore name="CLIENTS">
+    <checkitem desc="[p1-CRITICAL] Client Change Option for Production Systems" id="CHANGE-A_b">
+      <compliant>    MANDT like '%'  and ((CCCATEGORY = 'P'  and CCCORACTIV = '2'  and CCNOCLIIND = '3' and (CCCOPYLOCK ='X' or CCCOPYLOCK = 'L' )) OR (CCCATEGORY != 'P'))   </compliant>
+      <complianttext/>
+      <noncompliant> MANDT like '%'  and CCCATEGORY = 'P'  and not (CCCORACTIV = '2'  and CCNOCLIIND = '3' and (CCCOPYLOCK ='X' or CCCOPYLOCK = 'L' ))   </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <!-- The following configstores referenced in Configuration_Validation_Template_V2.2_CV-1 are also available in FRUN:
+<configstore name=”COMPONENTS” SCI_ID=”S00018”> 
+</configstore>
+<configstore name=”NAMESPACES" SCI_ID=”S00019”> 
+</configstore>
+<configstore name=”COMPONENTS_CHANGE_LOG" SCI_ID=”S00308” > 
+</configstore>
+<configstore name=”NAMESPACES _CHANGE_LOG" SCI_ID=”S00303” > 
+</configstore>
+<configstore name=”CLIENTS _CHANGE_LOG" SCI_ID=”S00310” > 
+</configstore>
+-->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <checkitem desc="[p2-STANDARD] rec/client (Profile parameter to create customizing table logs)" id="CHANGE-A_c">
+      <compliant>    NAME = 'rec/client'  and  VALUE != 'OFF'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'rec/client'  and  VALUE = 'OFF'   </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <!-- id= CHANGE-A_d, e, f: Transport Parameters available in Focused Run as of FRUN 3.0 FP00 -->
+<!--
+  <configstore name="TRANSPORT_TOOL">
+    <checkitem desc="[p3-EXTENDED] Transport Parameter RECCLIENT is activated" id="CHANGE-A_d">
+      <compliant>    NAME = 'RECCLIENT'  and ( VALUE != 'OFF' and length(VALUE) &gt; 0 )</compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'RECCLIENT'  and ( VALUE = 'OFF' or length(VALUE) = 0 )</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Transport Parameter VERS_AT_IMP is activated" id="CHANGE-A_e.1" system_roles="DEV">
+      <compliant>    NAME = 'VERS_AT_EXP'  and ( VALUE = 'NO_T' or VALUE = 'TRUE' or VALUE = 'YES' or VALUE = 'ON' or VALUE = '1' ) </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'VERS_AT_EXP'  and not ( VALUE = 'NO_T' or VALUE = 'TRUE' or VALUE = 'YES' or VALUE = 'ON' or VALUE = '1' ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Transport Parameter VERS_AT_IMP is activated in Prod." id="CHANGE-A_e.2" system_roles="PROD">
+      <compliant>    NAME = 'VERS_AT_IMP'  and VALUE = 'ALWAYS'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'VERS_AT_IMP'  and VALUE != 'ALWAYS' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Transport Parameter TLOGOCHECK is activated" id="CHANGE-A_f">
+      <compliant>    NAME = 'TLOGOCHECK'  and VALUE = 'TRUE'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'TLOGOCHECK'  and VALUE != 'TRUE' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Transport Parameter TP_RELEASE  is compliant" id="CHANGE-A_g.1">
+      <compliant>    NAME = 'TP_RELEASE'  and VALUE &gt;= '380.44.90'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'TP_RELEASE'  and VALUE &lt; '380.44.90' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Transport Parameter TP_VERSION  is compliant" id="CHANGE-A_g.2">
+      <compliant>    NAME = 'TP_VERSION'  and VALUE &gt;= '380'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'TP_VERSION'  and VALUE &lt; '380' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Transport Parameter CHK_CRIOBJ_AT_EXPORT  is compliant" id="CHANGE-A_h" system_roles="DEV">
+      <compliant>    NAME = 'CHK_CRIOBJ_AT_EXPORT'  and ( VALUE = 'W' or VALUE = 'E' ) </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'CHK_CRIOBJ_AT_EXPORT'  and ( VALUE = 'W' or VALUE = 'E' ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  -->
+  <!-- END of Transport Parameters available as of FRUN 3.0 FP00 -->
+  <configstore name="SAP_KERNEL">
+    <checkitem desc="[p3-EXTENDED] Kernel release which note 2405918 recommends" id="CHANGE-A_g.3">
+      <compliant>    NAME = 'KERN_REL' and 
+                   ( ( substring(VALUE,0,3) &gt; '773' ) or
+                     ( substring(VALUE,0,3) = '773' ) or
+                     ( substring(VALUE,0,3) = '753') or
+                     ( substring(VALUE,0,3) = '749') or
+                     ( substring(VALUE,0,3) = '745') or
+                     ( substring(VALUE,0,3) = '722') or
+                     ( substring(VALUE,0,3) = '721') )
+      </compliant>
+      <noncompliant> NAME = 'KERN_REL' and not
+                   ( ( substring(VALUE,0,3) &gt; '773' ) or
+                     ( substring(VALUE,0,3) = '773' ) or
+                     ( substring(VALUE,0,3) = '753') or
+                     ( substring(VALUE,0,3) = '749') or
+                     ( substring(VALUE,0,3) = '745') or
+                     ( substring(VALUE,0,3) = '722') or
+                     ( substring(VALUE,0,3) = '721') )
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Kernel patchlevel which note 0002671160 recommends" id="CHANGE-A_g.3">
+      <compliant>    NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1112'</compliant>
+      <noncompliant> NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1112'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>      NAME = 'KERN_REL' and VALUE = '721_REL'</joincompliant>
+        <joinnoncompliant>   NAME = 'KERN_REL' and VALUE = '721_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Kernel patchlevel which note 0002671160 recommends" id="CHANGE-A_g.3">
+      <compliant>    NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0625'</compliant>
+      <noncompliant> NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0625'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>      NAME = 'KERN_REL' and VALUE = '722_REL'</joincompliant>
+        <joinnoncompliant>   NAME = 'KERN_REL' and VALUE = '722_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Kernel patchlevel which note 0002671160 recommends" id="CHANGE-A_g.3">
+      <compliant>    NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0810'</compliant>
+      <noncompliant> NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0810'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>      NAME = 'KERN_REL' and VALUE = '745_REL'</joincompliant>
+        <joinnoncompliant>   NAME = 'KERN_REL' and VALUE = '745_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Kernel patchlevel which note 0002671160 recommends" id="CHANGE-A_g.3">
+      <compliant>    NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0521'</compliant>
+      <noncompliant> NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0521'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>      NAME = 'KERN_REL' and VALUE = '749_REL'</joincompliant>
+        <joinnoncompliant>   NAME = 'KERN_REL' and VALUE = '749_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Kernel patchlevel which note 0002671160 recommends" id="CHANGE-A_g.3">
+      <compliant>    NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0220'</compliant>
+      <noncompliant> NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0220'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>      NAME = 'KERN_REL' and VALUE = '753_REL'</joincompliant>
+        <joinnoncompliant>   NAME = 'KERN_REL' and VALUE = '753_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Kernel patchlevel which note 0002671160 recommends" id="CHANGE-A_g.3">
+      <compliant>    NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0011'</compliant>
+      <noncompliant> NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0011'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>      NAME = 'KERN_REL' and VALUE = '773_REL'</joincompliant>
+        <joinnoncompliant>   NAME = 'KERN_REL' and VALUE = '773_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Kernel patchlevel which note 0002671160 recommends" id="CHANGE-A_g.3">
+      <compliant>    NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0000'</compliant>
+      <noncompliant> NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0000'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>      NAME = 'KERN_REL' and VALUE = '774_REL'</joincompliant>
+        <joinnoncompliant>   NAME = 'KERN_REL' and VALUE = '774_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+</targetsystem>

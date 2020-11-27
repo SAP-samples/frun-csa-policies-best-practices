@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Security Baseline for PROCESS - JAVA" id="BL22_PROCESS-J" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- PROCESS -->
+  <!-- SECSTO-J: Protection of Secure Store – Java -->
+  <!-- AUDIT-J: Audit Settings – Java -->
+  <configstore name="xmlhardener_srv">
+    <checkitem desc="[p3-EXTENDED] Enable XML Hardener" id="AUDIT-J">
+      <compliant>     NAME = 'enable.xml.hardener' and VALUE = 'true'</compliant>
+      <complianttext/>
+      <noncompliant>  NAME = 'enable.xml.hardener' and not ( VALUE = 'true'  )</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

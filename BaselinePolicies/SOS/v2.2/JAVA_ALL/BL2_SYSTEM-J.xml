@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Baseline Policy for System Hardening - JAVA" id="BL22_SYSTEM-J" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="http">
+    <!-- DISCL-J: Information Disclosure – JAVA -->
+    <checkitem desc="[p2-STANDARD] Disclosure of unnecessary information about versions or from errors" id="DISCL-J_a">
+      <compliant>    NAME = 'UseServerHeader'  and  VALUE in ('false','FALSE')  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'UseServerHeader'  and  VALUE not in ('false','FALSE') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <!-- Alternative:
+    <checkitem desc="[p2-STANDARD] Disclosure of unnecessary information about versions or from errors" id="DISCL-J_a">
+      <compliant>
+            NAME = 'UseServerHeader'  and  UPPER(VALUE) = 'FALSE'
+         </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'UseServerHeader'  and  UPPER(VALUE) != 'FALSE'
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    -->
+    </configstore>
+  <configstore name="Parameters">
+    <!-- MSGSRV-J        Message Server Security - AS JAVA -->
+    <checkitem desc="[p2-STANDARD] Defined internal port for server communication" id="MSGSRV-J_a">
+      <compliant>    NAME = 'rdisp/msserv_internal'  and VALUE not like_regexpr '^\s*$' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'rdisp/msserv_internal'  and VALUE like_regexpr '^\s*$' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Prohibite external monitor" id="MSGSRV-J_b">
+      <compliant>    NAME = 'ms/monitor'  and VALUE = '0' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ms/monitor'  and not ( VALUE = '0'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivated administration port for external clients" id="MSGSRV-J_c">
+      <compliant>NAME = 'ms/admin_port'  and lpad(VALUE, 4, '0') &lt;= '0000' </compliant>
+      <complianttext/>
+      <noncompliant>NAME = 'ms/admin_port'  and not (lpad(VALUE, 4, '0') &lt;= '0000') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] File with access control list for message server" id="MSGSRV-J_d.1">
+      <compliant>    NAME = 'ms/acl_info' and 
+                     ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/ms_acl_info' or
+                       VALUE like_regexpr '^/sapmnt/(\w{3})/SYS/global/ms_acl_info'  or
+                       VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' )
+      </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ms/acl_info' and not 
+                     ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/ms_acl_info' or
+                       VALUE like_regexpr '^/sapmnt/(\w{3})/SYS/global/ms_acl_info'  or
+                       VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' ) 
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <!-- Alternative rule (more relaxed):    -->
+    <checkitem desc="[p1-CRITICAL] File with access control list for message server" id="MSGSRV-A_d.2">
+      <compliant>    NAME = 'ms/acl_info' and VALUE like_regexpr '.*\w{3}.SYS.global.ms_acl_info.*' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ms/acl_info' and not VALUE like_regexpr '.*\w{3}.SYS.global.ms_acl_info.*'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <!-- NOTEST-J: No Testing Functionality in Production  – JAVA -->
+  <configstore name="servlet_jsp">
+    <checkitem desc="[p1-CRITICAL] InvokerServlet globally enabled" id="NOTEST-J_a">
+      <compliant>    NAME = 'EnableInvokerServletGlobally'  and  VALUE = 'false'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'EnableInvokerServletGlobally'  and  VALUE != 'false' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <!-- SESS-J: Session Protection – Java -->
+  <configstore name="http">
+    <checkitem desc="[p2-STANDARD] HttpOnly must be enabled with SystemCookiesDataProtection=true" id="SESS-J_a.1">
+      <compliant>    NAME = 'HttpOnly'  and VALUE = 'true' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'HttpOnly'  and not VALUE = 'true' </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="http" no_data_found="Yes">
+        <joincompliant>      NAME = 'SystemCookiesDataProtection'  and VALUE = 'true' </joincompliant>
+        <joinnoncompliant>   NAME = 'SystemCookiesDataProtection'  and VALUE = 'true' </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] SystemCookiesDataProtection" id="SESS-J_a.2">
+      <compliant>    NAME = 'SystemCookiesDataProtection'  and VALUE = 'true' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'SystemCookiesDataProtection'  and VALUE = 'true'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] SystemCookiesDataProtection" id="SESS-J_b.2">
+      <compliant>    NAME = 'SystemCookiesHTTPSProtection'  and VALUE = 'true' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'SystemCookiesHTTPSProtection'  and VALUE = 'true'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

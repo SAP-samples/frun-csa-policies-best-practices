@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] SYSTEM - HANA" id="BL22-SYSTEM-H" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="HDB_PARAMETER">
+    <!-- with listeninterface = .global an insecure configuration is more likely than with settings .internal or .local -->
+    <checkitem desc="[p1-CRITICAL] HANA internal communication (listeninterface)" id="NETCF-H_a.1">
+      <compliant>    FILE_NAME = 'global.ini' and SECT = 'communication'  and NAME = 'listeninterface'  and VALUE != '.global' 
+      </compliant>
+      <complianttext/>
+      <noncompliant> FILE_NAME = 'global.ini' and SECT = 'communication'  and NAME = 'listeninterface'  and VALUE = '.global'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <!--Scale-out systems are usually compliant if internal hostname resolution is configured -->
+    <checkitem desc="[p1-CRITICAL] HANA internal communication (listeninterface)" id="NETCF-H_a.2">
+      <compliant>    FILE_NAME = 'global.ini' and SECT = 'internal_hostname_resolution' and NAME like '%' and VALUE not like_regexpr '^\s*$'
+      </compliant>
+      <complianttext> Parameter listeninterface = .internal and Section internal_hostname_resolution is configured </complianttext>
+      <noncompliant> FILE_NAME = 'global.ini' and SECT = 'internal_hostname_resolution' and NAME like '%' and VALUE like_regexpr '^\s*$'
+      </noncompliant>
+      <noncomplianttext> Parameter listeninterface = .internal but Section internal_hostname_resolution is not configured </noncomplianttext>
+      <joinstore name="HDB_PARAMETER" no_data_found="Yes">
+        <joincompliant>    FILE_NAME = 'global.ini' and SECT = 'communication'  and NAME = 'listeninterface'  and VALUE = '.internal' </joincompliant>
+        <joinnoncompliant> FILE_NAME = 'global.ini' and SECT = 'communication'  and NAME = 'listeninterface'  and VALUE = '.internal' </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!--Scale-out systems are always compliant if internal communication is encrypted (RECOMMENDED for HANA 2.0) -->
+    <checkitem desc="[p1-CRITICAL] HANA internal communication (listeninterface)" id="NETCF-H_a.3">
+      <compliant>    FILE_NAME = 'global.ini' and SECT = 'communication' and NAME = 'ssl' and LOWER(VALUE) = 'systempki' 
+      </compliant>
+      <complianttext/>
+      <noncompliant> FILE_NAME = 'global.ini' and SECT = 'communication' and NAME = 'ssl' and LOWER(VALUE) != 'systempki' 
+      </noncompliant>
+      <noncomplianttext> Internal communication of a Scale-out System should be encrypted  </noncomplianttext>
+      <joinstore name="HDB_PARAMETER" no_data_found="Yes">
+        <joincompliant>  FILE_NAME = 'global.ini' and SECT = 'communication'  and NAME = 'listeninterface'  and VALUE in ('.global','.internal')   </joincompliant>
+        <joinnoncompliant> FILE_NAME = 'global.ini' and SECT = 'communication'  and NAME = 'listeninterface'  and VALUE in ('.global','.internal')  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- For some cases the join condition does not find a .global setting in layer SYSTEM (to be analyzed)
+    <checkitem desc="[critical] HANA internal communication (listeninterface)" id="NETCF-H_a.4">
+      <compliant>    FILE_NAME = 'global.ini' and SECT = 'communication' and LAYER like '%' and NAME = 'listeninterface'  and VALUE = '.local'  
+      </compliant>
+      <complianttext/>
+      <noncompliant> FILE_NAME = 'global.ini' and SECT = 'communication' and LAYER like '%' and NAME = 'listeninterface'  and not VALUE = '.local'
+      </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="HDB_PARAMETER" no_data_found="Yes">
+        <joincompliant>    FILE_NAME = 'global.ini' and SECT = 'communication' and LAYER like '%' and NAME = 'listeninterface'  and VALUE = '.local'   </joincompliant>
+        <joinnoncompliant> FILE_NAME = 'global.ini' and SECT = 'communication' and LAYER like '%' and NAME = 'listeninterface'  and VALUE = '.local'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    -->
+    <!-- TRACES-H: Critical Data in trace files – HANA (TenantDB) -->
+    <checkitem desc="[p1-CRITICAL] SQL trace level: ALL_WITH_RESULTS" id="TRACES-H_a" system_attributes="DB_TENANT:TRUE">
+      <compliant>    FILE_NAME = 'indexserver.ini' and 
+                     SECT = 'sqltrace' and 
+                     NAME = 'level' and 
+                     LOWER(VALUE) != 'all_with_results'  and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </compliant>
+      <noncompliant> FILE_NAME = 'indexserver.ini' and 
+                     SECT = 'sqltrace' and 
+                     NAME = 'level' and 
+                     LOWER(VALUE) = 'all_with_results'  and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- SECUPD-H: Regular Security Updates – HANA -->
+  <configstore name="HDB_VERSION">
+    <checkitem desc="[p1-CRITICAL] Security Maintenance Status of HANA Version (SPS)" id="SECUPD-H.c">
+      <compliant>    ( (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.04' )
+                    OR (NAME = 'VERSION' AND substring(VALUE,0,7) &gt;= '2.00.05' )
+                    OR (NAME = 'VERSION' AND substring(VALUE,0,6) = '1.00.1' AND substring(VALUE,0,11) &gt;= '1.00.122.00') )
+      </compliant>
+      <noncompliant> ( (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.00' )
+                    OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.01')
+                    OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.02')
+                    OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.03')
+                    OR (NAME = 'VERSION' AND substring(VALUE,0,6) = '1.00.1' AND NOT(substring(VALUE,0,11) &gt;= '1.00.122.00')) )
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] HANA Version (Revision) is older than 1 year (older than 01.10.2019)" id="SECUPD-H.a">
+      <compliant>    ( NAME = 'VERSION' AND ( VALUE like '1%' AND substring(VALUE,0,11) &gt;= '1.00.122.27' ) )
+                  OR (NAME =  'VERSION' AND ( substring(VALUE,0,7) = '2.00.04' AND substring(VALUE,0,11) &gt;= '2.00.044.00' ) )
+                  OR (NAME =  'VERSION' AND ( substring(VALUE,0,7) = '2.00.05' AND substring(VALUE,0,11) &gt;= '2.00.050.00' ) )
+                  OR (NAME =  'VERSION' AND substring(VALUE,0,7) &gt; '2.00.05' )
+      </compliant>
+      <noncompliant> ( NAME = 'VERSION' AND ( VALUE like '1%' AND NOT substring(VALUE,0,11) &gt;= '1.00.122.27' ) )
+                  OR (NAME =  'VERSION' AND ( substring(VALUE,0,7) = '2.00.04' AND NOT substring(VALUE,0,11) &gt;= '2.00.044.00' ) )      
+                  OR ( NAME = 'VERSION' AND  substring(VALUE,0,7) = '2.00.03' )
+                  OR (  NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.00' )
+                  OR ( NAME = 'VERSION' AND substring(VALUE,0,7) =  '2.00.01' )
+                  OR ( NAME = 'VERSION' AND substring(VALUE,0,7) =  '2.00.02' )
+     </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Encryption of Network Connections - ABAP" id="BL22_NETENC-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- NETENC-A: Encryption of Network Connections – ABAP-->
+  <configstore name="ABAP_INSTANCE_PAHI" sci_id="">
+    <checkitem desc="[p2-STANDARD] snc/enable (Profile Parameter, enable SNC-Module)" id="NETENC-A_a">
+      <compliant>          NAME = 'snc/enable' and VALUE = '1' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/enable' and not ( VALUE = '1'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] snc/data_protection/min (Profile Parameter, Enforce encryption for SNC)" id="NETENC-A_b.1">
+      <compliant>          NAME = 'snc/data_protection/min' and VALUE = '3' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/data_protection/min' and not ( VALUE = '3'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] snc/data_protection/max (Profile Parameter, Enforce encryption for SNC)" id="NETENC-A_b.2">
+      <compliant>          NAME = 'snc/data_protection/max' and VALUE = '3' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/data_protection/max' and not ( VALUE = '3'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] snc/data_protection/max (Profile Parameter, Enforce encryption for SNC)" id="NETENC-A_b.3">
+      <compliant>          NAME = 'snc/data_protection/use' and ( VALUE = '3' or VALUE = '9' ) </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/data_protection/use' and not ( VALUE = '3' or VALUE = '9' ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Accept insecure SAPGUI logins to SNC-enabled Server" id="NETENC-A_c.1">
+      <compliant>          NAME = 'snc/accept_insecure_gui' and (VALUE = '0' or VALUE = 'U')</compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/accept_insecure_gui' and not (VALUE = '0' or VALUE = 'U') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Accept insecure RFC-connections to SNC-enabled Server" id="NETENC-A_c.2a">
+      <compliant>          NAME = 'snc/accept_insecure_rfc' and (VALUE = '0' or VALUE = 'U') </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/accept_insecure_rfc' and not (VALUE = '0' or VALUE = 'U') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Accept insecure RFC-connections to SNC-enabled Server" id="NETENC-A_c.2b">
+      <compliant>          NAME = 'snc/accept_insecure_r3int_rfc' and (VALUE = '0' or VALUE = '1') </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/accept_insecure_r3int_rfc' and not ( VALUE = '0' or VALUE = '1') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Accept only encrypted GUI connections to SNC-enabled Server" id="NETENC-A_c.3">
+      <compliant>          NAME = 'snc/only_encrypted_gui' and VALUE = '1' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/only_encrypted_gui' and VALUE = '1'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Accept only encrypted RFC connections to SNC-enabled Server" id="NETENC-A_c.4">
+      <compliant>          NAME = 'snc/only_encrypted_rfc' and VALUE = '1' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/only_encrypted_rfc' and not VALUE = '1' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] snc/log_unencrypted_rfc (Profile Parameter)" id="NETENC-A_d">
+      <compliant>          NAME = 'snc/log_unencrypted_rfc' and VALUE = '2' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/log_unencrypted_rfc' and not VALUE = '2'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] ssl/ciphersuites  (Profile Parameter, SAP Note 510007)" id="NETENC-A_f.1">
+      <compliant>          NAME = 'ssl/ciphersuites' and VALUE = '135:PFS:HIGH::EC_P256:EC_HIGH' </compliant>
+      <complianttext/>
+      <noncompliant>   NAME = 'ssl/ciphersuites' and not VALUE = '135:PFS:HIGH::EC_P256:EC_HIGH'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] ssl/client_ciphersuites  (Profile Parameter, SAP Note 510007)" id="NETENC-A_f.2">
+      <compliant>          NAME = 'ssl/client_ciphersuites' and VALUE = '150:PFS:HIGH::EC_P256:EC_HIGH' </compliant>
+      <complianttext/>
+      <noncompliant>   NAME = 'ssl/client_ciphersuites' and not VALUE = '150:PFS:HIGH::EC_P256:EC_HIGH'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] system/secure_communication (Profile Parameter, SAP Notes 2040644,  2362078)" id="NETENC-A_e">
+      <compliant>          NAME = 'system/secure_communication' and VALUE = 'ON' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'system/secure_communication' and not VALUE = 'ON'  </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="COMP_LEVEL" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant>        
+                                      ( component = 'SAP_BASIS' and version = '740' and SP &gt;= '0008' ) OR
+                                      ( component = 'SAP_BASIS' and version &gt; '740' )
+        </joincompliant>
+        <joinnoncompliant> 
+                                      ( component = 'SAP_BASIS' and version = '740' and SP &gt;= '0008' ) OR
+                                      ( component = 'SAP_BASIS' and version &gt; '740' ) </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL" sci-id="S00120">
+    <checkitem desc="[p3-EXTENDED] system/secure_communication (Profile Parameter, SAP Notes 2040644,  2362078)" id="NETENC-A_e">
+      <compliant>          ( component = 'SAP_BASIS' and version = '740' and SP &gt;= '0008' ) OR
+                                     ( component = 'SAP_BASIS' and version &gt; '740' )      
+      </compliant>
+      <complianttext/>
+      <noncompliant>   ( component = 'SAP_BASIS' and version = '740' and SP &lt; '0008' ) OR
+                                    ( component = 'SAP_BASIS' and version &lt; '740' )
+      </noncompliant>
+      <noncomplianttext>   system/secure_communication requires upgrade to SAP_BASIS 7.40 SP 8 or higher version
+      </noncomplianttext>
+      <joinstore name="COMP_LEVEL" no_data_found="Yes" not_in_output="Yes" sci-id="S00120">
+        <joincompliant> ( component = 'SAP_BASIS' and version = '740' and SP &lt; '0008' ) OR
+                                    ( component = 'SAP_BASIS' and version &lt; '740' )
+        </joincompliant>
+        <joinnoncompliant> 
+                                    ( component = 'SAP_BASIS' and version = '740' and SP &lt; '0008' ) OR
+                                    ( component = 'SAP_BASIS' and version &lt; '740' )
+        </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+</targetsystem>

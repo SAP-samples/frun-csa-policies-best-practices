@@ -1,0 +1,439 @@
+<!-- CRITAU-A: 1-CRITICAL Authorizations – ABAP -->
+  <configstore name="AUTH_PROFILE_USER" SCI_ID="ZAAAAA">
+
+    <checkitem desc="[p1-CRITICAL] Users with profile SAP_ALL" id="CRITAU-A_a.1" >
+      <compliant>          PROFILE = 'SAP_ALL'  and 
+                                     USERNAME = '%' and
+                                     USER_TYPE like '%' and not
+                                     STATUS = 'USER_IS_AUTHORIZED' 
+     </compliant>
+      <complianttext/>
+      <noncompliant>    PROFILE = 'SAP_ALL'  and 
+                                     USERNAME = '%' and
+                                     USER_TYPE like '%' and
+                                     STATUS = 'USER_IS_AUTHORIZED'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+<!-- Alternative check with some exempted user names:
+    <checkitem desc="[p1-CRITICAL] Forbidden users with profile SAP_ALL" id="CRITAU-A_a.1" >
+      <compliant>          PROFILE = 'SAP_ALL'  and not
+                                     USERNAME in ( 'DDIC','SAP*') and not USERNAME like 'FF%' and
+                                     USER_TYPE like '%' and not
+                                     STATUS = 'USER_IS_AUTHORIZED' 
+     </compliant>
+      <complianttext/>
+      <noncompliant>    PROFILE = 'SAP_ALL'  and not
+                                     USERNAME in ( 'DDIC','SAP*') and not USERNAME like 'FF%' and
+                                     USER_TYPE like '%' and
+                                     STATUS = 'USER_IS_AUTHORIZED' 
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+-->
+    <checkitem desc="[p1-CRITICAL] Users with profile SAP_NEW" id="CRITAU-A_b.1" >
+      <compliant>          PROFILE = 'SAP_NEW'  and 
+                                     USERNAME = '%' and
+                                     USER_TYPE like '%' and not
+                                     STATUS = 'USER_IS_AUTHORIZED' 
+     </compliant>
+      <complianttext/>
+      <noncompliant>    PROFILE = 'SAP_NEW'  and 
+                                     USERNAME = '%' and
+                                     USER_TYPE like '%' and
+                                     STATUS = 'USER_IS_AUTHORIZED'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+<!-- Alternative check with some exempted user names:
+    <checkitem desc="[p1-CRITICAL] Forbidden users with profile SAP_NEW" id="CRITAU-A_b.1" >
+      <compliant>          PROFILE = 'SAP_NEW'  and not
+                                     USERNAME in ( 'DDIC','SAP*') and not USERNAME like 'FF%' and
+                                     USER_TYPE like '%' and not
+                                     STATUS = 'USER_IS_AUTHORIZED' 
+     </compliant>
+      <complianttext/>
+      <noncompliant>    PROFILE = 'SAP_NEW'  and not
+                                     USERNAME in ( 'DDIC','SAP*') and not USERNAME like 'FF%' and
+                                     USER_TYPE like '%' and
+                                     STATUS = 'USER_IS_AUTHORIZED' 
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+-->
+  </configstore>
+<!--
+  <configstore name="AUTH_ ROLE_USER" SCI_ID="ZBBBBB">
+    <checkitem desc="[p1-CRITICAL] User SAP* has profile SAP_ALL" id="CRITAU-A_b.3" >
+      <compliant>        
+     </compliant>
+      <complianttext/>
+      <noncompliant>    
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+-->
+
+  <configstore name="AUTH_PROFILE_USER_CHANGE_DOC" SCI_ID="ZCCCCC">
+    <checkitem desc="[p1-CRITICAL] Profile SAP_ALL added to users" id="CRITAU-A_a.2" not_found="positive">
+      <compliant>          USER like '%' and
+                                     ACTION = 'ADDED' and
+                                     PROFILE = 'SAP_ALL'  and 
+                                     MODIFIED_BY like_regexpr '^\s*$' and CD_HIST_DATE &gt; to_decimal(to_varchar(add_seconds(CURRENT_UTCTIMESTAMP,-86400*30), 'YYYYMMDDHH24MISS')) 
+      </compliant>
+      <complianttext/>
+      <noncompliant>   USER like '%' and
+                                     ACTION = 'ADDED' and
+                                     PROFILE = 'SAP_ALL'  and 
+                                     MODIFIED_BY not like_regexpr '^\s*$' and CD_HIST_DATE &gt; to_decimal(to_varchar(add_seconds(CURRENT_UTCTIMESTAMP,-86400*30), 'YYYYMMDDHH24MISS')) 
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Profile SAP_NEW added to users" id="CRITAU-A_b.2" not_found="positive">
+      <compliant>          USER like '%' and
+                                     ACTION = 'ADDED' and
+                                     PROFILE = 'SAP_NEW'  and 
+                                     MODIFIED_BY like_regexpr '^\s*$' and CD_HIST_DATE &gt; to_decimal(to_varchar(add_seconds(CURRENT_UTCTIMESTAMP,-86400*30), 'YYYYMMDDHH24MISS')) 
+      </compliant>
+      <complianttext/>
+      <noncompliant>   USER like '%' and
+                                     ACTION = 'ADDED' and
+                                     PROFILE = 'SAP_NEW'  and 
+                                     MODIFIED_BY not like_regexpr '^\s*$' and CD_HIST_DATE &gt; to_decimal(to_varchar(add_seconds(CURRENT_UTCTIMESTAMP,-86400*30), 'YYYYMMDDHH24MISS')) 
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+
+  <configstore name="AUTH_COMB_CHECK_USER" SCI_ID="ZDDDD">
+<!-- It is assumed that all managed systems have been upgraded the software component ST-A/PI to version *R* . 
+      When having systems with lower ST-A/PI version change checks like as follows:
+   <checkitem desc="[p1-CRITICAL] Users with CHANGE ALL TABLES authorization" id="CRITAU-A_d.01.1">
+      <compliant>         COMB_ID = 'CHANGE_ALL_TABLES' and
+                                    USER like '%' and
+                                    (RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING') and
+                                    LOCKED like '%' and
+                                    INVALID like '%' 
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'CHANGE_ALL_TABLES' and
+                                    USER like '%' and
+                                    (RC !=  'NONE'  and RC != 'OBJECT_NOT_EXISTING') and
+                                    LOCKED like '%' and
+                                    INVALID like '%' 
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+
+To define users that can are OK, you may better define exemptions in the Exemptions UI, rather than adapting the check rules!
+-->
+    <checkitem desc="[p1-CRITICAL] Users with CHANGE ALL TABLES authorization" id="CRITAU-A_d.01.1">
+      <compliant>         COMB_ID = 'CHANGE_ALL_TABLES' and
+                                    USER like '%' and
+                                    ( RC =  'NONE'  or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'CHANGE_ALL_TABLES' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with READ ALL TABLE GROUPS authorization" id="CRITAU-A_d.02.1">
+      <compliant>         COMB_ID = 'READALLTABGRP' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'READALLTABGRP' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with READ ALL TABLES authorization" id="CRITAU-A_d.03.1">
+      <compliant>         COMB_ID = 'READALLTABLES' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'READALLTABLES' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with ALL TRANSACTIONS start authorization" id="CRITAU-A_d.04.1">
+      <compliant>         COMB_ID = 'STCODE_TCD_STAR' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'STCODE_TCD_STAR' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with S_START ALL authorization" id="CRITAU-A_d.16.1">
+      <compliant>         COMB_ID = 'S_START_STAR' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'S_START_STAR' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with ALL SERVICES authorization" id="CRITAU-A_d.05.1">
+      <compliant>         COMB_ID = 'S_SERVICE_STAR' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'S_SERVICE_STAR' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with START ALL REPORTS authorization" id="CRITAU-A_d.06.1">
+      <compliant>         COMB_ID = 'START_ALL_REPORTS' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'START_ALL_REPORTS' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with DEBUG / REPLACE authorization" id="CRITAU-A_d.07.1">
+      <compliant>         COMB_ID = 'DEBUG_REPLACE' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'DEBUG_REPLACE' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with DISPLAY ALL SPOOL REQUESTS authorization" id="CRITAU-A_d.08.1">
+      <compliant>         COMB_ID = 'DISPLAY_SPOOL' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'DISPLAY_SPOOL' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with RFC ADMIN authorization" id="CRITAU-A_d.09.1">
+      <compliant>         COMB_ID = 'ADMIN_RFC' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'ADMIN_RFC' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with EXECUTE ALL FUNCTION MODULES authorization" id="CRITAU-A_d.10.1">
+      <compliant>         COMB_ID = 'EXECUTE_ALL_FUNC' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'EXECUTE_ALL_FUNC' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with EXECUTE ALL CLASSES authorization" id="CRITAU-A_d.11.1">
+      <compliant>         COMB_ID = 'EXECUTE_ALL_CLASS' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'EXECUTE_ALL_CLASS' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with CHANGE OTHER USERS PASSWORD authorization" id="CRITAU-A_d.12.1">
+      <compliant>         COMB_ID = 'CHANGE_PASSWORD' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'CHANGE_PASSWORD' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with CHANGE TABLE GROUP authorization" id="CRITAU-A_d.13.1">
+      <compliant>         COMB_ID = 'CHANGE_TABLE_GROUP' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'CHANGE_TABLE_GROUP' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with ADMIN QUERY authorization" id="CRITAU-A_d.14.1">
+      <compliant>         COMB_ID = 'ADMIN_QUERY' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'ADMIN_QUERY' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with RUN ANY RFC authorization" id="CRITAU-A_d.15.1">
+      <compliant>         COMB_ID = 'AUTH_RUN_ANY_RFC' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'AUTH_RUN_ANY_RFC' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with READ HASH TABLE GROUP authorization" id="CRITAU-A_d.17.1">
+      <compliant>         COMB_ID = 'READHASHTABGRP' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'READHASHTABGRP' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Users with READ HASH TABLES authorization" id="CRITAU-A_d.18.1">
+      <compliant>         COMB_ID = 'READHASHTABLES' and
+                                    USER like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'READHASHTABLES' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <configstore name="TDDAT">
+    <checkitem desc="[p2-STANDARD] Access to table USH02 protected" id="CRITAU-A_d.1.1">
+      <compliant>TABNAME = 'USH02'  and CCLASS = 'SPWD' </compliant>
+      <complianttext/>
+      <noncompliant>TABNAME = 'USH02'  and not ( CCLASS = 'SPWD'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Access to table USR02 protected" id="CRITAU-A_d.1.2">
+      <compliant>TABNAME = 'USR02'  and CCLASS = 'SPWD' </compliant>
+      <complianttext/>
+      <noncompliant>TABNAME = 'USR02'  and not ( CCLASS = 'SPWD'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Access to table USRPWDHISTORY protected" id="CRITAU-A_d.1.3">
+      <compliant>TABNAME = 'USRPWDHISTORY'  and CCLASS = 'SPWD' </compliant>
+      <complianttext/>
+      <noncompliant>TABNAME = 'USRPWDHISTORY'  and not ( CCLASS = 'SPWD'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>

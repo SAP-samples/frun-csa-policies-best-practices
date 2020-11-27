@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] PROCESS - HANA" id="BL22_PROCESS-H" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="HDB_PARAMETER">
+    <!--	AUDIT-H: Audit Settings – HANA -->
+    <checkitem desc="[p1-CRITICAL] Auditing enabled" id="AUDIT-H_a">
+      <compliant>    FILE_NAME = 'global.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'global_auditing_state' and 
+                     UPPER(VALUE) = 'TRUE' and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </compliant>
+      <noncompliant> FILE_NAME = 'global.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'global_auditing_state' and 
+                     NOT (UPPER(VALUE) = 'TRUE' )  and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit trail target" id="AUDIT-H_b">
+      <compliant>    FILE_NAME = 'global.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'default_audit_trail_type' and 
+                     UPPER(VALUE) in ('SYSLOGPROTOCOL','CSTABLE' ) and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%'
+      </compliant>
+      <noncompliant> FILE_NAME = 'global.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'default_audit_trail_type' and 
+                     NOT UPPER(VALUE) in ('SYSLOGPROTOCOL','CSTABLE' ) and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%'
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] sr_audit_trail_type_cstable_override" id="AUDIT-H_c" not_found="positive">
+      <compliant>    FILE_NAME = 'global.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'sr_audit_trail_type_cstable_override' and 
+                     UPPER(VALUE) = 'SYSLOGPROTOCOL' and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%'
+      </compliant>
+      <noncompliant> FILE_NAME = 'global.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'sr_audit_trail_type_cstable_override' and 
+                     NOT UPPER(VALUE) = 'SYSLOGPROTOCOL' and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%'
+      </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

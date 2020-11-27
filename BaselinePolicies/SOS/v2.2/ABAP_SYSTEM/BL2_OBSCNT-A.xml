@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Obsolete Clients - ABAP" id="BL22_OBSCNT-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- OBSCNT-A: Obsolete Clients in ABAP -->
+  <configstore name="CLIENTS">
+    <checkitem desc="[p2-STANDARD] Obsolete Client 066 must not exist." id="OBSCNT-A.1" operator="NOT_EXIST">
+      <compliant>    MANDT = '066'    </compliant>
+      <noncompliant> MANDT = '066'    </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Template Client 001 must be deleted if not used" id="OBSCNT-A.2" operator="NOT_EXIST">
+      <compliant>    MANDT = '001'    </compliant>
+      <noncompliant> MANDT = '001'    </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

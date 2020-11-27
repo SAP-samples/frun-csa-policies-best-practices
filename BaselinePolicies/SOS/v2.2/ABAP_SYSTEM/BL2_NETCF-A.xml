@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Secure Network Configuration – ABAP" id="BL22_NETCF-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- NETCF-A: Secure Network Configuration – ABAP -->
+  <configstore name="ABAP_INSTANCE_PAHI" sci_id="">
+    <checkitem desc="[p2-STANDARD] Execution option for the RFC authority check" id="NETCF-A_a">
+      <compliant>    NAME = 'auth/rfc_authority_check' and ( VALUE = '1' OR VALUE = '6' or VALUE = '9' )</compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'auth/rfc_authority_check' and not ( VALUE = '1' OR VALUE = '6' or VALUE = '9' ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Block unauthorized remote RFC callbacks" id="NETCF-A_b">
+      <compliant>    NAME = 'rfc/callback_security_method' and VALUE = '3' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'rfc/callback_security_method' and not ( VALUE = '3'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Profile parameter rfc/selftrust (see notes 2449757, 2614667)" id="NETCF-A_c">
+      <compliant>    NAME = 'rfc/selftrust' and VALUE = '0' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'rfc/selftrust' and not ( VALUE = '0'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Profile parameter ixml/dtd_restriction (see notes 2308217, 1712860)" id="NETCF-A_e">
+      <compliant>    NAME = 'ixml/dtd_restriction' and ( VALUE = 'expansion'  or VALUE = 'prohibited' )  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ixml/dtd_restriction' and not ( VALUE = 'expansion'  or VALUE = 'prohibited' ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Profile parameter login/disable_cpic " id="NETCF-A_f">
+      <compliant>    NAME = 'login/disable_cpic' and VALUE = '1'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'login/disable_cpic' and not VALUE = '1' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Profile parameter wdisp/add_xforwardedfor_header" id="NETCF-A_g2">
+      <compliant>    NAME = 'wdisp/add_xforwardedfor_header' and VALUE in ('1','true','TRUE')  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'wdisp/add_xforwardedfor_header' and not VALUE in ('1','true','TRUE') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <!-- Alternative Syntax:
+    <checkitem desc="[p2-STANDARD] Profile parameter wdisp/add_xforwardedfor_header" id="NETCF-A_g1">
+      <compliant>    NAME = 'wdisp/add_xforwardedfor_header' and ( VALUE = '1' or UPPER(VALUE) = 'TRUE' )  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'wdisp/add_xforwardedfor_header' and not ( VALUE = '1' or UPPER(VALUE) = 'TRUE' )</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    -->
+  </configstore>
+  <configstore name="SICF_SERVICES" name_extended="" sci_id="">
+    <checkitem desc="[p2-STANDARD] Deactivate WebService FormToRfc" id="NETCF-A_d.01" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/FormToRfc/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/FormToRfc/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService IDoc_XML" id="NETCF-A_d.02" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/IDoc_XML/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/IDoc_XML/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService bsp_veri" id="NETCF-A_d.03" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/bsp_veri/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/bsp_veri/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService certmap" id="NETCF-A_d.04" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/certmap/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/certmap/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService certreq" id="NETCF-A_d.05" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/certreq/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/certreq/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService icf" id="NETCF-A_d.06" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/icf/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/icf/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService echo" id="NETCF-A_d.07" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/echo/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/echo/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService error" id="NETCF-A_d.08" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/error/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/error/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService CERTMAP" id="NETCF-A_d.09" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/its/CERTMAP/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/its/CERTMAP/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService CERTREQ" id="NETCF-A_d.10" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/its/CERTREQ/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/its/CERTREQ/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService report" id="NETCF-A_d.11" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/report/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/report/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService rfc" id="NETCF-A_d.12" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/soap/rfc/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/soap/rfc/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService IDoc" id="NETCF-A_d.13" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/srt/IDoc/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/srt/IDoc/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService webrfc" id="NETCF-A_d.14" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/webrfc/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/webrfc/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService xrfc" id="NETCF-A_d.15" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/xrfc/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/xrfc/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService xrfc_test" id="NETCF-A_d.16" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/xrfc_test/' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/xrfc_test/' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/htmlb_samples" id="NETCF-A_d.17" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/htmlb_samples' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/htmlb_samples' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/bsp_model" id="NETCF-A_d.18" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/bsp_model' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/bsp_model' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/it00" id="NETCF-A_d.19" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it00' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it00' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/it01" id="NETCF-A_d.20" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it01' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it01' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/it02" id="NETCF-A_d.21" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it02' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it02' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/it03" id="NETCF-A_d.22" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it03' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it03' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/it04" id="NETCF-A_d.23" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it04' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it04' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/it05" id="NETCF-A_d.24" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it05' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it05' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/itmvc2" id="NETCF-A_d.25" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/itmvc2' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/itmvc2' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/itsm" id="NETCF-A_d.26" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/itsm' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/itsm' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/sbspext_htmlb" id="NETCF-A_d.27" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_htmlb' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_htmlb' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/sbspext_phtmlb" id="NETCF-A_d.28" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_phtmlb' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_phtmlb' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/sbspext_table" id="NETCF-A_d.29" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_table' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_table' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/sbspext_xhtmlb" id="NETCF-A_d.30" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_xhtmlb' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_xhtmlb' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/system_private" id="NETCF-A_d.31" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/system_private' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/system_private' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/system_public" id="NETCF-A_d.32" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/system_public' </compliant>
+      <complianttext/>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/system_public' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

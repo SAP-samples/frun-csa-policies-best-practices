@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Password Policy - ABAP" id="BL22_PWDPOL-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- PWDPOL-A: Password Policy – ABAP -->
+  <configstore name="USER_PASSWD_HASH_USAGE">
+    <checkitem desc="[p2-STANDARD] Latest password hashing mechanism (PWDSALTEDHASH) used" id="PWDPOL-A_f.1" not_found="positive">
+      <compliant>          USER_TYPE like '%' and 
+                                     BCODE = 'UNUSED' and 
+                                     PASSCODE = 'UNUSED' and 
+                                     PWDSALTEDHASH like '%' and 
+                                     NUM_USER like '%' and
+                                     PERC_USER like '%'
+      </compliant>
+      <complianttext/>
+      <noncompliant>    USER_TYPE like '%'  and 
+                                      (BCODE = 'USED'  or PASSCODE = 'USED' )  and 
+                                      PWDSALTEDHASH like '%'  and 
+                                     NUM_USER like '%' and
+                                      PERC_USER like '%'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Latest password hashing mechanism (PWDSALTEDHASH) used" id="PWDPOL-A_f.2" not_found="positive">
+      <compliant>          USER_TYPE like '%' and 
+                                     BCODE = 'USED' and 
+                                     PASSCODE like  '%' and 
+                                     PWDSALTEDHASH like '%' and 
+                                     NUM_USER like '%' and
+                                     PERC_USER = '0.00'
+      </compliant>
+      <complianttext/>
+      <noncompliant>    USER_TYPE like '%' and 
+                                     BCODE = 'USED' and 
+                                     PASSCODE like  '%' and 
+                                     PWDSALTEDHASH like '%' and 
+                                     NUM_USER like '%' and
+                                     PERC_USER &gt; '0.00'
+       </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Latest password hashing mechanism (PWDSALTEDHASH) used" id="PWDPOL-A_f.3" not_found="positive">
+      <compliant>          USER_TYPE like '%' and 
+                                     BCODE like '%' and 
+                                     PASSCODE =  'USED' and 
+                                     PWDSALTEDHASH like '%' and 
+                                     NUM_USER like '%' and
+                                     PERC_USER = '0.00'
+      </compliant>
+      <complianttext/>
+      <noncompliant>    USER_TYPE like '%' and 
+                                     BCODE like '%' and 
+                                     PASSCODE =  'USED' and 
+                                     PWDSALTEDHASH like '%' and 
+                                     NUM_USER like '%' and
+                                     PERC_USER &gt; '0.00'
+       </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <!-- in case a certain % of old hashing is accepted, you could use the following validation rules as start for your adaptions -->
+  <configstore name="USER_PASSWD_HASH_USAGE">
+    <checkitem desc="[p2-STANDARD] Password hashing for COMMUNICATION user (1)" id="PWDPOL-A_f.01" not_found="positive">
+      <compliant>          USER_TYPE = 'COMMUNICATION' and 
+                                     BCODE like '%' and 
+                                     PASSCODE like '%' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER = '0' and 
+                                     PERC_USER like '%'
+      </compliant>
+      <complianttext/>
+      <noncompliant>   USER_TYPE = 'COMMUNICATION' and 
+                                     BCODE like '%' and 
+                                     PASSCODE like '%' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER != '0' and 
+                                     PERC_USER like '%'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password hashing for DIALOG user (1)" id="PWDPOL-A_f.02" not_found="positive">
+      <compliant>          USER_TYPE = 'DIALOG' and 
+                                     BCODE = 'UNUSED' and 
+                                     PASSCODE = 'UNUSED' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     PERC_USER like '%'
+      </compliant>
+      <complianttext/>
+      <noncompliant>   USER_TYPE = 'DIALOG' and 
+                                     NOT ( BCODE = 'UNUSED' or 
+                                                PASSCODE = 'UNUSED' ) and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     PERC_USER like '%'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password hashing for DIALOG user (2)" id="PWDPOL-A_f.03" not_found="positive">
+      <compliant>          USER_TYPE = 'DIALOG' and 
+                                     BCODE = 'USED' and 
+                                     PASSCODE like '%' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     PERC_USER &lt;= '5.00'
+      </compliant>
+      <complianttext/>
+      <noncompliant>    USER_TYPE = 'DIALOG' and 
+                                     BCODE = 'USED' and 
+                                     PASSCODE like '%' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     not ( PERC_USER &lt;= '5.00' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password hashing for DIALOG user (3)" id="PWDPOL-A_f.04" not_found="positive">
+      <compliant>          USER_TYPE = 'DIALOG' and 
+                                     BCODE like '%' and 
+                                     PASSCODE = 'USED' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     PERC_USER &lt;= '5.00'
+      </compliant>
+      <complianttext/>
+      <noncompliant>    USER_TYPE = 'DIALOG' and 
+                                     BCODE like '%' and 
+                                     PASSCODE = 'USED' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     not ( PERC_USER &lt;= '5.00' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password hashing for REFERENCE user (1)" id="PWDPOL-A_f.05" not_found="positive">
+      <compliant>          USER_TYPE = 'REFERENCE' and 
+                                     BCODE = 'UNUSED' and 
+                                     PASSCODE = 'UNUSED' and 
+                                     PWDSALTEDHASH = 'UNUSED' and
+                                     NUM_USER like '%' and 
+                                     PERC_USER like '%'
+      </compliant>
+      <complianttext/>
+      <noncompliant>   USER_TYPE = 'REFERENCE' and 
+                                     not ( BCODE = 'UNUSED' or
+                                     PASSCODE = 'UNUSED' or 
+                                     PWDSALTEDHASH = 'UNUSED' ) and
+                                     NUM_USER like '%' and 
+                                     PERC_USER like '%'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password hashing for REFERENCE user (2)" id="PWDPOL-A_f.06" not_found="positive">
+      <compliant>          USER_TYPE = 'REFERENCE' and 
+                                     BCODE = 'USED' and 
+                                     PASSCODE like '%' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER = '0' and 
+                                     PERC_USER like '%'
+      </compliant>
+      <complianttext/>
+      <noncompliant>   USER_TYPE = 'REFERENCE' and 
+                                     BCODE = 'USED' and
+                                     PASSCODE like '%' and
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER != '0' and 
+                                     PERC_USER like '%'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password hashing for REFERENCE user (3)" id="PWDPOL-A_f.06" not_found="positive">
+      <compliant>          USER_TYPE = 'REFERENCE' and 
+                                     BCODE like '%' and 
+                                     PASSCODE  = 'USED' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER = '0' and 
+                                     PERC_USER like '%'
+      </compliant>
+      <complianttext/>
+      <noncompliant>   USER_TYPE = 'REFERENCE' and 
+                                     BCODE like '%' and 
+                                     PASSCODE  = 'USED' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER != '0' and 
+                                     PERC_USER like '%'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password hashing for REFERENCE user (4)" id="PWDPOL-A_f.07" not_found="positive">
+      <compliant>          USER_TYPE = 'REFERENCE' and 
+                                     BCODE like '%' and 
+                                     PASSCODE like '%'   and 
+                                     PWDSALTEDHASH = 'USED' and
+                                     NUM_USER = '0' and 
+                                     PERC_USER like '%'
+      </compliant>
+      <complianttext/>
+      <noncompliant>   USER_TYPE = 'REFERENCE' and 
+                                     BCODE like '%' and 
+                                     PASSCODE like '%'   and 
+                                     PWDSALTEDHASH = 'USED' and
+                                     NUM_USER != '0' and 
+                                     PERC_USER like '%'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password hashing for SERVICE user (1)" id="PWDPOL-A_f.08" not_found="positive">
+      <compliant>          USER_TYPE = 'SERVICE' and 
+                                     BCODE = 'UNUSED' and 
+                                     PASSCODE = 'UNUSED'   and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     PERC_USER like '%'
+      </compliant>
+      <complianttext/>
+      <noncompliant>   USER_TYPE = 'SERVICE' and 
+                                     not ( BCODE = 'UNUSED' or 
+                                     PASSCODE = 'UNUSED'  )  and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     PERC_USER like '%'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password hashing for SERVICE user (2)" id="PWDPOL-A_f.09" not_found="positive">
+      <compliant>          USER_TYPE = 'SERVICE' and 
+                                     BCODE = 'USED' and 
+                                     PASSCODE like '%' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     PERC_USER &lt;= '0.00'
+      </compliant>
+      <complianttext/>
+      <noncompliant>    USER_TYPE = 'SERVICE' and 
+                                     BCODE = 'USED' and 
+                                     PASSCODE like '%' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     not ( PERC_USER &lt;= '0.00' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password hashing for SERVICE user (3)" id="PWDPOL-A_f.10" not_found="positive">
+      <compliant>          USER_TYPE = 'SERVICE' and 
+                                     BCODE like '%' and 
+                                     PASSCODE = 'USED' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     PERC_USER &lt;= '0.00'
+      </compliant>
+      <complianttext/>
+      <noncompliant>    USER_TYPE = 'SERVICE' and 
+                                     BCODE like '%' and 
+                                     PASSCODE = 'USED' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     not ( PERC_USER &lt;= '0.00' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password hashing for SYSTEM user (1)" id="PWDPOL-A_f.11" not_found="positive">
+      <compliant>          USER_TYPE = 'SYSTEM' and 
+                                     BCODE = 'UNUSED' and 
+                                     PASSCODE = 'UNUSED'   and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     PERC_USER like '%'
+      </compliant>
+      <complianttext/>
+      <noncompliant>   USER_TYPE = 'SYSTEM' and 
+                                     not ( BCODE = 'UNUSED' or 
+                                     PASSCODE = 'UNUSED'  )  and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     PERC_USER like '%'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password hashing for SYSTEM user (2)" id="PWDPOL-A_f.12" not_found="positive">
+      <compliant>          USER_TYPE = 'SYSTEM' and 
+                                     BCODE = 'USED' and 
+                                     PASSCODE like '%' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     PERC_USER &lt;= '0.00'
+      </compliant>
+      <complianttext/>
+      <noncompliant>    USER_TYPE = 'SYSTEM' and 
+                                     BCODE = 'USED' and 
+                                     PASSCODE like '%' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     not ( PERC_USER &lt;= '0.00' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password hashing for SYSTEM user (3)" id="PWDPOL-A_f.13" not_found="positive">
+      <compliant>          USER_TYPE = 'SYSTEM' and 
+                                     BCODE like '%' and 
+                                     PASSCODE = 'USED' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     PERC_USER &lt;= '0.00'
+      </compliant>
+      <complianttext/>
+      <noncompliant>    USER_TYPE = 'SYSTEM' and 
+                                     BCODE like '%' and 
+                                     PASSCODE = 'USED' and 
+                                     PWDSALTEDHASH like '%' and
+                                     NUM_USER like '%' and 
+                                     not ( PERC_USER &lt;= '0.00' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <checkitem desc="[p1-CRITICAL] Password hash algorithm" id="PWDPOL-A_k">
+      <compliant>   NAME = 'login/password_hash_algorithm' and 
+                    VALUE like_regexpr 'encoding=RFC2307, algorithm=(iSSHA-256|iSSHA-384|iSSHA-512), iterations=(\d{5,}), saltsize=(128|256)'
+      </compliant>
+      <noncompliant>NAME = 'login/password_hash_algorithm' and not 
+                    VALUE like_regexpr 'encoding=RFC2307, algorithm=(iSSHA-256|iSSHA-384|iSSHA-512), iterations=(\d{5,}), saltsize=(128|256)'
+      </noncompliant>
+    </checkitem>
+    <!-- Alternative Syntax:
+    <checkitem desc="[p1-CRITICAL] Password hash algorithm" id="PWDPOL-A_k">
+      <compliant>NAME = 'login/password_hash_algorithm' and 
+                 VALUE like_regexpr 'encoding=RFC2307'  and
+                 ( VALUE like_regexpr 'algorithm=iSSHA-256' OR VALUE like_regexpr 'algorithm=iSSHA-384' OR VALUE like_regexpr 'algorithm=iSSHA-512') and
+                 ( VALUE like_regexpr 'saltsize=128' OR VALUE like_regexpr 'saltsize=256' )
+      </compliant>
+      <noncompliant>NAME = 'login/password_hash_algorithm' and 
+               ( ( not VALUE like_regexpr 'encoding=RFC2307' ) OR
+                 ( not VALUE like_regexpr 'algorithm=iSSHA-256' OR not VALUE like_regexpr 'algorithm=iSSHA-384' OR not VALUE like_regexpr 'algorithm=iSSHA-512') OR
+                 ( not VALUE like_regexpr 'saltsize=128' OR not VALUE like_regexpr 'saltsize=256' ) )
+      </noncompliant>
+    </checkitem>
+    -->
+    <checkitem desc="[p1-CRITICAL] Minimum password length" id="PWDPOL-A_a.1">
+      <compliant>          NAME = 'login/min_password_lng' and lpad(VALUE,4,'0') &gt;= '0008'  </compliant>
+      <noncompliant>   NAME = 'login/min_password_lng' and lpad(VALUE,4,'0') &lt; '0008' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Maximum password idle initial lifetime" id="PWDPOL-A_b.1">
+      <compliant>          NAME = 'login/password_max_idle_initial' and lpad(VALUE,4,'0') between '0001' and '0014' </compliant>
+      <noncompliant>   NAME = 'login/password_max_idle_initial' and not ( lpad(VALUE,4,'0') between '0001' and '0014' )</noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Maximum password expiration time" id="PWDPOL-A_c.1">
+      <compliant>          NAME = 'login/password_expiration_time' and lpad(VALUE,4,'0') between '0001' and '0183' </compliant>
+      <noncompliant>    NAME = 'login/password_expiration_time' and NOT (lpad(VALUE,4,'0')between '0001' and '0183') </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Disable downward compatible passwords" id="PWDPOL-A_d">
+      <compliant>          NAME = 'login/password_downwards_compatibility' and VALUE ='0'</compliant>
+      <noncompliant>   NAME = 'login/password_downwards_compatibility' and NOT (VALUE ='0') </noncompliant>
+      <noncomplianttext>login/password_downwards_compatibility = 0. Action Required: Cleanup password hash values</noncomplianttext>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Compliance with current password policy must be enforced" id="PWDPOL-A_e.1">
+      <compliant>          NAME = 'login/password_compliance_to_current_policy' and VALUE = '1'</compliant>
+      <noncompliant>    NAME = 'login/password_compliance_to_current_policy' and NOT VALUE = '1' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] http(s) calls with expired passwords must be rejected" id="PWDPOL-A_g">
+      <compliant>          NAME = 'icf/reject_expired_passwd' and VALUE = '1'</compliant>
+      <noncompliant>    NAME = 'icf/reject_expired_passwd' and NOT VALUE = '1' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] RFC calls with expired passwords must be rejected" id="PWDPOL-A_h">
+      <compliant>          NAME = 'rfc/reject_expired_passwd' and VALUE = '1'</compliant>
+      <noncompliant>    NAME = 'rfc/reject_expired_passwd' and NOT VALUE = '1' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password complexity (digits) must exist (Profile Parameter)" id="PWDPOL-A_i.1.1">
+      <compliant>          NAME = 'login/min_password_digits' and lpad(VALUE,4,'0') &gt;= '0001' </compliant>
+      <noncompliant>    NAME = 'login/min_password_digits' and not lpad(VALUE,4,'0') &gt;= '0001'  </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password complexity (letters) must exist (profile parameter)" id="PWDPOL-A_i.2.1">
+      <compliant>          NAME = 'login/min_password_letters' and lpad(VALUE,4,'0') &gt;= '0001'  </compliant>
+      <noncompliant>    NAME = 'login/min_password_letters' and not lpad(VALUE,4,'0') &gt;= '0001' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password complexity (lowercase letters) must exist (profile parameter)" id="PWDPOL-A_i.3.1">
+      <compliant>          NAME = 'login/min_password_lowercase' and lpad(VALUE,4,'0') &gt;= '0001'  </compliant>
+      <noncompliant>    NAME = 'login/min_password_lowercase' and not lpad(VALUE,4,'0') &gt;= '0001'  </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password complexity (uppercase letters) must exist (profile parameter)" id="PWDPOL-A_i.4.1">
+      <compliant>          NAME = 'login/min_password_uppercase' and lpad(VALUE,4,'0') &gt;= '0001' </compliant>
+      <noncompliant>   NAME = 'login/min_password_uppercase' and not lpad(VALUE,4,'0') &gt;= '0001'  </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password complexity (special characters) must exist (profile parameter)" id="PWDPOL-A_i.5.1">
+      <compliant>          NAME = 'login/min_password_specials' and lpad(VALUE,4,'0') &gt;= '0001' </compliant>
+      <noncompliant>   NAME = 'login/min_password_specials' and not lpad(VALUE,4,'0') &gt;= '0001'  </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for number of different previous passwords must exist (profile parameter)" id="PWDPOL-A_i.6.1">
+      <compliant>          NAME = 'login/min_password_diff' and lpad(VALUE,4,'0') &gt;= '0003'  </compliant>
+      <noncompliant>    NAME = 'login/min_password_diff' and not lpad(VALUE,4,'0') &gt;= '0003' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for disabling password logon must exist (profile parameter)" id="PWDPOL-A_j.1.1">
+      <compliant>          NAME = 'login/disable_password_logon' and length(VALUE) &gt;= '1'  </compliant>
+      <noncompliant>    NAME = 'login/disable_password_logon' and not length(VALUE) &gt;= '1' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for maximum failed logon attempts must exist (profile parameter)" id="PWDPOL-A_j.3.1">
+      <compliant>          NAME = 'login/fails_to_user_lock' and lpad(VALUE,4,'0') between '0001' and '0005' </compliant>
+      <noncompliant>    NAME = 'login/fails_to_user_lock' and not lpad(VALUE,4,'0') between '0001' and '0005' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for automatic user unlock (after failed logins) must exist (profile parameter)" id="PWDPOL-A_j.4.1">
+      <compliant>          NAME = 'login/failed_user_auto_unlock' and VALUE = '0' </compliant>
+      <noncompliant>    NAME = 'login/failed_user_auto_unlock' and VALUE != '0' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for maximum idle time of productive passwords must exist (profile parameter)" id="PWDPOL-A_j.5.1">
+      <compliant>          NAME = 'login/password_max_idle_productive' and lpad(VALUE,4,'0') between '0001' and '0180' </compliant>
+      <noncompliant>    NAME = 'login/password_max_idle_productive' and not lpad(VALUE,4,'0') between '0001' and '0180'  </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password change for SSO must exist (profile parameter)" id="PWDPOL-A_j.6.1">
+      <compliant>          NAME = 'login/password_change_for_SSO' and VALUE = '1' </compliant>
+      <noncompliant>    NAME = 'login/password_change_for_SSO' and VALUE != '1' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password history size must exist (profile parameter)" id="PWDPOL-A_j.7.1">
+      <compliant>          NAME = 'login/password_history_size' and lpad(VALUE,4,'0') &gt;= '0005' </compliant>
+      <noncompliant>    NAME = 'login/password_history_size' and not lpad(VALUE,4,'0') &gt;= '0005' </noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="AUTH_SECURITY_POLICY">
+    <checkitem desc="[p1-CRITICAL] Rule for password length is noncompliant (security policy attribute)" id="PWDPOL-A_a.2" not_found="positive">
+      <compliant>          ATTRIB_KEY = 'MIN_PASSWORD_LENGTH' and NAME like '%'  and  ( CLIENT != '[XXX]' and lpad(ATTRIB_VALUE,4,'0') &gt;= '0008' )</compliant>
+      <noncompliant>    ATTRIB_KEY = 'MIN_PASSWORD_LENGTH' and NAME like '%' and CLIENT != '[XXX]'  and NOT lpad(ATTRIB_VALUE,4,'0') &gt;= '0008' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Rule for initial password lifetime is noncompliant (security policy attribute)" id="PWDPOL-A_b.2" not_found="positive">
+      <compliant>          ATTRIB_KEY = 'MAX_PASSWORD_IDLE_INITIAL' and NAME like '%'  and  ( CLIENT != '[XXX]' and lpad(ATTRIB_VALUE,4,'0') between '0001' and '0014' ) </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MAX_PASSWORD_IDLE_INITIAL' and NAME like '%' and CLIENT != '[XXX]'  and NOT lpad(ATTRIB_VALUE,4,'0') between '0001' and '0014' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Rule for password change attribute is noncompliant (security policy attribute)" id="PWDPOL-A_c.2" not_found="positive">
+      <compliant>          ATTRIB_KEY = 'PASSWORD_CHANGE_INTERVAL' and NAME like '%'  and  ( CLIENT != '[XXX]' and lpad(ATTRIB_VALUE,4,'0') between '0001' and '0183' ) </compliant>
+      <noncompliant>    ATTRIB_KEY = 'PASSWORD_CHANGE_INTERVAL' and NAME like '%' and CLIENT != '[XXX]'  and NOT lpad(ATTRIB_VALUE,4,'0') between '0001' and '0183' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Rule for enforcement of current password policy is noncompliant (security policy attribute)" id="PWDPOL-A_e.2" not_found="positive">
+      <compliant>          ATTRIB_KEY = 'PASSWORD_COMPLIANCE_TO_CURRENT_POLICY' and NAME like '%' and   ( CLIENT != '[XXX]' and ATTRIB_VALUE = '1'  ) </compliant>
+      <noncompliant>    ATTRIB_KEY = 'PASSWORD_COMPLIANCE_TO_CURRENT_POLICY' and NAME like '%' and CLIENT != '[XXX]'  and NOT ATTRIB_VALUE = '1' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password complexity (digits) is noncompliant (security policy attribute)" id="PWDPOL-A_i.1.2" not_found="positive">
+      <compliant>          ATTRIB_KEY = 'MIN_PASSWORD_DIGITS' and NAME like '%'  and  ( CLIENT != '[XXX]' and lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001' ) </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MIN_PASSWORD_DIGITS' and NAME like '%' and CLIENT != '[XXX]'  and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password complexity (letters) is noncompliant (security policy attribute)" id="PWDPOL-A_i.2.2" not_found="positive">
+      <compliant>          ATTRIB_KEY = 'MIN_PASSWORD_LETTERS' and NAME like '%'  and  ( CLIENT != '[XXX]' and lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001' ) </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MIN_PASSWORD_LETTERS' and NAME like '%' and CLIENT != '[XXX]'  and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001'  </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password complexity (lowercase letters) is noncompliant (security policy attribute)" id="PWDPOL-A_i.3.2" not_found="positive">
+      <compliant>          ATTRIB_KEY = 'MIN_PASSWORD_LOWERCASE' and NAME like '%'  and  ( CLIENT != '[XXX]' and lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001' ) </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MIN_PASSWORD_LOWERCASE' and NAME like '%' and CLIENT != '[XXX]'  and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password complexity (uppercase letters) is noncompliant (security policy attribute)" id="PWDPOL-A_i.4.2" not_found="positive">
+      <compliant>         ATTRIB_KEY = 'MIN_PASSWORD_UPPERCASE' and NAME like '%'  and  ( CLIENT != '[XXX]' and lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001' ) </compliant>
+      <noncompliant>   ATTRIB_KEY = 'MIN_PASSWORD_UPPERCASE' and NAME like '%' and CLIENT != '[XXX]'  and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001'  </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password complexity (special characters) is noncompliant (security policy attribute)" id="PWDPOL-A_i.5.2" not_found="positive">
+      <compliant>          ATTRIB_KEY = 'MIN_PASSWORD_SPECIALS' and NAME like '%'  and  ( CLIENT != '[XXX]' and lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001' ) </compliant>
+      <noncompliant>   ATTRIB_KEY = 'MIN_PASSWORD_SPECIALS' and NAME like '%' and CLIENT != '[XXX]'  and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001'  </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for number of different previous passwords is noncompliant(security policy attribute)" id="PWDPOL-A_i.6.2" not_found="positive">
+      <compliant>          ATTRIB_KEY = 'MIN_PASSWORD_DIFFERENCE' and NAME like '%'  and  ( CLIENT != '[XXX]' and lpad(ATTRIB_VALUE,4,'0')  &gt;= '0003' ) </compliant>
+      <noncompliant>   ATTRIB_KEY = 'MIN_PASSWORD_DIFFERENCE' and NAME like '%' and CLIENT != '[XXX]'  and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0003' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for disabling password logon is noncompliant (security policy attribute)" id="PWDPOL-A_j.1.2" not_found="positive">
+      <compliant>         ATTRIB_KEY = 'DISABLE_PASSWORD_LOGON' and NAME like '%' and ( CLIENT != '[XXX]' and length(ATTRIB_VALUE) &gt;= '1'  ) </compliant>
+      <noncompliant>  ATTRIB_KEY = 'DISABLE_PASSWORD_LOGON' and NAME like '%' and CLIENT != '[XXX]'  and NOT length(ATTRIB_VALUE) &gt;= '1' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for disabling ticket logon is noncompliant (security policy attribute)" id="PWDPOL-A_j.2.2" not_found="positive">
+      <compliant>         ATTRIB_KEY = 'DISABLE_TICKET_LOGON' and NAME like '%' and ( CLIENT != '[XXX]' and length(ATTRIB_VALUE) &gt;= '1'  ) </compliant>
+      <noncompliant>  ATTRIB_KEY = 'DISABLE_TICKET_LOGON' and NAME like '%' and CLIENT != '[XXX]'  and NOT length(ATTRIB_VALUE) &gt;= '1' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for maximum failed logon attempts is noncompliant (security policy attribute)" id="PWDPOL-A_j.3.2" not_found="positive">
+      <compliant>          ATTRIB_KEY = 'MAX_FAILED_PASSWORD_LOGON_ATTEMPTS' and NAME like '%'  and  ( CLIENT != '[XXX]' and lpad(ATTRIB_VALUE,4,'0')  &lt;= '0005' ) </compliant>
+      <noncompliant>   ATTRIB_KEY = 'MAX_FAILED_PASSWORD_LOGON_ATTEMPTS' and NAME like '%' and CLIENT != '[XXX]'  and NOT lpad(ATTRIB_VALUE,4,'0')  &lt;= '0005' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for automatic user unlock (after failed logins) is noncompliant (security policy attribute)" id="PWDPOL-A_j.4.2" not_found="positive">
+      <compliant>         ATTRIB_KEY = 'PASSWORD_LOCK_EXPIRATION' and NAME like '%' and   ( CLIENT != '[XXX]' and  ATTRIB_VALUE = '0'  ) </compliant>
+      <noncompliant>  ATTRIB_KEY = 'PASSWORD_LOCK_EXPIRATION' and NAME like '%' and CLIENT != '[XXX]'  and  ATTRIB_VALUE = '0'  </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for maximum idle time of productive passwords is noncompliant(security policy attribute)" id="PWDPOL-A_j.5.2" not_found="positive">
+      <compliant>          ATTRIB_KEY = 'MAX_PASSWORD_IDLE_PRODUCTIVE' and NAME like '%' and   ( CLIENT != '[XXX]' and  lpad(ATTRIB_VALUE,4,'0') between '0001' and '0180'  ) </compliant>
+      <noncompliant>   ATTRIB_KEY = 'MAX_PASSWORD_IDLE_PRODUCTIVE' and NAME like '%' and CLIENT != '[XXX]'  and  NOT lpad(ATTRIB_VALUE,4,'0') between '0001' and '0180'  </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password change wait time is noncompliant (security policy attribute)" id="PWDPOL-A_j.6.2" not_found="positive">
+      <compliant>         ATTRIB_KEY = 'MIN_PASSWORD_CHANGE_WAITTIME' and NAME like '%' and ( CLIENT != '[XXX]' and length(ATTRIB_VALUE) &gt; '0'  ) </compliant>
+      <noncompliant>  ATTRIB_KEY = 'MIN_PASSWORD_CHANGE_WAITTIME' and NAME like '%' and CLIENT != '[XXX]'  and NOT length(ATTRIB_VALUE) &gt; '0'  </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password change for SSO is noncompliant (security policy attribute)" id="PWDPOL-A_j.7.2" not_found="positive">
+      <compliant>         ATTRIB_KEY = 'PASSWORD_CHANGE_FOR_SSO' and NAME like '%' and   ( CLIENT != '[XXX]' and ATTRIB_VALUE = '1'  ) </compliant>
+      <noncompliant>   ATTRIB_KEY = 'PASSWORD_CHANGE_FOR_SSO' and NAME like '%' and CLIENT != '[XXX]'  and ATTRIB_VALUE !=  '1'  </noncompliant>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Rule for password history size is noncompliant (security policy attribute)" id="PWDPOL-A_j.8.2" not_found="positive">
+      <compliant>         ATTRIB_KEY = 'PASSWORD_HISTORY_SIZE' and NAME like '%' and   ( CLIENT != '[XXX]' and  lpad(ATTRIB_VALUE,4,'0')  &gt;= '0005') </compliant>
+      <noncompliant>  ATTRIB_KEY = 'PASSWORD_HISTORY_SIZE' and NAME like '%' and CLIENT != '[XXX]'  and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0005'  </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

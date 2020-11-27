@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Baseline Policy for Application Security - JAVA" id="BL22_APPLICATION-J" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- SELFRG-J: No Self-Registration of Users 
+
+  <configstore name="com.sap.security.core.ume.service">
+    <checkitem desc="[p2-STANDARD] UME Self Registration" id="SELFRG-J">
+      <compliant>    NAME = 'ume.logon.selfreg'  and VALUE = 'false' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.selfreg'  and VALUE != 'false' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+-->
+  <!-- PWDPOL-J: Password Policy – SAP AS Java settings (UME) -->
+  <configstore name="com.sap.security.core.ume.service">
+    <checkitem desc="[p1-CRITICAL] Minimum Password Length" id="PWDPOL-J_a.1">
+      <compliant>    NAME = 'ume.logon.security_policy.password_min_length'  and lpad(VALUE, 4, '0') &gt;= '0008' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.password_min_length'  and not ( lpad(VALUE, 4, '0') &gt;= '0008'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Disable user ID as part of password" id="PWDPOL-J_a.2">
+      <compliant>    NAME = 'ume.logon.security_policy.userid_in_password_allowed'  and VALUE in ('false','FALSE' )  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.userid_in_password_allowed'  and not VALUE in ('false','FALSE' )  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Disable old password in password allowed" id="PWDPOL-J_b">
+      <compliant>    NAME = 'ume.logon.security_policy.oldpass_in_newpass_allowed'  and VALUE in ('false','FALSE' )</compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.oldpass_in_newpass_allowed'  and not VALUE in ('false','FALSE' ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Minimum number of letters and numbers in password" id="PWDPOL-J_c.1">
+      <compliant>    NAME = 'ume.logon.security_policy.password_alpha_numeric_required'  and lpad(VALUE, 4, '0') &gt;= '0001' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.password_alpha_numeric_required'  and not ( lpad(VALUE, 4, '0') &gt;= '0001' ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Minimum number of uppercase and lowercase letters in password required" id="PWDPOL-J_c.2">
+      <compliant>    NAME = 'ume.logon.security_policy.password_mix_case_required'  and lpad(VALUE, 4, '0') &gt;= '0001' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.password_mix_case_required'  and not ( lpad(VALUE, 4, '0') &gt;= '0001'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Minimum number of special characters in passwords" id="PWDPOL-J_c.3">
+      <compliant>    NAME = 'ume.logon.security_policy.password_special_char_required'  and lpad(VALUE, 4, '0') &gt;= '0001' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.password_special_char_required'  and not ( lpad(VALUE, 4, '0') &gt;= '0001'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <configstore name="Parameters">
+    <!-- Check RFCGW-A_b.1.x validate if parameter value contains 2x // or \\ to ensure it's a path-like value - Consider replacing with RFCGW-A_b.1.y-->
+    <checkitem desc="[p1-CRITICAL] Path-like value for ms/acl_info (message server access control list)" id="RFCGW-A_b.1.x">
+      <compliant>    NAME = 'gw/sec_info' and length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0 </compliant>
+      <noncompliant> NAME = 'gw/sec_info' and NOT(length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0)</noncompliant>
+    </checkitem>
+    <!--       
+    <checkitem desc="[p1-CRITICAL] File with access control list for message server" id="RFCGW-A_b.1.y">
+      <compliant>    NAME = 'gw/sec_info'  and VALUE like 'your mount path/acl file name' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/sec_info'  and not ( VALUE like 'your mount path/acl file name'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+-->
+    <!-- Check RFCGW-A_b.2.x validate if parameter value contains 2x // or \\ to ensure it's a path-like value - Consider replacing with RFCGW-A_b.2.y-->
+    <checkitem desc="[p1-CRITICAL] Path-like value for ms/acl_info (message server access control list)" id="RFCGW-A_b.01.x">
+      <compliant>    NAME = 'gw/reg_info' and length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0 </compliant>
+      <noncompliant> NAME = 'gw/reg_info' and NOT(length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0)</noncompliant>
+    </checkitem>
+    <!--       
+    <checkitem desc="[p1-CRITICAL] File with access control list for message server" id="RFCGW-A_b.1.y">
+      <compliant>    NAME = 'gw/reg_info'  and VALUE like 'your mount path/acl file name' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/reg_info'  and not ( VALUE like 'your mount path/acl file name'  ) </noncompliant>
+     <noncomplianttext/>
+   </checkitem>
+-->
+    <checkitem desc="[p1-CRITICAL] Gateway security options" id="RFCGW-A_c.1">
+      <compliant>    NAME = 'gw/reg_no_conn_info'  and 
+                     VALUE in ( '15','31','47','63','79','95','111','127','143','159','175','191','207','223','239','255' )
+      </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/reg_no_conn_info'  and not
+                     VALUE in ( '15','31','47','63','79','95','111','127','143','159','175','191','207','223','239','255' )
+      </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="Parameters" no_data_found="Yes">
+        <joincompliant>     NAME = 'is/server_version' and VALUE &lt; '7.40'</joincompliant>
+        <joinnoncompliant>  NAME = 'is/server_version' and VALUE &lt; '7.40'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Gateway security options" id="RFCGW-A_c.2">
+      <compliant>    NAME = 'gw/reg_no_conn_info'  and 
+                     VALUE in ('1','65','129','193')
+      </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/reg_no_conn_info'  and not
+                     VALUE in ('1','65','129','193')
+      </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="Parameters" no_data_found="Yes">
+        <joincompliant>    NAME = 'is/server_version' and VALUE &gt;= '7.40'</joincompliant>
+        <joinnoncompliant> NAME = 'is/server_version' and VALUE &gt;= '7.40'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+
+    <checkitem desc="[p1-CRITICAL] Mode for non existing ACL file" id="RFCGW-A_d">
+      <compliant>    NAME = 'gw/acl_mode'  and VALUE = '1' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/acl_mode'  and not ( VALUE = '1'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Enable gateway monitor commands" id="RFCGW-A_e">
+      <compliant>    NAME = 'gw/monitor'  and VALUE = '1' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/monitor'  and not ( VALUE = '1'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Disable simulation mode for reg_info and sec_info" id="RFCGW-A_f">
+      <compliant>    NAME = 'gw/sim_mode'  and VALUE = '0' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/sim_mode'  and not ( VALUE = '0'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] acceptable method to start programs via the RFC Gateway " id="RFCGW-A_g">
+      <compliant>    NAME = 'gw/rem_start'  and (VALUE = 'DISABLED' or VALUE = 'SSH_SHELL' )  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/rem_start'  and not (VALUE = 'DISABLED' or VALUE = 'SSH_SHELL' ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <!-- SSO-J: Single Sign-On – Java -->
+  <configstore name="com.sap.security.core.ume.service">
+    <checkitem desc="[p3-EXTENDED] Send SAP logon ticket only via HTTPS" id="SSO-J_a">
+      <compliant>    NAME = 'ume.logon.security.enforce_secure_cookie'  and VALUE in ('true','TRUE') </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security.enforce_secure_cookie'  and not VALUE in ('true','TRUE') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] SAP logon ticket set to HttpOnly" id="SSO-J_b">
+      <compliant>    NAME = 'ume.logon.httponlycookie'  and VALUE in ('true','TRUE')</compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.httponlycookie'  and not VALUE in ('true','TRUE') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] SAP logon ticket lifetime" id="SSO-J_c">
+      <compliant>    NAME = 'login.ticket_lifetime'  and lpad(VALUE, 4, '0') &lt;= '0008' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'login.ticket_lifetime'  and not (lpad(VALUE, 4, '0') &lt;= '0008'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <!-- CRITAU-J   -  Critical Authorizations for JAVA -->
+  <!-- This section is commented out, because each customer needs to configure a Store Customizing in their system 
+       Make sure that 
+       + configstore name here is exactly as configured in your system. 
+       + SCI_ID is specified for every custom configstore 
+-->
+  <!--
+<configstore name="AUTH_ROLE_USER" SCI_ID="" >
+    <checkitem desc="[p2-STANDARD] Role SAP_J2EE_ADMIN must not be assigned to users other than standard users" id="CRITAU-J_a">
+      <compliant>          CHECK_ID = 'SAP_J2EE_ADMIN' and
+                                     ROLE = 'SAP_J2EE_ADMIN' and not
+                                     USER in ('J2EE_ADMIN','PISUPER') and
+                                     lpad(USER_COUNT,4,'0') = '0000'
+      </compliant>
+      <complianttext/>
+      <noncompliant>   CHECK_ID = 'SAP_J2EE_ADMIN' and
+                                     ROLE = 'SAP_J2EE_ADMIN' and not
+                                     USER in ('J2EE_ADMIN','PISUPER') and
+                                     lpad(USER_COUNT,4,'0') &gt;= '0001' 
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+-->
+</targetsystem>

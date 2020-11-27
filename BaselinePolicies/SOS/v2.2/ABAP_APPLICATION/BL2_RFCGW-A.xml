@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] RFC Gateway Security Options" id="BL22_RFCGW-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- RFCGW-A: RFC Gateway Security (part of application server ABAP) -->
+  <configstore name="GW_SECINFO" name_extended="" sci_id="" system_type="ABAP">
+<!--
+    <checkitem desc="[p1-CRITICAL] sec_info: Access OK (RFC gateway hardening)" id="RFCGW-A_a.01" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '.*ACCESS=[^\*].*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '.*ACCESS=[^\*].*' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] sec_info: Cancel OK (RFC gateway hardening)" id="RFCGW-A_a.02" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '.*CANCEL=[^\*].*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '.*CANCEL=[^\*].*' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] sec_info: Deny OK (RFC gateway hardening)" id="RFCGW-A_a.03" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '^D.*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '^D.*' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] sec_info: Default line not OK (RFC gateway hardening)" id="RFCGW-A_a.04" operator="NOT_EXIST">
+      <compliant>          line like '%' and text like_regexpr 'P TP=* USER=* USER-HOST=* HOST=*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr 'P TP=* USER=* USER-HOST=* HOST=*' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] sec_info: TP OK (RFC gateway hardening)" id="RFCGW-A_a.05" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '.*TP=[^\*].*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '.*TP=[^\*].*' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] sec_info: Host OK (RFC gateway hardening)" id="RFCGW-A_a.06" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '.*HOST=[^\*].*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '.*HOST=[^\*].*' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] sec_info: User OK (RFC gateway hardening)" id="RFCGW-A_a.07" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '.*USER=[^\*].*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '.*USER=[^\*].*' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] sec_info: User-Host OK (RFC gateway hardening)" id="RFCGW-A_a.08" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '.*USER-HOST=[^\*].*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '.*USER-HOST=[^\*].*' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] sec_info: Comment OK (RFC gateway hardening)" id="RFCGW-A_a.09" not_found="positive" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '^#.*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '^#.*' </noncompliant>
+    </checkitem>
+-->
+    <checkitem desc="[p1-CRITICAL] sec_info (RFC gateway hardening)" id="RFCGW-A_a.Sec" operator="">
+      <compliant>line like '%' and ( (text like_regexpr 'USER-HOST=[^*]' and text like_regexpr '[^-]HOST=[^*]') or text like_regexpr 'HOST=[*][.]')</compliant>
+      <noncompliant>line like '%' and not ( (text like_regexpr 'USER-HOST=[^*]' and text like_regexpr '[^-]HOST=[^*]') or text like_regexpr 'HOST=[*][.]')</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <configstore name="GW_REGINFO" name_extended="" sci_id="" system_type="ABAP">
+<!--
+    <checkitem desc="[p1-CRITICAL] reg_info: Line P TP=* not OK (RFC gateway hardening)" id="RFCGW-A_a.10" operator="NOT_EXIST">
+      <compliant>          line like '%' and TEXT like '%P TP=*%' </compliant>
+      <noncompliant>    line like '%' and TEXT like '%P TP=*%' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] reg_info: TP OK (RFC gateway hardening)" id="RFCGW-A_a.11" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '.*TP=[^\*].*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '.*TP=[^\*].*' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] reg_info: Host OK (RFC gateway hardening)" id="RFCGW-A_a.12" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '.*HOST=[^\*].*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '.*HOST=[^\*].*' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] reg_info: Access OK (RFC gateway hardening)" id="RFCGW-A_a.13" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '.*ACCESS=[^\*].*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '.*ACCESS=[^\*].*' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] reg_info: Cancel OK (RFC gateway hardening)" id="RFCGW-A_a.14" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '.*CANCEL=[^\*].*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '.*CANCEL=[^\*].*' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] reg_info: Deny OK (RFC gateway hardening)" id="RFCGW-A_a.15" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '^D.*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '^D.*' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] reg_info: Comment OK (RFC gateway hardening)" id="RFCGW-A_a.16" not_found="positive" operator="EXIST">
+      <compliant>          line like '%' and text like_regexpr '^#.*'</compliant>
+      <noncompliant>    line like '%' and text like_regexpr '^#.*' </noncompliant>
+    </checkitem>
+-->
+    <checkitem desc="[p1-CRITICAL] reg_info (RFC gateway hardening)" id="RFCGW-A_a.Reg" operator="">
+      <compliant>line like '%' and ( TEXT like_regexpr 'HOST=[^*]' )</compliant>
+      <noncompliant> (line like '%' and TEXT like  '%HOST=*%' ) OR ( line like '%' and TEXT = 'P TP=*' )</noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- checks from Baseline Template version 1.9
+  <configstore name="GW_SECINFO" name_extended="" sci_id="" system_type="ABAP">
+    <checkitem desc="[p1-CRITICAL] RFC gateway hardening (secinfo content)" id="RFCGW-A_a.1" operator="">
+      <compliant>          line like '%' and ( (text like_regexpr 'USER-HOST=[^*]' and text like_regexpr '[^-]HOST=[^*]') or text like_regexpr 'HOST=[*][.]')</compliant>
+      <noncompliant>    line like '%' and not ( (text like_regexpr 'USER-HOST=[^*]' and text like_regexpr '[^-]HOST=[^*]') or text like_regexpr 'HOST=[*][.]')</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="GW_REGINFO" name_extended="" sci_id="" system_type="ABAP">
+    <checkitem desc="[p1-CRITICAL] RFC gateway hardening (reginfo content)" id="RFCGW-A_a.2" operator="">
+      <compliant>          line like '%' and ( TEXT like_regexpr 'HOST=[^*]' )</compliant>
+      <noncompliant>    ( line like '%' and TEXT like  '%HOST=[*]%' ) OR ( line like '%' and TEXT = 'P TP=*' )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="GW_PRXINFO" name_extended="" sci_id="" system_type="ABAP">
+    <checkitem desc="[p1-CRITICAL] RFC gateway hardening (prxyinfo content)" id="RFCGW-A_a.3" operator="">
+      <compliant>          line like '%' and ( text like  '%P SOURCE=local,internal%' or text like '%SOURCE=*%'  )</compliant>
+      <noncompliant>    line like '%' and ( not ( text like  '%P SOURCE=local,internal%' or text like '%SOURCE=*%' ) or text = 'gw/prxy_info file not found')</noncompliant>
+    </checkitem>
+  </configstore>
+-->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- Check RFCGW-A_b.1.x validate if parameter value contains 2x // or \\ to ensure it's a path-like value - Consider replacing with RFCGW-A_b.1.y-->
+    <checkitem desc="[p1-CRITICAL] Path-like value for ms/acl_info (message server access control list)" id="RFCGW-A_b.1.x">
+      <compliant>          NAME = 'gw/sec_info' and length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0 </compliant>
+      <noncompliant>    NAME = 'gw/sec_info' and NOT(length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0)</noncompliant>
+    </checkitem>
+    <!--       
+    <checkitem desc="[p1-CRITICAL] File with access control list for message server" id="RFCGW-A_b.1.y">
+      <compliant>          NAME = 'gw/sec_info'  and VALUE like 'your mount path/acl file name' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'gw/sec_info'  and not ( VALUE like 'your mount path/acl file name'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+-->
+    <!-- Check RFCGW-A_b.2.x validate if parameter value contains 2x // or \\ to ensure it's a path-like value - Consider replacing with RFCGW-A_b.2.y-->
+    <checkitem desc="[p1-CRITICAL] Path-like value for ms/acl_info (message server access control list)" id="RFCGW-A_b.01.x">
+      <compliant>          NAME = 'gw/reg_info' and length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0 </compliant>
+      <noncompliant>    NAME = 'gw/reg_info' and NOT(length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0)</noncompliant>
+    </checkitem>
+    <!--       
+    <checkitem desc="[p1-CRITICAL] File with access control list for message server" id="RFCGW-A_b.1.y">
+      <compliant>          NAME = 'gw/reg_info'  and VALUE like 'your mount path/acl file name' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'gw/reg_info'  and not ( VALUE like 'your mount path/acl file name'  ) </noncompliant>
+     <noncomplianttext/>
+   </checkitem>
+-->
+    <checkitem desc="[p1-CRITICAL] Gateway security options" id="RFCGW-A_c.1">
+      <compliant>         NAME = 'gw/reg_no_conn_info'  and 
+                                  VALUE in ( '15','31','47','63','79','95','111','127','143','159','175','191','207','223','239','255' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>NAME = 'gw/reg_no_conn_info'  and not
+                                  VALUE in ( '15','31','47','63','79','95','111','127','143','159','175','191','207','223','239','255' )
+      </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>             NAME = 'KERN_REL' and substring(VALUE,0,3) &lt; '740'</joincompliant>
+        <joinnoncompliant>       NAME = 'KERN_REL' and substring(VALUE,0,3) &lt; '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Gateway security options" id="RFCGW-A_c.2">
+      <compliant>          NAME = 'gw/reg_no_conn_info'  and 
+                                     VALUE in ('1','65','129','193')
+      </compliant>
+      <complianttext/>
+      <noncompliant>   NAME = 'gw/reg_no_conn_info'  and not
+                                     VALUE in ('1','65','129','193')
+      </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>             NAME = 'KERN_REL' and substring(VALUE,0,3) &gt;= '740'</joincompliant>
+        <joinnoncompliant>       NAME = 'KERN_REL' and substring(VALUE,0,3) &gt;= '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Mode for non existing ACL file" id="RFCGW-A_d">
+      <compliant>          NAME = 'gw/acl_mode'  and VALUE = '1' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'gw/acl_mode'  and not ( VALUE = '1'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Enable gateway monitor commands" id="RFCGW-A_e">
+      <compliant>          NAME = 'gw/monitor'  and VALUE = '1' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'gw/monitor'  and not ( VALUE = '1'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Disable simulation mode for reg_info and sec_info" id="RFCGW-A_f">
+      <compliant>          NAME = 'gw/sim_mode'  and VALUE = '0' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'gw/sim_mode'  and not ( VALUE = '0'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] acceptable method to start programs via the RFC Gateway " id="RFCGW-A_g">
+      <compliant>          NAME = 'gw/rem_start'  and (VALUE = 'DISABLED' or VALUE = 'SSH_SHELL' )  </compliant>
+      <complianttext/>
+      <noncompliant>   NAME = 'gw/rem_start'  and not (VALUE = 'DISABLED' or VALUE = 'SSH_SHELL' ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

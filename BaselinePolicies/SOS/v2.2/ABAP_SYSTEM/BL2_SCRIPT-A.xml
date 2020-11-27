@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Scripting Protection - ABAP" id="BL22_SCRIPT-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- SCRIPT-A: Scripting Protection – ABAP -->
+  <!-- Possible values: TRUE, FALSE, 0, 1, ON, OFF, YES, NO
+       Related notes: 2163298, 2163298  -->
+  <configstore name="ABAP_INSTANCE_PAHI" sci_id="">
+    <checkitem desc="[p3-[EXTENDED] Scripting Protection profile parameter (sapgui/nwbc_scripting)" id="SCRIPT-A_a.1">
+      <compliant>NAME = 'sapgui/nwbc_scripting' and VALUE = 'FALSE' </compliant>
+      <complianttext/>
+      <noncompliant>NAME = 'sapgui/nwbc_scripting' and not VALUE = 'FALSE'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-[EXTENDED] Scripting Protection profile parameter (sapgui/user_scripting)" id="SCRIPT-A_a.2">
+      <compliant>    NAME = 'sapgui/user_scripting' and VALUE = 'FALSE' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'sapgui/user_scripting' and not VALUE = 'FALSE'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-[EXTENDED] Scripting Protection profile parameter (sapgui/user_scripting_disable_recording)" id="SCRIPT-A_a.3">
+      <compliant>    NAME = 'sapgui/user_scripting_disable_recording' and VALUE = 'TRUE' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'sapgui/user_scripting_disable_recording' and not VALUE = 'TRUE'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-[EXTENDED] Scripting Protection profile parameter (sapgui/user_scripting_force_notification)" id="SCRIPT-A_a.4">
+      <compliant>    NAME = 'sapgui/user_scripting_force_notification' and VALUE = 'TRUE' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'sapgui/user_scripting_force_notification' and not VALUE = 'TRUE'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-[EXTENDED] Scripting Protection profile parameter (sapgui/user_scripting_per_user)" id="SCRIPT-A_a.5">
+      <compliant>    NAME = 'sapgui/user_scripting_per_user' and VALUE = 'TRUE' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'sapgui/user_scripting_per_user' and not VALUE = 'TRUE'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-[EXTENDED] Scripting Protection profile parameter (sapgui/user_scripting_set_readonly)" id="SCRIPT-A_a.6">
+      <compliant>    NAME = 'sapgui/user_scripting_set_readonly' and VALUE = 'TRUE' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'sapgui/user_scripting_set_readonly' and not VALUE = 'TRUE'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

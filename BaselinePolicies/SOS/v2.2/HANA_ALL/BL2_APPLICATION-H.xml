@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Application - HANA" id="BL22_APPLICATION-H" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- STDUSR-H: Standard Users in HANA -->
+  <configstore name="HDB_SYSTEM_USER">
+    <checkitem desc="[p2-STANDARD] SYSTEM user is deactivated" id="STDUSR-H">
+      <compliant>    USER_NAME = 'SYSTEM' and VALID_FROM like '%' and VALID_UNTIL like '%' and DEACTIVATION_TIME like '%' and LOWER(USER_DEACTIVATED) = 'true' </compliant>
+      <noncompliant> USER_NAME = 'SYSTEM' and VALID_FROM like '%' and VALID_UNTIL like '%' and DEACTIVATION_TIME like '%' and not LOWER(USER_DEACTIVATED) = 'true' </noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- PWDPOL-H: Password Policy - HANA (SystemDB) -->
+  <configstore name="HDB_PARAMETER">
+    <checkitem desc="[p1-CRITICAL] Password Policy - minimal password length" id="PWDPOL-H_a.1" system_attributes="DB_SYSTEMDB:TRUE">
+      <compliant>    FILE_NAME = 'nameserver.ini'  and TENANT like '%'  and HOST like '%'  and 
+                     SECT = 'password policy'  and 
+                     NAME = 'minimal_password_length'  and 
+                     LAYER like '%'  and 
+                     lpad(VALUE,4,'0') &gt;= '0008' 
+      </compliant>
+      <complianttext/>
+      <noncompliant> FILE_NAME = 'nameserver.ini'  and TENANT like '%'  and HOST like '%'  and 
+                     SECT = 'password policy'  and 
+                     NAME = 'minimal_password_length'  and 
+                     LAYER like '%'  and 
+                     NOT lpad(VALUE,4,'0') &gt;= '0008'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Password Policy: Unused initial Password Lifetime" id="PWDPOL-H_a.2" system_attributes="DB_SYSTEMDB:TRUE">
+      <compliant>    FILE_NAME = 'nameserver.ini'  and TENANT like '%'  and HOST like '%'  and 
+                     SECT = 'password policy'  and (NAME = 'maximum_unused_inital_password_lifetime' OR NAME = 'maximum_unused_initial_password_lifetime') and 
+                     LAYER like '%'  and 
+                     lpad(VALUE,4,'0') between '0001' and '0014'  
+      </compliant>
+      <complianttext/>
+      <noncompliant> FILE_NAME = 'nameserver.ini'  and TENANT like '%'  and HOST like '%'  and 
+                     SECT = 'password policy'  and (NAME = 'maximum_unused_inital_password_lifetime' OR NAME = 'maximum_unused_initial_password_lifetime') and 
+                     LAYER like '%'  and  
+                     NOT lpad(VALUE,4,'0') between '0001' and '0014'  
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password Policy: First Change" id="PWDPOL-H_b" system_attributes="DB_SYSTEMDB:TRUE">
+      <compliant>    FILE_NAME = 'nameserver.ini' and 
+                     SECT = 'password policy' and 
+                     NAME = 'force_first_password_change' and 
+                     LOWER(VALUE) = 'true' and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </compliant>
+      <noncompliant> FILE_NAME = 'nameserver.ini' and 
+                     SECT = 'password policy' and 
+                     NAME = 'force_first_password_change' and 
+                     NOT LOWER(VALUE) = 'true' and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Password Policy: Unused Productive Password Lifetime" id="PWDPOL-H_c" system_attributes="DB_SYSTEMDB:TRUE">
+      <compliant>    FILE_NAME = 'nameserver.ini' and 
+                     SECT = 'password policy' and 
+                     NAME = 'maximum_unused_productive_password_lifetime' and  
+                     lpad(VALUE,4,'0') between '0001' and '0090' and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </compliant>
+      <noncompliant> FILE_NAME = 'nameserver.ini' and 
+                     SECT = 'password policy' and 
+                     NAME = 'maximum_unused_productive_password_lifetime' and not
+                     lpad(VALUE,4,'0') between '0001' and '0090' and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </noncompliant>
+    </checkitem>
+    <!--  PWDPOL-H: Password Policy - HANA (TenantDB) -->
+    <checkitem desc="[p1-CRITICAL] Password Policy - minimal password length" id="PWDPOL-H_a.1" system_attributes="DB_TENANT:TRUE">
+      <compliant>    FILE_NAME = 'indexserver.ini'  and TENANT like '%'  and HOST like '%'  and 
+                     SECT = 'password policy'  and 
+                     NAME = 'minimal_password_length'  and 
+                     LAYER like '%'  and 
+                     lpad(VALUE,4,'0') &gt;= '0008' 
+      </compliant>
+      <complianttext/>
+      <noncompliant> FILE_NAME = 'indexserver.ini'  and TENANT like '%'  and HOST like '%'  and 
+                     SECT = 'password policy'  and 
+                     NAME = 'minimal_password_length'  and 
+                     LAYER like '%'  and 
+                     NOT lpad(VALUE,4,'0') &gt;= '0008' 
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Password Policy: Unused initial Password Lifetime" id="PWDPOL-H_a.2" system_attributes="DB_TENANT:TRUE">
+      <compliant>    FILE_NAME = 'indexserver.ini'  and TENANT like '%'  and HOST like '%'  and TENANT like '%' and
+                     SECT = 'password policy'  and 
+                     (NAME = 'maximum_unused_inital_password_lifetime' OR NAME = 'maximum_unused_initial_password_lifetime')  and 
+                     LAYER like '%'  and  
+                     lpad(VALUE,4,'0') between '0001' and '0014'  
+      </compliant>
+      <complianttext/>
+      <noncompliant> FILE_NAME = 'indexserver.ini'  and TENANT like '%'  and HOST like '%'  and TENANT like '%' and 
+                     SECT = 'password policy'  and 
+                     (NAME = 'maximum_unused_inital_password_lifetime' OR NAME = 'maximum_unused_initial_password_lifetime') and 
+                     LAYER like '%'  and NOT 
+                      lpad(VALUE,4,'0') between '0001' and '0014'  
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Password Policy: First Change" id="PWDPOL-H_b" system_attributes="DB_TENANT:TRUE">
+      <compliant>    FILE_NAME = 'indexserver.ini' and  
+                     SECT = 'password policy' and 
+                     NAME = 'force_first_password_change' and 
+                     LOWER(VALUE) = 'true'  and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </compliant>
+      <noncompliant> FILE_NAME = 'indexserver.ini' and 
+                     SECT = 'password policy' and 
+                     NAME = 'force_first_password_change' and 
+                     NOT LOWER(VALUE) = 'true'  and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Password Policy: Unused Productive Password Lifetime" id="PWDPOL-H_c" system_attributes="DB_TENANT:TRUE">
+      <compliant>    FILE_NAME = 'indexserver.ini' and  HOST like '%' and TENANT like '%' and 
+                     SECT = 'password policy' and 
+                     NAME = 'maximum_unused_productive_password_lifetime' and 
+                     LAYER like '%' and
+                     lpad(VALUE,4,'0') between '0001' and '0090' 
+      </compliant>
+      <noncompliant> FILE_NAME = 'indexserver.ini' and HOST like '%' and TENANT like '%' and
+                     SECT = 'password policy' and 
+                     NAME = 'maximum_unused_productive_password_lifetime' and 
+                     LAYER like '%' and 
+                     NOT lpad(VALUE,4,'0') between '0001' and '0090' 
+      </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

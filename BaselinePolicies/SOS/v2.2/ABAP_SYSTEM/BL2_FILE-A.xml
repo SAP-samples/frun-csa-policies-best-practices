@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Directory Traversal Protection – ABAP" id="BL22_FILE-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!--  FILE-A:  Directory Traversal Protection – ABAP -->
+    <!--  You may strengthen the rule about profile parameter abap/path_normalization = ext according to notes 2562089 and 2551541. -->
+    <checkitem desc="[p2-STANDARD] abap/path_normalization (Profile Parameter, Directory Traversal Protection)" id="FILE-A_a2">
+      <compliant>    NAME = 'abap/path_normalization'  and  VALUE != 'off'   </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'abap/path_normalization'  and  VALUE = 'off'    </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>
