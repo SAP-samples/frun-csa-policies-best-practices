@@ -4,7 +4,7 @@ This folder provides policies for automating the requirements of the _SAP Securi
 [SAP CoE Security Services - Security Baseline Template Version 2.2 (including ConfigVal Package CV-2)](https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip)
 
 ## Note
-All policies follow closely the target systems for application Configuration Validatation in the SAP Solution Manager (see document: Configuration_Validation_Template_V2.2_CV-2.docx).  
+All policies follow closely the target systems for application Configuration Validatation in the SAP Solution Manager (see document: `Configuration_Validation_Template_V2.2_CV-2.docx`).  
 In cases where the technology of Focused Run supports a more accurate translation of Baseline Template requirements, the validation rules are adapted. This applies e.g. to:
 * Dependencies of requirements (e.g. release dependency of parameter settings) by using joins. 
 * Avoidance of "no data found" results by checking the existence of a parameter and then check further details only if the first check is positive.
