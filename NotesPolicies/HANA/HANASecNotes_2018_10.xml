@@ -11,7 +11,7 @@ Version: 002
 Date:    May 2019
 -->
 
-<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="HANA NOTES OF PATCHDAY: 2018-11" id="HPATCHDAY_2018-10" multisql="Yes" xsi:schemaLocation="csa_policy.xsd">
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="HANA NOTES OF PATCHDAY: 2018-10" id="HPATCHDAY_2018-10" multisql="Yes" xsi:schemaLocation="csa_policy.xsd">
 <!--  HAN-AS-XS - 2681207 - [CVE-2018-2465] DOS vulnerability in SAP HANA, Extended Application Services cla (Version 0004 )  -->
   <configstore name="HDB_VERSION">
     <checkitem desc="Note 0002681207 vulnerability exists" id="0002681207" operator="check_note:0002681207">
