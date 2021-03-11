@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This FRUN CSA policy contains rules to check the following ABAP Security Notes:
+
+[p3-CVSS 6.8] 0003023778 FS-PE - [CVE-2021-21487] Missing Authorization Check in Payment Engine
+[p3-CVSS 6.8] 0003007888 IS-B-BCA - [CVE-2021-21486] Missing Authorization check in SAP Enterprise Financial Service
+                               + manual activity
+[p3-CVSS 4.7] 0002972275 BC-BSP - Reverse Tabnabbing vulnerability within SAP Business Server Pages Applications
+              "Please implement SAP Notes 3015022 and 3016693 previous to security note 2972275."
+[p3-CVSS 4.3] 0002944188 PS-IS - [CVE-2020-6316] Missing Authorization Check in SAP ERP and SAP S/4 HANA
+
+
+[p3-CVSS 6.3] 0002475705 FIN-FSCM-IHC - Switchable Authorization checks for RFC in In House Cash
+                               + manual activity
+
+
+
+The policy does not check the following Security Notes:
+[p3-CVSS 4.3]  0003027767 CA-VE-VEV - [CVE-2021-27592] Improper Input Validation in SAP 3D Visual Enterprise Viewer
+[p3-CVSS 4.3]  0003027758 CA-VE-VEV - [Multiple CVEs] Improper Input Validation in SAP 3D Visual Enterprise Viewer
+[p1-CVSS 9.9]  0003022622 MFG-MII - [CVE-2021-21480] Code injection vulnerability in SAP Manufacturing Integration a
+[p1-CVSS 10.0]  0002890213 SV-SMG-MON-EEM - [CVE-2020-6207] Missing Authentication Check in SAP Solution Manager
+[p1-CVSS 9.6]  0003022422 BC-UPG-TLS-TLJ - [CVE-2021-21481] Missing Authorization Check in SAP NetWeaver AS JAVA (Migration
+[p3-CVSS 6.5]  0002983436 EP-KM-CM-UI - [CVE-2021-21488] Insecure Deserialisation in SAP NetWeaver Knowledge Management
+[p3-CVSS 4.7]  0002978151 BC-WD-UR - Reverse tabnabbing issue in Unified Rendering based frameworks in NetWeaver Appl
+[p3-CVSS 4.7]  0002977001 EP-PDK-HBJ - Reverse TabNabbing vulnerability in SAP NetWeaver Application Server Java (Appli
+[p3-CVSS 4.7]  0002976947 BC-WD-JAV - [CVE-2021-21491] Reverse TabNabbing vulnerability in SAP NetWeaver Application S
+[p3-CVSS 5.3]  0002943844 BI-DEV-JAV - [CVE-2020-6308] Server-Side Request Forgery vulnerability in SAP BusinessObjects
+[p1-CVSS 10.0]  0002622660 BC-FES-BUS-DSK - Security updates for the browser control Google Chromium delivered with SAP Busi
+[p3-CVSS 4.3]  0002333957 CA-UI2-INT-FE - Clickjacking Framing Protection in SAP Fiori Launchpad for NW AS ABAP basen on a
+
+[p2-CVSS 7.7]  0003017378 HAN-DB-SEC - [CVE-2021-21484] Possible authentication bypass in SAP HANA LDAP scenarios
+                     see separate Hana Policy
+
+SAP Security: PatchDay_2021-03
+Version: 001
+Date:    10.03.2021
+-->
+
+<targetsystem desc="SNotes of PatchDay: 2021-03" id="PatchDay_2021-03" multisql="Yes">
+
+  <!-- [p3-CVSS 4.7]  BC-BSP 0002972275 - Reverse Tabnabbing vulnerability within SAP Business Server Pages Applications i (Version 0002) (Medium) -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 4.7] Note 0002972275 exists" id="0002972275" operator="check_note">
+      <compliant>NOTE = '0002972275' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.7] Note 0002972275 missing and solution with SP available" id="0002972275" operator="check_note:0002972275">
+     <compliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and not( (lpad(SP,4,'0'))  &lt; '0039' )   ) <!-- SAP_BASIS 700 SAPKB70039 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0024' )   ) <!-- SAP_BASIS 701 SAPKB70124 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0024' )   ) <!-- SAP_BASIS 702 SAPKB70224 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0029' )   ) <!-- SAP_BASIS 731 SAPKB73129 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0026' )   ) <!-- SAP_BASIS 740 SAPKB74026 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- SAP_BASIS 750 SAPK-75021INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) <!-- SAP_BASIS 751 SAPK-75113INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0008' )   ) <!-- SAP_BASIS 752 SAPK-75208INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- SAP_BASIS 753 SAPK-75306INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0004' )   ) <!-- SAP_BASIS 754 SAPK-75404INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0002' )   ) <!-- SAP_BASIS 755 SAPK-75502INSAPBASIS -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and (lpad(SP,4,'0'))  &lt; '0039' )  <!-- SAP_BASIS 700 SAPKB70039 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0024' )  <!-- SAP_BASIS 701 SAPKB70124 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and (lpad(SP,4,'0'))  &lt; '0024' )  <!-- SAP_BASIS 702 SAPKB70224 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0029' )  <!-- SAP_BASIS 731 SAPKB73129 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0026' )  <!-- SAP_BASIS 740 SAPKB74026 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- SAP_BASIS 750 SAPK-75021INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0013' )  <!-- SAP_BASIS 751 SAPK-75113INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0008' )  <!-- SAP_BASIS 752 SAPK-75208INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- SAP_BASIS 753 SAPK-75306INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0004' )  <!-- SAP_BASIS 754 SAPK-75404INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0002' )  <!-- SAP_BASIS 755 SAPK-75502INSAPBASIS -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.7] Note 0002972275 missing and applicable using Correction Instruction" id="0002972275" operator="check_note:0002972275">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and lpad(SP,4,'0') between '0037' and '0038' )  <!-- SAP_BASIS 700 SAPKB70037 - SAPKB70038  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and lpad(SP,4,'0') between '0022' and '0023' )  <!-- SAP_BASIS 701 SAPKB70122 - SAPKB70123  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and lpad(SP,4,'0') between '0022' and '0023' )  <!-- SAP_BASIS 702 SAPKB70222 - SAPKB70223  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and lpad(SP,4,'0') between '0027' and '0028' )  <!-- SAP_BASIS 731 SAPKB73127 - SAPKB73128  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and lpad(SP,4,'0') between '0021' and '0025' )  <!-- SAP_BASIS 740 SAPKB74021 - SAPKB74025  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and lpad(SP,4,'0') between '0013' and '0020' )  <!-- SAP_BASIS 750 SAPK-75013INSAPBASIS - SAPK-75020INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and lpad(SP,4,'0') between '0007' and '0012' )  <!-- SAP_BASIS 751 SAPK-75107INSAPBASIS - SAPK-75112INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and lpad(SP,4,'0') between '0003' and '0007' )  <!-- SAP_BASIS 752 SAPK-75203INSAPBASIS - SAPK-75207INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and lpad(SP,4,'0') between '0001' and '0005' )  <!-- SAP_BASIS 753 SAPK-75301INSAPBASIS - SAPK-75305INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and lpad(SP,4,'0') between '0001' and '0003' )  <!-- SAP_BASIS 754 SAPK-75401INSAPBASIS - SAPK-75403INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and lpad(SP,4,'0') between '0001' and '0003' )  <!-- SAP_BASIS 754 SAPK-75401INSAPBASIS - SAPK-75403INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0000' )  <!-- SAP_BASIS 755 755 - 755  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- [p3-CVSS 6.3]  FIN-FSCM-IHC 0002475705 - Switchable Authorization checks for RFC in In House Cash (Version 0002) (Medium) -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 6.3] Note 0002475705 exists" id="0002475705" operator="check_note">
+      <compliant>NOTE = '0002475705' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.3] Note 0002475705 missing and solution with SP available" id="0002475705" operator="check_note:0002475705">
+     <compliant>(
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and not( (lpad(SP,4,'0'))  &lt; '0031' )   ) <!-- EA-FINSERV 600 SAPKGPFD31 -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and not( (lpad(SP,4,'0'))  &lt; '0020' )   ) <!-- EA-FINSERV 603 SAPK-60320INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- EA-FINSERV 604 SAPK-60421INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and not( (lpad(SP,4,'0'))  &lt; '0018' )   ) <!-- EA-FINSERV 605 SAPK-60518INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and not( (lpad(SP,4,'0'))  &lt; '0020' )   ) <!-- EA-FINSERV 606 SAPK-60620INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and not( (lpad(SP,4,'0'))  &lt; '0012' )   ) <!-- EA-FINSERV 616 SAPK-61612INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- EA-FINSERV 617 SAPK-61715INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- EA-FINSERV 618 SAPK-61809INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- EA-FINSERV 800 SAPK-80006INEAFINSRV -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and not( (lpad(SP,4,'0'))  &lt; '0004' )   ) <!-- S4CORE 101 SAPK-10104INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- S4CORE 102 SAPK-10201INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and (lpad(SP,4,'0'))  &lt; '0031' )  <!-- EA-FINSERV 600 SAPKGPFD31 -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and (lpad(SP,4,'0'))  &lt; '0020' )  <!-- EA-FINSERV 603 SAPK-60320INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- EA-FINSERV 604 SAPK-60421INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and (lpad(SP,4,'0'))  &lt; '0018' )  <!-- EA-FINSERV 605 SAPK-60518INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and (lpad(SP,4,'0'))  &lt; '0020' )  <!-- EA-FINSERV 606 SAPK-60620INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- EA-FINSERV 606 SAPK-60621INEAFINSRV --> or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and (lpad(SP,4,'0'))  &lt; '0012' )  <!-- EA-FINSERV 616 SAPK-61612INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- EA-FINSERV 617 SAPK-61715INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- EA-FINSERV 618 SAPK-61809INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- EA-FINSERV 800 SAPK-80006INEAFINSRV -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and (lpad(SP,4,'0'))  &lt; '0004' )  <!-- S4CORE 101 SAPK-10104INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and (lpad(SP,4,'0'))  &lt; '0001' )  <!-- S4CORE 102 SAPK-10201INS4CORE -->
+
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.3] Note 0002475705 missing and applicable using Correction Instruction" id="0002475705" operator="check_note:0002475705">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and lpad(SP,4,'0') between '0001' and '0030' )  <!-- EA-FINSERV 600 SAPKGPFD01 - SAPKGPFD30  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and lpad(SP,4,'0') between '0000' and '0019' )  <!-- EA-FINSERV 603 603 - SAPK-60319INEAFINSRV  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and lpad(SP,4,'0') between '0001' and '0020' )  <!-- EA-FINSERV 604 SAPK-60401INEAFINSRV - SAPK-60420INEAFINSRV  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and lpad(SP,4,'0') between '0003' and '0017' )  <!-- EA-FINSERV 605 SAPK-60503INEAFINSRV - SAPK-60517INEAFINSRV  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and lpad(SP,4,'0') between '0001' and '0019' )  <!-- EA-FINSERV 606 SAPK-60601INEAFINSRV - SAPK-60619INEAFINSRV  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and lpad(SP,4,'0') between '0000' and '0011' )  <!-- EA-FINSERV 616 616 - SAPK-61611INEAFINSRV  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and lpad(SP,4,'0') between '0001' and '0014' )  <!-- EA-FINSERV 617 SAPK-61701INEAFINSRV - SAPK-61714INEAFINSRV  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and lpad(SP,4,'0') between '0000' and '0008' )  <!-- EA-FINSERV 618 618 - SAPK-61808INEAFINSRV  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- EA-FINSERV 800 800 - SAPK-80005INEAFINSRV  --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and lpad(SP,4,'0') between '0000' and '0003' )  <!-- S4CORE 101 101 - SAPK-10103INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and lpad(SP,4,'0') between '0000' and '0000' )  <!-- S4CORE 102 102 - 102  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p3-CVSS 6.8]  FS-PE 0003023778 - [CVE-2021-21487] Missing Authorization Check in Payment Engine (Version 0005)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 6.8] Note 0003023778 exists" id="0003023778" operator="check_note">
+      <compliant>NOTE = '0003023778' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.8] Note 0003023778 missing and solution with SP available" id="0003023778" operator="check_note:0003023778">
+     <compliant>(
+      ( COMPONENT = 'PAY-ENGINE' and VERSION = '500' and not( (lpad(SP,4,'0'))  &lt; '0010' )   ) <!-- PAY-ENGINE 500 SAPK-50010INPE1 --> or
+      ( COMPONENT = 'PES4' and VERSION = '100' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- PES4 100 SAPK-10001INPES4 -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'PAY-ENGINE' and VERSION = '500' and (lpad(SP,4,'0'))  &lt; '0010' )  <!-- PAY-ENGINE 500 SAPK-50010INPE1 --> or
+      ( COMPONENT = 'PES4' and VERSION = '100' and (lpad(SP,4,'0'))  &lt; '0001' )  <!-- PES4 100 SAPK-10001INPES4 -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.8] Note 0003023778 missing and applicable using Correction Instruction" id="0003023778" operator="check_note:0003023778">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'PAY-ENGINE' and VERSION = '500' and lpad(SP,4,'0') between '0000' and '0009' )  <!-- PAY-ENGINE 500 500 - SAPK-50009INPE1  --> or
+      ( COMPONENT = 'PES4' and VERSION = '100' and lpad(SP,4,'0') between '0000' and '0000' )  <!-- PES4 100 100 - 100  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p3-CVSS 6.8]  IS-B-BCA 0003007888 - [CVE-2021-21486] Missing Authorization check in SAP Enterprise Financial Service (Version 0005)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 6.8] Note 0003007888 exists" id="0003007888" operator="check_note">
+      <compliant>NOTE = '0003007888' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.8] Note 0003007888 missing and solution with SP available" id="0003007888" operator="check_note:0003007888">
+     <compliant>(
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and not( (lpad(SP,4,'0'))  &lt; '0035' )   ) <!-- EA-FINSERV 600 SAPKGPFD35 -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and not( (lpad(SP,4,'0'))  &lt; '0024' )   ) <!-- EA-FINSERV 603 SAPK-60324INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and not( (lpad(SP,4,'0'))  &lt; '0025' )   ) <!-- EA-FINSERV 604 SAPK-60425INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and not( (lpad(SP,4,'0'))  &lt; '0022' )   ) <!-- EA-FINSERV 605 SAPK-60522INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) <!-- EA-FINSERV 606 SAPK-60628INEAFINSRV --> or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and not( (lpad(SP,4,'0'))  &lt; '0022' )   ) <!-- EA-FINSERV 617 SAPK-61722INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and not( (lpad(SP,4,'0'))  &lt; '0016' )   ) <!-- EA-FINSERV 618 SAPK-61816INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and not( (lpad(SP,4,'0'))  &lt; '0012' )   ) <!-- EA-FINSERV 800 SAPK-80012INEAFINSRV -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and not( (lpad(SP,4,'0'))  &lt; '0010' )   ) <!-- S4CORE 101 SAPK-10110INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and not( (lpad(SP,4,'0'))  &lt; '0008' )   ) <!-- S4CORE 102 SAPK-10208INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- S4CORE 103 SAPK-10306INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and not( (lpad(SP,4,'0'))  &lt; '0004' )   ) <!-- S4CORE 104 SAPK-10404INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and not( (lpad(SP,4,'0'))  &lt; '0002' )   ) <!-- S4CORE 105 SAPK-10502INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and (lpad(SP,4,'0'))  &lt; '0035' )  <!-- EA-FINSERV 600 SAPKGPFD35 -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and (lpad(SP,4,'0'))  &lt; '0024' )  <!-- EA-FINSERV 603 SAPK-60324INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and (lpad(SP,4,'0'))  &lt; '0025' )  <!-- EA-FINSERV 604 SAPK-60425INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and (lpad(SP,4,'0'))  &lt; '0022' )  <!-- EA-FINSERV 605 SAPK-60522INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and (lpad(SP,4,'0'))  &lt; '0028' )  <!-- EA-FINSERV 606 SAPK-60628INEAFINSRV --> or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and (lpad(SP,4,'0'))  &lt; '0022' )  <!-- EA-FINSERV 617 SAPK-61722INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and (lpad(SP,4,'0'))  &lt; '0016' )  <!-- EA-FINSERV 618 SAPK-61816INEAFINSRV -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and (lpad(SP,4,'0'))  &lt; '0012' )  <!-- EA-FINSERV 800 SAPK-80012INEAFINSRV -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and (lpad(SP,4,'0'))  &lt; '0010' )  <!-- S4CORE 101 SAPK-10110INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and (lpad(SP,4,'0'))  &lt; '0008' )  <!-- S4CORE 102 SAPK-10208INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- S4CORE 103 SAPK-10306INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and (lpad(SP,4,'0'))  &lt; '0004' )  <!-- S4CORE 104 SAPK-10404INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and (lpad(SP,4,'0'))  &lt; '0002' )  <!-- S4CORE 105 SAPK-10502INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.8] Note 0003007888 missing and applicable using Correction Instruction" id="0003007888" operator="check_note:0003007888">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '600' and lpad(SP,4,'0') between '0001' and '0034' )  <!-- EA-FINSERV 600 SAPKGPFD01 - SAPKGPFD34  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '603' and lpad(SP,4,'0') between '0000' and '0023' )  <!-- EA-FINSERV 603 603 - SAPK-60323INEAFINSRV  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '604' and lpad(SP,4,'0') between '0001' and '0024' )  <!-- EA-FINSERV 604 SAPK-60401INEAFINSRV - SAPK-60424INEAFINSRV  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '605' and lpad(SP,4,'0') between '0003' and '0021' )  <!-- EA-FINSERV 605 SAPK-60503INEAFINSRV - SAPK-60521INEAFINSRV  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '606' and lpad(SP,4,'0') between '0001' and '0027' )  <!-- EA-FINSERV 606 SAPK-60601INEAFINSRV - SAPK-60627INEAFINSRV  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '616' and lpad(SP,4,'0') between '0000' and '0999' )  <!-- EA-FINSERV 616 616 - ALL_SP  --> or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '617' and lpad(SP,4,'0') between '0001' and '0021' )  <!-- EA-FINSERV 617 SAPK-61701INEAFINSRV - SAPK-61721INEAFINSRV  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '618' and lpad(SP,4,'0') between '0000' and '0015' )  <!-- EA-FINSERV 618 618 - SAPK-61815INEAFINSRV  -->  or
+      ( COMPONENT = 'EA-FINSERV' and VERSION = '800' and lpad(SP,4,'0') between '0000' and '0011' )  <!-- EA-FINSERV 800 800 - SAPK-80011INEAFINSRV  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and lpad(SP,4,'0') between '0000' and '0009' )  <!-- S4CORE 101 101 - SAPK-10109INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and lpad(SP,4,'0') between '0000' and '0007' )  <!-- S4CORE 102 102 - SAPK-10207INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- S4CORE 103 103 - SAPK-10305INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and lpad(SP,4,'0') between '0000' and '0003' )  <!-- S4CORE 104 104 - SAPK-10403INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and lpad(SP,4,'0') between '0000' and '0001' )  <!-- S4CORE 105 105 - SAPK-10501INS4CORE  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p3-CVSS 4.3]  PS-IS 0002944188 - [CVE-2020-6316] Missing Authorization Check in SAP ERP and SAP S/4 HANA (Version 0010) (Medium) -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 4.3] Note 0002944188 exists" id="0002944188" operator="check_note">
+      <compliant>NOTE = '0002944188' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.3] Note 0002944188 missing and solution with SP available" id="0002944188" operator="check_note:0002944188">
+     <compliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '100' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) <!-- S4CORE 100 SAPK-10011INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- S4CORE 101 SAPK-10109INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- S4CORE 102 SAPK-10207INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- S4CORE 103 SAPK-10305INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and not( (lpad(SP,4,'0'))  &lt; '0003' )   ) <!-- S4CORE 104 SAPK-10403INS4CORE --> or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '600' and not( (lpad(SP,4,'0'))  &lt; '0033' )   ) <!-- SAP_APPL 600 SAPKH60033 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '602' and not( (lpad(SP,4,'0'))  &lt; '0023' )   ) <!-- SAP_APPL 602 SAPKH60223 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '603' and not( (lpad(SP,4,'0'))  &lt; '0022' )   ) <!-- SAP_APPL 603 SAPKH60322 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '604' and not( (lpad(SP,4,'0'))  &lt; '0023' )   ) <!-- SAP_APPL 604 SAPKH60423 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '605' and not( (lpad(SP,4,'0'))  &lt; '0020' )   ) <!-- SAP_APPL 605 SAPKH60520 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '606' and not( (lpad(SP,4,'0'))  &lt; '0026' )   ) <!-- SAP_APPL 606 SAPKH60626 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '617' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- SAP_APPL 617 SAPKH61721 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '618' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- SAP_APPL 618 SAPK-61815INSAPAPPL -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '100' and (lpad(SP,4,'0'))  &lt; '0011' )  <!-- S4CORE 100 SAPK-10011INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- S4CORE 101 SAPK-10109INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- S4CORE 102 SAPK-10207INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- S4CORE 103 SAPK-10305INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and (lpad(SP,4,'0'))  &lt; '0003' )  <!-- S4CORE 104 SAPK-10403INS4CORE --> or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '600' and (lpad(SP,4,'0'))  &lt; '0033' )  <!-- SAP_APPL 600 SAPKH60033 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '602' and (lpad(SP,4,'0'))  &lt; '0023' )  <!-- SAP_APPL 602 SAPKH60223 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '603' and (lpad(SP,4,'0'))  &lt; '0022' )  <!-- SAP_APPL 603 SAPKH60322 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '604' and (lpad(SP,4,'0'))  &lt; '0023' )  <!-- SAP_APPL 604 SAPKH60423 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '605' and (lpad(SP,4,'0'))  &lt; '0020' )  <!-- SAP_APPL 605 SAPKH60520 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '606' and (lpad(SP,4,'0'))  &lt; '0026' )  <!-- SAP_APPL 606 SAPKH60626 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '617' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- SAP_APPL 617 SAPKH61721 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '618' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- SAP_APPL 618 SAPK-61815INSAPAPPL -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.3] Note 0002944188 missing and applicable using Correction Instruction" id="0002944188" operator="check_note:0002944188">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '100' and lpad(SP,4,'0') between '0000' and '0010' )  <!-- S4CORE 100 100 - SAPK-10010INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and lpad(SP,4,'0') between '0000' and '0008' )  <!-- S4CORE 101 101 - SAPK-10108INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and lpad(SP,4,'0') between '0000' and '0006' )  <!-- S4CORE 102 102 - SAPK-10206INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- S4CORE 103 103 - SAPK-10304INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and lpad(SP,4,'0') between '0000' and '0002' )  <!-- S4CORE 104 104 - SAPK-10402INS4CORE  --> or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '600' and lpad(SP,4,'0') between '0001' and '0032' )  <!-- SAP_APPL 600 SAPKH60001 - SAPKH60032  -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '602' and lpad(SP,4,'0') between '0000' and '0022' )  <!-- SAP_APPL 602 602 - SAPKH60222  -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '603' and lpad(SP,4,'0') between '0000' and '0021' )  <!-- SAP_APPL 603 603 - SAPKH60321  -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '604' and lpad(SP,4,'0') between '0001' and '0022' )  <!-- SAP_APPL 604 SAPKH60401 - SAPKH60422  -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '605' and lpad(SP,4,'0') between '0000' and '0019' )  <!-- SAP_APPL 605 605 - SAPKH60519  -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '606' and lpad(SP,4,'0') between '0001' and '0025' )  <!-- SAP_APPL 606 SAPKH60601 - SAPKH60625  -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '616' and lpad(SP,4,'0') between '0000' and '0014' )  <!-- SAP_APPL 616 616 - SAPKH61614  -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '617' and lpad(SP,4,'0') between '0001' and '0020' )  <!-- SAP_APPL 617 SAPKH61701 - SAPKH61720  -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '618' and lpad(SP,4,'0') between '0000' and '0014' )  <!-- SAP_APPL 618 618 - SAPK-61814INSAPAPPL  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>
