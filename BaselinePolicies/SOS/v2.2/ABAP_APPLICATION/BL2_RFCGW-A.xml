@@ -41,8 +41,8 @@
     </checkitem>
 -->
     <checkitem desc="[p1-CRITICAL] sec_info (RFC gateway hardening)" id="RFCGW-A_a.Sec" operator="">
-      <compliant>line like '%' and ( (text like_regexpr 'USER-HOST=[^*]' and text like_regexpr '[^-]HOST=[^*]') or text like_regexpr 'HOST=[*][.]')</compliant>
-      <noncompliant>line like '%' and not ( (text like_regexpr 'USER-HOST=[^*]' and text like_regexpr '[^-]HOST=[^*]') or text like_regexpr 'HOST=[*][.]')</noncompliant>
+      <compliant>line like '%' and ((text like_regexpr 'USER-HOST=' and text like_regexpr 'USER-HOST=[^*]') or text like_regexpr '[^-]HOST=[^*]') </compliant>
+      <noncompliant>line like '%' and not  ((text like_regexpr 'USER-HOST=' and text like_regexpr 'USER-HOST=[^*]') or text like_regexpr '[^-]HOST=[^*]') </noncompliant>
     </checkitem>
   </configstore>
 
