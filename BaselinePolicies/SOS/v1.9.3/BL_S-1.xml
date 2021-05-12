@@ -7,7 +7,13 @@ Target system BL_S-1 / ABAP Profile Parameters in general
 
 Version: 002
    BL_S-1.03   added    server_port_0 and brackets
-Date:    Nov 28 2019
+Version: 003
+   exchanged (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE))
+           by to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' ))
+     to avoid SEQl error "SQL_CODE=339 invalid number: [6930] exception 70006930: attribute value is not a number" during validation
+
+
+Date:    Mai 12 2021
 -->
 <targetsystem desc="ABAP Profile Parameters" id="BL_S-1" multisql="Yes">
   <configstore name="ABAP_INSTANCE_PAHI">
@@ -32,7 +38,7 @@ Date:    Nov 28 2019
       <noncomplianttext/>
     </checkitem>
     <checkitem desc="ICM server specification" id="BL_S-1.03">
-   <compliant>( ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTPS%' )
+      <compliant>( ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTPS%' )
                           or ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTPS%' )
                           or ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTPS%' )
                           or ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTPS%' )
@@ -40,10 +46,10 @@ Date:    Nov 28 2019
                           or ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTPS%' )
                           or ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTPS%' )
                           or ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTPS%' )
-			  or ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTPS%' ))
-   </compliant>
-   <complianttext/>
-   <noncompliant>( ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTP,%' )
+                          or ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTPS%' ))
+         </compliant>
+      <complianttext/>
+      <noncompliant> ( ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTP,%' )
                           and ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTP,%' )
                           and ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTP,%' )
                           and ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTP,%' )
@@ -51,8 +57,8 @@ Date:    Nov 28 2019
                           and ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTP,%' )
                           and ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTP,%' )
                           and ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTP,%' )
-			  and ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTP,%' ))
-   </noncompliant>
+                          and ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTP,%' ))
+         </noncompliant>
       <noncomplianttext/>
     </checkitem>
     <checkitem desc="Disable CPIC" id="BL_S-1.04">
@@ -67,61 +73,61 @@ Date:    Nov 28 2019
     </checkitem>
     <checkitem desc="Minimum number of digits in passwords" id="BL_S-1.05">
       <compliant>
-            NAME = 'login/min_password_digits'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 1
+            NAME = 'login/min_password_digits'  and to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 1
          </compliant>
       <complianttext/>
       <noncompliant>
-            NAME = 'login/min_password_digits'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 1  )
+            NAME = 'login/min_password_digits'  and not ( to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 1  )
          </noncompliant>
       <noncomplianttext/>
     </checkitem>
     <checkitem desc="Minimum number of letters in passwords" id="BL_S-1.06">
       <compliant>
-            NAME = 'login/min_password_letters'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 0
+            NAME = 'login/min_password_letters'  and to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 0
          </compliant>
       <complianttext/>
       <noncompliant>
-            NAME = 'login/min_password_letters'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 0  )
+            NAME = 'login/min_password_letters'  and not ( to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 0  )
          </noncompliant>
       <noncomplianttext/>
     </checkitem>
     <checkitem desc="Minimum password length" id="BL_S-1.07">
       <compliant>
-            NAME = 'login/min_password_lng'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 8
+            NAME = 'login/min_password_lng'  and to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 8
          </compliant>
       <complianttext/>
       <noncompliant>
-            NAME = 'login/min_password_lng'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 8  )
+            NAME = 'login/min_password_lng'  and not ( to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 8  )
          </noncompliant>
       <noncomplianttext/>
     </checkitem>
     <checkitem desc="Minimum number of lower-case characters in passwords" id="BL_S-1.08">
       <compliant>
-            NAME = 'login/min_password_lowercase'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 1
+            NAME = 'login/min_password_lowercase'  and to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 1
          </compliant>
       <complianttext/>
       <noncompliant>
-            NAME = 'login/min_password_lowercase'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 1  )
+            NAME = 'login/min_password_lowercase'  and not ( to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 1  )
          </noncompliant>
       <noncomplianttext/>
     </checkitem>
     <checkitem desc="Minium number of special characters in passwords" id="BL_S-1.09">
       <compliant>
-            NAME = 'login/min_password_specials'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 0
+            NAME = 'login/min_password_specials'  and to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 0
          </compliant>
       <complianttext/>
       <noncompliant>
-            NAME = 'login/min_password_specials'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 0  )
+            NAME = 'login/min_password_specials'  and not ( to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 0  )
          </noncompliant>
       <noncomplianttext/>
     </checkitem>
     <checkitem desc="Minimum number of upper-case characters in passwords" id="BL_S-1.10">
       <compliant>
-            NAME = 'login/min_password_uppercase'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 1
+            NAME = 'login/min_password_uppercase'  and to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 1
          </compliant>
       <complianttext/>
       <noncompliant>
-            NAME = 'login/min_password_uppercase'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 1  )
+            NAME = 'login/min_password_uppercase'  and not ( to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 1  )
          </noncompliant>
       <noncomplianttext/>
     </checkitem>
@@ -177,11 +183,11 @@ Date:    Nov 28 2019
     </checkitem>
     <checkitem desc="Number of selection slots for security audit" id="BL_S-1.16">
       <compliant>
-            NAME = 'rsau/selection_slots'  and (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 10
+            NAME = 'rsau/selection_slots'  and to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 10
          </compliant>
       <complianttext/>
       <noncompliant>
-            NAME = 'rsau/selection_slots'  and not ( (SUBSTR_REGEXPR('([[:digit:]]{1,99})' IN VALUE)) &gt;= 10 )
+            NAME = 'rsau/selection_slots'  and not ( to_bigint(coalesce(substr_regexpr('^([[:blank:]]{0,})(\d{1,10})([[:blank:]]{0,})$' in value group 2), '-1' )) &gt;= 10 )
          </noncompliant>
       <noncomplianttext/>
     </checkitem>
