@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] CRITICAL Authorizations - ABAP" id="BL2_CRITAU-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
   <!-- CRITAU-A: 1-CRITICAL Authorizations – ABAP 
-   Config store name and SCI_ID need adjusted to customized store
-  <configstore name="AUTH_PROFILE_USER" SCI_ID="ZAAAAA">
+   Config store name and sci_id need adjusted to customized store
+  <configstore name="AUTH_PROFILE_USER" sci_id="ZAAAAA">
 
     <checkitem desc="[p1-CRITICAL] Users with profile SAP_ALL" id="CRITAU-A_a.1" >
       <compliant>          PROFILE = 'SAP_ALL'  and 
@@ -70,7 +70,7 @@
   </configstore>
 -->
   <!--
-  <configstore name="AUTH_ ROLE_USER" SCI_ID="ZBBBBB">
+  <configstore name="AUTH_ ROLE_USER" sci_id="ZBBBBB">
     <checkitem desc="[p1-CRITICAL] User SAP* has profile SAP_ALL" id="CRITAU-A_b.3" >
       <compliant>        
      </compliant>
@@ -82,7 +82,7 @@
   </configstore>
 -->
   <!--
-  <configstore name="AUTH_PROFILE_USER_CHANGE_DOC" SCI_ID="ZCCCCC">
+  <configstore name="AUTH_PROFILE_USER_CHANGE_DOC" sci_id="ZCCCCC">
     <checkitem desc="[p1-CRITICAL] Profile SAP_ALL added to users" id="CRITAU-A_a.2" not_found="positive">
       <compliant>          USER like '%' and
                                      ACTION = 'ADDED' and
@@ -114,7 +114,7 @@
   </configstore>
 -->
   <!--
-  <configstore name="AUTH_COMB_CHECK_USER" SCI_ID="ZDDDD">
+  <configstore name="AUTH_COMB_CHECK_USER" sci_id="ZDDDD">
    It is assumed that all managed systems have been upgraded the software component ST-A/PI to version *R* . 
       When having systems with lower ST-A/PI version change checks like as follows:
    <checkitem desc="[p1-CRITICAL] Users with CHANGE ALL TABLES authorization" id="CRITAU-A_d.01.1">
