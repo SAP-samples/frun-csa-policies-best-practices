@@ -45,13 +45,15 @@
       <compliant>    NAME = 'ms/acl_info' and 
                      ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/ms_acl_info' or
                        VALUE like_regexpr '^/sapmnt/(\w{3})/SYS/global/ms_acl_info'  or
-                       VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' )
+                       VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' or
+                       VALUE like_regexpr '^\\\\.*\\sapmnt\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' )
       </compliant>
       <complianttext/>
       <noncompliant> NAME = 'ms/acl_info' and not 
                      ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/ms_acl_info' or
                        VALUE like_regexpr '^/sapmnt/(\w{3})/SYS/global/ms_acl_info'  or
-                       VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' ) 
+                       VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' or
+                       VALUE like_regexpr '^\\\\.*\\sapmnt\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' ) 
       </noncompliant>
       <noncomplianttext/>
     </checkitem>
