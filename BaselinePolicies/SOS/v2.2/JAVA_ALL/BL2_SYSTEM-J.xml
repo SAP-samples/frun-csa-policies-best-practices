@@ -40,6 +40,10 @@
       <complianttext/>
       <noncompliant>NAME = 'ms/admin_port'  and not (lpad(VALUE, 4, '0') &lt;= '0000') </noncompliant>
       <noncomplianttext/>
+      <joinstore name="Parameters" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant>NAME = 'ms/admin_port'</joincompliant>
+        <joinnoncompliant>NAME = 'ms/admin_port'</joinnoncompliant>
+      </joinstore>
     </checkitem>
     <checkitem desc="[p1-CRITICAL] File with access control list for message server" id="MSGSRV-J_d.1">
       <compliant>    NAME = 'ms/acl_info' and 
