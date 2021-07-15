@@ -20,7 +20,7 @@ Comments:
 Version:    001
 Date:       Oct 2020
 -->
-<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.1] Baseline Policy: PROCESS - ABAP (Version 1 - Oct 2020)" id="BP_PROCESS-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] PROCESS - ABAP" id="BL22_PROCESS-A" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
   <!-- 2.4.2	DATA PROTECTION AND PRIVACY -->
   <configstore name="ABAP_SECSTORE_INFO">
     <checkitem desc="[p3-EXTENDED] SECSTORE individual master key)" id="SECSTO-A">
@@ -41,7 +41,6 @@ Date:       Oct 2020
       <noncompliant> NAME = 'SlotCount' and not (lpad(VALUE, 4, '0') &gt;= '0010') </noncompliant>
       <noncomplianttext/>
     </checkitem>
-
   </configstore>
   <!-- INSTANCE PROFILE PARAMETERS / KERNEL PARAMETERS for Auditing -->
   <!-- Note: The profile parameters are overwritten if kernel parameters are configured.Policy checks the actual runtime value of parameters -->
@@ -64,7 +63,6 @@ Date:       Oct 2020
       <noncompliant> NAME = 'rsau/selection_slots' and not (lpad(VALUE, 4, '0') &gt;= '0010') </noncompliant>
       <noncomplianttext/>
     </checkitem>
-   
     <checkitem desc="[p2-STANDARD] Audit Log user selection method used inside SAP kernel (Profile Parameter)" id="AUDIT-A_a.5p">
       <compliant>    NAME = 'rsau/user_selection' and VALUE = '1' </compliant>
       <noncompliant> NAME = 'rsau/user_selection' and VALUE != '1' </noncompliant>
