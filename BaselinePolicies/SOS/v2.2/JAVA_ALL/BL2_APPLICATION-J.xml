@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Baseline Policy for Application Security - JAVA" id="BL22_APPLICATION-J" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Baseline Policy for Application Security - JAVA" id="BL2_APPLICATION-J" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- 
+restricted config store check items related to config store 'Parameters'   to sci_id S00165   J2EE Instance - Parameters
+as coming with FRUN 3.0 FP01 there config stores 'Parameters# for other landscape types 
+  
+  
+Version 2
+23th july 2021
+-->
   <!-- SELFRG-J: No Self-Registration of Users 
 
   <configstore name="com.sap.security.core.ume.service">
@@ -50,7 +58,7 @@
       <noncomplianttext/>
     </checkitem>
   </configstore>
-  <configstore name="Parameters">
+  <configstore name="Parameters" sci_id="S00165">
     <!-- Check RFCGW-A_b.1.x validate if parameter value contains 2x // or \\ to ensure it's a path-like value - Consider replacing with RFCGW-A_b.1.y-->
     <checkitem desc="[p1-CRITICAL] Path-like value for ms/acl_info (message server access control list)" id="RFCGW-A_b.1.x">
       <compliant>    NAME = 'gw/sec_info' and length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0 </compliant>
@@ -86,26 +94,23 @@
                      VALUE in ( '15','31','47','63','79','95','111','127','143','159','175','191','207','223','239','255' )
       </noncompliant>
       <noncomplianttext/>
-      <joinstore name="Parameters" no_data_found="Yes">
+      <joinstore name="Parameters" no_data_found="Yes" sci_id="S00165">
         <joincompliant>     NAME = 'is/server_version' and VALUE &lt; '7.40'</joincompliant>
         <joinnoncompliant>  NAME = 'is/server_version' and VALUE &lt; '7.40'</joinnoncompliant>
       </joinstore>
     </checkitem>
     <checkitem desc="[p1-CRITICAL] Gateway security options" id="RFCGW-A_c.2">
-      <compliant>    NAME = 'gw/reg_no_conn_info'  and 
-                     VALUE in ('1','65','129','193')
+      <compliant>    NAME = 'gw/reg_no_conn_info'  and VALUE in ('1','65','129','193')
       </compliant>
       <complianttext/>
-      <noncompliant> NAME = 'gw/reg_no_conn_info'  and not
-                     VALUE in ('1','65','129','193')
+      <noncompliant> NAME = 'gw/reg_no_conn_info'  and not VALUE in ('1','65','129','193')
       </noncompliant>
       <noncomplianttext/>
-      <joinstore name="Parameters" no_data_found="Yes">
+      <joinstore name="Parameters" no_data_found="Yes" sci_id="S00165">
         <joincompliant>    NAME = 'is/server_version' and VALUE &gt;= '7.40'</joincompliant>
         <joinnoncompliant> NAME = 'is/server_version' and VALUE &gt;= '7.40'</joinnoncompliant>
       </joinstore>
     </checkitem>
-
     <checkitem desc="[p1-CRITICAL] Mode for non existing ACL file" id="RFCGW-A_d">
       <compliant>    NAME = 'gw/acl_mode'  and VALUE = '1' </compliant>
       <complianttext/>

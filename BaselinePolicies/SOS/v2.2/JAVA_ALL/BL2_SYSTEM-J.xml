@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Baseline Policy for System Hardening - JAVA" id="BL22_SYSTEM-J" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.2] Baseline Policy for System Hardening - JAVA" id="BL2_SYSTEM-J" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- 
+restricted config store check items related to config store 'Parameters'   to sci_id S00165   J2EE Instance - Parameters
+as coming with FRUN 3.0 FP01 there config stores 'Parameters# for other landscape types 
+  
+  
+Version 2
+23th july 2021
+-->
   <configstore name="http">
     <!-- DISCL-J: Information Disclosure – JAVA -->
     <checkitem desc="[p2-STANDARD] Disclosure of unnecessary information about versions or from errors" id="DISCL-J_a">
@@ -20,8 +28,8 @@
       <noncomplianttext/>
     </checkitem>
     -->
-    </configstore>
-  <configstore name="Parameters">
+  </configstore>
+  <configstore name="Parameters" sci_id="S00165">
     <!-- MSGSRV-J        Message Server Security - AS JAVA -->
     <checkitem desc="[p2-STANDARD] Defined internal port for server communication" id="MSGSRV-J_a">
       <compliant>    NAME = 'rdisp/msserv_internal'  and VALUE not like_regexpr '^\s*$' </compliant>
@@ -40,7 +48,7 @@
       <complianttext/>
       <noncompliant>NAME = 'ms/admin_port'  and not (lpad(VALUE, 4, '0') &lt;= '0000') </noncompliant>
       <noncomplianttext/>
-      <joinstore name="Parameters" no_data_found="Yes" not_in_output="Yes">
+      <joinstore name="Parameters" no_data_found="Yes" not_in_output="Yes" sci_id="S00165">
         <joincompliant>NAME = 'ms/admin_port'</joincompliant>
         <joinnoncompliant>NAME = 'ms/admin_port'</joinnoncompliant>
       </joinstore>
