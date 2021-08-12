@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="SNotes for PatchDay: 2021-08 (HANA)" id="HPATCHDAY_2021-08" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--
+This FRUN CSA policy contains rules to check the following HANA Security Note:
+
+[p2-CVSS 8.8] 3057378 BC-CST-WDP - Missing Authentication check in SAP Web Dispatcher (Version 6)
+
+The parameter authentication_methods, that is used in this policy, does not determine if X509 certificates are actually used in your system. For checking actual use, you may check manually in HANA system views USERS, X509_PROVIDERS or X509_USER_MAPPINGS
+Note: Version and Parameter Setting of XS Advanced are not covered by this policy!
+Min Revisions are:
+SAP HANA 2.0 SPS04: revision 48.06
+SAP HANA 2.0 SPS05: revision 56
+no fix is provided for HANA 1.0 (which is out of maintenance)
+
+SAP Security Patch Day: 2021-08
+Version: 001
+Date:    12th Aug 2021
+
+-->
+  <!--  [p2-CVSS 8.8] 3057378 BC-CST-WDP - Missing Authentication check in SAP Web Dispatcher (Version 6)  -->
+  <configstore name="HDB_VERSION">
+    <checkitem desc="[p2-CVSS 5.4] Note 3057378 requires revision update" id="0003057378">
+      <compliant>
+                 (  (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.04' AND substring(VALUE,0,11) &gt;= '2.00.048.06')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND substring(VALUE,0,8) &gt;= '2.00.056')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &gt; '2.00.05' ) )  
+      </compliant>
+      <noncompliant>
+                (   (NAME = 'VERSION' AND substring(VALUE,0,4) = '2.00' AND substring(VALUE,0,7) &lt; '2.00.04')
+	         OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.04' AND NOT substring(VALUE,0,11) &gt;= '2.00.048.06') 
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND NOT substring(VALUE,0,8) &gt;= '2.00.056')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,4) = '1.00' ) )
+      </noncompliant>
+
+      <joinstore name="HDB_PARAMETER" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant> FILE_NAME = 'global.ini' and SECT = 'authentication'  and NAME = 'authentication_methods'  and LOWER(VALUE)  like '%x509%' </joincompliant>
+        <joinnoncompliant> FILE_NAME = 'global.ini' and SECT = 'authentication'  and NAME = 'authentication_methods'  and LOWER(VALUE)  like '%x509%' </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+</targetsystem>
