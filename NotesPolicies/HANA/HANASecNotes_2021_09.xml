@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="SNotes of PatchDay: 2021-09 (HANA)" id="HPATCHDAY_2021-09" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--
+This FRUN CSA policy contains rules to check the following HANA Security Note:
+
+[p2-CVSS 7.5] 3051787 - BC-IAM-SSO-CCL  [CVE-2021-38177] Null Pointer Dereference vulnerability in SAP CommonCryptoLib Version 3
+
+
+Min Revisions are:
+SAP HANA 2.0 SPS04: revision 48.06
+SAP HANA 2.0 SPS05: revision 56
+no fix is provided for HANA 1.0 (which is out of maintenance)
+
+SAP Security Patch Day: 2021-09
+Version: 001
+Date:    16th Sep 2021
+
+-->
+  <!--  [p2-CVSS 7.5] 3051787 - BC-IAM-SSO-CCL  [CVE-2021-38177] Null Pointer Dereference vulnerability in SAP CommonCryptoLib Version 3 -->
+  <configstore name="HDB_VERSION">
+    <checkitem desc="[p2-CVSS 7.5] HANA revision update required by SNote 3051787" id="0003051787">
+      <compliant>
+                 (  (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.04' AND substring(VALUE,0,11) &gt;= '2.00.048.06')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND substring(VALUE,0,8) &gt;= '2.00.056')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &gt; '2.00.05' ) )  
+      </compliant>
+      <noncompliant>
+                (   (NAME = 'VERSION' AND substring(VALUE,0,4) = '2.00' AND substring(VALUE,0,7) &lt; '2.00.04')
+	         OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.04' AND NOT substring(VALUE,0,11) &gt;= '2.00.048.06') 
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND NOT substring(VALUE,0,8) &gt;= '2.00.056')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,4) = '1.00' ) )
+      </noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL" sci_id="S00343">
+    <checkitem desc="[p2-CVSS 7.5] SAP EXTENDED APP SERVICES 1 patch required by SNote 3051787" id="0003051787_xsa" not_found="positive">
+      <compliant>
+                 ( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') = '0000' and lpad(PATCH,4,'0') &gt;= '0135')  or
+                 ( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') &gt; '0000' )
+      </compliant>
+      <noncompliant>
+                 ( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') = '0000' and ( lpad(PATCH,4,'0') &lt; '0135' or PATCH = 'null') ) 
+      </noncompliant>
+    </checkitem>
+  </configstore>
+ </targetsystem>
