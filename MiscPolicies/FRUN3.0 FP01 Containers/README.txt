@@ -10,6 +10,9 @@ The container files are starting with 'CsaCont'.
 After a container file had been selected a dialog is displayed that offers to select or deselect single policies.
 'Import' applies the selected policies.
 
+In Case the Message E VSCAN 034 stops the import, please check profile for the Virus Scan (VSCANPROFILE).
+
+
 ## Attention
 Already existing policies - if selected for import - are overwritten.
 
