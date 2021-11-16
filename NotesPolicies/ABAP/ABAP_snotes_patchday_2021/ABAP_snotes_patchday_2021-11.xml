@@ -13,6 +13,7 @@ This FRUN CSA policy contains rules to check the following ABAP Security Notes:
 [p1-CVSS 9.6]  0003099776 BC-MID-RFC - [CVE-2021-40501] Missing Authorization check in ABAP Platform Kernel
                This policy checks the recommended SAP Kernel Versions ('786_REL','785_REL','781_REL','777_REL') and Level;
                For other Kernel Versions no fix offered, please read the note;
+               Versions older 777_REL are not affected and not validated;
                The policy doesn't check whether the Hotfix provided by the note is applied
 
 The policy does not check the following Security Notes:
@@ -24,8 +25,9 @@ The policy does not check the following Security Notes:
 [p2-CVSS 7.5]  0002971638 XX-PART-WILY - [CVE-2020-6369] Hard-coded Credentials in CA Introscope Enterprise Manager (Affe
 
 SAP Security: PatchDay_2021-11
-Version: 001
-Date:    11.11.2021
+Version: 002
+    Note 0003099776   kernel version check restricted to version 777 and higher
+Date:    16.11.2021
 -->
 
 <targetsystem desc="SNotes of PatchDay: 2021-11" id="PatchDay_2021-11" multisql="Yes">
@@ -107,7 +109,7 @@ Date:    11.11.2021
     <!-- for other kernel releases no fix offered, please read the note 3099776 -->
     <checkitem desc="[p1-CVSS 9.6] Kernel version which note 0003080567 recommends" id="0003099776" not_found="ignore">
       <compliant/>
-      <noncompliant>NAME = 'KERN_REL' and VALUE not in ('786_REL','785_REL','781_REL','777_REL')</noncompliant>
+      <noncompliant>NAME = 'KERN_REL' and VALUE not in ('786_REL','785_REL','781_REL','777_REL') and VALUE &gt; '777_REL'</noncompliant>
     </checkitem>
   </configstore>
 
