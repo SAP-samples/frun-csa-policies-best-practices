@@ -17,21 +17,17 @@ After connecting the managed systems to SAP Focused Run (FRUN), you can start to
 
 If you are using an editor of your choice to create and edit a policy, you may use the XSF file in Schema to support you with further XML syntax checks and input help. Also here you need to copy and paste the file content into the editor of FRUN CSA policy management finally.
   
-All provided powershell scripts have been implemented and tested using PSVersion 5.1 / PSEdition Desktop. All scripts provide further help using the powershell cmd-let get-help. You need to run those scripts using Windows PowerShell.
 
 # Configuration
 Use the baseline policies as a template for your own policies reflecting the requirements of your corporate hardening guides and security policies. Demo: [Configuration and Security Analytics ](https://sapvideoa35699dc5.hana.ondemand.com/?entry_id=1_ce0ht4id)
 In many cases the check ids of the provided SAP Baseline Policies must adapted to match requirement ids of customer corporate hardening guide. Re-Use or adapt the check rules when matching the corporate guide. The policies in baseline/SOS are based on the recommendations of [SAP Security Optimization Services Portfolio](https://support.sap.com/sos). In the media library there you will find the archive "SAP CoE Security Services - Security Baseline Template Version 1.9" which provides details about each single check. The baseline SOS policies are organised in a similar way to the target systems mentioned in the "SAP Security Baseline Template" document (provided as part of the archive).
 
-To get transparency about the implementation status of security notes (currently for systems of type ABAP and for SAP HANA database) use the notes policies in NotesPolicies. Those are defined per SAP patchday and contain rules for all notes which are measurable using FRUN CSA. It's possible to upload each single patchday individually as FRUN CSA policy. It would be also possible to merge single patch days into new a policy. To support this kind of tasks you may use the following scripts or perform it using an editor via copy and paste functions.
-* MergePolicy: merges several FRUN CSA policies into a new policy
-* getNotes: reads node definitions from several policies and stores all of them into a new policy
-* countNotes: counts the number of note definitions within a policy (lists all notes)
-* deleteNotes: deletes duplicate note definitions in a policy
-
+To get transparency about the implementation status of security notes (currently for systems of type ABAP and for SAP HANA database) use the notes policies in NotesPolicies. Those are defined per SAP patchday and contain rules for all notes which are measurable using FRUN CSA. It's possible to upload each single patchday individually as FRUN CSA policy. It would be also possible to merge single patch days into new a policy. 
+Please use the feature 'Composite' policy, add those policies for which an overall result should be displayed. 
 For the ABAP patchdays in 2018 you find policy ABAP_snotes_patchday_2018-0**1_12**.xml which contains all notes of 2018 in one policy next to policies organized by patch day date (like ABAP_snotes_patchday_2018-**01**.xml for patch day in Jan 2018). You are going to choose the policy id in FRUN CSA validation to start the compliance checks, so the policy content defines the number of checks you see in one run.  
 
-In MiscPolicies/ABAPSPStackAge the policy age_of_sap_basis.xml is provided which is able to measure if a SAP Basis component of an ABAP system is older than 24 month to understand if the support with SAP security notes is still guaranteed. The policies are created based on an excel file and a script you find in that folder too. The excel contains in sheet NW_ALL for SAP Basis Support Package the **released on date** from SAP's Product Availability Matrix and is used as source to set the rule using script createAgeOfBasisPolicy.ps1.
+In MiscPolicies/ABAPSPStackAge the policy age_of_sap_basis.xml is provided which is able to measure if a SAP Basis component of an ABAP system is older than 24 month to understand if the support with SAP security notes is still guaranteed. 
+Starting with FRUN 3.0 FP01 the policy 'Age of component level 3.0 FP01.xml' in subfolder 'FRUN3.0 FP01 AgeOfComponents' provides this information for the SAP softwarecompents of a system.
 
 # Limitations
 The number of check items is not limited per policy, however, as a rule of thumb you should not add more than approximately 100 check items to a single policy.
