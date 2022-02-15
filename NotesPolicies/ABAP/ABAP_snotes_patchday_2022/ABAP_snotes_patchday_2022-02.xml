@@ -23,12 +23,12 @@ This FRUN CSA policy contains rules to check the following ABAP Security Notes:
                                    + manual activity
 [p2-CVSS 8.7] 0003112928 FI-FIO-AP - [CVE-2022-22531] Multiple vulnerabilities in F0743 Create Single Payment applica
                                    + manual activity
-
+[p2-CVSS 8.1]  0003123427 BC-CST-IC - [CVE-2022-22532] HTTP Request Smuggling in SAP NetWeaver Application Server Java
 
 
 The policy does not check the following Security Notes:
 
-[p2-CVSS 8.1]  0003123427 BC-CST-IC - [CVE-2022-22532] HTTP Request Smuggling in SAP NetWeaver Application Server Java
+
 [p1-CVSS 10.0]  0002622660 BC-FES-BUS-DSK - Security updates for the browser control Google Chromium delivered with SAP Busi
 [p3-CVSS 5.6]  0003140564 BC-SYB-ASE - [CVE-2022-22528] Information Disclosure in SAP Adaptive Server Enterprise
 [p3-CVSS 5.4]  0003126748 BI-RA-WBI-FE-HTM - [CVE-2022-22546] XSS vulnerability in SAP Business Objects Web Intelligence (BI
@@ -646,6 +646,34 @@ Date:    10.02.2022
       ( COMPONENT = 'S4CORE' and VERSION = '105' and lpad(SP,4,'0') between '0000' and '0003' )  <!-- S4CORE 105 105 - SAPK-10503INS4CORE  -->  or
       ( COMPONENT = 'S4CORE' and VERSION = '106' and lpad(SP,4,'0') between '0000' and '0000' )  <!-- S4CORE 106 106 - 106  -->
      )</noncompliant>
+    </checkitem>
+  </configstore>
+	
+	<!-- [p1-CVSS 8.1]  BC-CST-IC 0003123427 - [CVE-2022-22532] HTTP Request Smuggling in SAP NetWeaver Application Server Java, S (Version 0005)  -->
+   <configstore name="SAP_KERNEL">
+    <checkitem desc="[p2-CVSS 8.1] Kernel version which note 0003123427 recommends" id="0003123427">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1115'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1115'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '722_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '722_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-CVSS 8.1] Kernel version which note 0003123427 recommends" id="0003123427">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1036'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1036'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '749_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '749_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-CVSS 8.1] Kernel version which note 0003123427 recommends" id="0003123427">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0914'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0914'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joinnoncompliant>
+      </joinstore>
     </checkitem>
   </configstore>
 </targetsystem>
