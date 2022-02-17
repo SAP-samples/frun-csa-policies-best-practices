@@ -37,6 +37,9 @@ The policy does not check the following Security Notes:
 SAP Security: PatchDay_2021-09
 Version: 001
 Date:    16.09.2021
+Version: 002
+Date: 	17.02.2022
+   check "WebDispatcher patch required for SNote 3051787v3" id="0003051787_w" adjusted
 -->
 
 <targetsystem desc="SNotes of PatchDay: 2021-09" id="PatchDay_2021-09" multisql="Yes">
@@ -134,12 +137,12 @@ Date:    16.09.2021
 				( COMPONENT = 'WEBDISP' and VERSION = '7.85' and (lpad(SP,4,'0') &gt;= '0004' ) )
       </compliant>
       <noncompliant>
-				( COMPONENT = 'WEBDISP' and VERSION like '7.22%' and not (lpad(SP,4,'0') &gt; '1100' ) ) or
-				( COMPONENT = 'WEBDISP' and VERSION = '7.49' and not (lpad(SP,4,'0') &gt; '1012' ) ) or
-				( COMPONENT = 'WEBDISP' and VERSION = '7.53' and not (lpad(SP,4,'0') &gt; '0822' ) ) or
-				( COMPONENT = 'WEBDISP' and VERSION = '7.77' and not (lpad(SP,4,'0') &gt; '0341' ) ) or
-				( COMPONENT = 'WEBDISP' and VERSION = '7.81' and not (lpad(SP,4,'0') &gt; '0128' ) ) or
-				( COMPONENT = 'WEBDISP' and VERSION = '7.85' and not (lpad(SP,4,'0') &gt; '0004' ) )
+				( COMPONENT = 'WEBDISP' and VERSION like '7.22%' and not (lpad(SP,4,'0') &gt;= '1100' ) ) or
+				( COMPONENT = 'WEBDISP' and VERSION = '7.49' and not (lpad(SP,4,'0') &gt;= '1012' ) ) or
+				( COMPONENT = 'WEBDISP' and VERSION = '7.53' and not (lpad(SP,4,'0') &gt;= '0822' ) ) or
+				( COMPONENT = 'WEBDISP' and VERSION = '7.77' and not (lpad(SP,4,'0') &gt;= '0341' ) ) or
+				( COMPONENT = 'WEBDISP' and VERSION = '7.81' and not (lpad(SP,4,'0') &gt;= '0128' ) ) or
+				( COMPONENT = 'WEBDISP' and VERSION = '7.85' and not (lpad(SP,4,'0') &gt;= '0004' ) )
 			</noncompliant>
     </checkitem>
   </configstore>

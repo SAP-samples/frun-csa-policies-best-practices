@@ -116,8 +116,8 @@ Date:    10.02.2022
       <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1115'</compliant>
       <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1115'</noncompliant>
       <joinstore name="SAP_KERNEL" no_data_found="Yes">
-        <joincompliant>NAME = 'KERN_REL' and VALUE = '722_REL'</joincompliant>
-        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '722_REL'</joinnoncompliant>
+        <joincompliant>NAME = 'KERN_REL' and VALUE like '722%'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE like '722%'</joinnoncompliant>
       </joinstore>
     </checkitem>
     <checkitem desc="[p4-CVSS 3.7] Kernel version which note 0003116223 recommends" id="0003116223">
@@ -192,8 +192,8 @@ Date:    10.02.2022
       <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1115'</compliant>
       <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1115'</noncompliant>
       <joinstore name="SAP_KERNEL" no_data_found="Yes">
-        <joincompliant>NAME = 'KERN_REL' and VALUE = '722_REL'</joincompliant>
-        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '722_REL'</joinnoncompliant>
+        <joincompliant>NAME = 'KERN_REL' and VALUE like '722%'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE like '722%'</joinnoncompliant>
       </joinstore>
     </checkitem>
     <checkitem desc="[p1-CVSS 10.0] Kernel version which note 0003123396 recommends" id="0003123396">
