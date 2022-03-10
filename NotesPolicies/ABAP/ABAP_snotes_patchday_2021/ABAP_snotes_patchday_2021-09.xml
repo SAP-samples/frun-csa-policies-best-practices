@@ -50,8 +50,8 @@ Date: 	17.02.2022
       <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1111'</compliant>
       <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1111'</noncompliant>
       <joinstore name="SAP_KERNEL" no_data_found="Yes">
-        <joincompliant>NAME = 'KERN_REL' and VALUE = '722_REL'</joincompliant>
-        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '722_REL'</joinnoncompliant>
+        <joincompliant>NAME = 'KERN_REL' and VALUE like '722%'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE like '722%'</joinnoncompliant>
       </joinstore>
     </checkitem>
     <checkitem desc="[p2-CVSS 8.9] Kernel version which note 0003080567 recommends" id="0003080567">

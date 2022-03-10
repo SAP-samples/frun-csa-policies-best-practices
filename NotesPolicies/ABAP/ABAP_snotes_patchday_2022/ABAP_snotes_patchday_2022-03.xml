@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This FRUN CSA policy contains rules to check the following ABAP Security Notes:
+
+[p3-CVSS 6.5] 0003142092 LO-MD-BP - [CVE-2022-22542] Information Disclosure vulnerability in SAP S/4HANA (Supplier F
+                                  + manual activity + notes  3105021 and 3142092
+[p1-CVSS 10.0] 0003123396 BC-CST-IC - [CVE-2022-22536] Request smuggling and request concatenation in SAP NetWeaver
+				Same checks as in SAP Security: PatchDay_2022-02
+				"UPDATE March 8, 2022: This note has been re-released with updated text. 
+				This update consists of textual changes which provide more clarity on the details 
+				and steps provided in ‘Reason and Prerequisites’ and ‘Solution’ sections."
+				(check for Kernel level provided by this policy; No check for SAP Web Dispatcher and SAP Content Server)
+[p3-CVSS 5.4] 0003145997 BC-ABA-SC - [CVE-2022-26102] Missing authorization check in SAP NetWeaver Application Server
+[p2-CVSS 8.2] 0003149805 CA-FLP-FE-COR - [CVE-2022-26101] Cross-Site Scripting (XSS) vulnerability in SAP Fiori launchpad
+[p3-CVSS 4.2] 0002784596 FI-LOC-SRF-RUN - Cross-Site Request Forgery (CSRF) vulnerability in Run Compliance Report
+			(+ manual activity: Implement the corresponding UI note - 2796307)
+[p3-CVSS 5.4]  0003147283 SV-FRN-APP-RUM - [CVE-2022-24399] Cross-Site Scripting (XSS) vulnerability in SAP Focused Run (Re
+
+
+The policy does not check the following Security Notes:
+[p3-CVSS 4.8]  0003111110 BC-INS-TLS - [CVE-2022-26100] Denial of service (DOS) in SAPCAR
+[p3-CVSS 5.3]  0001753378 BC-JAS-WEB - Directory traversal in Web Container
+[p3-CVSS 5.0]  0003103424 BI-BIP-SL-ENG-OLA - [CVE-2022-24398] Information Disclosure vulnerability in SAP Business Objects Bu
+[p3-CVSS 6.1]  0003146260 EP-PIN-NAV - [CVE-2022-24397] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver Enter
+[p3-CVSS 6.1]  0003146261 EP-PIN-NAV - [CVE-2022-24395] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver Enter
+[p4-CVSS 3.7]  0003132360 EP-PIN-RTM - [CVE-2022-26103] Information Disclosure vulnerability in SAP NetWeaver(Real Time
+[p3-CVSS 5.4]  0003144941 EPM-BFC-PSI-INS - [CVE-2022-26104] Missing Authorization check in SAP Financial Consolidation
+[p1-CVSS 10.0]  0003154684 MOB-SYC-SAP-WM - [CVE-2021-44228] Remote Code Execution vulnerability associated with Apache Log4
+[p1-CVSS 9.3]  0003145987 SV-FRN-INF-SDA - [CVE-2022-24396] Missing Authentication check in SAP Focused Run (Simple Diagnos
+[p3-CVSS 5.2]  0003147102 SV-FRN-INF-SDA - [CVE-2022-22547] Information Disclosure vulnerability in SAP Focused Run (Simple
+[p1-CVSS 10.0]  0003131047 XX-SER-SN - [CVE-2021-44228] Central Security Note for Remote Code Execution vulnerability a
+
+
+SAP Security: PatchDay_2022-03
+Version: 001
+Date:    10.03.2022
+-->
+
+<targetsystem desc="SNotes of PatchDay: 2022-03" id="PatchDay_2022-03" multisql="Yes">
+
+ <!-- [p1-CVSS 10.0]  BC-CST-IC 0003123396 - [CVE-2022-22536] Request smuggling and request concatenation in SAP NetWeaver, S (Version 0020)  -->
+   <configstore name="SAP_KERNEL">
+    <checkitem desc="[p1-CVSS 10.0] Kernel version which note 0003123396 recommends" id="0003123396">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1115'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1115'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE like '722%'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE like '722%'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p1-CVSS 10.0] Kernel version which note 0003123396 recommends" id="0003123396">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1036'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1036'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '749_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '749_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p1-CVSS 10.0] Kernel version which note 0003123396 recommends" id="0003123396">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0915'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0915'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p1-CVSS 10.0] Kernel version which note 0003123396 recommends" id="0003123396">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0429'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0429'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '777_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '777_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p1-CVSS 10.0] Kernel version which note 0003123396 recommends" id="0003123396">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0227'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0227'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '781_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '781_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p1-CVSS 10.0] Kernel version which note 0003123396 recommends" id="0003123396">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0069'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0069'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '785_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '785_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p1-CVSS 10.0] Kernel version which note 0003123396 recommends" id="0003123396">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0015'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0015'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '786_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '786_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p1-CVSS 10.0] Kernel version which note 0003123396 recommends" id="0003123396">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0004'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0004'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '787_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '787_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p1-CVSS 10.0] Kernel version which note 0003123396 recommends" id="0003123396">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0207'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0207'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '804_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '804_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+
+
+  <!-- [p3-CVSS 5.4]  BC-ABA-SC 0003145997 - [CVE-2022-26102] Missing authorization check in SAP NetWeaver Application Server (Version 0007)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 5.4] Note 0003145997 exists" id="0003145997" operator="check_note">
+      <compliant>NOTE = '0003145997' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 5.4] Note 0003145997 missing and solution with SP available" id="0003145997" operator="check_note:0003145997">
+     <compliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and not( (lpad(SP,4,'0'))  &lt; '0040' )   ) <!-- SAP_BASIS 700 SAPKB70040 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0025' )   ) <!-- SAP_BASIS 701 SAPKB70125 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0025' )   ) <!-- SAP_BASIS 702 SAPKB70225 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0031' )   ) <!-- SAP_BASIS 731 SAPKB73131 -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and (lpad(SP,4,'0'))  &lt; '0040' )  <!-- SAP_BASIS 700 SAPKB70040 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0025' )  <!-- SAP_BASIS 701 SAPKB70125 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and (lpad(SP,4,'0'))  &lt; '0025' )  <!-- SAP_BASIS 702 SAPKB70225 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0031' )  <!-- SAP_BASIS 731 SAPKB73131 -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 5.4] Note 0003145997 missing and applicable using Correction Instruction" id="0003145997" operator="check_note:0003145997">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and lpad(SP,4,'0') between '0004' and '0039' )  <!-- SAP_BASIS 700 SAPKB70004 - SAPKB70039  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and lpad(SP,4,'0') between '0000' and '0024' )  <!-- SAP_BASIS 701 701 - SAPKB70124  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and lpad(SP,4,'0') between '0001' and '0024' )  <!-- SAP_BASIS 702 SAPKB70201 - SAPKB70224  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '710' and lpad(SP,4,'0') between '0000' and '0999' )  <!-- SAP_BASIS 710 710 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and lpad(SP,4,'0') between '0001' and '0999' )  <!-- SAP_BASIS 711 SAPKB71101 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and lpad(SP,4,'0') between '0001' and '0999' )  <!-- SAP_BASIS 730 SAPKB73001 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and lpad(SP,4,'0') between '0001' and '0030' )  <!-- SAP_BASIS 731 SAPKB73101 - SAPKB73130  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p2-CVSS 8.2]  CA-FLP-FE-COR 0003149805 - [CVE-2022-26101] Cross-Site Scripting (XSS) vulnerability in SAP Fiori launchpad (Version 0012)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="p2-CVSS 8.2] Note 0003149805 exists" id="0003149805" operator="check_note">
+      <compliant>NOTE = '0003149805' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p2-CVSS 8.2] Note 0003149805 missing and solution with SP available" id="0003149805" operator="check_note:0003149805">
+     <compliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '787' and not( (lpad(SP,4,'0'))  &lt; '0004' )   ) <!-- SAP_BASIS 787 SAPK-78704INSAPBASIS --> or
+      ( COMPONENT = 'SAP_UI' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- SAP_UI 754 SAPK-75409INSAPUI -->  or
+      ( COMPONENT = 'SAP_UI' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- SAP_UI 755 SAPK-75506INSAPUI -->  or
+      ( COMPONENT = 'SAP_UI' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0003' )   ) <!-- SAP_UI 756 SAPK-75603INSAPUI -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '787' and (lpad(SP,4,'0'))  &lt; '0004' )  <!-- SAP_BASIS 787 SAPK-78704INSAPBASIS --> or
+      ( COMPONENT = 'SAP_UI' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- SAP_UI 754 SAPK-75409INSAPUI -->  or
+      ( COMPONENT = 'SAP_UI' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- SAP_UI 755 SAPK-75506INSAPUI -->  or
+      ( COMPONENT = 'SAP_UI' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0003' )  <!-- SAP_UI 756 SAPK-75603INSAPUI -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p2-CVSS 8.2] Note 0003149805 missing and applicable using Correction Instruction" id="0003149805" operator="check_note:0003149805">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'SAP_UI' and VERSION = '754' and lpad(SP,4,'0') between '0001' and '0008' )  <!-- SAP_UI 754 SAPK-75401INSAPUI - SAPK-75408INSAPUI  --> or
+      ( COMPONENT = 'SAP_UI' and VERSION = '755' and lpad(SP,4,'0') between '0001' and '0005' )  <!-- SAP_UI 755 SAPK-75501INSAPUI - SAPK-75505INSAPUI  -->  or
+      ( COMPONENT = 'SAP_UI' and VERSION = '756' and lpad(SP,4,'0') between '0001' and '0002' )  <!-- SAP_UI 756 SAPK-75601INSAPUI - SAPK-75602INSAPUI  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p3-CVSS 4.2]  FI-LOC-SRF-RUN 0002784596 - Cross-Site Request Forgery (CSRF) vulnerability in Run Compliance Report (Version 0003)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 4.2] Note 0002784596 exists" id="0002784596" operator="check_note">
+      <compliant>NOTE = '0002784596' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.2] Note 0002784596 missing and solution with SP available" id="0002784596" operator="check_note:0002784596">
+     <compliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- S4CORE 102 SAPK-10205INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and not( (lpad(SP,4,'0'))  &lt; '0003' )   ) <!-- S4CORE 103 SAPK-10303INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- S4CORE 102 SAPK-10205INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and (lpad(SP,4,'0'))  &lt; '0003' )  <!-- S4CORE 103 SAPK-10303INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.2] Note 0002784596 missing and applicable using Correction Instruction" id="0002784596" operator="check_note:0002784596">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and lpad(SP,4,'0') between '0001' and '0004' )  <!-- S4CORE 102 SAPK-10201INS4CORE - SAPK-10204INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and lpad(SP,4,'0') between '0000' and '0002' )  <!-- S4CORE 103 103 - SAPK-10302INS4CORE  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p3-CVSS 6.5]  LO-MD-BP 0003142092 - [CVE-2022-22542] Information Disclosure vulnerability in SAP S/4HANA (Supplier F (Version 0010) (Medium) -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 6.5] Note 0003142092 exists" id="0003142092" operator="check_note">
+      <compliant>NOTE = '0003142092' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.5] Note 0003142092 missing and solution with SP available" id="0003142092" operator="check_note:0003142092">
+     <compliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- S4CORE 104 SAPK-10406INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and not( (lpad(SP,4,'0'))  &lt; '0004' )   ) <!-- S4CORE 105 SAPK-10504INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and not( (lpad(SP,4,'0'))  &lt; '0002' )   ) <!-- S4CORE 106 SAPK-10602INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- S4CORE 104 SAPK-10406INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and (lpad(SP,4,'0'))  &lt; '0004' )  <!-- S4CORE 105 SAPK-10504INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and (lpad(SP,4,'0'))  &lt; '0002' )  <!-- S4CORE 106 SAPK-10602INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.5] Note 0003142092 missing and applicable using Correction Instruction" id="0003142092" operator="check_note:0003142092">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- S4CORE 104 104 - SAPK-10405INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and lpad(SP,4,'0') between '0000' and '0003' )  <!-- S4CORE 105 105 - SAPK-10503INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and lpad(SP,4,'0') between '0000' and '0001' )  <!-- S4CORE 106 106 - SAPK-10601INS4CORE  -->
+
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p3-CVSS 5.4]  SV-FRN-APP-RUM 0003147283 - [CVE-2022-24399] Cross-Site Scripting (XSS) vulnerability in SAP Focused Run (Re (Version 0002)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 5.4] Note 0003147283 exists" id="0003147283" operator="check_note">
+      <compliant>NOTE = '0003147283' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+    <checkitem desc="[p3-CVSS 5.4] Note 0003147283 missing and solution with SP available" id="0003147283" operator="check_note:0003147283">
+      <compliant>( COMPONENT = 'FRUN' and VERSION = '300' and ( (lpad(SP,4,'0'))  &gt; '0002' ) )
+      </compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 5.4] Note 0003147283 missing and applicable using Correction Instruction" id="0003147283" operator="check_note:0003147283">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'FRUN' and VERSION = '200' and lpad(SP,4,'0') between '0000' and '0003' )  <!-- FRUN 200 200 - SAPK-20003INFRUN  -->  or
+      ( COMPONENT = 'FRUN' and VERSION = '300' and lpad(SP,4,'0') between '0000' and '0002' )  <!-- FRUN 300 300 - SAPK-30002INFRUN  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+</targetsystem>
