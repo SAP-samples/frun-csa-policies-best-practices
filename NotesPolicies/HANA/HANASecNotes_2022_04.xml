@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This FRUN CSA policy contains rules to check the following Note related to tehe mitigation of Log4j vulnerability in (HANA):
+[p1-CVSS 9.8] 3189428 - [CVE-2022-22965] Remote Code Execution vulnerability associated with Spring Framework used in SAP HANA Extended Application Services(Version 4) 
+                check for SAP_EXTENDED_APP_SERVICES
+		+ manual activity  
+[p2-CVSS-7.5] 3111311 BC-CST-WDP - [CVE-2022-28772]Denial of service (DOS) in SAP Web Dispatcher and SAP Netweaver (Internet Communication Manager)(Version 7)
+       check for SAP_EXTENDED_APP_SERVICES
+[p3-CVSS-4.9] 3111293 BC-CST-WDP - [CVE-2022-28773] Denial of service (DOS) in SAP Web Dispatcher and SAP Netweaver (Internet Communication Manager) (Version 6)
+        Check for Hana Version
+
+PatchDay: 2022-04 
+Version:  001
+Date:     12.04.2022
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="SNotes of PatchDay: 2022-04 (HANA)" id="2022-04_HANA" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--[p1-CVSS 9.8] 3189428 - [CVE-2022-22965] Remote Code Execution vulnerability associated with Spring Framework used in SAP HANA Extended Application Services(Version 4)-->
+  <configstore name="COMP_LEVEL" sci_id ="S00343">
+    <checkitem desc="[p1-CVSS 9.8] XS Advanced version which note 0003189428v4 recommends" id="3189428">
+      <compliant>    COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(PATCH,4,'0') &gt;= '0145'   </compliant>
+      <complianttext/>
+      <noncompliant> COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(PATCH,4,'0') &lt;  '0145'   </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="COMP_LEVEL" sci_id ="S00343" no_data_found="Yes">
+        <joincompliant>COMPONENT = 'SAP_EXTENDED_APP_SERVICES'</joincompliant>
+        <joinnoncompliant>COMPONENT = 'SAP_EXTENDED_APP_SERVICES'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  <!--[p2-CVSS-7.5] 3111311 BC-CST-WDP - [CVE-2022-28772]Denial of service (DOS) in SAP Web Dispatcher and SAP Netweaver (Internet Communication Manager)(Version 7) -->
+    <checkitem desc="[p2-CVS-7.5] XS Advanced version which note 0003111311v7 recommends" id="3111311">
+      <compliant>    COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(PATCH,4,'0') &gt;= '0143'   </compliant>
+      <complianttext/>
+      <noncompliant> COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(PATCH,4,'0') &lt;  '0143'   </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="COMP_LEVEL" sci_id ="S00343" no_data_found="Yes">
+        <joincompliant>COMPONENT = 'SAP_EXTENDED_APP_SERVICES'</joincompliant>
+        <joinnoncompliant>COMPONENT = 'SAP_EXTENDED_APP_SERVICES'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+  <!--  [p3-CVSS-4.9] 3111293 BC-CST-WDP - [CVE-2022-28773] Denial of service (DOS) in SAP Web Dispatcher and SAP Netweaver (Internet Communication Manager) (Version 6)  -->
+  <configstore name="HDB_VERSION">
+    <checkitem desc="[p3-CVSS-4.9] Note 3111293 requires revision update" id="0003111293">
+      <compliant>
+                 (  (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' AND substring(VALUE,0,8) &gt;= '2.00.061')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND substring(VALUE,0,11) &gt;= '2.00.059.02')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &gt; '2.00.06' ) )  
+      </compliant>
+      <noncompliant>
+                (   (NAME = 'VERSION' AND substring(VALUE,0,4) = '2.00' AND substring(VALUE,0,7) &lt; '2.00.05')
+	         OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' AND substring(VALUE,0,6) &lt; '2.00.061') 
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND substring(VALUE,0,11) &lt; '2.00.059.02')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,4) = '1.00' ) )
+      </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>
