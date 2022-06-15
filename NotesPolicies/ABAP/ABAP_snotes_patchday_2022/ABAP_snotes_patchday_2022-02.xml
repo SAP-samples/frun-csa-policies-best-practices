@@ -499,15 +499,15 @@ Date:    10.02.2022
      )</noncompliant>
     </checkitem>
   </configstore>
-  <!-- [p3-CVSS ]  BC-CCM-MON 0003112710 - [CVE-2021-42067] Information Disclosure vulnerability in SAP NetWeaver Applicati (Version 0012) (Medium) -->
+  <!-- [p3-CVSS 4.3]  BC-CCM-MON 0003112710 - [CVE-2021-42067] Information Disclosure vulnerability in SAP NetWeaver Applicati (Version 0012) (Medium) -->
   <configstore name="ABAP_NOTES">
-    <checkitem desc="[p3-CVSS ] Note 0003112710 exists" id="0003112710" operator="check_note">
+    <checkitem desc="[p3-CVSS 4.3] Note 0003112710 exists" id="0003112710" operator="check_note">
       <compliant>NOTE = '0003112710' and PRSTATUS = 'E'</compliant>
       <noncompliant/>
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-  <checkitem desc="[p3-CVSS ] Note 0003112710 missing and solution with SP available" id="0003112710" operator="check_note:0003112710">
+  <checkitem desc="[p3-CVSS 4.3] Note 0003112710 missing and solution with SP available" id="0003112710" operator="check_note:0003112710">
      <compliant>(
       ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0025' )   ) <!-- SAP_BASIS 701 SAPKB70125 -->  or
       ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0025' )   ) <!-- SAP_BASIS 702 SAPKB70225 -->  or
@@ -539,7 +539,7 @@ Date:    10.02.2022
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-  <checkitem desc="[p3-CVSS ] Note 0003112710 missing and applicable using Correction Instruction" id="0003112710" operator="check_note:0003112710">
+  <checkitem desc="[p3-CVSS 4.3] Note 0003112710 missing and applicable using Correction Instruction" id="0003112710" operator="check_note:0003112710">
     <compliant/>
     <noncompliant>(
       ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and lpad(SP,4,'0') between '0000' and '0024' )  <!-- SAP_BASIS 701 701 - SAPKB70124  -->  or
@@ -559,15 +559,15 @@ Date:    10.02.2022
     </checkitem>
   </configstore>
 
-  <!-- [p3-CVSS ]  BC-WD-ABA 0003107196 - Cross-Site Request Forgery (CSRF) vulnerability in SAP NetWeaver AS ABAP within (Version 0004) (Medium) -->
+  <!-- [p3-CVSS 4.3]  BC-WD-ABA 0003107196 - Cross-Site Request Forgery (CSRF) vulnerability in SAP NetWeaver AS ABAP within (Version 0004) (Medium) -->
   <configstore name="ABAP_NOTES">
-    <checkitem desc="[p3-CVSS ] Note 0003107196 exists" id="0003107196" operator="check_note">
+    <checkitem desc="[p3-CVSS 4.3] Note 0003107196 exists" id="0003107196" operator="check_note">
       <compliant>NOTE = '0003107196' and PRSTATUS = 'E'</compliant>
       <noncompliant/>
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-  <checkitem desc="[p3-CVSS ] Note 0003107196 missing and solution with SP available" id="0003107196" operator="check_note:0003107196">
+  <checkitem desc="[p3-CVSS 4.3] Note 0003107196 missing and solution with SP available" id="0003107196" operator="check_note:0003107196">
      <compliant>(
       ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0025' )   ) <!-- SAP_BASIS 701 SAPKB70125 -->  or
       ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0025' )   ) <!-- SAP_BASIS 702 SAPKB70225 -->  or
@@ -593,7 +593,7 @@ Date:    10.02.2022
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-  <checkitem desc="[p3-CVSS ] Note 0003107196 missing and applicable using Correction Instruction" id="0003107196" operator="check_note:0003107196">
+  <checkitem desc="[p3-CVSS 4.3] Note 0003107196 missing and applicable using Correction Instruction" id="0003107196" operator="check_note:0003107196">
     <compliant/>
     <noncompliant>(
       ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and lpad(SP,4,'0') between '0020' and '0024' )  <!-- SAP_BASIS 701 SAPKB70120 - SAPKB70124  -->  or
@@ -609,15 +609,15 @@ Date:    10.02.2022
     </checkitem>
   </configstore>
 
-  <!-- [p2-CVSS ]  FI-FIO-AP 0003112928 - [CVE-2022-22531] Multiple vulnerabilities in F0743 Create Single Payment applica (Version 0009) (High) -->
+  <!-- [p2-CVSS 8.7]  FI-FIO-AP 0003112928 - [CVE-2022-22531] Multiple vulnerabilities in F0743 Create Single Payment applica (Version 0009) (High) -->
   <configstore name="ABAP_NOTES">
-    <checkitem desc="[p2-CVSS ] Note 0003112928 exists" id="0003112928" operator="check_note">
+    <checkitem desc="[p2-CVSS 8.7] Note 0003112928 exists" id="0003112928" operator="check_note">
       <compliant>NOTE = '0003112928' and PRSTATUS = 'E'</compliant>
       <noncompliant/>
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-  <checkitem desc="[p2-CVSS ] Note 0003112928 missing and solution with SP available" id="0003112928" operator="check_note:0003112928">
+  <checkitem desc="[p2-CVSS 8.7] Note 0003112928 missing and solution with SP available" id="0003112928" operator="check_note:0003112928">
      <compliant>(
       ( COMPONENT = 'S4CORE' and VERSION = '102' and not( (lpad(SP,4,'0'))  &lt; '0010' )   ) <!-- S4CORE 102 SAPK-10210INS4CORE -->  or
       ( COMPONENT = 'S4CORE' and VERSION = '103' and not( (lpad(SP,4,'0'))  &lt; '0008' )   ) <!-- S4CORE 103 SAPK-10308INS4CORE -->  or
@@ -635,7 +635,7 @@ Date:    10.02.2022
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-  <checkitem desc="[p2-CVSS ] Note 0003112928 missing and applicable using Correction Instruction" id="0003112928" operator="check_note:0003112928">
+  <checkitem desc="[p2-CVSS 8.7] Note 0003112928 missing and applicable using Correction Instruction" id="0003112928" operator="check_note:0003112928">
     <compliant/>
     <noncompliant>(
       ( COMPONENT = 'S4CORE' and VERSION = '100' and lpad(SP,4,'0') between '0000' and '0999' )  <!-- S4CORE 100 100 - ALL_SP  -->  or
