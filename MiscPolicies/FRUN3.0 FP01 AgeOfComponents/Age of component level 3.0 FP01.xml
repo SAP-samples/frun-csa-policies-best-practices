@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
 Exclude software components for which SP_REL_DATE is empty
 Version: 002
 Date:    July 16 2021
+
+Added 'and SP like '%' ' to get SP displayed
+Version: 003
+Date:    July 01 2022
+
 -->
+
 <targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="Age of component level 3.0 FP01" id="AGE_OF_COMP_LEVEL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
   <!-- Basic -->
   <configstore name="COMP_LEVEL">
     <checkitem desc="Age of Component Level - ABAP" id="ABAP.AGE_COMP.01" not_found="ignore" system_attributes="SYSTEM_TYPE:ABAP">
       <compliant>
-      COMPONENT like '%' and VERSION like '%' and SP_REL_DATE != '' and (add_days(current_date,-730)) &lt; (CASE WHEN SP_REL_DATE like_regexpr '^\d{8,8}$' THEN SP_REL_DATE WHEN SP_REL_DATE = 'NEWER' THEN CURRENT_DATE ELSE '00000000' END)
+      COMPONENT like '%' and VERSION like '%' and SP like '%' and SP_REL_DATE != '' and (add_days(current_date,-730)) &lt; (CASE WHEN SP_REL_DATE like_regexpr '^\d{8,8}$' THEN SP_REL_DATE WHEN SP_REL_DATE = 'NEWER' THEN CURRENT_DATE ELSE '00000000' END)
       </compliant>
       <noncompliant>
-      COMPONENT like '%' and VERSION like '%' and SP_REL_DATE != '' and not (add_days(current_date,-730)) &lt; (CASE WHEN SP_REL_DATE like_regexpr '^\d{8,8}$' THEN SP_REL_DATE WHEN SP_REL_DATE = 'NEWER' THEN CURRENT_DATE ELSE '00000000' END)
+      COMPONENT like '%' and VERSION like '%' and SP like '%'  and SP_REL_DATE != '' and not (add_days(current_date,-730)) &lt; (CASE WHEN SP_REL_DATE like_regexpr '^\d{8,8}$' THEN SP_REL_DATE WHEN SP_REL_DATE = 'NEWER' THEN CURRENT_DATE ELSE '00000000' END)
       </noncompliant>
     </checkitem>
     <checkitem desc="Age of Component Level - JAVA" id="JAVA.AGE_COMP.01" not_found="ignore" system_attributes="SYSTEM_TYPE:JAVA">
       <compliant>
-      COMPONENT like '%' and VERSION like '%' and SP_REL_DATE != ''and (add_days(current_date,-730)) &lt; (CASE WHEN SP_REL_DATE like_regexpr '^\d{8,8}$' THEN SP_REL_DATE WHEN SP_REL_DATE = 'NEWER' THEN CURRENT_DATE ELSE '00000000' END)
+      COMPONENT like '%' and VERSION like '%' and SP like '%'  and SP_REL_DATE != ''and (add_days(current_date,-730)) &lt; (CASE WHEN SP_REL_DATE like_regexpr '^\d{8,8}$' THEN SP_REL_DATE WHEN SP_REL_DATE = 'NEWER' THEN CURRENT_DATE ELSE '00000000' END)
       </compliant>
       <noncompliant>
-      COMPONENT like '%' and VERSION like '%' and SP_REL_DATE != '' and not (add_days(current_date,-730)) &lt; (CASE WHEN SP_REL_DATE like_regexpr '^\d{8,8}$' THEN SP_REL_DATE WHEN SP_REL_DATE = 'NEWER' THEN CURRENT_DATE ELSE '00000000' END)
+      COMPONENT like '%' and VERSION like '%' and SP like '%'  and SP_REL_DATE != '' and not (add_days(current_date,-730)) &lt; (CASE WHEN SP_REL_DATE like_regexpr '^\d{8,8}$' THEN SP_REL_DATE WHEN SP_REL_DATE = 'NEWER' THEN CURRENT_DATE ELSE '00000000' END)
       </noncompliant>
     </checkitem>
   </configstore>
