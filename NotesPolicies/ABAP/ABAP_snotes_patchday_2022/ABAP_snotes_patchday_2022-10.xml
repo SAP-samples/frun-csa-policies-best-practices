@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This FRUN CSA policy contains rules to check the following ABAP Security Notes:
+
+
+[p3-CVSS 4.9] 0003150454 BC-MID-RFC - Information Disclosure vulnerability in SAP NetWeaver Application Server ABAP
+[p3-CVSS 4.3] 0003234755 CA-MDG-APP-CUS - Information Disclosure vulnerability in Master Data Governance
+[p3-CVSS 6.3] 0002726124 IS-A - Missing Authorization Check in multiple components under SAP Automotive Solution
+[p3-CVSS 5.3] 0002460948 IS-A-VMS - Missing Authorization Check in Vehicle Management System
+[p3-CVSS 6.3] 0002634023 QM-QN - Missing authorization check in Consumption of CDS Views (or) OData Services in QM-QN
+[p3-CVSS 6.5] 0002495712 IS-A - Missing authorization check in SAP Automotive Solutions (Version 0002) 
+
+
+The policy does not check the following Security Notes:
+
+[p2-CVSS 8.1]  0003232021 BC-SYB-SQA - [CVE-2022-35299] Buffer Overflow in SAP SQL Anywhere and SAP IQ
+[p2-CVSS 8.2]  0003213507 BI-BIP-ADM - [CVE-2022-31596] Information Disclosure vulnerability in SAP BusinessObjects Bus
+[p2-CVSS 8.2]  0003229132 BI-BIP-ADM - [CVE-2022-39013] Information Disclosure vulnerability in SAP BusinessObjects Bus
+[p2-CVSS 7.7]  0003239293 BI-BIP-ADM - [CVE-2022-39015] Information Disclosure vulnerability in SAP BusinessObjects Bus
+[p3-CVSS 6.0]  0003213524 BI-BIP-CMC - [CVE-2022-32244] Information Disclosure vulnerability in SAP BusinessObjects Bus
+[p3-CVSS 6.1]  0003211161 BI-BIP-INV - [CVE-2022-39800] Cross-Site Scripting (XSS) vulnerability in SAP BusinessObjects
+[p3-CVSS 6.8]  0003233226 BI-BIP-LCM - [CVE-2022-35296] Information Disclosure vulnerability in SAP BusinessObjects Bus
+[p3-CVSS 5.4]  0003229425 BI-RA-AWB - [CVE-2022-41206] Cross-Site Scripting (XSS) vulnerability in SAP BusinessObjects
+[p2-CVSS 7.0]  0003245929 CA-VE-VEA - [Multiple CVEs] Multiple vulnerabilities in SAP 3D Visual Enterprise Author
+[p2-CVSS 7.0]  0003245928 CA-VE-VEV - [Multiple CVEs] Multiple vulnerabilities in SAP 3D Visual Enterprise Viewer
+[p3-CVSS 6.1]  0003202523 CEC-COM-CPS - Cross-Site Scripting (XSS) vulnerability in SAP Commerce
+[p1-CVSS 9.6]  0003239152 CEC-COM-CPS - [CVE-2022-41204] Account hijacking through URL Redirection vulnerability in SAP
+[p3-CVSS 4.9]  0003248384 CEC-PRO-GIY - [CVE-2022-41210] Information Disclosure Vulnerability in SAP Customer Data Cloud
+[p3-CVSS 4.9]  0003248970 CEC-PRO-GIY - [CVE-2022-41209] Information Disclosure Vulnerability in SAP Customer Data Cloud
+[p3-CVSS 4.8]  0003167342 EIM-DS-SVR - [CVE-2022-35226] Cross-Site Scripting (XSS) vulnerability in Data Services Manag
+[p3-CVSS 6.5]  0003049899 KM-SEN-MGR - [CVE-2022-35297] Stored Cross-Site Scripting (XSS) vulnerability in SAP Enable N
+[p1-CVSS 9.9]  0003242933 MFG-ME - [CVE-2022-39802] File path traversal vulnerability in SAP Manufacturing Executio
+
+
+SAP Security: PatchDay_2022-10
+Version: 001
+Date:    13.10.2022
+-->
+
+
+<targetsystem desc="SNotes of PatchDay: 2022-10" id="PatchDay_2022-10" multisql="Yes">
+
+  <!-- [p3-CVSS 4.9]  BC-MID-RFC 0003150454 - Information Disclosure vulnerability in SAP NetWeaver Application Server ABAP an (Version 0011) (Medium) -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 4.9] Note 0003150454 exists" id="0003150454" operator="check_note">
+      <compliant>NOTE = '0003150454' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.9] Note 0003150454 missing and solution with SP available" id="0003150454" operator="check_note:0003150454">
+     <compliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and not( (lpad(SP,4,'0'))  &lt; '0040' )   ) <!-- SAP_BASIS 700 SAPKB70040 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0025' )   ) <!-- SAP_BASIS 701 SAPKB70125 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0025' )   ) <!-- SAP_BASIS 702 SAPKB70225 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0031' )   ) <!-- SAP_BASIS 731 SAPKB73131 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0029' )   ) <!-- SAP_BASIS 740 SAPKB74029 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0024' )   ) <!-- SAP_BASIS 750 SAPK-75026INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- SAP_BASIS 751 SAPK-75115INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) <!-- SAP_BASIS 752 SAPK-75212INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- SAP_BASIS 753 SAPK-75310INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- SAP_BASIS 754 SAPK-75408INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- SAP_BASIS 755 SAPK-75506INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0004' )   ) <!-- SAP_BASIS 756 SAPK-75604INSAPBASIS --> or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- SAP_BASIS 757 SAPK-75701INSAPBASIS -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and (lpad(SP,4,'0'))  &lt; '0040' )  <!-- SAP_BASIS 700 SAPKB70040 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0025' )  <!-- SAP_BASIS 701 SAPKB70125 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and (lpad(SP,4,'0'))  &lt; '0025' )  <!-- SAP_BASIS 702 SAPKB70225 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0031' )  <!-- SAP_BASIS 731 SAPKB73131 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0029' )  <!-- SAP_BASIS 740 SAPKB74029 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0024' )  <!-- SAP_BASIS 750 SAPK-75026INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- SAP_BASIS 751 SAPK-75116INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0011' )  <!-- SAP_BASIS 752 SAPK-75212INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- SAP_BASIS 753 SAPK-75310INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- SAP_BASIS 754 SAPK-75408INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- SAP_BASIS 755 SAPK-75506INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0004' )  <!-- SAP_BASIS 756 SAPK-75604INSAPBASIS --> or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0001' )  <!-- SAP_BASIS 757 SAPK-75701INSAPBASIS -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.9] Note 0003150454 missing and applicable using Correction Instruction" id="0003150454" operator="check_note:0003150454">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and lpad(SP,4,'0') between '0004' and '0039' )  <!-- SAP_BASIS 700 SAPKB70004 - SAPKB70039  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and lpad(SP,4,'0') between '0000' and '0024' )  <!-- SAP_BASIS 701 701 - SAPKB70124  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and lpad(SP,4,'0') between '0001' and '0024' )  <!-- SAP_BASIS 702 SAPKB70201 - SAPKB70224  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '710' and lpad(SP,4,'0') between '0000' and '0999' )  <!-- SAP_BASIS 710 710 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '711' and lpad(SP,4,'0') between '0001' and '0999' )  <!-- SAP_BASIS 711 SAPKB71101 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '720' and lpad(SP,4,'0') between '0002' and '0999' )  <!-- SAP_BASIS 720 SAPKB72002 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '730' and lpad(SP,4,'0') between '0001' and '0999' )  <!-- SAP_BASIS 730 SAPKB73001 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and lpad(SP,4,'0') between '0001' and '0030' )  <!-- SAP_BASIS 731 SAPKB73101 - SAPKB73130  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and lpad(SP,4,'0') between '0000' and '0027' )  <!-- SAP_BASIS 740 740 - SAPKB74027  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and lpad(SP,4,'0') between '0028' and '0028' )  <!-- SAP_BASIS 740 SAPKB74028 - SAPKB74028  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and lpad(SP,4,'0') between '0001' and '0023' )  <!-- SAP_BASIS 750 SAPK-75001INSAPBASIS - SAPK-75023INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and lpad(SP,4,'0') between '0000' and '0014' )  <!-- SAP_BASIS 751 751 - SAPK-75114INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and lpad(SP,4,'0') between '0000' and '0010' )  <!-- SAP_BASIS 752 752 - SAPK-75210INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and lpad(SP,4,'0') between '0000' and '0008' )  <!-- SAP_BASIS 753 753 - SAPK-75308INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and lpad(SP,4,'0') between '0000' and '0006' )  <!-- SAP_BASIS 754 754 - SAPK-75406INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- SAP_BASIS 755 755 - SAPK-75504INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0003' )  <!-- SAP_BASIS 756 756 - SAPK-75603INSAPBASIS  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p3-CVSS 4.3]]  CA-MDG-APP-CUS 0003234755 - Information Disclosure vulnerability in Master Data Governance (Version 0002)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 4.3] Note 0003234755 exists" id="0003234755" operator="check_note">
+      <compliant>NOTE = '0003234755' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.3] Note 0003234755 missing and solution with SP available" id="0003234755" operator="check_note:0003234755">
+     <compliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and not( (lpad(SP,4,'0'))  &lt; '0012' )   ) <!-- S4CORE 102 SAPK-10212INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and not( (lpad(SP,4,'0'))  &lt; '0010' )   ) <!-- S4CORE 103 SAPK-10310INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and not( (lpad(SP,4,'0'))  &lt; '0008' )   ) <!-- S4CORE 104 SAPK-10408INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- S4CORE 105 SAPK-10506INS4CORE --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and not( (lpad(SP,4,'0'))  &lt; '0003' )   ) <!-- S4CORE 106 SAPK-10603INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '107' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- S4CORE 107 SAPK-10701INS4CORE -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '606' and not( (lpad(SP,4,'0'))  &lt; '0031' )   ) <!-- SAP_APPL 606 SAPKH60631 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '617' and not( (lpad(SP,4,'0'))  &lt; '0026' )   ) <!-- SAP_APPL 617 SAPKH61726 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '618' and not( (lpad(SP,4,'0'))  &lt; '0020' )   ) <!-- SAP_APPL 618 SAPK-61820INSAPAPPL -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and (lpad(SP,4,'0'))  &lt; '0012' )  <!-- S4CORE 102 SAPK-10212INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and (lpad(SP,4,'0'))  &lt; '0010' )  <!-- S4CORE 103 SAPK-10310INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and (lpad(SP,4,'0'))  &lt; '0008' )  <!-- S4CORE 104 SAPK-10408INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- S4CORE 105 SAPK-10506INS4CORE --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and (lpad(SP,4,'0'))  &lt; '0003' )  <!-- S4CORE 106 SAPK-10603INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '107' and (lpad(SP,4,'0'))  &lt; '0001' )  <!-- S4CORE 107 SAPK-10701INS4CORE -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '606' and (lpad(SP,4,'0'))  &lt; '0031' )  <!-- SAP_APPL 606 SAPKH60631 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '617' and (lpad(SP,4,'0'))  &lt; '0026' )  <!-- SAP_APPL 617 SAPKH61726 -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '618' and (lpad(SP,4,'0'))  &lt; '0020' )  <!-- SAP_APPL 618 SAPK-61820INSAPAPPL -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.3] Note 0003234755 missing and applicable using Correction Instruction" id="0003234755" operator="check_note:0003234755">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and lpad(SP,4,'0') between '0000' and '0011' )  <!-- S4CORE 102 102 - SAPK-10211INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and lpad(SP,4,'0') between '0000' and '0009' )  <!-- S4CORE 103 103 - SAPK-10309INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and lpad(SP,4,'0') between '0000' and '0007' )  <!-- S4CORE 104 104 - SAPK-10407INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- S4CORE 105 105 - SAPK-10505INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and lpad(SP,4,'0') between '0000' and '0002' )  <!-- S4CORE 106 106 - SAPK-10602INS4CORE  --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '107' and lpad(SP,4,'0') between '0000' and '0000' )  <!-- S4CORE 107 107 - 107  -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '606' and lpad(SP,4,'0') between '0001' and '0030' )  <!-- SAP_APPL 606 SAPKH60601 - SAPKH60630  -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '617' and lpad(SP,4,'0') between '0001' and '0025' )  <!-- SAP_APPL 617 SAPKH61701 - SAPKH61725  -->  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '618' and lpad(SP,4,'0') between '0000' and '0019' )  <!-- SAP_APPL 618 618 - SAPK-61819INSAPAPPL  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p3-CVSS 6.3]  IS-A 0002726124 - Missing Authorization Check in multiple components under SAP Automotive Solution (Version 0004) (Medium) -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 6.3] Note 0002726124 exists" id="0002726124" operator="check_note">
+      <compliant>NOTE = '0002726124' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.3] Note 0002726124 missing and solution with SP available" id="0002726124" operator="check_note:0002726124">
+     <compliant>(
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '600' and not( (lpad(SP,4,'0'))  &lt; '0032' )   ) <!-- ECC-DIMP 600 SAPK-60032INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '602' and not( (lpad(SP,4,'0'))  &lt; '0022' )   ) <!-- ECC-DIMP 602 SAPK-60222INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '603' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- ECC-DIMP 603 SAPK-60321INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '604' and not( (lpad(SP,4,'0'))  &lt; '0022' )   ) <!-- ECC-DIMP 604 SAPK-60422INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '605' and not( (lpad(SP,4,'0'))  &lt; '0019' )   ) <!-- ECC-DIMP 605 SAPK-60519INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '606' and not( (lpad(SP,4,'0'))  &lt; '0024' )   ) <!-- ECC-DIMP 606 SAPK-60624INECCDIMP --> or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '616' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) <!-- ECC-DIMP 616 SAPK-61613INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '617' and not( (lpad(SP,4,'0'))  &lt; '0018' )   ) <!-- ECC-DIMP 617 SAPK-61718INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '618' and not( (lpad(SP,4,'0'))  &lt; '0012' )   ) <!-- ECC-DIMP 618 SAPK-61812INECCDIMP -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '100' and not( (lpad(SP,4,'0'))  &lt; '0008' )   ) <!-- S4CORE 100 SAPK-10008INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- S4CORE 101 SAPK-10106INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and not( (lpad(SP,4,'0'))  &lt; '0004' )   ) <!-- S4CORE 102 SAPK-10204INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and not( (lpad(SP,4,'0'))  &lt; '0002' )   ) <!-- S4CORE 103 SAPK-10302INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '600' and (lpad(SP,4,'0'))  &lt; '0032' )  <!-- ECC-DIMP 600 SAPK-60032INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '602' and (lpad(SP,4,'0'))  &lt; '0022' )  <!-- ECC-DIMP 602 SAPK-60222INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '603' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- ECC-DIMP 603 SAPK-60321INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '604' and (lpad(SP,4,'0'))  &lt; '0022' )  <!-- ECC-DIMP 604 SAPK-60422INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '605' and (lpad(SP,4,'0'))  &lt; '0019' )  <!-- ECC-DIMP 605 SAPK-60519INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '606' and (lpad(SP,4,'0'))  &lt; '0024' )  <!-- ECC-DIMP 606 SAPK-60624INECCDIMP --> or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '616' and (lpad(SP,4,'0'))  &lt; '0013' )  <!-- ECC-DIMP 616 SAPK-61613INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '617' and (lpad(SP,4,'0'))  &lt; '0018' )  <!-- ECC-DIMP 617 SAPK-61718INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '618' and (lpad(SP,4,'0'))  &lt; '0012' )  <!-- ECC-DIMP 618 SAPK-61812INECCDIMP -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '100' and (lpad(SP,4,'0'))  &lt; '0008' )  <!-- S4CORE 100 SAPK-10008INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- S4CORE 101 SAPK-10106INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and (lpad(SP,4,'0'))  &lt; '0004' )  <!-- S4CORE 102 SAPK-10204INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and (lpad(SP,4,'0'))  &lt; '0002' )  <!-- S4CORE 103 SAPK-10302INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.3] Note 0002726124 missing and applicable using Correction Instruction" id="0002726124" operator="check_note:0002726124">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '600' and lpad(SP,4,'0') between '0001' and '0031' )  <!-- ECC-DIMP 600 SAPK-60001INECCDIMP - SAPK-60031INECCDIMP  --> or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '602' and lpad(SP,4,'0') between '0000' and '0021' )  <!-- ECC-DIMP 602 602 - SAPK-60221INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '603' and lpad(SP,4,'0') between '0000' and '0020' )  <!-- ECC-DIMP 603 603 - SAPK-60320INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '604' and lpad(SP,4,'0') between '0001' and '0021' )  <!-- ECC-DIMP 604 SAPK-60401INECCDIMP - SAPK-60421INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '605' and lpad(SP,4,'0') between '0000' and '0018' )  <!-- ECC-DIMP 605 605 - SAPK-60518INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '606' and lpad(SP,4,'0') between '0001' and '0023' )  <!-- ECC-DIMP 606 SAPK-60601INECCDIMP - SAPK-60623INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '616' and lpad(SP,4,'0') between '0000' and '0012' )  <!-- ECC-DIMP 616 616 - SAPK-61612INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '617' and lpad(SP,4,'0') between '0001' and '0017' )  <!-- ECC-DIMP 617 SAPK-61701INECCDIMP - SAPK-61717INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '618' and lpad(SP,4,'0') between '0000' and '0011' )  <!-- ECC-DIMP 618 618 - SAPK-61811INECCDIMP  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '100' and lpad(SP,4,'0') between '0000' and '0007' )  <!-- S4CORE 100 SAPK-10003INS4CORE - SAPK-10007INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- S4CORE 101 101 - SAPK-10105INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and lpad(SP,4,'0') between '0000' and '0003' )  <!-- S4CORE 102 102 - SAPK-10203INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and lpad(SP,4,'0') between '0000' and '0001' )  <!-- S4CORE 103 103 - SAPK-10301INS4CORE  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p3-CVSS 5.3]  IS-A-VMS 0002460948 - Missing Authorization Check in Vehicle Management System (Version 0002) (Medium) -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 5.3] Note 0002460948 exists" id="0002460948" operator="check_note">
+      <compliant>NOTE = '0002460948' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 5.3] Note 0002460948 missing and solution with SP available" id="0002460948" operator="check_note:0002460948">
+     <compliant>(
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '600' and not( (lpad(SP,4,'0'))  &lt; '0030' )   ) <!-- ECC-DIMP 600 SAPK-60030INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '602' and not( (lpad(SP,4,'0'))  &lt; '0020' )   ) <!-- ECC-DIMP 602 SAPK-60220INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '603' and not( (lpad(SP,4,'0'))  &lt; '0019' )   ) <!-- ECC-DIMP 603 SAPK-60319INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '604' and not( (lpad(SP,4,'0'))  &lt; '0020' )   ) <!-- ECC-DIMP 604 SAPK-60420INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '605' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) <!-- ECC-DIMP 605 SAPK-60517INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '606' and not( (lpad(SP,4,'0'))  &lt; '0020' )   ) <!-- ECC-DIMP 606 SAPK-60620INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '616' and not( (lpad(SP,4,'0'))  &lt; '0012' )   ) <!-- ECC-DIMP 616 SAPK-61612INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '617' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- ECC-DIMP 617 SAPK-61715INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '618' and not( (lpad(SP,4,'0'))  &lt; '0008' )   ) <!-- ECC-DIMP 618 SAPK-61808INECCDIMP --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and not( (lpad(SP,4,'0'))  &lt; '0003' )   ) <!-- S4CORE 101 SAPK-10103INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '600' and (lpad(SP,4,'0'))  &lt; '0030' )  <!-- ECC-DIMP 600 SAPK-60030INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '602' and (lpad(SP,4,'0'))  &lt; '0020' )  <!-- ECC-DIMP 602 SAPK-60220INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '603' and (lpad(SP,4,'0'))  &lt; '0019' )  <!-- ECC-DIMP 603 SAPK-60319INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '604' and (lpad(SP,4,'0'))  &lt; '0020' )  <!-- ECC-DIMP 604 SAPK-60420INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '605' and (lpad(SP,4,'0'))  &lt; '0017' )  <!-- ECC-DIMP 605 SAPK-60517INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '606' and (lpad(SP,4,'0'))  &lt; '0020' )  <!-- ECC-DIMP 606 SAPK-60620INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '616' and (lpad(SP,4,'0'))  &lt; '0012' )  <!-- ECC-DIMP 616 SAPK-61612INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '617' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- ECC-DIMP 617 SAPK-61715INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '618' and (lpad(SP,4,'0'))  &lt; '0008' )  <!-- ECC-DIMP 618 SAPK-61808INECCDIMP --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and (lpad(SP,4,'0'))  &lt; '0003' )  <!-- S4CORE 101 SAPK-10103INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 5.3] Note 0002460948 missing and applicable using Correction Instruction" id="0002460948" operator="check_note:0002460948">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '600' and lpad(SP,4,'0') between '0009' and '0029' )  <!-- ECC-DIMP 600 SAPK-60009INECCDIMP - SAPK-60029INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '602' and lpad(SP,4,'0') between '0000' and '0019' )  <!-- ECC-DIMP 602 602 - SAPK-60219INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '603' and lpad(SP,4,'0') between '0000' and '0018' )  <!-- ECC-DIMP 603 603 - SAPK-60318INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '604' and lpad(SP,4,'0') between '0001' and '0019' )  <!-- ECC-DIMP 604 SAPK-60401INECCDIMP - SAPK-60419INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '605' and lpad(SP,4,'0') between '0000' and '0016' )  <!-- ECC-DIMP 605 605 - SAPK-60516INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '606' and lpad(SP,4,'0') between '0000' and '0019' )  <!-- ECC-DIMP 606 606 - SAPK-60619INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '616' and lpad(SP,4,'0') between '0000' and '0011' )  <!-- ECC-DIMP 616 616 - SAPK-61611INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '617' and lpad(SP,4,'0') between '0008' and '0014' )  <!-- ECC-DIMP 617 SAPK-61708INECCDIMP - SAPK-61714INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '618' and lpad(SP,4,'0') between '0000' and '0007' )  <!-- ECC-DIMP 618 618 - SAPK-61807INECCDIMP  --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '100' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- S4CORE 100 100 - SAPK-10004INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and lpad(SP,4,'0') between '0000' and '0002' )  <!-- S4CORE 101 101 - SAPK-10102INS4CORE  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p3-CVSS 6.3]  QM-QN 0002634023 - Missing authorization check in Consumption of CDS Views (or) OData Services in Q (Version 0002) (Medium) -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 6.3] Note 0002634023 exists" id="0002634023" operator="check_note">
+      <compliant>NOTE = '0002634023' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.3] Note 0002634023 missing and solution with SP available" id="0002634023" operator="check_note:0002634023">
+     <compliant>(
+      ( COMPONENT = 'EA-APPL' and VERSION = '617' and not( (lpad(SP,4,'0'))  &lt; '0017' )   )  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '618' and not( (lpad(SP,4,'0'))  &lt; '0011' )   )
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'EA-APPL' and VERSION = '617' and (lpad(SP,4,'0'))  &lt; '0017' )  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '618' and (lpad(SP,4,'0'))  &lt; '0011' )
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.3] Note 0002634023 missing and applicable using Correction Instruction" id="0002634023" operator="check_note:0002634023">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'EA-APPL' and VERSION = '617' and lpad(SP,4,'0') between '0010' and '0016' )  or
+      ( COMPONENT = 'SAP_APPL' and VERSION = '618' and lpad(SP,4,'0') between '0000' and '0010' ) 
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p3-CVSS 6.5]  IS-A 0002495712 - Missing authorization check in SAP Automotive Solutions (Version 0002)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 6.5] Note 0002495712 exists" id="0002495712" operator="check_note">
+      <compliant>NOTE = '0002495712' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.5] Note 0002495712 missing and solution with SP available" id="0002495712" operator="check_note:0002495712">
+     <compliant>(
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '604' and not( (lpad(SP,4,'0'))  &lt; '0020' )   ) <!-- ECC-DIMP 604 SAPK-60420INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '605' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) <!-- ECC-DIMP 605 SAPK-60517INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '606' and not( (lpad(SP,4,'0'))  &lt; '0020' )   ) <!-- ECC-DIMP 606 SAPK-60620INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '616' and not( (lpad(SP,4,'0'))  &lt; '0012' )   ) <!-- ECC-DIMP 616 SAPK-61612INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '617' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- ECC-DIMP 617 SAPK-61715INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '618' and not( (lpad(SP,4,'0'))  &lt; '0008' )   ) <!-- ECC-DIMP 618 SAPK-61808INECCDIMP --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '100' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- S4CORE 100 SAPK-10005INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and not( (lpad(SP,4,'0'))  &lt; '0003' )   ) <!-- S4CORE 101 SAPK-10103INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '604' and (lpad(SP,4,'0'))  &lt; '0020' )  <!-- ECC-DIMP 604 SAPK-60420INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '605' and (lpad(SP,4,'0'))  &lt; '0017' )  <!-- ECC-DIMP 605 SAPK-60517INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '606' and (lpad(SP,4,'0'))  &lt; '0020' )  <!-- ECC-DIMP 606 SAPK-60620INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '616' and (lpad(SP,4,'0'))  &lt; '0012' )  <!-- ECC-DIMP 616 SAPK-61612INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '617' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- ECC-DIMP 617 SAPK-61715INECCDIMP -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '618' and (lpad(SP,4,'0'))  &lt; '0008' )  <!-- ECC-DIMP 618 SAPK-61808INECCDIMP --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '100' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- S4CORE 100 SAPK-10005INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and (lpad(SP,4,'0'))  &lt; '0003' )  <!-- S4CORE 101 SAPK-10103INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 6.5] Note 0002495712 missing and applicable using Correction Instruction" id="0002495712" operator="check_note:0002495712">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '604' and lpad(SP,4,'0') between '0002' and '0019' )  <!-- ECC-DIMP 604 SAPK-60402INECCDIMP - SAPK-60419INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '605' and lpad(SP,4,'0') between '0000' and '0016' )  <!-- ECC-DIMP 605 605 - SAPK-60516INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '606' and lpad(SP,4,'0') between '0001' and '0019' )  <!-- ECC-DIMP 606 SAPK-60601INECCDIMP - SAPK-60619INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '616' and lpad(SP,4,'0') between '0000' and '0011' )  <!-- ECC-DIMP 616 616 - SAPK-61611INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '617' and lpad(SP,4,'0') between '0001' and '0014' )  <!-- ECC-DIMP 617 SAPK-61701INECCDIMP - SAPK-61714INECCDIMP  -->  or
+      ( COMPONENT = 'ECC-DIMP' and VERSION = '618' and lpad(SP,4,'0') between '0000' and '0007' )  <!-- ECC-DIMP 618 618 - SAPK-61807INECCDIMP  --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '100' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- S4CORE 100 100 - SAPK-10004INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and lpad(SP,4,'0') between '0000' and '0002' )  <!-- S4CORE 101 101 - SAPK-10102INS4CORE  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+</targetsystem>
