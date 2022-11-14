@@ -38,6 +38,13 @@ Version: 002
   check on  note 0002958563   restricted on DB4 and SYSBASE as the note 0002958563 is only relevant for these DBs
 Date:    Nov 03 2020
 
+Version: 003
+  check on  note 0002958563   restricted on DB4 and SYSBASE as the note 0002958563 is only relevant for these DBs
+   exchanged <joinstore name="DB_INFO" no_data_found="Yes">
+   by        <joinstore name="DB_INFO" no_data_found="No">
+   to avoid records with content “no data found” 
+Date:    Nov 14 2022
+
 -->
 
 <targetsystem desc="SNotes of PatchDay: 2020-09" id="PatchDay_2020-09" multisql="Yes">
