@@ -38,6 +38,14 @@ Version: 002
   check on  note 0002958563   restricted on DB4 and SYSBASE as the note 0002958563 is only relevant for these DBs
 Date:    Nov 03 2020
 
+Version: 003
+  check on  note 0002958563   restricted on DB4 and SYSBASE as the note 0002958563 is only relevant for these DBs
+   exchanged <joinstore name="DB_INFO" no_data_found="Yes">
+   by        <joinstore name="DB_INFO" no_data_found="No">
+   to avoid records with content “no data found” 
+Date:    Nov 14 2022
+
+
 -->
 
 <targetsystem desc="SNotes of PatchDay: 2020-09" id="PatchDay_2020-09" multisql="Yes">
@@ -83,7 +91,7 @@ Date:    Nov 03 2020
        ( COMPONENT = 'SAP_BW' and VERSION = '701' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    23 )  <!-- SAP_BW 701 SAPKW70123 -->   or
        ( COMPONENT = 'SAP_BW' and VERSION = '702' and to_integer( REPLACE_REGEXPR( '\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) &lt;    23 )  <!-- SAP_BW 702 SAPKW70223 -->
      )</noncompliant>
-      <joinstore name="DB_INFO" no_data_found="Yes">
+      <joinstore name="DB_INFO" no_data_found="No">
         <joincompliant> NAME = 'DBSYS' and (UCASE(left(VALUE,3)) = 'DB4' or UCASE(left(VALUE,3)) = 'SYB') </joincompliant>
         <joinnoncompliant> NAME = 'DBSYS' and (UCASE(left(VALUE,3)) = 'DB4' or UCASE(left(VALUE,3)) = 'SYB') </joinnoncompliant>
       </joinstore>
@@ -108,7 +116,7 @@ Date:    Nov 03 2020
  or ( COMPONENT = 'SAP_BW' and VERSION = '754' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and    2 )  <!-- SAP_BW 754 754 - SAPK-75402INSAPBW  -->
  or ( COMPONENT = 'SAP_BW' and VERSION = '755' and to_integer( REPLACE_REGEXPR('\.' IN (COALESCE(NULLIF(SP,''),'0')) with '')) between     0 and   0 )  <!-- SAP_BW 755 755 - 755  -->
   )</noncompliant>
-      <joinstore name="DB_INFO" no_data_found="Yes">
+      <joinstore name="DB_INFO" no_data_found="No">
         <joincompliant> NAME = 'DBSYS' and (UCASE(left(VALUE,3)) = 'DB4' or UCASE(left(VALUE,3)) = 'SYB') </joincompliant>
         <joinnoncompliant> NAME = 'DBSYS' and (UCASE(left(VALUE,3)) = 'DB4' or UCASE(left(VALUE,3)) = 'SYB') </joinnoncompliant>
       </joinstore>
