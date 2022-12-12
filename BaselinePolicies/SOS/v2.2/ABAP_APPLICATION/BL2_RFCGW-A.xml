@@ -92,7 +92,7 @@
   <configstore name="GW_REGINFO" name_extended="" sci_id="" system_type="ABAP">
     <checkitem desc="[p1-CRITICAL] RFC gateway hardening (reginfo content)" id="RFCGW-A_a.2" operator="">
       <compliant>          line like '%' and ( TEXT like_regexpr 'HOST=[^*]' )</compliant>
-      <noncompliant>    ( line like '%' and TEXT like  '%HOST=[*]%' ) OR ( line like '%' and TEXT = 'P TP=*' )</noncompliant>
+      <noncompliant>    ( line like '%' and TEXT like '%HOST=*%' ) OR ( line like '%' and TEXT = 'P TP=*' )</noncompliant>
     </checkitem>
   </configstore>
   <configstore name="GW_PRXINFO" name_extended="" sci_id="" system_type="ABAP">
