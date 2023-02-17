@@ -101,13 +101,13 @@ Version 2
     <checkitem desc="[p2-STANDARD] SystemCookiesDataProtection" id="SESS-J_a.2">
       <compliant>    NAME = 'SystemCookiesDataProtection'  and VALUE = 'true' </compliant>
       <complianttext/>
-      <noncompliant> NAME = 'SystemCookiesDataProtection'  and VALUE = 'true'  </noncompliant>
+      <noncompliant> NAME = 'SystemCookiesDataProtection'  and not VALUE = 'true'  </noncompliant>
       <noncomplianttext/>
     </checkitem>
     <checkitem desc="[p2-STANDARD] SystemCookiesDataProtection" id="SESS-J_b.2">
       <compliant>    NAME = 'SystemCookiesHTTPSProtection'  and VALUE = 'true' </compliant>
       <complianttext/>
-      <noncompliant> NAME = 'SystemCookiesHTTPSProtection'  and VALUE = 'true'  </noncompliant>
+      <noncompliant> NAME = 'SystemCookiesHTTPSProtection'  and not VALUE = 'true'  </noncompliant>
       <noncomplianttext/>
     </checkitem>
   </configstore>
