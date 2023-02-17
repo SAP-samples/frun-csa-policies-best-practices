@@ -29,8 +29,19 @@ Mapping of Release/SP/Patch Level vs Build-Number is taken from SAP Note 1602088
 
 
 SAP Security: PatchDay_2023-01
-Version: 001
-Date:    12.01.2023
+Version: 002
+Date:    17.02.2023
+
+
+
+COMMENT on CHANGES:
+Compared to version 001, this policy is extended with 2 checks for SNote 3089413: 
+[p1-CVSS 9.0] 0003089413 BC-MID-RFC - [CVE-2023-0014] Capture-replay vulnerability in SAP NetWeaver AS for ABAP and ABAP Platform (Version 9)
++ Check if Trust relations are successfully migrated (based on Store: RFCSYSACL)
++ Check if parameter rfc/allowoldticket4tt denies all use of insecure trusted RFC (as client, as server) that has not been successfully migrated 
+  (Note 3157268 - How-To-Guide: Migration of Trusted/Trusting Relationships (Version 8)
++ 2 checks (included in a comment) of attribute string of RFC Destinations of type 3, H, W: Is information on SID and Installation Number included as an attribute and is respective attribute value corresponding to expected pattern (SID: 3 characters, Installation Number: 10 characters). If not the migration for such destination may require rework.
+
 -->
 
 <targetsystem desc="SNotes of PatchDay: 2023-01" id="PatchDay_2023-01" multisql="Yes">
@@ -150,6 +161,73 @@ Date:    12.01.2023
       </noncompliant>
     </checkitem>
   </configstore>
+
+ <configstore name="RFCSYSACL">
+    <checkitem desc="[p1-CVSS 9.0] Note 0003089413: Migrated Trust Relations" id="0003089413_TRUST" not_found="ignore">
+      <compliant>
+                  RFCSYSID like '%' and 
+                  TLICENSE_NR like '%' and
+                  RFCTRUSTSY like '%' and
+                  RFCDEST like '%' and
+                  RFCTCDCHK like '%' and 
+                  RFCSNC like '%' and
+                  RFCSLOPT like '3%'
+      </compliant>
+      <noncompliant>
+                  RFCSYSID like '%' and 
+                  TLICENSE_NR like '%' and
+                  RFCTRUSTSY like '%' and
+                  RFCDEST like '%' and
+                  RFCTCDCHK like '%' and 
+                  RFCSNC like '%' and
+                  RFCSLOPT not like '3%'
+      </noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore SYSTEM_TYPE="ABAP" name="ABAP_INSTANCE_PAHI">
+    <checkitem desc="Notes 0003157268 and 0003089413: Parameter rfc/allowoldticket4tt blocks old method (Trusted RFC)" id="0003157268" not_found="negative">
+      <compliant>
+                  NAME = 'rfc/allowoldticket4tt' and 
+                  VALUE = 'no'
+      </compliant>
+      <noncompliant>
+                  NAME = 'rfc/allowoldticket4tt' and 
+                  not VALUE = 'no'
+      </noncompliant>
+    </checkitem>
+  </configstore>
+<!--
+  <configstore name="RFCDES">
+    <checkitem desc="[p1-CVSS 9.0] Note 0003089413: System ID in migrated Destinations" id="3089413_SID" not_found="ignore">
+      <compliant>
+                  RFCDEST like '%' and 
+                  RFCTYPE in ('3','H','W') and
+                  RFCOPTIONS like_regexpr ',Q=Y,' and
+                  RFCOPTIONS like_regexpr ',\[=[^,]{3},'
+      </compliant>
+      <noncompliant>
+                  RFCDEST like '%' and 
+                  RFCTYPE in ('3','H','W') and
+                  RFCOPTIONS like_regexpr ',Q=Y,' and
+                  not RFCOPTIONS like_regexpr ',\[=[^,]{3},'
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CVSS 9.0] Note 0003089413: Installation Number in migrated Destinations" id="3089413_InstNo" not_found="ignore">
+      <compliant>
+                  RFCDEST like '%' and 
+                  RFCTYPE in ('3','H','W') and
+                  RFCOPTIONS like_regexpr ',Q=Y,' and 
+                  RFCOPTIONS like_regexpr ',\^=\d{10},'
+      </compliant>
+      <noncompliant>
+                  RFCDEST like '%' and 
+                  RFCTYPE in ('3','H','W') and
+                  RFCOPTIONS like_regexpr ',Q=Y,' and 
+                  not RFCOPTIONS like_regexpr ',\^=\d{10},'
+      </noncompliant>
+    </checkitem>
+  </configstore>
+-->
 
   <!-- [p3-CVSS 6.1]  BC-ABA-LA 0003283283 - [CVE-2023-0013] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver AS for (Version 0005)  -->
   <configstore name="ABAP_NOTES">
