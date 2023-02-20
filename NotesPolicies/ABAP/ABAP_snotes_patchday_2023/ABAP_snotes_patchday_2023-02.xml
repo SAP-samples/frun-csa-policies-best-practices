@@ -282,13 +282,13 @@ Date:    16.02.2023
   
     <!-- [p3-CVSS 6.5] 0002985905 CA-GTF-CSC-DME - [CVE-2023-24524] Missing Authorization check in SAP S/4 HANA Map Treasury Corres (Version 0004) -->
   <configstore name="ABAP_NOTES">
-    <checkitem desc="[p-CVSS ] Note 0002985905 exists" id="0002985905" operator="check_note">
+    <checkitem desc="[p3-CVSS 6.5] Note 0002985905 exists" id="0002985905" operator="check_note">
       <compliant>NOTE = '0002985905' and PRSTATUS = 'E'</compliant>
       <noncompliant/>
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-  <checkitem desc="[p-CVSS ] Note 0002985905 missing and solution with SP available" id="0002985905" operator="check_note:0002985905">
+  <checkitem desc="[p3-CVSS 6.5] Note 0002985905 missing and solution with SP available" id="0002985905" operator="check_note:0002985905">
      <compliant>(
       ( COMPONENT = 'S4CORE' and VERSION = '104' and not( (lpad(SP,4,'0'))  &lt; '0004' )   ) <!-- S4CORE 104 SAPK-10404INS4CORE --> or
       ( COMPONENT = 'S4CORE' and VERSION = '105' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- S4CORE 105 SAPK-10501INS4CORE -->
@@ -300,7 +300,7 @@ Date:    16.02.2023
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-  <checkitem desc="[p-CVSS ] Note 0002985905 missing and applicable using Correction Instruction" id="0002985905" operator="check_note:0002985905">
+  <checkitem desc="[p3-CVSS 6.5] Note 0002985905 missing and applicable using Correction Instruction" id="0002985905" operator="check_note:0002985905">
     <compliant/>
     <noncompliant>(
       ( COMPONENT = 'S4CORE' and VERSION = '104' and lpad(SP,4,'0') between '0000' and '0003' )  <!-- S4CORE 104 104 - SAPK-10403INS4CORE  -->  or
