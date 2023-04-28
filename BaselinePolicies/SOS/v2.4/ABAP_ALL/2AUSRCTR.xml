@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] User Control of Action (ABAP)" id="2AUSRCTR" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- USRCTR-A: User Control of Action – ABAP -->
+  <configstore name="ABAP_INSTANCE_PAHI" sci_id="">
+    <checkitem desc="[p2-STANDARD] dynp/checkskip1screen (User Control Profile Parameter)" id="USRCTR-A_a.1">
+      <compliant>    NAME = 'dynp/checkskip1screen'  and VALUE = 'ALL' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'dynp/checkskip1screen'  and VALUE != 'ALL'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] dynp/confirmskip1screen (User Control Profile Parameter, note 1956086)" id="USRCTR-A_a.2">
+      <compliant>    NAME = 'dynp/confirmskip1screen'  and VALUE = 'ALL'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'dynp/confirmskip1screen'  and VALUE != 'ALL'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] auth/check/calltransaction (User Control Profile Parameter)" id="USRCTR-A_b">
+      <compliant>    NAME = 'auth/check/calltransaction'  and ( VALUE = '2'  or VALUE = '3' )</compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'auth/check/calltransaction'  and not  ( VALUE = '2' and VALUE = '3' )</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] auth/no_check_in_some_cases (note 1723881, User Control Profile Parameter)" id="USRCTR-A_c">
+      <compliant>    NAME = 'auth/no_check_in_some_cases'  and VALUE = 'Y'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'auth/no_check_in_some_cases'  and VALUE != 'Y'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] auth/object_disabling_active (User Control Profile Parameter)" id="USRCTR-A_d">
+      <compliant>    NAME = 'auth/object_disabling_active'  and VALUE = 'N'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'auth/object_disabling_active'  and VALUE != 'N'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] rdisp/gui_auto_logout (User Control Profile Parameter)" id="USRCTR-A_e">
+      <compliant>    NAME = 'rdisp/gui_auto_logout'  and VALUE like_regexpr  '^(1 ?H|[1-9] ?M|[1-5]\d ?M|60 ?M|[1-9]\d{0,2}|[12]\d\d\d|3[0-5]\d\d|3600)$'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'rdisp/gui_auto_logout'  and not VALUE like_regexpr '^(1 ?H|[1-9] ?M|[1-5]\d ?M|60 ?M|[1-9]\d{0,2}|[12]\d\d\d|3[0-5]\d\d|3600)$'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] rdisp/vbdelete (User Control Profile Parameter)" id="USRCTR-A_f">
+      <compliant>    NAME = 'rdisp/vbdelete'  and VALUE = '0'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'rdisp/vbdelete'  and VALUE != '0'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Standard Users (HANA)" id="2HSTDUSR" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- STDUSR-H: Standard Users in HANA -->
+  <configstore name="HDB_SYSTEM_USER">
+    <checkitem desc="[p2-STANDARD] SYSTEM user is deactivated" id="STDUSR-H">
+      <compliant>    USER_NAME = 'SYSTEM' and VALID_FROM like '%' and VALID_UNTIL like '%' and DEACTIVATION_TIME like '%' and LOWER(USER_DEACTIVATED) = 'true' </compliant>
+      <noncompliant> USER_NAME = 'SYSTEM' and VALID_FROM like '%' and VALID_UNTIL like '%' and DEACTIVATION_TIME like '%' and not LOWER(USER_DEACTIVATED) = 'true' </noncompliant>
+    </checkitem>
+    </configstore>
+</targetsystem>

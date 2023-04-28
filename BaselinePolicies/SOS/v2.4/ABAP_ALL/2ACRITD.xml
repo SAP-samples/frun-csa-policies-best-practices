@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Protection of Password Hashes (ABAP)" id="2ACRITD" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="TDDAT">
+    <checkitem desc="[p2-STANDARD] Access to table USH02 protected" id="CRITAU-A_d.1.1">
+      <compliant>TABNAME = 'USH02'  and CCLASS = 'SPWD' </compliant>
+      <complianttext/>
+      <noncompliant>TABNAME = 'USH02'  and not ( CCLASS = 'SPWD'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Access to table USR02 protected" id="CRITAU-A_d.1.2">
+      <compliant>TABNAME = 'USR02'  and CCLASS = 'SPWD' </compliant>
+      <complianttext/>
+      <noncompliant>TABNAME = 'USR02'  and not ( CCLASS = 'SPWD'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Access to table USRPWDHISTORY protected" id="CRITAU-A_d.1.3">
+      <compliant>TABNAME = 'USRPWDHISTORY'  and CCLASS = 'SPWD' </compliant>
+      <complianttext/>
+      <noncompliant>TABNAME = 'USRPWDHISTORY'  and not ( CCLASS = 'SPWD'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

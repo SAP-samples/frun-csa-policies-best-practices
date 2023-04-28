@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Audit Settings (HANA)" id="2HAUDIT" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="HDB_PARAMETER">
+    <checkitem desc="[p2-STANDARD] Audit trail target" id="AUDIT-H_b" system_attributes="DB_TENANT:TRUE">
+      <compliant>    FILE_NAME = 'global.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'default_audit_trail_type' and 
+                     UPPER(VALUE) in ('SYSLOGPROTOCOL','CSTABLE' ) and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%'
+      </compliant>
+      <noncompliant> FILE_NAME = 'global.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'default_audit_trail_type' and 
+                     NOT UPPER(VALUE) in ('SYSLOGPROTOCOL','CSTABLE' ) and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%'
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit trail target" id="AUDIT-H_b" system_attributes="DB_SYSTEMDB:TRUE">
+      <compliant>    FILE_NAME = 'nameserver.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'default_audit_trail_type' and 
+                     UPPER(VALUE) in ('SYSLOGPROTOCOL','CSTABLE' ) and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%'
+      </compliant>
+      <noncompliant> FILE_NAME = 'nameserver.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'default_audit_trail_type' and 
+                     NOT UPPER(VALUE) in ('SYSLOGPROTOCOL','CSTABLE' ) and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%'
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] sr_audit_trail_type_cstable_override" id="AUDIT-H_c" not_found="positive" system_attributes="DB_TENANT:TRUE">
+      <compliant>    FILE_NAME = 'global.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'sr_audit_trail_type_cstable_override' and 
+                     UPPER(VALUE) = 'SYSLOGPROTOCOL' and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%'
+      </compliant>
+      <noncompliant> FILE_NAME = 'global.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'sr_audit_trail_type_cstable_override' and 
+                     NOT UPPER(VALUE) = 'SYSLOGPROTOCOL' and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%'
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] sr_audit_trail_type_cstable_override" id="AUDIT-H_c" not_found="positive" system_attributes="DB_SYSTEMDB:TRUE">
+      <compliant>    FILE_NAME = 'nameserver.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'sr_audit_trail_type_cstable_override' and 
+                     UPPER(VALUE) = 'SYSLOGPROTOCOL' and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%'
+      </compliant>
+      <noncompliant> FILE_NAME = 'nameserver.ini' and 
+                     SECT = 'auditing configuration' and 
+                     NAME = 'sr_audit_trail_type_cstable_override' and 
+                     NOT UPPER(VALUE) = 'SYSLOGPROTOCOL' and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%'
+      </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+This Policy requires creation of a customizable store. 
+sci_id may be different in your system and may require an adjustment. 
+Configstore name is up to your choice and also may require adjustment.
+Store definition can be performed based on information from the Configuration Validation Template.
+
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Critical Authorizations (JAVA)" id="2JCRITAU_CSTO" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="AUTH_ROLE_USER" sci_id="">
+    <checkitem desc="[p2-STANDARD] Role SAP_J2EE_ADMIN must not be assigned to users other than standard users" id="CRITAU-J_a1" not_found="positive">
+      <compliant>          CHECK_ID = 'SAP_J2EE_ADMIN' and
+                                     ROLE = 'SAP_J2EE_ADMIN' and not
+                                     USER in ('J2EE_ADMIN','PISUPER') and
+                                     lpad(USER_COUNT,4,'0') = '0000'
+      </compliant>
+      <complianttext/>
+      <noncompliant>   CHECK_ID = 'SAP_J2EE_ADMIN' and
+                                     ROLE = 'SAP_J2EE_ADMIN' and not
+                                     USER in ('J2EE_ADMIN','PISUPER') and
+                                     lpad(USER_COUNT,4,'0') &gt;= '0001' 
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

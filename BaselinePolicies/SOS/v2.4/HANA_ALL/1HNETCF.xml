@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Secure Network Configuration (HANA)" id="1HNETCF" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="HDB_PARAMETER">
+    <!-- with listeninterface = .global an insecure configuration is more likely than with settings .internal or .local -->
+    <checkitem desc="[p1-CRITICAL] HANA internal communication (listeninterface)" id="NETCF-H_a.1">
+      <compliant>    FILE_NAME = 'global.ini' and SECT = 'communication'  and NAME = 'listeninterface'  and VALUE != '.global' 
+      </compliant>
+      <complianttext/>
+      <noncompliant> FILE_NAME = 'global.ini' and SECT = 'communication'  and NAME = 'listeninterface'  and VALUE = '.global'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <!--Scale-out systems are usually compliant if internal hostname resolution is configured -->
+    <checkitem desc="[p1-CRITICAL] HANA internal communication (listeninterface)" id="NETCF-H_a.2">
+      <compliant>    FILE_NAME = 'global.ini' and SECT = 'internal_hostname_resolution' and NAME like '%' and VALUE not like_regexpr '^\s*$'
+      </compliant>
+      <complianttext> Parameter listeninterface = .internal and Section internal_hostname_resolution is configured </complianttext>
+      <noncompliant> FILE_NAME = 'global.ini' and SECT = 'internal_hostname_resolution' and NAME like '%' and VALUE like_regexpr '^\s*$'
+      </noncompliant>
+      <noncomplianttext> Parameter listeninterface = .internal but Section internal_hostname_resolution is not configured </noncomplianttext>
+      <joinstore name="HDB_PARAMETER" no_data_found="Yes">
+        <joincompliant>    FILE_NAME = 'global.ini' and SECT = 'communication'  and NAME = 'listeninterface'  and VALUE = '.internal' </joincompliant>
+        <joinnoncompliant> FILE_NAME = 'global.ini' and SECT = 'communication'  and NAME = 'listeninterface'  and VALUE = '.internal' </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+</targetsystem>

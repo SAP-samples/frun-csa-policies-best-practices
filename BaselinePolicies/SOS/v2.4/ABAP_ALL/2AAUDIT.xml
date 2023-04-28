@@ -1,0 +1,410 @@
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[STANDARD] Audit Settings (ABAP)" id="2AAUDIT" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- Section 2.4.3      AUDIT AND FRAUD MANAGEMENT -->
+  <!-- KERNEL PARAMETERS for Auditing -->
+  <configstore name="AUDIT_CONFIGURATION">
+    <checkitem desc="[p2-STANDARD] Audit Log activated (current values)" id="AUDIT-A_a.1">
+      <compliant>    NAME = 'Enabled' and VALUE = 'Yes'</compliant>
+      <noncompliant> NAME = 'Enabled' and not VALUE = 'Yes'</noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit Log number of selection slots (current values)" id="AUDIT-A_a.4">
+      <compliant>    NAME = 'SlotCount' and lpad(VALUE,4,'0') &gt;= '0010' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'SlotCount' and not (lpad(VALUE,4,'0') &gt;= '0010') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+
+  </configstore>
+  <!-- INSTANCE PROFILE PARAMETERS / KERNEL PARAMETERS for Auditing -->
+  <!-- Note: The profile parameters are overwritten if kernel parameters are configured.Policy checks the actual runtime value of parameters -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <checkitem desc="[p2-STANDARD] Audit Log activated (Profile Parameter)" id="AUDIT-A_a.1p">
+      <compliant>    NAME = 'rsau/enable' and VALUE = '1'</compliant>
+      <noncompliant> NAME = 'rsau/enable' and VALUE != '1' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit Log integrity protection (Profile Parameter)" id="AUDIT-A_a.2p">
+      <compliant>    NAME = 'rsau/integrity' and VALUE = '1' </compliant>
+      <noncompliant> NAME = 'rsau/integrity' and VALUE != '1' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD]  Audit Log IP address logging (Profile Parameter)" id="AUDIT-A_a.3p">
+      <compliant>    NAME = 'rsau/log_peer_address' and VALUE = '1' </compliant>
+      <noncompliant> NAME = 'rsau/log_peer_address' and NOT (VALUE = '1') </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit Log number of selection slots (Profile Parameter)" id="AUDIT-A_a.4p">
+      <compliant>    NAME = 'rsau/selection_slots' and lpad(VALUE, 4, '0') &gt;= '0010' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'rsau/selection_slots' and not (lpad(VALUE, 4, '0') &gt;= '0010') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+       <checkitem desc="[p2-STANDARD] Audit Log user selection method used inside SAP kernel (Profile Parameter)" id="AUDIT-A_a.5p">
+      <compliant>    NAME = 'rsau/user_selection' and VALUE = '1' </compliant>
+      <noncompliant> NAME = 'rsau/user_selection' and VALUE != '1' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] icm/ HTTP/logging_0 exists (Profile Parameter)" id="AUDIT-A_c.1a" operator="EXIST">
+      <compliant>    NAME = 'icm/HTTP/logging_0' and VALUE like '%' </compliant>
+      <noncompliant> NAME = 'icm/HTTP/logging_0' and not VALUE like '%' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] icm/HTTP/logging_0 is compliant (Profile Parameter)" id="AUDIT-A_c.1b">
+      <compliant>    NAME = 'icm/HTTP/logging_0' and VALUE like_regexpr 'PREFIX=\/,LOGFILE=http_%y_%m\.log,MAXFILES=2,MAXSIZEKB=50000,SWITCHTF=month, LOGFORMAT=%t %a %u1 \"%r\" %s %b %Lms %{Host}i %w1 %w2'</compliant>
+      <noncompliant> NAME = 'icm/HTTP/logging_0' and not VALUE like_regexpr 'PREFIX=\/,LOGFILE=http_%y_%m\.log,MAXFILES=2,MAXSIZEKB=50000,SWITCHTF=month, LOGFORMAT=%t %a %u1 \"%r\" %s %b %Lms %{Host}i %w1 %w2' </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant>    NAME = 'icm/HTTP/logging_0' and VALUE like '%'  </joincompliant>
+        <joinnoncompliant> NAME = 'icm/HTTP/logging_0' and VALUE like '%'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] icm/ HTTP/logging_client_0 exists (Profile Parameter)" id="AUDIT-A_c.2a" operator="EXIST">
+      <compliant>    NAME = 'icm/HTTP/logging_client_0' and VALUE like '%' </compliant>
+      <noncompliant> NAME = 'icm/HTTP/logging_client_0' and not VALUE like '%' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] icm/HTTP/logging_client_0 is compliant (Profile Parameter)" id="AUDIT-A_c.2b">
+      <compliant>    NAME = 'icm/HTTP/logging_client_0' and VALUE like_regexpr 'PREFIX=\/,LOGFILE=http_client_%y_%m\.log,MAXFILES=2,MAXSIZEKB=50000,SWITCHTF=month, LOGFORMAT=%t %a %u1 \"%r\" %s %b %Lms %{Host}i' </compliant>
+      <noncompliant> NAME = 'icm/HTTP/logging_client_0' and not VALUE like_regexpr 'PREFIX=\/,LOGFILE=http_client_%y_%m\.log,MAXFILES=2,MAXSIZEKB=50000,SWITCHTF=month, LOGFORMAT=%t %a %u1 \"%r\" %s %b %Lms %{Host}i' </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant>    NAME = 'icm/HTTP/logging_client_0' and VALUE like '%'  </joincompliant>
+        <joinnoncompliant> NAME = 'icm/HTTP/logging_client_0' and VALUE like '%'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] icm/security_log exists (Profile Parameter)" id="AUDIT-A_c.3a" operator="EXIST">
+      <compliant>    NAME = 'icm/security_log' and VALUE like '%' </compliant>
+      <noncompliant> NAME = 'icm/security_log' and not VALUE like '%' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] icm/security_log is compliant (Profile Parameter)" id="AUDIT-A_c.3b">
+      <compliant>    NAME =  'icm/security_log' and VALUE like_regexpr 'LOGFILE=dev_icm_sec_%y_%m,LEVEL=3,MAXFILES=2,MAXSIZEKB=50000,SWITCHTF=month' </compliant>
+      <noncompliant> NAME = 'icm/security_log' and not VALUE like_regexpr 'LOGFILE=dev_icm_sec_%y_%m,LEVEL=3,MAXFILES=2,MAXSIZEKB=50000,SWITCHTF=month' </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant>    NAME = 'icm/security_log' and VALUE like '%'  </joincompliant>
+        <joinnoncompliant> NAME = 'icm/security_log' and VALUE like '%'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+
+    <checkitem desc="[p2-STANDARD] ms/HTTP/logging_0 exists (Profile Parameter)" id="AUDIT-A_d.1a" operator="EXIST">
+      <compliant>    NAME = 'ms/HTTP/logging_0' and VALUE like '%' </compliant>
+      <noncompliant> NAME = 'ms/HTTP/logging_0' and not VALUE like '%' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] ms/HTTP/logging_0 is compliant (Profile Parameter)" id="AUDIT-A_d.1b">
+      <compliant>    NAME =  'ms/HTTP/logging_0' and VALUE like_regexpr 'PREFIX=\/,LOGFILE=\$\(DIR_LOGGING\)\/ms-http-%y-%m-%d\.log%o,MAXFILES=7,MAXSIZEKB=10000,SWITCHTF=day,LOGFORMAT=%t %a %u %r %s %b %{Host}i' </compliant>
+      <noncompliant> NAME =  'ms/HTTP/logging_0' and not VALUE like_regexpr 'PREFIX=\/,LOGFILE=\$\(DIR_LOGGING\)\/ms-http-%y-%m-%d\.log%o,MAXFILES=7,MAXSIZEKB=10000,SWITCHTF=day,LOGFORMAT=%t %a %u %r %s %b %{Host}i' </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant>    NAME = 'ms/HTTP/logging_0' and VALUE like '%'  </joincompliant>
+        <joinnoncompliant> NAME = 'ms/HTTP/logging_0' and VALUE like '%'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>  
+</configstore>
+  <!-- AUDIT SLOTS -->
+  <configstore name="AUDIT_CONFIGURATION_SLOT">
+    <checkitem desc="[p2-STANDARD] Audit Slot for SAP* user exists (Filter SAP#*)" id="AUDIT-A_b1.1" operator="EXIST">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and STATUS = 'X'
+                       and UNAME = 'SAP#*' 
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and STATUS = 'X'
+                       and UNAME = 'SAP#*' 
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit Slot for SAP* user specified as recommended" id="AUDIT-A_b1.2">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and UNAME = 'SAP#*' 
+
+                       and STATUS = 'X'
+                       and CLIENT = '*' 
+                       
+                       and LOWBUTTON = 'X'
+
+                       and LOGIN = 'X'
+                       and RFCLOGIN = 'X'
+                       and TASTART = 'X'
+                       and REPOSTART = 'X'
+                       and USERMASTER = 'X'
+                       and RFCSTART = 'X'
+                       and MISC = 'X'                          
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and UNAME = 'SAP#*' 
+                       
+                       and (
+                         STATUS != 'X'
+                         or CLIENT != '*'
+
+                         or LOWBUTTON != 'X'
+
+                         or RFCLOGIN != 'X'
+                         or TASTART != 'X'
+                         or REPOSTART != 'X'
+                         or USERMASTER != 'X'
+                         or RFCSTART != 'X'
+                         or MISC != 'X'
+                       )
+      </noncompliant>
+      <joinstore name="AUDIT_CONFIGURATION_SLOT" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant>    SLOTINDEX like '%'  and UNAME = 'SAP#*' 
+        </joincompliant>
+        <joinnoncompliant> SLOTINDEX like '%'  and UNAME = 'SAP#*'  
+        </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit Slot for DDIC user exists" id="AUDIT-A_b1.3" operator="EXIST">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and STATUS = 'X'
+                       and UNAME = 'DDIC' 
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and STATUS = 'X'
+                       and UNAME = 'DDIC' 
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit Slot for DDIC user specified as recommended" id="AUDIT-A_b1.4">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and UNAME = 'DDIC' 
+
+                       and STATUS = 'X'
+                       and CLIENT = '*' 
+                       
+                       and ( MEDBUTTON = 'X' or LOWBUTTON = 'X' )
+
+                       and LOGIN = 'X'
+                       and RFCLOGIN = 'X'
+                       and TASTART = 'X'
+                       and REPOSTART = 'X'
+                       and USERMASTER = 'X'
+                       and RFCSTART = 'X'
+                       and MISC = 'X'                          
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and UNAME = 'DDIC' 
+                       
+                       and (
+                         STATUS != 'X'
+                         or CLIENT != '*'
+
+                         or ( MEDBUTTON != 'X' and LOWBUTTON != 'X' )
+
+                         or RFCLOGIN != 'X'
+                         or TASTART != 'X'
+                         or REPOSTART != 'X'
+                         or USERMASTER != 'X'
+                         or RFCSTART != 'X'
+                         or MISC != 'X'
+                       )
+      </noncompliant>
+      <joinstore name="AUDIT_CONFIGURATION_SLOT" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant>    SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'DDIC' </joincompliant>
+        <joinnoncompliant> SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'DDIC'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit Slot  for SAPCPIC user exists" id="AUDIT-A_b1.5" operator="EXIST">
+      <compliant>    SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'SAPCPIC'  </compliant>
+      <noncompliant> SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'SAPCPIC'  </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit Slot for SAPCPIC user specified as recommended" id="AUDIT-A_b1.6">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and UNAME = 'SAPCPIC' 
+
+                       and STATUS = 'X'
+                       and CLIENT = '*' 
+                       
+                       and ( MEDBUTTON = 'X' or LOWBUTTON = 'X' )
+
+                       and LOGIN = 'X'
+                       and RFCLOGIN = 'X'
+                       and TASTART = 'X'
+                       and REPOSTART = 'X'
+                       and USERMASTER = 'X'
+                       and RFCSTART = 'X'
+                       and MISC = 'X'                          
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and UNAME = 'SAPCPIC' 
+                       
+                       and (
+                         STATUS != 'X'
+                         or CLIENT != '*'
+
+                         or ( MEDBUTTON != 'X' and LOWBUTTON != 'X' )
+
+                         or RFCLOGIN != 'X'
+                         or TASTART != 'X'
+                         or REPOSTART != 'X'
+                         or USERMASTER != 'X'
+                         or RFCSTART != 'X'
+                         or MISC != 'X'
+                       )
+      </noncompliant>
+      <joinstore name="AUDIT_CONFIGURATION_SLOT" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant>    SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'SAPCPIC' </joincompliant>
+        <joinnoncompliant> SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'SAPCPIC'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit Slot for CRITICAL USERS exists" id="AUDIT-A_b2.1" operator="EXIST">
+      <compliant>
+                       SLOTINDEX like '%' 
+                       and STATUS = 'X'
+                       and ( UNAME != 'SAP#*' and UNAME != 'DDIC' and UNAME != 'SAPCPIC' and UNAME != '*' )  
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%' 
+                       and STATUS = 'X'
+                       and ( UNAME != 'SAP#*' and UNAME != 'DDIC' and UNAME != 'SAPCPIC'  and UNAME != '*' ) 
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit Slot for CRITICAL USERS correctly specified" id="AUDIT-A_b2.2">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and ( UNAME != 'SAP#*' and UNAME != 'DDIC' and UNAME != 'SAPCPIC' and UNAME != '*' ) 
+
+                       and STATUS = 'X'
+                       and CLIENT = '*' 
+                       
+                       and ( LOWBUTTON = 'X' )
+
+                       and LOGIN = 'X'
+                       and RFCLOGIN = 'X'
+                       and TASTART = 'X'
+                       and REPOSTART = 'X'
+                       and USERMASTER = 'X'
+                       and RFCSTART = 'X'
+                       and MISC = 'X'                          
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and ( UNAME != 'SAP#*' and UNAME != 'DDIC' and UNAME != 'SAPCPIC' and UNAME != '*' ) 
+                       
+                       and (
+                         STATUS != 'X'
+                         or CLIENT != '*'
+
+                         or LOWBUTTON != 'X'
+
+                         or RFCLOGIN != 'X'
+                         or TASTART != 'X'
+                         or REPOSTART != 'X'
+                         or USERMASTER != 'X'
+                         or RFCSTART != 'X'
+                         or MISC != 'X'
+                       )
+      </noncompliant>
+      <joinstore name="AUDIT_CONFIGURATION_SLOT" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant>    SLOTINDEX like '%'
+                           and STATUS = 'X'  
+                           and ( UNAME != 'SAP#*' and UNAME != 'DDIC' and UNAME != 'SAPCPIC' and UNAME != '*' ) 
+        </joincompliant>
+        <joinnoncompliant> SLOTINDEX like '%'  
+                           and STATUS = 'X'
+                           and ( UNAME != 'SAP#*' and UNAME != 'DDIC' and UNAME != 'SAPCPIC' and UNAME != '*' ) 
+        </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit Slot for SUPPORT or FIREFIGHTER Users exists" id="AUDIT-A_b2.1a" operator="EXIST">
+      <compliant>
+                       SLOTINDEX like '%' 
+                       and STATUS = 'X'
+                       and ( UNAME like 'SAPSUPPORT%' or UNAME like 'FF%' )  
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%' 
+                       and STATUS = 'X'
+                       and ( UNAME like 'SAPSUPPORT%' or UNAME like 'FF%' )  
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit Slot for SUPPORT or FIREFIGHTER users correctly specified" id="AUDIT-A_b2.2a">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and ( UNAME like 'SAPSUPPORT%' or UNAME like 'FF%' )  
+
+                       and STATUS = 'X'
+                       and CLIENT = '*' 
+                       
+                       and ( LOWBUTTON = 'X' )
+
+                       and LOGIN = 'X'
+                       and RFCLOGIN = 'X'
+                       and TASTART = 'X'
+                       and REPOSTART = 'X'
+                       and USERMASTER = 'X'
+                       and RFCSTART = 'X'
+                       and MISC = 'X'                          
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and ( UNAME like 'SAPSUPPORT%' or UNAME like 'FF%' )  
+                       
+                       and (
+                         STATUS != 'X'
+                         or CLIENT != '*'
+
+                         or LOWBUTTON != 'X'
+
+                         or RFCLOGIN != 'X'
+                         or TASTART != 'X'
+                         or REPOSTART != 'X'
+                         or USERMASTER != 'X'
+                         or RFCSTART != 'X'
+                         or MISC != 'X'
+                       )
+      </noncompliant>
+      <joinstore name="AUDIT_CONFIGURATION_SLOT" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant>    SLOTINDEX like '%'
+                           and STATUS = 'X'  
+                           and ( UNAME like 'SAPSUPPORT%' or UNAME like 'FF%' )  
+        </joincompliant>
+        <joinnoncompliant> SLOTINDEX like '%'  
+                           and STATUS = 'X'
+                           and ( UNAME like 'SAPSUPPORT%' or UNAME like 'FF%' )  
+        </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Audit Slot for ANY USER exists" id="AUDIT-A_b3.1" operator="EXIST">
+      <compliant>
+                    SLOTINDEX like '%'
+                    and UNAME = '*' 
+                    and STATUS = 'X'
+                    and CLIENT = '*'
+                    
+                    and LOWBUTTON like '%'
+                    and MEDBUTTON like '%'
+                    and HIGHBUTTON like '%'
+                    
+                    and LOGIN like '%'
+                    and RFCLOGIN like '%'
+                    and TASTART like '%'
+                    and REPOSTART like '%'
+                    and USERMASTER like '%'
+                    and RFCSTART like '%'
+                    and MISC like '%' 
+                    
+                    and SELVAR like '%'
+                    and MSGVECT like '%'
+      </compliant>
+      <noncompliant>
+                    SLOTINDEX like '%'
+                    and UNAME = '*' 
+                    and STATUS = 'X'
+                    and CLIENT = '*' 
+                    
+                    and LOWBUTTON like '%'
+                    and MEDBUTTON like '%'
+                    and HIGHBUTTON like '%'
+                    
+                    and LOGIN like '%'
+                    and RFCLOGIN like '%'
+                    and TASTART like '%'
+                    and REPOSTART like '%'
+                    and USERMASTER like '%'
+                    and RFCSTART like '%'
+                    and MISC like '%'
+                    
+                    and SELVAR like '%'
+                    and MSGVECT like '%'
+      </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

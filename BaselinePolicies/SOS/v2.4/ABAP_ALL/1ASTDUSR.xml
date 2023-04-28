@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Standard Users (ABAP)" id="1ASTDUSR" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  STDUSR-A: 2-STANDARD Users in ABAP-->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <checkitem desc="[p1-CRITICAL] No Login with automatic user SAP*" id="STDUSR-A_a.6">
+      <compliant>       NAME = 'login/no_automatic_user_sapstar'  and VALUE = '1' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'login/no_automatic_user_sapstar'  and not ( VALUE = '1'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <!--
+  <configstore name="AUTH_PROFILE_USER" SCI_ID="ZAAAAA">
+    <checkitem desc="[p1-CRITICAL] User SAP* authorization profiles" id="STDUSR-A_a.5.1" operator="NOT_EXIST">
+      <compliant>       length(PROFILE) &gt; '0' and USERNAME = 'SAP*' </compliant>
+      <complianttext/>
+      <noncompliant>    length(PROFILE) &gt; '0' and USERNAME = 'SAP*' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] User SAP* has profile SAP_ALL" id="STDUSR-A_a.5.2" operator="NOT_EXIST">
+      <compliant>       PROFILE = 'SAP_ALL'  and USERNAME = 'SAP*' </compliant>
+      <complianttext/>
+      <noncompliant>    PROFILE = 'SAP_ALL'  and USERNAME = 'SAP*' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+-->
+  <configstore name="STANDARD_USERS">
+    <checkitem desc="[p1-CRITICAL] User SAP*" id="STDUSR-A_a.1-4">
+      <compliant>       CLIENT like '%' and USERNAME = 'SAP*' and EXISTING = 'X' and PASSWORD_STATUS = 'CHANGED' and LOCKED = 'X' and USERGROUP ='SUPER' </compliant>
+      <complianttext/>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'SAP*' and ( EXISTING != 'X' or PASSWORD_STATUS != 'CHANGED' or LOCKED != 'X' or USERGROUP !='SUPER' )</noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] User DDIC" id="STDUSR-A_b" not_found="positive">
+      <compliant>       CLIENT like '%'  and USERNAME = 'DDIC' and (( PASSWORD_STATUS = 'CHANGED' and USERGROUP ='SUPER') or EXISTING != 'X')  </compliant>
+      <complianttext/>
+      <noncompliant>    CLIENT like '%'  and USERNAME = 'DDIC' and (not (( PASSWORD_STATUS = 'CHANGED' and USERGROUP ='SUPER') or EXISTING != 'X') ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] User SAPCPIC" id="STDUSR-A_c" not_found="positive">
+      <compliant>       CLIENT like '%'  and USERNAME = 'SAPCPIC' and (( PASSWORD_STATUS = 'CHANGED' and USERGROUP ='SUPER') or EXISTING != 'X')  </compliant>
+      <complianttext/>
+      <noncompliant>    CLIENT like '%'  and USERNAME = 'SAPCPIC' and (not (( PASSWORD_STATUS = 'CHANGED' and USERGROUP ='SUPER') or EXISTING != 'X') ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] User TMSADM in client 000" id="STDUSR-A_d.1">
+      <compliant>       CLIENT = '000'  and USERNAME = 'TMSADM' and EXISTING like '%' and PASSWORD_STATUS = 'CHANGED' and USERGROUP ='SUPER'  </compliant>
+      <complianttext/>
+      <noncompliant>    CLIENT = '000'  and USERNAME = 'TMSADM' and EXISTING like '%' and ( PASSWORD_STATUS != 'CHANGED' or USERGROUP !='SUPER' )</noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] User TMSADM must not exist in clients other than 000" id="STDUSR-A_d.2" not_found="positive">
+      <compliant>       CLIENT != '000' and USERNAME = 'TMSADM' and EXISTING != 'X'  </compliant>
+      <complianttext/>
+      <noncompliant>    CLIENT != '000' and USERNAME = 'TMSADM' and EXISTING = 'X'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] User EARLYWATCH must not exist in obsolete client = 066" id="STDUSR-A_e.1" not_found="positive">
+      <compliant>       CLIENT = '066'  and USERNAME = 'EARLYWATCH' and EXISTING != 'X' </compliant>
+      <noncompliant>    CLIENT = '066'  and USERNAME = 'EARLYWATCH' and EXISTING = 'X'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] User EARLYWATCH must not exist client other than 066" id="STDUSR-A_e.2" not_found="positive">
+      <compliant>       CLIENT != '066'  and USERNAME = 'EARLYWATCH' and EXISTING != 'X' </compliant>
+      <noncompliant>    CLIENT != '066'  and USERNAME = 'EARLYWATCH' and EXISTING = 'X'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <!-- SAP Solution Manager - STANDARD Users -->
+    <!-- NOT YET AVAILABLE in Focused Run 3.00 FP00-->
+  </configstore>
+</targetsystem>

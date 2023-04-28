@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] RFC Gateway Security Options (ABAP)" id="3ARFCGW" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- RFCGW-A: RFC Gateway Security (part of application server ABAP) -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <checkitem desc="[p3-EXTENDED] acceptable method to start programs via the RFC Gateway " id="RFCGW-A_g">
+      <compliant>      NAME = 'gw/rem_start'  and (VALUE = 'DISABLED' or VALUE = 'SSH_SHELL' )  </compliant>
+      <complianttext/>
+      <noncompliant>   NAME = 'gw/rem_start'  and not (VALUE = 'DISABLED' or VALUE = 'SSH_SHELL' ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] ACL file prxyinfo is maitained" id="RFCGW-A_h">
+      <compliant>      NAME = 'gw/acl_mode_proxy'  and VALUE = '1'  </compliant>
+      <complianttext/>
+      <noncompliant>   NAME = 'gw/acl_mode_proxy'  and not VALUE = '1'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

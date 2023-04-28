@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Single Sign-On (ABAP)" id="2ASSO" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- SSO-A: Single Sign-On – ABAP -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <checkitem desc="[p2-STANDARD] Generate ticket only via https" id="SSO-A_a">
+      <compliant>       NAME = 'login/ticket_only_by_https'  and  VALUE = '1'     </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'login/ticket_only_by_https'  and VALUE != '1'    </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Ticket only back to creating host" id="SSO-A_b">
+      <compliant>       NAME = 'login/ticket_only_to_host'  and VALUE = '1'       </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'login/ticket_only_to_host'  and VALUE != '1'     </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Set HTTPonly-Flag for Cookies" id="SSO-A_c">
+      <compliant>       NAME = 'icf/set_HTTPonly_flag_on_cookies'  and not ( VALUE = '1'or VALUE = '3')   </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'icf/set_HTTPonly_flag_on_cookies'  and ( VALUE = '1'or VALUE = '3')         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

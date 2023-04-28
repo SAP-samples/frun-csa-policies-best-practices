@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Encryption of Network Connections (ABAP)" id="2ANETENC" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- NETENC-A: Encryption of Network Connections – ABAP-->
+  <configstore name="ABAP_INSTANCE_PAHI" sci_id="">
+    <checkitem desc="[p2-STANDARD] snc/enable (Profile Parameter, enable SNC-Module)" id="NETENC-A_a">
+      <compliant>       NAME = 'snc/enable' and VALUE = '1'  </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/enable' and VALUE != '1' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] snc/data_protection/min (Profile Parameter, Enforce encryption for SNC)" id="NETENC-A_b.1">
+      <compliant>       NAME = 'snc/data_protection/min' and VALUE = '3'  </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/data_protection/min' and VALUE != '3' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] snc/data_protection/max (Profile Parameter, Enforce encryption for SNC)" id="NETENC-A_b.2">
+      <compliant>       NAME = 'snc/data_protection/max' and VALUE = '3'  </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/data_protection/max' and VALUE != '3' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] snc/data_protection/max (Profile Parameter, Enforce encryption for SNC)" id="NETENC-A_b.3">
+      <compliant>       NAME = 'snc/data_protection/use' and ( VALUE = '3' or VALUE = '9' ) </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'snc/data_protection/use' and not ( VALUE = '3' or VALUE = '9' ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] ICM server port specification (HTTPS vs HTTP)" id="NETENC-O.a.1">
+      <compliant>( ( NAME like 'icm/server_port_0' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_5' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTPS%' )
+                          or ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTPS%' )
+			  or ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTPS%' ))
+   </compliant>
+      <complianttext/>
+      <noncompliant>( ( NAME like 'icm/server_port_0' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_5' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTP,%' )
+                          and ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTP,%' )
+			  and ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTP,%' ))
+   </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] ICM server port specification (PROT=HTTPS)" id="NETENC-O.a.2" operator="NOT_EXIST">
+      <compliant>       lpad(substr_after(name,'icm/server_port_'),2,'0') &gt; '09'   </compliant>
+      <complianttext/>
+      <noncompliant>    lpad(substr_after(name,'icm/server_port_'),2,'0') &gt; '09'   </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] ICM/HHTP/admin specifiies a PORT" id="NETENC-O.a.1">
+      <compliant>( ( NAME like 'icm/HTTP/admin_0' and VALUE like '%PORT=%' )
+                          or ( NAME like 'icm/HTTP/admin_1' and VALUE like '%PORT=%' )
+                          or ( NAME like 'icm/HTTP/admin_2' and VALUE like '%PORT=%' )
+                          or ( NAME like 'icm/HTTP/admin_3' and VALUE like '%PORT=%' )
+                          or ( NAME like 'icm/HTTP/admin_4' and VALUE like '%PORT=%' )
+                          or ( NAME like 'icm/HTTP/admin_5' and VALUE like '%PORT=%' )
+                          or ( NAME like 'icm/HTTP/admin_6' and VALUE like '%PORT=%' )
+                          or ( NAME like 'icm/HTTP/admin_7' and VALUE like '%PORT=%' )
+                          or ( NAME like 'icm/HTTP/admin_8' and VALUE like '%PORT=%' )
+			  or ( NAME like 'icm/HTTP/admin_9' and VALUE like '%PORT=%' ))
+   </compliant>
+      <complianttext/>
+      <noncompliant>( ( NAME like 'icm/HTTP/admin_0' and VALUE like '%PORT=%' )
+                          and ( NAME like 'icm/HTTP/admin_1' and not VALUE like '%PORT=%' )
+                          and ( NAME like 'icm/HTTP/admin_2' and not VALUE like '%PORT=%' )
+                          and ( NAME like 'icm/HTTP/admin_3' and not VALUE like '%PORT=%' )
+                          and ( NAME like 'icm/HTTP/admin_4' and not VALUE like '%PORT=%' )
+                          and ( NAME like 'icm/HTTP/admin_5' and not VALUE like '%PORT=%' )
+                          and ( NAME like 'icm/HTTP/admin_6' and not VALUE like '%PORT=%' )
+                          and ( NAME like 'icm/HTTP/admin_7' and not VALUE like '%PORT=%' )
+                          and ( NAME like 'icm/HTTP/admin_8' and not VALUE like '%PORT=%' )
+			  and ( NAME like 'icm/HTTP/admin_9' and not VALUE like '%PROT=HTTP,%' ))
+   </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] ICM server port specification (PORT=)" id="NETENC-O.a.2" operator="NOT_EXIST">
+      <compliant>       lpad(substr_after(name,'icm/server_port_'),2,'0') &gt; '09'   </compliant>
+      <complianttext/>
+      <noncompliant>    lpad(substr_after(name,'icm/server_port_'),2,'0') &gt; '09'   </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] system/secure_communication (Profile Parameter, SAP Notes 2040644,  2362078)" id="NETENC-A_e">
+      <compliant>       NAME = 'system/secure_communication' and VALUE = 'ON' </compliant>
+      <complianttext/>
+      <noncompliant>    NAME = 'system/secure_communication' and not VALUE = 'ON'  </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="COMP_LEVEL" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant>        
+                       ( component = 'SAP_BASIS' and version = '740' and SP &gt;= '0008' ) OR
+                       ( component = 'SAP_BASIS' and version &gt; '740' )
+        </joincompliant>
+        <joinnoncompliant> 
+                       ( component = 'SAP_BASIS' and version = '740' and SP &gt;= '0008' ) OR
+                       ( component = 'SAP_BASIS' and version &gt; '740' ) </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL" sci-id="S00120">
+    <checkitem desc="[p2-STANDARD] system/secure_communication (Profile Parameter, SAP Notes 2040644,  2362078)" id="NETENC-A_e">
+      <compliant>      ( component = 'SAP_BASIS' and version = '740' and SP &gt;= '0008' ) OR
+                       ( component = 'SAP_BASIS' and version &gt; '740' )      
+      </compliant>
+      <complianttext/>
+      <noncompliant>   ( component = 'SAP_BASIS' and version = '740' and SP &lt; '0008' ) OR
+                       ( component = 'SAP_BASIS' and version &lt; '740' )
+      </noncompliant>
+      <noncomplianttext>   system/secure_communication requires upgrade to SAP_BASIS 7.40 SP 8 or higher version
+      </noncomplianttext>
+      <joinstore name="COMP_LEVEL" no_data_found="Yes" not_in_output="Yes" sci-id="S00120">
+        <joincompliant> ( component = 'SAP_BASIS' and version = '740' and SP &lt; '0008' ) OR
+                        ( component = 'SAP_BASIS' and version &lt; '740' )
+        </joincompliant>
+        <joinnoncompliant> 
+                        ( component = 'SAP_BASIS' and version = '740' and SP &lt; '0008' ) OR
+                        ( component = 'SAP_BASIS' and version &lt; '740' )
+        </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+</targetsystem>

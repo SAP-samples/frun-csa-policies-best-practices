@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Password Policy (HANA)" id="2HPWDPOL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="HDB_PARAMETER">
+    <checkitem desc="[p2-STANDARD] Force initial password change" id="PWDPOL-H_b" system_attributes="DB_TENANT:TRUE">
+      <compliant>    FILE_NAME = 'indexserver.ini' and  
+                     SECT = 'password policy' and 
+                     NAME = 'force_first_password_change' and 
+                     LOWER(VALUE) = 'true'  and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </compliant>
+      <noncompliant> FILE_NAME = 'indexserver.ini' and 
+                     SECT = 'password policy' and 
+                     NAME = 'force_first_password_change' and 
+                     NOT LOWER(VALUE) = 'true'  and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Force initial password change" id="PWDPOL-H_b" system_attributes="DB_SYSTEMDB:TRUE">
+      <compliant>    FILE_NAME = 'nameserver.ini' and 
+                     SECT = 'password policy' and 
+                     NAME = 'force_first_password_change' and 
+                     LOWER(VALUE) = 'true' and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </compliant>
+      <noncompliant> FILE_NAME = 'nameserver.ini' and 
+                     SECT = 'password policy' and 
+                     NAME = 'force_first_password_change' and 
+                     NOT LOWER(VALUE) = 'true' and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </noncompliant>
+    </checkitem>
+  </configstore>
+
+  <configstore name="HDB_USERGROUP_PARAMETERS">
+    <checkitem desc="[p2-STANDARD] First PW Change in Usergroup-specific Password Policy" id="PWDPOL-H_b2" not_found="ignore">
+      <compliant>    USERGROUP_NAME like '%' and
+                     PARAMETER_NAME = 'force_first_password_change' and 
+                     PARAMETER_SET_NAME like '%' and
+                     IS_PARAMETER_SET_ENABLED like '%' and
+                     LOWER(PARAMETER_VALUE) = 'true' 
+      </compliant>
+      <noncompliant> USERGROUP_NAME like '%' and
+                     PARAMETER_NAME = 'force_first_password_change' and 
+                     PARAMETER_SET_NAME like '%' and
+                     IS_PARAMETER_SET_ENABLED like '%' and
+                     not LOWER(PARAMETER_VALUE) = 'true' 
+      </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

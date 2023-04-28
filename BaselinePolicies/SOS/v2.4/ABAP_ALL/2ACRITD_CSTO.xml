@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Protection of Password Hashes (ABAP)" id="2ACRITD_CSTO" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+    <configstore name="AUTH_COMB_USER" sci_id="">
+    <checkitem desc="[p2-STANDARD] Users with READHASHTABGRP authorization" id="CRITAU-A_d.2.1" not_found="positive">
+      <compliant>         COMB_ID = 'READHASHTABGRP' and
+                                    USER like '%' and
+                                    ( RC =  'NONE'  or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'READHASHTABGRP' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Users with READHASHTABLES authorization" id="CRITAU-A_d.2.2" not_found="positive">
+      <compliant>         COMB_ID = 'READHASHTABLES' and
+                                    USER like '%' and
+                                    ( RC =  'NONE'  or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'READHASHTABLES' and
+                                    USER like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or
+                                      LOCKED = 'X' or
+                                      INVALID = 'X' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+   </configstore>
+   <configstore name="AUTH_COMB_ROLE" sci_id="">
+    <checkitem desc="[p2-STANDARD] Roles with READ HASH TABLE GROUP authorization" id="CRITAU-A_d.2.3" not_found="positive">
+      <compliant>         COMB_ID = 'READHASHTABGRP' and
+                                    ROLE like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'READHASHTABGRP' and
+                                    ROLE like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Roles with READ HASH TABLES authorization" id="CRITAU-A_d.2.4" not_found="positive">
+      <compliant>         COMB_ID = 'READHASHTABLES' and
+                                    ROLE like '%' and
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+      </compliant>
+      <complianttext/>
+      <noncompliant>   COMB_ID = 'READHASHTABLES' and
+                                    ROLE like '%' and not
+                                    ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

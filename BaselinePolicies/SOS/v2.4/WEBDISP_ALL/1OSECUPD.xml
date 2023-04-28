@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Regular Security Updates (WebDispatcher)" id="1OSECUPD" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="COMP_LEVEL" name_extended="" sci_id="S00120" system_type="WEBDISP">
+    <checkitem desc="[p1-CRITICAL] Last detected update of WebDispatcher older than 1 Year" id="1OSECUPD">
+      <compliant>
+           component = 'WEBDISP' and version like '%' 
+                 and CD_HIST_MOD like '%' 
+                 and not ( CD_HIST_DATE &lt; to_number(replace(add_days(current_date, -365), '-', '')||replace(current_time, ':', '') ))
+      </compliant>
+      <noncompliant> 
+           component = 'WEBDISP' and version like '%' 
+                 and CD_HIST_MOD like '%' 
+                 and ( CD_HIST_DATE &lt; to_number(replace(add_days(current_date, -365), '-', '')||replace(current_time, ':', '') ))
+      </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

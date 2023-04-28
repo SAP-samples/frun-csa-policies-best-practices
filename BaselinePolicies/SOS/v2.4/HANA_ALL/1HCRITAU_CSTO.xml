@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This Policy requires a customizable store
+
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Critical Authorizations (HANA)" id="1HCRITAU_CSTO" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="HDB_SYSTEMPRIVILEGES" sci_id="">
+    <!-- CRITAU-A: 1-CRITICAL Authorizations (HANA) -->
+    <checkitem desc="[p1-CRITICAL] Critical Authorizations (HANA)" id="CRITAU-H">
+      <compliant>    
+                     PRIVILEGE = 'DATA ADMIN' and 
+                     GRANTEE in ( 'SYSTEM', '_SYS_REPO' ) and 
+                     GRANTEE_TYPE = 'USER' and
+                     GRANTOR like '%'
+      </compliant>
+      <noncompliant> 
+                     PRIVILEGE = 'DATA ADMIN' and not
+                     GRANTEE in ( 'SYSTEM', '_SYS_REPO' ) and 
+                     GRANTEE_TYPE = 'USER' and
+                     GRANTOR like '%'
+      </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

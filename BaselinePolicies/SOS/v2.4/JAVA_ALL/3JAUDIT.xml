@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL 2.4] Audit Settings (JAVA)" id="3JAUDIT" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- AUDIT-J: Audit Settings – Java -->
+  <configstore name="xmlhardener_srv">
+    <checkitem desc="[p3-EXTENDED] Enable XML Hardener" id="AUDIT-J">
+      <compliant>     NAME = 'enable.xml.hardener' and VALUE = 'true'</compliant>
+      <complianttext/>
+      <noncompliant>  NAME = 'enable.xml.hardener' and not VALUE = 'true' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

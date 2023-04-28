@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Information Disclosure (JAVA)" id="2JDISCL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="http">
+    <!-- 2.2.1.2.2  DISCL-J: Information Disclosure – JAVA -->
+    <checkitem desc="[p2-STANDARD] Disclosure of unnecessary information about versions or from errors" id="DISCL-J_a">
+      <compliant>    NAME = 'UseServerHeader'  and  VALUE in ('false','FALSE')  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'UseServerHeader'  and  VALUE not in ('false','FALSE') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <configstore name="Parameters" sci_id="S00165" system_type="JAVA">
+    <checkitem desc="[p2-STANDARD] Disclosure of unnecessary information about versions or from errors " id="DISCL-J_b">
+      <compliant>
+            NAME = 'service/protectedwebmethods' and (VALUE like 'SDEFAULT%' or VALUE like 'ALL%')
+      </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'service/protectedwebmethods' and not VALUE like 'SDEFAULT%' and not VALUE like 'ALL%'
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <!--
+  <configstore name="Parameters" sci_id="S00439" system_type="JAVA">
+    <checkitem desc="[p2-STANDARD] Disclosure of unnecessary information about versions or from errors " id="DISCL-J_b">
+      <compliant>
+            NAME = 'service/protectedwebmethods' and (VALUE like 'SDEFAULT%' or VALUE like 'ALL%')
+      </compliant>
+      <complianttext/>
+      <noncompliant>
+            NAME = 'service/protectedwebmethods' and not VALUE like 'SDEFAULT%' and not VALUE like 'ALL%'
+         </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  -->
+</targetsystem>

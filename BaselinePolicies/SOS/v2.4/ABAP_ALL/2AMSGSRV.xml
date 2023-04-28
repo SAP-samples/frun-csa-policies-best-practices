@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Message Server Security (ABAP)" id="2AMSGSRV" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="ABAP_INSTANCE_PAHI" sci_id="">
+    <checkitem desc="[p2-STANDARD] Defined internal port for server communication" id="MSGSRV-A_a">
+      <compliant>NAME = 'rdisp/msserv_internal'  and lpad(VALUE, 4, '0') &gt; '0000' </compliant>
+      <complianttext/>
+      <noncompliant>NAME = 'rdisp/msserv_internal'  and not ( lpad(VALUE, 4, '0') &gt; '0000' ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <!-- Alternative Syntax:
+    <checkitem desc="[p2-STANDARD] Defined internal port for server communication" id="MSGSRV-A_a">
+      <compliant>NAME = 'rdisp/msserv_internal'  and VALUE not like_regexpr '^\s*$' </compliant>
+      <complianttext/>
+      <noncompliant>NAME = 'rdisp/msserv_internal'  and VALUE like_regexpr '^\s*$' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    -->
+    <checkitem desc="[p2-STANDARD] Prohibite external monitor" id="MSGSRV-A_b">
+      <compliant>NAME = 'ms/monitor'  and VALUE = '0' </compliant>
+      <complianttext/>
+      <noncompliant>NAME = 'ms/monitor'  and not ( VALUE = '0'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivated administration port for external clients" id="MSGSRV-A_c">
+      <compliant>NAME = 'ms/admin_port'  and lpad(VALUE, 4, '0') &lt;= '0000' </compliant>
+      <complianttext/>
+      <noncompliant>NAME = 'ms/admin_port'  and not (lpad(VALUE, 4, '0') &lt;= '0000') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] File with access control list for message server" id="MSGSRV-A_d.1">
+      <compliant>    NAME = 'ms/acl_info' and
+                     ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/ms_acl_info' or
+                       VALUE like_regexpr '^/sapmnt/(\w{3})/SYS/global/ms_acl_info'  or
+                       VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' )
+      </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ms/acl_info' and not
+                     ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/ms_acl_info' or
+                       VALUE like_regexpr '^/sapmnt/(\w{3})/SYS/global/ms_acl_info'  or
+                       VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' ) 
+      </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="Yes">
+        <joincompliant>    NAME = 'system/secure_communication' and VALUE = 'ON'
+        </joincompliant>
+        <joinnoncompliant> NAME = 'system/secure_communication' and VALUE = 'ON'
+        </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+</targetsystem>

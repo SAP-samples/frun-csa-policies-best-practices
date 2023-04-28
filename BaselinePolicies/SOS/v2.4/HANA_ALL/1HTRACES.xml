@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Critical Data in trace files (HANA)" id="1HTRACES" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="HDB_PARAMETER">
+    <!-- TRACES-H: Critical Data in trace files – HANA (TenantDB) -->
+    <checkitem desc="[p1-CRITICAL] SQL trace level: ALL_WITH_RESULTS" id="TRACES-H_a" system_attributes="DB_TENANT:TRUE">
+      <compliant>    FILE_NAME = 'indexserver.ini' and 
+                     SECT = 'sqltrace' and 
+                     NAME = 'level' and 
+                     LOWER(VALUE) != 'all_with_results'  and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </compliant>
+      <noncompliant> FILE_NAME = 'indexserver.ini' and 
+                     SECT = 'sqltrace' and 
+                     NAME = 'level' and 
+                     LOWER(VALUE) = 'all_with_results'  and 
+                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+      </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

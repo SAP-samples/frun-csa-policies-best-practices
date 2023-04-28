@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Regular Security Updates (BTP)" id="2PSECUPD" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="SCC_VERSION">
+    <checkitem desc="[p2-STANDARD] Most current SAP Cloud Connector Version (Note 3302250)" id="SECUPD-P_a2">
+      <compliant>
+        (NAME = 'version' AND substring(VALUE,0,1) = '2' AND substring(VALUE,0,6) &gt;= '2.15.2') OR 
+        (NAME = 'version' AND substring(VALUE,0,1) = '2' AND substring(VALUE,0,4) between '2.15' and '2.19') OR
+        (NAME = 'version' AND substring(VALUE,0,1) = '2' AND substring(VALUE,0,4) between '2.20' and '2.29') OR
+        (NAME = 'version' AND substring(VALUE,0,1) &gt;= '3' ) 
+      </compliant>
+      <noncompliant>
+        (NAME = 'version' AND substring(VALUE,0,1) = '2' AND substring(VALUE,0,4) = '2.15' AND substring(VALUE,0,6) &lt; '2.15.2') OR 
+        (NAME = 'version' AND substring(VALUE,0,1) = '2' AND substring(VALUE,0,4) &lt; '2.15') OR
+        (NAME = 'version' AND substring(VALUE,0,1) &lt; '2' ) 
+      </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Password Policy (JAVA)" id="3JPWDPOL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- PWDPOL-J: Password Policy – SAP AS Java settings (UME) -->
+  <configstore name="com.sap.security.core.ume.service">
+    <checkitem desc="[p3-EXTENDED] Disable user ID as part of password" id="PWDPOL-J_a.2">
+      <compliant>    NAME = 'ume.logon.security_policy.userid_in_password_allowed'  and VALUE in ('false','FALSE' )  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.userid_in_password_allowed'  and not VALUE in ('false','FALSE' )  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Password Expiration Days" id="PWDPOL-J_b.1">
+      <compliant>    NAME = 'ume.logon.security_policy.password_expire_days'  and lpad(VALUE,4,'0') between '0001' and '0183' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.password_expire_days'  and not lpad(VALUE,4,'0') between '0001' and '0183'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Disable old password in password allowed" id="PWDPOL-J_b.2">
+      <compliant>    NAME = 'ume.logon.security_policy.oldpass_in_newpass_allowed'  and VALUE in ('false','FALSE' )</compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.oldpass_in_newpass_allowed'  and not VALUE in ('false','FALSE' ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Minimum number of letters and numbers in password" id="PWDPOL-J_c.1">
+      <compliant>    NAME = 'ume.logon.security_policy.password_alpha_numeric_required'  and lpad(VALUE,4,'0') &gt;= '0001' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.password_alpha_numeric_required'  and not lpad(VALUE,4,'0') &gt;= '0001' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Minimum number of uppercase and lowercase letters in password required" id="PWDPOL-J_c.2">
+      <compliant>    NAME = 'ume.logon.security_policy.password_mix_case_required'  and lpad(VALUE,4,'0') &gt;= '0001' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.password_mix_case_required'  and not lpad(VALUE,4,'0') &gt;= '0001' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Minimum number of special characters in passwords" id="PWDPOL-J_c.3">
+      <compliant>    NAME = 'ume.logon.security_policy.password_special_char_required'  and lpad(VALUE,4,'0') &gt;= '0001' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.password_special_char_required'  and not lpad(VALUE,4,'0') &gt;= '0001' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Minimum number of password history" id="PWDPOL-J_d">
+      <compliant>    NAME = 'ume.logon.security_policy.password_history'  and lpad(VALUE,4,'0') &gt;= '0005' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.password_history'  and not lpad(VALUE,4,'0') &gt;= '0005' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] Maximum password idle time" id="PWDPOL-J_e">
+      <compliant>    NAME = 'ume.logon.security_policy.password_max_idle_time'  and lpad(VALUE,4,'0') between '0001' and '0180' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.password_max_idle_time'  and not lpad(VALUE,4,'0') between '0001' and '0180'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

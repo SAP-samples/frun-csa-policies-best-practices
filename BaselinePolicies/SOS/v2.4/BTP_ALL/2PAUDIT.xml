@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Audit Settings (BTP)" id="2PAUDIT" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="SCC_CONFIG" name_extended="" sci_id="">
+    <checkitem desc="[p2-STANDARD] Audit Settings – BTP" id="AUDIT-P_b">
+      <compliant>      NAME = 'auditLevel' and VALUE = 'SECURITY' </compliant>
+      <complianttext/>
+      <noncompliant>   NAME = 'auditLevel' and VALUE != 'SECURITY' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

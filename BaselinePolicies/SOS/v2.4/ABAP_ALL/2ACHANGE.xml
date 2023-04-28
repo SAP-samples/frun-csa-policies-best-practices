@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem desc="[BL2.4] Change Protection of Prod System (ABAP)" id="2ACHANGE" multisql="Yes" version="0000">
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <checkitem desc="[p2-STANDARD] rec/client (Profile parameter to create customizing table logs)" id="CHANGE-A_c">
+      <compliant>    NAME = 'rec/client' and VALUE != 'OFF'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'rec/client' and VALUE = 'OFF'   </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <configstore name="TRANSPORT_TOOL">
+    <checkitem desc="[p2-STANDARD] Transport Parameter TLOGOCHECK is activated" id="CHANGE-A_f">
+      <compliant>    NAME = 'TLOGOCHECK' and VALUE = '1'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'TLOGOCHECK' and not VALUE = '1' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] User Control of Action - SACF (ABAP)" id="2AUSRCTR_SACF" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="ABAP_SACF_INFO">
+    <checkitem desc="[p2-STANDARD] SACF Scenarios not active (HMODE)" id="USRCTR-A.g.1">
+      <compliant>
+          SCENARIO_NAME like '%'
+          and CHK_HMODE_A = 'A' 
+          and SAL_MODE_A like '%' 
+          and DESCRIPTION like '%'
+          and NOTE_ID like '%'
+      </compliant>
+      <noncompliant>
+          SCENARIO_NAME like '%'
+          and not CHK_HMODE_A = 'A'
+          and SAL_MODE_A like '%' 
+          and DESCRIPTION like '%'
+          and NOTE_ID like '%'
+      </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] SACF Scenarios without Audit Logging (SALMODE)" id="USRCTR-A.g.2">
+      <compliant>
+          SCENARIO_NAME like '%'
+          and CHK_HMODE_A like '%'
+          and (SAL_MODE_A = 'A' or SAL_MODE_A = 'E' )
+          and DESCRIPTION like '%'
+          and NOTE_ID like '%'
+      </compliant>
+      <noncompliant>
+          SCENARIO_NAME like '%'
+          and CHK_HMODE_A like '%'
+          and not (SAL_MODE_A = 'A' or SAL_MODE_A = 'E') 
+          and DESCRIPTION like '%'
+          and NOTE_ID like '%'
+      </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

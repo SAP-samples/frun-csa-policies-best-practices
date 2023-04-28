@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] No Testing Functionality in Production (JAVA)" id="1JNOTEST" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- NOTEST-J: No Testing Functionality in Production  – JAVA -->
+  <configstore name="servlet_jsp">
+    <checkitem desc="[p1-CRITICAL] InvokerServlet globally enabled" id="NOTEST-J_a">
+      <compliant>    NAME = 'EnableInvokerServletGlobally'  and  VALUE = 'false'  </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'EnableInvokerServletGlobally'  and  VALUE != 'false' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

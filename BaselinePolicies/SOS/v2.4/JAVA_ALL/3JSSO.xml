@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Single Sign-On (JAVA)" id="3JSSO" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+
+  <!-- SSO-J: Single Sign-On – Java -->
+  <configstore name="com.sap.security.core.ume.service">
+    <checkitem desc="[p3-EXTENDED] Send SAP logon ticket only via HTTPS" id="SSO-J_a">
+      <compliant>    NAME = 'ume.logon.security.enforce_secure_cookie'  and VALUE in ('true','TRUE') </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security.enforce_secure_cookie'  and not VALUE in ('true','TRUE') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] SAP logon ticket set to HttpOnly" id="SSO-J_b">
+      <compliant>    NAME = 'ume.logon.httponlycookie'  and VALUE in ('true','TRUE')</compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.httponlycookie'  and not VALUE in ('true','TRUE') </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p3-EXTENDED] SAP logon ticket lifetime" id="SSO-J_c">
+      <compliant>    NAME = 'login.ticket_lifetime'  and lpad(VALUE,4,'0') &lt;= '0008' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'login.ticket_lifetime'  and not (lpad(VALUE,4,'0') &lt;= '0008'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

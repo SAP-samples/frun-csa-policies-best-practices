@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Obsolete Clients (ABAP)" id="2AOBSCNT" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- OBSCNT-A: Obsolete Clients in ABAP -->
+  <configstore name="CLIENTS">
+    <checkitem desc="[p2-STANDARD] Obsolete Client 066 must not exist." id="OBSCNT-A.1" operator="NOT_EXIST">
+      <compliant>    MANDT = '066'    </compliant>
+      <noncompliant> MANDT = '066'    </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Template Client 001 must be deleted if not used" id="OBSCNT-A.2" operator="NOT_EXIST">
+      <compliant>    MANDT = '001'    </compliant>
+      <noncompliant> MANDT = '001'    </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

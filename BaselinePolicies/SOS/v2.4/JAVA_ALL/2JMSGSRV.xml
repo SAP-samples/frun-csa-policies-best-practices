@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Message Server Security (JAVA)" id="2JMSGSRV" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="Parameters" system_type="JAVA">
+    <!-- MSGSRV-J        Message Server Security - AS JAVA -->
+    <checkitem desc="[p2-STANDARD] Defined internal port for server communication" id="MSGSRV-J_a">
+      <compliant>    NAME = 'rdisp/msserv_internal'  and VALUE not like_regexpr '^\s*$' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'rdisp/msserv_internal'  and VALUE like_regexpr '^\s*$' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+<!-- Alternative Syntax
+    <checkitem desc="[p2-STANDARD] Defined internal port for server communication" id="MSGSRV-J_a1">
+      <compliant>    NAME = 'rdisp/msserv_internal'  and length(VALUE) != '0' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'rdisp/msserv_internal'  and length(VALUE) = '0' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+-->
+    <checkitem desc="[p2-STANDARD] Prohibite external monitor" id="MSGSRV-J_b">
+      <compliant>    NAME = 'ms/monitor'  and VALUE = '0' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ms/monitor'  and not VALUE = '0' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivated administration port for external clients" id="MSGSRV-J_c">
+      <compliant>    NAME = 'ms/admin_port'  and VALUE = '0' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ms/admin_port'  and not VALUE = '0'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

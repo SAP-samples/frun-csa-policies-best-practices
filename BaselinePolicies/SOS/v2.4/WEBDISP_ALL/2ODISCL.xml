@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Information Disclosure (WebDispatcher)" id="2ODISCL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="Parameters" sci_id="S00444">
+    <!--  DISCL-O: Information Disclosure – WebDispatcher -->
+    <checkitem desc="[p2-STANDARD] Disclosure of unnecessary information about versions or from errors " id="DISCL-O_a.1">
+      <compliant>    NAME = 'login/show_detailed_errors' and     VALUE ='0'</compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'login/show_detailed_errors' and not VALUE = '0'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Individual error pages for preventing disclosure of unnecessary information" id="DISCL-O_a.2">
+      <compliant>   NAME = 'icm/HTTP/error_templ_path' 
+                    and     (   VALUE like_regexpr '^\/usr\/sap\/\w{3}\/\w{3,10}\/data\/icmandir\/error_templ' 
+                             or VALUE like_regexpr '^\w:\\usr\\sap\\\w{3}\\\w{3,10}\\data\\icmandir[\\|\/]error_temp' )</compliant>
+      <noncompliant>NAME =  ('icm/HTTP/error_templ_path') 
+                    and not (   VALUE like_regexpr '^\/usr\/sap\/\w{3}\/\w{3,10}\/data\/icmandir\/error_templ' 
+                             or VALUE like_regexpr '^\w:\\usr\\sap\\\w{3}\\\w{3,10}\\data\\icmandir[\\|\/]error_temp' )</noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Disclosure of unnecessary information about versions or from errors " id="DISCL-O_c">
+      <compliant>   NAME = 'service/protectedwebmethods' and     VALUE like_regexpr '(SDEFAULT.*|ALL.*)'</compliant>
+      <complianttext/>
+      <noncompliant>NAME = 'service/protectedwebmethods' and not VALUE like_regexpr '(SDEFAULT.*|ALL.*)'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <!--  DISCL-O: Information Disclosure – OTHER (checks also applicable to AS ABAP) -->
+    <checkitem desc="[p2-STANDARD] is/HTTP/show_server_header  (Parameter, Note 1329326)" id="DISCL-O_a.1">
+      <compliant>   NAME = 'is/HTTP/show_server_header' and     VALUE in ( 'FALSE', 'false', '0' )</compliant>
+      <complianttext/>
+      <noncompliant>NAME = 'is/HTTP/show_server_header' and not VALUE in ( 'FALSE', 'false', '0' )</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] is/HTTP/show_detailed_errors (Parameter, Note 1616535)" id="DISCL-O_a.2">
+      <compliant>   NAME = 'is/HTTP/show_detailed_errors' and     VALUE in ( 'FALSE', 'false', '0' )</compliant>
+      <complianttext/>
+      <noncompliant>NAME = 'is/HTTP/show_detailed_errors' and not VALUE in ( 'FALSE', 'false', '0' )</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] icm/SMTP/show_server_header (Parameter, Note 2045861)" id="DISCL-O_a.3">
+      <compliant>   NAME = 'icm/SMTP/show_server_header' and     VALUE in ( 'FALSE', 'false', '0' )</compliant>
+      <complianttext/>
+      <noncompliant>NAME = 'icm/SMTP/show_server_header' and not VALUE in ( 'FALSE', 'false', '0' )</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Authentication handler icm/HTTP/auth_NN recommended as of Version 7.73" id="DISCL-O_b.1">
+      <compliant>   NAME like 'icm/HTTP/auth_%'  and VALUE != 'PREFIX=/,FILTER=SAP'</compliant>
+      <noncompliant>NAME like  'icm/HTTP/auth_%' and VALUE =  'PREFIX=/,FILTER=SAP'</noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="Yes" sci_id="S00120">
+        <joincompliant>   COMPONENT = 'WEBDISP' and VERSION &gt;= '7.73'</joincompliant>
+        <joinnoncompliant>COMPONENT = 'WEBDISP' and VERSION &gt;= '7.73'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] wdisp/permission_table recommended for SAP_BASIS lower 7.50" id="DISCL-O_b.2">
+      <compliant>   NAME = 'wdisp/permission_table' and     VALUE not like_regexpr '^\s*$'</compliant>
+      <noncompliant>NAME = 'wdisp/permission_table' and not VALUE not like_regexpr '^\s*$'</noncompliant>
+      <noncomplianttext/>
+      <joinstore name="COMP_LEVEL" no_data_found="Yes" sci_id="S00120">
+        <joincompliant>   COMPONENT = 'WEBDISP' and VERSION &lt; '7.73'</joincompliant>
+        <joinnoncompliant>COMPONENT = 'WEBDISP' and VERSION &lt; '7.73'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] icm/HTTP/admin_NN (Parameter, Note 2260323)" id="DISCL-O_c">
+      <compliant>   NAME like 'icm/HTTP/admin_%' and       VALUE like_regexpr '.*CLIENTHOST=.*'</compliant>
+      <noncompliant>NAME like 'icm/HTTP/admin_%' and not ( VALUE like_regexpr '.*CLIENTHOST=.*' )</noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] rdisp/TRACE_HIDE_SEC_DATA  (Parameter, Note 2012562)" id="DISCL-O_a.4">
+      <compliant>   NAME = 'rdisp/TRACE_HIDE_SEC_DATA' and     VALUE in ( 'on', 'ON' )</compliant>
+      <noncompliant>NAME = 'rdisp/TRACE_HIDE_SEC_DATA' and not VALUE in ( 'on', 'ON' )</noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] icm/trace_secured_data  (Parameter, Note 634262)" id="DISCL-O_d">
+      <compliant>   NAME = 'icm/trace_secured_data' and     VALUE in ( 'FALSE', 'false', '0' )</compliant>
+      <noncompliant>NAME = 'icm/trace_secured_data' and not VALUE in ( 'FALSE', 'false', '0' )</noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] icm/accept_forwarded_cert_via_http (Parameter, Note 2656696)" id="DISCL-O_e">
+      <compliant>   NAME = 'icm/accept_forwarded_cert_via_http' and     VALUE in ( 'FALSE', 'false', '0' )</compliant>
+      <noncompliant>NAME = 'icm/accept_forwarded_cert_via_http' and not VALUE in ( 'FALSE', 'false', '0' )</noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] icm/trusted_reverse_proxy_NN  (Parameter, Note 2052899)" id="DISCL-O_f.1" not_found="positive">
+      <compliant>   NAME like 'icm/trusted_reverse_proxy_%' and ( VALUE not like '%SUBJECT="*"%' and VALUE not like '%ISSUER="*"%' )</compliant>
+      <noncompliant>NAME like 'icm/trusted_reverse_proxy_%' and ( VALUE     like '%SUBJECT="*"%' or  VALUE     like '%ISSUER="*"%' )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="Parameters" sci_id="S00444">
+    <checkitem desc="[p2-STANDARD] wdisp/permission_table NOT recommended as of Version 7.73" id="DISCL-O_b.2">
+      <compliant/>
+      <complianttext/>
+      <noncompliant>NAME = 'wdisp/permission_table'  and VALUE like '%' </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="COMP_LEVEL" no_data_found="Yes" sci_id="S00120">
+        <joincompliant>   COMPONENT = 'WEBDISP' and VERSION &gt;= '7.73'</joincompliant>
+        <joinnoncompliant>COMPONENT = 'WEBDISP' and VERSION &gt;= '7.73'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+</targetsystem>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Encryption of Network Connections (WebDispatcher)" id="2ONETENC" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="Parameters" sci_id="S00444">
+    <checkitem desc="[p2-STANDARD] ICM server port specification (HTTPS vs HTTP)" id="NETENC-O.a1">
+      <compliant>(   ( NAME like 'icm/server_port_0' and VALUE like '%PROT=HTTPS%' )
+                  or ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTPS%' )
+                  or ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTPS%' )
+                  or ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTPS%' )
+                  or ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTPS%' )
+                  or ( NAME like 'icm/server_port_5' and VALUE like '%PROT=HTTPS%' )
+                  or ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTPS%' )
+                  or ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTPS%' )
+                  or ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTPS%' )
+			      or ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTPS%' ) )
+      </compliant>
+      <complianttext/>
+      <noncompliant>(( NAME like 'icm/server_port_0' and VALUE like '%PROT=HTTP,%' )
+                  or ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTP,%' )
+                  or ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTP,%' )
+                  or ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTP,%' )
+                  or ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTP,%' )
+                  or ( NAME like 'icm/server_port_5' and VALUE like '%PROT=HTTP,%' )
+                  or ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTP,%' )
+                  or ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTP,%' )
+                  or ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTP,%' )
+			      or ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTP,%' ) )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] ICM/HTTP/admin specifies a PORT" id="NETENC-O.a2">
+      <compliant>(   ( NAME like 'icm/HTTP/admin_0' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_1' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_2' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_3' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_4' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_5' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_6' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_7' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_8' and VALUE like '%PORT=%' )
+		    	  or ( NAME like 'icm/HTTP/admin_9' and VALUE like '%PORT=%' ) )
+   </compliant>
+      <complianttext/>
+      <noncompliant>not (
+                     ( NAME like 'icm/HTTP/admin_0' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_1' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_2' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_3' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_4' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_5' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_6' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_7' and VALUE like '%PORT=%' )
+                  or ( NAME like 'icm/HTTP/admin_8' and VALUE like '%PORT=%' )
+		    	  or ( NAME like 'icm/HTTP/admin_9' and VALUE like '%PORT=%' ) )
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

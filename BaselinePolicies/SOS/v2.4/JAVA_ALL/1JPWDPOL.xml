@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BLv2.4] Password Policy (JAVA)" id="1JPWDPOL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- PWDPOL-J: Password Policy – SAP AS Java settings (UME) -->
+  <configstore name="com.sap.security.core.ume.service">
+    <checkitem desc="[p1-CRITICAL] Minimum Password Length" id="PWDPOL-J_a.1">
+      <compliant>    NAME = 'ume.logon.security_policy.password_min_length'  and lpad(VALUE,4,'0') &gt;= '0008' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ume.logon.security_policy.password_min_length'  and not lpad(VALUE,4,'0') &gt;= '0008' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>
