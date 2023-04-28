@@ -21,42 +21,26 @@ Date:        2023-04-28
       </compliant>
       <complianttext/>
       <noncompliant>(( NAME like 'icm/server_port_0' and VALUE like '%PROT=HTTP,%' )
-                  or ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTP,%' )
-                  or ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTP,%' )
-                  or ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTP,%' )
-                  or ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTP,%' )
-                  or ( NAME like 'icm/server_port_5' and VALUE like '%PROT=HTTP,%' )
-                  or ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTP,%' )
-                  or ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTP,%' )
-                  or ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTP,%' )
-			      or ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTP,%' ) )
+                  and ( NAME like 'icm/server_port_1' and VALUE like '%PROT=HTTP,%' )
+                  and ( NAME like 'icm/server_port_2' and VALUE like '%PROT=HTTP,%' )
+                  and ( NAME like 'icm/server_port_3' and VALUE like '%PROT=HTTP,%' )
+                  and ( NAME like 'icm/server_port_4' and VALUE like '%PROT=HTTP,%' )
+                  and ( NAME like 'icm/server_port_5' and VALUE like '%PROT=HTTP,%' )
+                  and ( NAME like 'icm/server_port_6' and VALUE like '%PROT=HTTP,%' )
+                  and ( NAME like 'icm/server_port_7' and VALUE like '%PROT=HTTP,%' )
+                  and ( NAME like 'icm/server_port_8' and VALUE like '%PROT=HTTP,%' )
+			and ( NAME like 'icm/server_port_9' and VALUE like '%PROT=HTTP,%' ) )
       </noncompliant>
       <noncomplianttext/>
     </checkitem>
     <checkitem desc="[p2-STANDARD] ICM/HTTP/admin specifies a PORT" id="NETENC-O.a2">
-      <compliant>(   ( NAME like 'icm/HTTP/admin_0' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_1' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_2' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_3' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_4' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_5' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_6' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_7' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_8' and VALUE like '%PORT=%' )
-		    	  or ( NAME like 'icm/HTTP/admin_9' and VALUE like '%PORT=%' ) )
+      <compliant>(   ( NAME like 'icm/HTTP/admin_%' and VALUE like '%PORT=%' )
+                   )
    </compliant>
       <complianttext/>
-      <noncompliant>not (
-                     ( NAME like 'icm/HTTP/admin_0' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_1' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_2' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_3' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_4' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_5' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_6' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_7' and VALUE like '%PORT=%' )
-                  or ( NAME like 'icm/HTTP/admin_8' and VALUE like '%PORT=%' )
-		    	  or ( NAME like 'icm/HTTP/admin_9' and VALUE like '%PORT=%' ) )
+      <noncompliant>(
+                     ( NAME like 'icm/HTTP/admin_%' and not VALUE like '%PORT=%' )
+                  )
       </noncompliant>
       <noncomplianttext/>
     </checkitem>
