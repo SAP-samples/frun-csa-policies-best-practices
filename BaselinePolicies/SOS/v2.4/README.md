@@ -21,7 +21,7 @@ CHANGE: Checks that require customers to create a customizable store are put int
 
 ADD: Policies BTP (SAP Cloud Connector) and SAP WebDispatcher
 
-ADD: Container files are provided at [MiscPolicies/FRUN3.0 FP01 Containers](../../MiscPolicies/FRUN3.0%20FP01%20Containers) to upload the policies in few steps.
+ADD: Container files are provided at [MiscPolicies/FRUN3.0 FP01 Containers](../../../MiscPolicies/FRUN3.0%20FP01%20Containers) to upload the policies in few steps.
 
 INFO: The Baseline Template is available in the media library at https://support.sap.com/sos  
 Check rules follow the implementation guidance of there-published document `Configration_Validation_Template_V2.4_CV-1.docx`.  
