@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Password Policy (ABAP)" id="1APWDPOL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- PWDPOL-A: Password Policy – ABAP -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <checkitem desc="[p1-CRITICAL] Minimum password length" id="PWDPOL-A_a.1">
+      <compliant>      NAME = 'login/min_password_lng' and lpad(VALUE,4,'0') &gt;= '0008'  </compliant>
+      <noncompliant>   NAME = 'login/min_password_lng' and lpad(VALUE,4,'0') &lt; '0008' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Maximum password idle initial lifetime" id="PWDPOL-A_b.1">
+      <compliant>      NAME = 'login/password_max_idle_initial' and lpad(VALUE,4,'0') between '0001' and '0014' </compliant>
+      <noncompliant>   NAME = 'login/password_max_idle_initial' and not lpad(VALUE,4,'0') between '0001' and '0014' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Disable downward compatible passwords" id="PWDPOL-A_d">
+      <compliant>      NAME = 'login/password_downwards_compatibility' and VALUE ='0'</compliant>
+      <noncompliant>   NAME = 'login/password_downwards_compatibility' and NOT VALUE ='0' </noncompliant>
+      <noncomplianttext>login/password_downwards_compatibility = 0. Action Required: Cleanup password hash values</noncomplianttext>
+    </checkitem>
+  </configstore>
+  <configstore name="AUTH_SECURITY_POLICY">
+    <checkitem desc="[p1-CRITICAL] Rule for password length is noncompliant (security policy attribute)" id="PWDPOL-A_a.2" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'MIN_PASSWORD_LENGTH' and NAME like '%' and CLIENT != '[XXX]' and lpad(ATTRIB_VALUE,4,'0') &gt;= '0008' </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MIN_PASSWORD_LENGTH' and NAME like '%' and CLIENT != '[XXX]' and NOT lpad(ATTRIB_VALUE,4,'0') &gt;= '0008' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Rule for initial password lifetime is noncompliant (security policy attribute)" id="PWDPOL-A_b.2" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'MAX_PASSWORD_IDLE_INITIAL' and NAME like '%' and CLIENT != '[XXX]' and lpad(ATTRIB_VALUE,4,'0') between '0001' and '0014'  </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MAX_PASSWORD_IDLE_INITIAL' and NAME like '%' and CLIENT != '[XXX]'  and NOT lpad(ATTRIB_VALUE,4,'0') between '0001' and '0014' </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>

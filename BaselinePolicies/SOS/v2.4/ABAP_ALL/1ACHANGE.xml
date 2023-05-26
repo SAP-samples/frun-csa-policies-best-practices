@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem desc="[BL2.4] Change Protection of Prod System (ABAP)" id="1ACHANGE" multisql="Yes" version="0000">
+  <configstore name="GLOBAL">
+    <checkitem desc="[p1-CRITICAL] Global Modifiable Change Option for Production Systems" id="CHANGE-A_a" system_roles="PROD:DEV:TEST:SANDBOX:QA::">
+      <compliant>    ((NAME = 'GLOBAL_SETTING'  and VALUE = 'NOT MODIFIABLE'  and ptree.value = 'PROD' and ptree.hier_id = '1') OR (ptree.value != 'PROD' and ptree.hier_id = '1'))</compliant>
+      <complianttext/>
+      <noncompliant>   NAME = 'GLOBAL_SETTING'  and not ( VALUE = 'NOT MODIFIABLE'  ) and ptree.value = 'PROD' and ptree.hier_id = '1'</noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <configstore name="CLIENTS">
+    <checkitem desc="[p1-CRITICAL] Client Change Option for Production Systems" id="CHANGE-A_b">
+      <compliant>    MANDT like '%'  and ((CCCATEGORY = 'P'  and CCCORACTIV = '2'  and CCNOCLIIND = '3' and (CCCOPYLOCK ='X' or CCCOPYLOCK = 'L' )) OR (CCCATEGORY != 'P'))   </compliant>
+      <complianttext/>
+      <noncompliant> MANDT like '%'  and CCCATEGORY = 'P'  and not (CCCORACTIV = '2'  and CCNOCLIIND = '3' and (CCCOPYLOCK ='X' or CCCOPYLOCK = 'L' ))   </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

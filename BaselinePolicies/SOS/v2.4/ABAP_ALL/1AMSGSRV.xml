@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem desc="[BL2.4] Message Server Security (ABAP)" id="1AMSGSRV" multisql="Yes" version="0000">
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <checkitem desc="[p1-CRITICAL] File with access control list for message server" id="MSGSRV-A_d.1">
+      <compliant>    NAME = 'ms/acl_info' and 
+                     ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/ms_acl_info' or
+                       VALUE like_regexpr '^/sapmnt/(\w{3})/SYS/global/ms_acl_info'  or
+                       VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' )
+      </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'ms/acl_info' and not 
+                     ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/ms_acl_info' or
+                       VALUE like_regexpr '^/sapmnt/(\w{3})/SYS/global/ms_acl_info'  or
+                       VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' ) 
+      </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="Yes" not_in_output="Yes">
+        <joincompliant>    NAME = 'system/secure_communication' and VALUE != 'ON'
+        </joincompliant>
+        <joinnoncompliant> NAME = 'system/secure_communication' and VALUE != 'ON'
+        </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+  <!--	MSGSRV-A: Message Server Security - ABAP-->
+  <configstore name="MS_SECINFO" name_extended="" sci_id="" system_type="ABAP">
+    <checkitem desc="[p1-CRITICAL] Message server hardening (acl_info content)" id="MSGSRV-A_e.1" operator="">
+      <compliant>    line like '%' and text like_regexpr 'HOST=[ \t]*([^* \t]|[*][a-zA-Z0-9.]).*' </compliant>
+      <noncompliant> line like '%' and not text like_regexpr 'HOST=[ \t]*([^* \t]|[*][a-zA-Z0-9.]).*'  </noncompliant>
+    </checkitem>
+    <!-- OLD Syntax BL v2.2:
+    <checkitem desc="[p1-CRITICAL] Message server hardening (acl_info content)" id="MSGSRV-A_e.1" operator="">
+      <compliant>    line like '%' and text like_regexpr '.*HOST=[^*].*' </compliant>
+      <noncompliant> line like '%' and not text like_regexpr '.*HOST=[^*].*'  </noncompliant>
+    </checkitem>
+-->
+  </configstore>
+</targetsystem>

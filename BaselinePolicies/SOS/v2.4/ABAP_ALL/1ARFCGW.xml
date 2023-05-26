@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] RFC Gateway Security (ABAP)" id="1ARFCGW" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <configstore name="GW_SECINFO" name_extended="" sci_id="" system_type="ABAP">
+    <checkitem desc="[p1-CRITICAL] RFC gateway hardening (secinfo content)" id="RFCGW-A_a.Sec1" operator="">
+      <compliant>          line like '%' 
+                             and  text like_regexpr '^P.*' 
+                             and ( text like_regexpr '.*TP=[^\*].*' or text like_regexpr '.*HOST=[^\*].*' or text like_regexpr '.*USER=[^\*].*' or text like_regexpr '.*USER-HOST=[^\*].*' )  </compliant>
+      <noncompliant>    line like '%' 
+                             and  text like_regexpr '^P.*' 
+                             and ( not text like_regexpr '.*TP=[^\*].*' or not text like '%TP=%' )
+                             and ( not text like_regexpr '.*HOST=[^\*].*' or not text like '% HOST=%') 
+                             and ( not text like_regexpr '.*USER=[^\*].*' or not text like '%USER=%' )
+                             and ( not text like_regexpr '.*USER-HOST=[^\*].*' or not text like '%USER-HOST=%' ) </noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="GW_REGINFO" name_extended="" sci_id="" system_type="ABAP">
+    <!-- Consider the following rule as acceptance of TP=* in reg_info is not recommended by SAP. Consider this more strict rule as a requirement of EXTENDED -->
+    <!--
+
+    <checkitem desc="[p1-CRITICAL] reg_info (RFC gateway hardening)" id="RFCGW-A_a.Reg1" operator="">
+      <compliant>         line like '%' and TEXT like_regexpr '^P.*TP=[^\*].*'</compliant>
+      <noncompliant>      line like '%' and TEXT like_regexpr '^P.*' and not TEXT like_regexpr '^P.*TP=[^\*].*' </noncompliant>
+    </checkitem>
+-->
+    <checkitem desc="[p1-CRITICAL] reg_info (RFC gateway hardening)" id="RFCGW-A_a.Reg2" operator="">
+      <compliant>         line like '%' 
+                      and (( TEXT like_regexpr '^P.*' 
+                          and ( TEXT like_regexpr '.*TP=[^\*].*'
+                             or TEXT like_regexpr '.*HOST=[^\*].*'
+                             or TEXT like_regexpr '.*ACCESS=[^\*].*'
+                             or TEXT like_regexpr '.*CANCEL=[^\*].*' ) )
+                         or  TEXT like_regexpr '^D.*' 
+                         or  TEXT like_regexpr '^#.*' ) 
+
+      </compliant>
+      <noncompliant>      line like '%' 
+                      and TEXT like_regexpr '^P.*' 
+                      and not ( TEXT like_regexpr '.*TP=[^\*].*'
+                             or TEXT like_regexpr '.*HOST=[^\*].*'
+                             or TEXT like_regexpr '.*ACCESS=[^\*].*'
+                             or TEXT like_regexpr '.*CANCEL=[^\*].*' ) 
+      </noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- Check RFCGW-A_b.1.x validate if parameter value contains 2x // or \\ to ensure it's a path-like value - Consider replacing with check for actual path-->
+    <checkitem desc="[p1-CRITICAL] Path-like value for ms/acl_info (message server access control list)" id="RFCGW-A_b.1">
+      <compliant>    NAME = 'gw/sec_info' and length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0 </compliant>
+      <noncompliant> NAME = 'gw/sec_info' and NOT(length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0)</noncompliant>
+    </checkitem>
+    <!--       
+    <checkitem desc="[p1-CRITICAL] File with access control list for message server" id="RFCGW-A_b.1">
+      <compliant>    NAME = 'gw/sec_info'  and VALUE like 'your mount path/acl file name' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/sec_info'  and not ( VALUE like 'your mount path/acl file name'  ) </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+-->
+    <!-- Check RFCGW-A_b.2.x validate if parameter value contains 2x // or \\ to ensure it's a path-like value - Consider replacing with check for actual path-->
+    <checkitem desc="[p1-CRITICAL] Path-like value for ms/acl_info (message server access control list)" id="RFCGW-A_b.2">
+      <compliant>    NAME = 'gw/reg_info' and length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0 </compliant>
+      <noncompliant> NAME = 'gw/reg_info' and NOT(length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0)</noncompliant>
+    </checkitem>
+    <!--       
+    <checkitem desc="[p1-CRITICAL] File with access control list for message server" id="RFCGW-A_b.2">
+      <compliant>    NAME = 'gw/reg_info'  and VALUE like 'your mount path/acl file name' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/reg_info'  and not ( VALUE like 'your mount path/acl file name'  ) </noncompliant>
+     <noncomplianttext/>
+   </checkitem>
+-->
+    <checkitem desc="[p1-CRITICAL] Gateway security options" id="RFCGW-A_c.1">
+      <compliant>    NAME = 'gw/reg_no_conn_info'  and 
+                     VALUE in ( '15','31','47','63','79','95','111','127','143','159','175','191','207','223','239','255' )
+      </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/reg_no_conn_info'  and not
+                     VALUE in ( '15','31','47','63','79','95','111','127','143','159','175','191','207','223','239','255' )
+      </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes" system_type="ABAP">
+        <joincompliant>     NAME = 'KERN_REL' and substring(VALUE,0,3) &lt; '740'</joincompliant>
+        <joinnoncompliant>  NAME = 'KERN_REL' and substring(VALUE,0,3) &lt; '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Gateway security options" id="RFCGW-A_c.2">
+      <compliant>    NAME = 'gw/reg_no_conn_info'  and 
+                     VALUE in ('1','255')
+      </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/reg_no_conn_info'  and not
+                     VALUE in ('1','255')
+      </noncompliant>
+      <noncomplianttext/>
+      <joinstore name="SAP_KERNEL" no_data_found="Yes" system_type="ABAP">
+        <joincompliant>    NAME = 'KERN_REL' and substring(VALUE,0,3) &gt;= '740'</joincompliant>
+        <joinnoncompliant> NAME = 'KERN_REL' and substring(VALUE,0,3) &gt;= '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Mode for non existing ACL file" id="RFCGW-A_d">
+      <compliant>    NAME = 'gw/acl_mode'  and VALUE = '1' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/acl_mode'  and not VALUE = '1' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Enable gateway monitor commands" id="RFCGW-A_e">
+      <compliant>    NAME = 'gw/monitor'  and VALUE = '1' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/monitor'  and not VALUE = '1' </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <checkitem desc="[p1-CRITICAL] Disable simulation mode for reg_info and sec_info" id="RFCGW-A_f">
+      <compliant>    NAME = 'gw/sim_mode'  and VALUE = '0' </compliant>
+      <complianttext/>
+      <noncompliant> NAME = 'gw/sim_mode'  and not VALUE = '0'  </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>

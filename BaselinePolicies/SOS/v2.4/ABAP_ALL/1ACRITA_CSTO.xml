@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+This Policy requires creation of a customizable store. 
+sci_id may be different in your system and may require an adjustment. 
+Configstore name is up to your choice and also may require adjustment.
+Store definition can be performed based on information from the Configuration Validation Template. 
+
+Reference:   SAP Security Baseline Template v2.4 (2022/12)
+Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+Version:     001
+Date:        2023-04-28
+-->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] No use of critical auth. profile SAP_ALL (ABAP)" id="1ACRITA_CSTO" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- CRITAU-A: 1-CRITICAL Authorizations – ABAP -->
+  <configstore name="AUTH_PROFILE_USER" sci_id="">
+    <checkitem desc="[p1-CRITICAL] Users with profile SAP_ALL" id="CRITAU-A_a.1" not_found="positive">
+      <compliant>          PROFILE = 'SAP_ALL'  and 
+                                     USERNAME != 'DDIC' and
+                                     USER_TYPE like '%' and not
+                                     STATUS = 'USER_IS_AUTHORIZED' 
+     </compliant>
+      <complianttext/>
+      <noncompliant>    PROFILE = 'SAP_ALL'  and 
+                                     USERNAME like '%' and
+                                     USER_TYPE like '%' and
+                                     STATUS = 'USER_IS_AUTHORIZED'
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+    <!-- Alternative check with some exempted user names:
+    <checkitem desc="[p1-CRITICAL] Forbidden users with profile SAP_ALL" id="CRITAU-A_a.1"  not_found="positive">
+      <compliant>          PROFILE = 'SAP_ALL'  and not
+                                     USERNAME in ( 'DDIC','SAP*') and not USERNAME like 'FF%' and
+                                     USER_TYPE like '%' and not
+                                     STATUS = 'USER_IS_AUTHORIZED' 
+     </compliant>
+      <complianttext/>
+      <noncompliant>    PROFILE = 'SAP_ALL'  and not
+                                     USERNAME in ( 'DDIC','SAP*') and not USERNAME like 'FF%' and
+                                     USER_TYPE like '%' and
+                                     STATUS = 'USER_IS_AUTHORIZED' 
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  -->
+  </configstore>
+  <configstore name="AUTH_PROFILE_USER_CHANGE_DOC" sci_id="">
+    <checkitem desc="[p1-CRITICAL] Profile SAP_ALL added to users" id="CRITAU-A_a.2" not_found="positive">
+      <compliant>          USER like '%' and
+                                     ACTION = 'ADDED' and
+                                     PROFILE = 'SAP_ALL'  and 
+                                     MODIFIED_BY like_regexpr '^\s*$' and CD_HIST_DATE &gt; to_decimal(to_varchar(add_seconds(CURRENT_UTCTIMESTAMP,-86400*30), 'YYYYMMDDHH24MISS')) 
+      </compliant>
+      <complianttext/>
+      <noncompliant>   USER like '%' and
+                                     ACTION = 'ADDED' and
+                                     PROFILE = 'SAP_ALL'  and 
+                                     MODIFIED_BY not like_regexpr '^\s*$' and CD_HIST_DATE &gt; to_decimal(to_varchar(add_seconds(CURRENT_UTCTIMESTAMP,-86400*30), 'YYYYMMDDHH24MISS')) 
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>
