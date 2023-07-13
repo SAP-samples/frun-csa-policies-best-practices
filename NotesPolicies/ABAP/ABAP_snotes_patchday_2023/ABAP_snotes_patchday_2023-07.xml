@@ -68,73 +68,6 @@ Date:    13.07.2023
     </checkitem>
   </configstore>
 
-
-
-
-  <!-- [p-CVSS ]  BW-BEX-OT-BICS-PROV 0003088078 - [CVE-2023-33992] Missing Authorization Check in SAP Business Warehouse and SAP B (Version 0004)  -->
-  <configstore name="ABAP_NOTES">
-    <checkitem desc="[p-CVSS ] Note 0003088078 exists" id="0003088078" operator="check_note">
-      <compliant>NOTE = '0003088078' and PRSTATUS = 'E'</compliant>
-      <noncompliant/>
-    </checkitem>
-  </configstore>
-  <configstore name="COMP_LEVEL">
-  <checkitem desc="[p-CVSS ] Note 0003088078 missing and solution with SP available" id="0003088078" operator="check_note:0003088078">
-     <compliant>(
-      ( COMPONENT = 'DW4CORE' and VERSION = '100' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- DW4CORE 100 SAPK-10021INDW4CORE -->  or
-      ( COMPONENT = 'DW4CORE' and VERSION = '200' and not( (lpad(SP,4,'0'))  &lt; '0010' )   ) <!-- DW4CORE 200 SAPK-20010INDW4CORE -->  or
-      ( COMPONENT = 'DW4CORE' and VERSION = '300' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- DW4CORE 300 SAPK-30001INDW4CORE -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '000032' and not( (lpad(SP,4,'0'))  &lt; '0000' )   ) <!-- SAP_BW 000032 SAPK-S4CLOUD_2111_BW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '000033' and not( (lpad(SP,4,'0'))  &lt; '0000' )   ) <!-- SAP_BW 000033 SAPK-S4CLOUD_2202_BW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0030' )   ) <!-- SAP_BW 731 SAPKW73130 -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0027' )   ) <!-- SAP_BW 740 SAPKW74027 -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0023' )   ) <!-- SAP_BW 750 SAPK-75023INSAPBW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0014' )   ) <!-- SAP_BW 751 SAPK-75114INSAPBW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0010' )   ) <!-- SAP_BW 752 SAPK-75210INSAPBW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0008' )   ) <!-- SAP_BW 753 SAPK-75308INSAPBW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- SAP_BW 754 SAPK-75406INSAPBW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0004' )   ) <!-- SAP_BW 755 SAPK-75504INSAPBW --> or
-      ( COMPONENT = 'SAP_BW' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- SAP_BW 756 SAPK-75601INSAPBW -->
-     )</compliant>
-     <noncompliant>(
-      ( COMPONENT = 'DW4CORE' and VERSION = '100' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- DW4CORE 100 SAPK-10021INDW4CORE -->  or
-      ( COMPONENT = 'DW4CORE' and VERSION = '200' and (lpad(SP,4,'0'))  &lt; '0010' )  <!-- DW4CORE 200 SAPK-20010INDW4CORE -->  or
-      ( COMPONENT = 'DW4CORE' and VERSION = '300' and (lpad(SP,4,'0'))  &lt; '0001' )  <!-- DW4CORE 300 SAPK-30001INDW4CORE -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '000032' and (lpad(SP,4,'0'))  &lt; '0000' )  <!-- SAP_BW 000032 SAPK-S4CLOUD_2111_BW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '000033' and (lpad(SP,4,'0'))  &lt; '0000' )  <!-- SAP_BW 000033 SAPK-S4CLOUD_2202_BW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0030' )  <!-- SAP_BW 731 SAPKW73130 -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0027' )  <!-- SAP_BW 740 SAPKW74027 -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0023' )  <!-- SAP_BW 750 SAPK-75023INSAPBW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0014' )  <!-- SAP_BW 751 SAPK-75114INSAPBW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0010' )  <!-- SAP_BW 752 SAPK-75210INSAPBW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0008' )  <!-- SAP_BW 753 SAPK-75308INSAPBW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- SAP_BW 754 SAPK-75406INSAPBW -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0004' )  <!-- SAP_BW 755 SAPK-75504INSAPBW --> or
-      ( COMPONENT = 'SAP_BW' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0001' )  <!-- SAP_BW 756 SAPK-75601INSAPBW -->
-     )</noncompliant>
-    </checkitem>
-  </configstore>
-  <configstore name="COMP_LEVEL">
-  <checkitem desc="[p-CVSS ] Note 0003088078 missing and applicable using Correction Instruction" id="0003088078" operator="check_note:0003088078">
-    <compliant/>
-    <noncompliant>(
-      ( COMPONENT = 'DW4CORE' and VERSION = '100' and lpad(SP,4,'0') between '0015' and '0020' )  <!-- DW4CORE 100 SAPK-10015INDW4CORE - SAPK-10020INDW4CORE  -->  or
-      ( COMPONENT = 'DW4CORE' and VERSION = '200' and lpad(SP,4,'0') between '0004' and '0006' )  <!-- DW4CORE 200 SAPK-20004INDW4CORE - SAPK-20006INDW4CORE  -->  or
-      ( COMPONENT = 'DW4CORE' and VERSION = '200' and lpad(SP,4,'0') between '0007' and '0009' )  <!-- DW4CORE 200 SAPK-20007INDW4CORE - SAPK-20009INDW4CORE  -->  or
-      ( COMPONENT = 'DW4CORE' and VERSION = '300' and lpad(SP,4,'0') between '0000' and '0000' )  <!-- DW4CORE 300 300 - 300  -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '730' and lpad(SP,4,'0') between '0010' and '0999' )  <!-- SAP_BW 730 SAPKW73010 - ALL_SP  -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '731' and lpad(SP,4,'0') between '0020' and '0029' )  <!-- SAP_BW 731 SAPKW73120 - SAPKW73129  -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '740' and lpad(SP,4,'0') between '0021' and '0026' )  <!-- SAP_BW 740 SAPKW74021 - SAPKW74026  --> or
-      ( COMPONENT = 'SAP_BW' and VERSION = '750' and lpad(SP,4,'0') between '0015' and '0022' )  <!-- SAP_BW 750 SAPK-75015INSAPBW - SAPK-75022INSAPBW  -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '751' and lpad(SP,4,'0') between '0007' and '0013' )  <!-- SAP_BW 751 SAPK-75107INSAPBW - SAPK-75113INSAPBW  -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '752' and lpad(SP,4,'0') between '0004' and '0009' )  <!-- SAP_BW 752 SAPK-75204INSAPBW - SAPK-75209INSAPBW  -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '753' and lpad(SP,4,'0') between '0002' and '0007' )  <!-- SAP_BW 753 SAPK-75302INSAPBW - SAPK-75307INSAPBW  -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '754' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- SAP_BW 754 754 - SAPK-75405INSAPBW  -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0003' )  <!-- SAP_BW 755 755 - SAPK-75503INSAPBW  -->  or
-      ( COMPONENT = 'SAP_BW' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0000' )  <!-- SAP_BW 756 756 - 756  -->
-     )</noncompliant>
-    </checkitem>
-  </configstore>
   <!-- [p3-CVSS 4.5]  BW-BEX-OT-BICS-PROV 0003088078 - [CVE-2023-33992] Missing Authorization Check in SAP Business Warehouse and SAP B (Version 0004)  -->
   <configstore name="ABAP_NOTES">
     <checkitem desc="[p3-CVSS 4.5] Note 0003088078 exists" id="0003088078" operator="check_note">
@@ -312,8 +245,6 @@ Date:    13.07.2023
      )</noncompliant>
     </checkitem>
   </configstore>
-
-
 
 
   <!-- [p1-CVSS 9.1]  IS-OIL-DS-HPM 0003350297 - [CVE-2023-36922] OS command injection vulnerability in SAP ECC and SAP S/4HANA ( (Version 0008)  -->
