@@ -37,6 +37,14 @@ Date:    July 10  2019
 Version: 002
    replaced ( COALESCE(NULLIF(SP,''),'0') )    by  ( REPLACE_REGEXPR ('\.' IN (COALESCE(NULLIF(SP,''),'0')) with ''))
 Date:    November 11 2020
+
+Version: 003
+SAP_KERNEL related checks (note 2738791):
+replaced lpad(VALUE,3,'0')  by lpad(VALUE,4,'0') and added leading 0
+
+Date:    August 10 2023
+
+
 -->
 
 <targetsystem desc="SNotes of PatchDay: 2019-07" id="PatchDay_2019-07" multisql="Yes">
@@ -358,16 +366,16 @@ Date:    November 11 2020
       </joinstore>
     </checkitem>    
     <checkitem desc="kernel version which note 0002738791 recommends" id="0002738791">
-      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,3,'0') &gt;= '622'</compliant>
-      <noncompliant>NAME = 'KERN_PATCHLEVEL'and lpad(VALUE,3,'0') &lt; '622'</noncompliant>
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0622'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL'and lpad(VALUE,4,'0') &lt; '0622'</noncompliant>
       <joinstore name="SAP_KERNEL" no_data_found="Yes">
         <joincompliant>NAME = 'KERN_REL' and VALUE = '749_REL'</joincompliant>
         <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '749_REL'</joinnoncompliant>
       </joinstore>
     </checkitem>
     <checkitem desc="kernel version which note 0002738791 recommends" id="0002738791">
-      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,3,'0') &gt;= '410'</compliant>
-      <noncompliant>NAME = 'KERN_PATCHLEVEL'and lpad(VALUE,3,'0') &lt; '410'</noncompliant>
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0410'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL'and lpad(VALUE,4,'0') &lt; '0410'</noncompliant>
       <joinstore name="SAP_KERNEL" no_data_found="Yes">
         <joincompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joincompliant>
         <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joinnoncompliant>
