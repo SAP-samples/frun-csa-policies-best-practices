@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This Policy contains the following SNotes published on PatchDay 2023-09:
+
+
+HANA Database
+[p1-CVSS 9.8] 0003340576 BC-IAM-SSO-CCL - [CVE-2023-40309] Missing Authorization check in SAP CommonCryptoLib (Version 10)
+[p2-CVSS 7.5] 0003327896 BC-IAM-SSO-CCL - [CVE-2023-40308] Memory Corruption vulnerability in SAP CommonCryptoLib (Version 10)
+
+
+SAP Security: PatchDay_2023-09
+Version: 0001
+Date:    14.09.2023
+-->
+<targetsystem desc="SNotes of PatchDay: 2023-09" id="PatchDay_2023-08" multisql="Yes" version="0000">
+
+  <configstore name="HDB_VERSION">
+    <checkitem desc="[p1-CVSS 9.8] Note 3340576 requires revision update" id="0003340576">
+      <compliant>
+                 (  (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,8) &gt;= '2.00.071')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' AND substring(VALUE,0,11) &gt;= '2.00.067.02')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &gt; '2.00.07' ) 
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &lt;= '2.00.05' ) )  
+      </compliant>
+      <noncompliant> 
+                 (  (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND NOT substring(VALUE,0,8) &gt;= '2.00.071')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' AND NOT substring(VALUE,0,11) &gt;= '2.00.067.02') )
+     </noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+    <checkitem desc="[p1-CVSS 9.8] Note 3340576 may require XS Advanced update" id="0003340576_xsa" not_found="ignore">
+      <compliant>    COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '2' and lpad(PATCH,4,'0') &gt;= '0003' 
+      </compliant>
+      <complianttext/>
+      <noncompliant> COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '2' and lpad(PATCH,4,'0') &lt; '0003' 
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <configstore name="HDB_VERSION">
+    <checkitem desc="[p2-CVSS 7.5] Note 3327896 requires revision update" id="0003327896">
+      <compliant>
+                 (  (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,8) &gt;= '2.00.071')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' AND substring(VALUE,0,11) &gt;= '2.00.067.02')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND substring(VALUE,0,11) &gt;= '2.00.059.10')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &gt; '2.00.07' ) )  
+      </compliant>
+      <noncompliant> 
+                 (  (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND NOT substring(VALUE,0,8) &gt;= '2.00.071')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' AND NOT substring(VALUE,0,11) &gt;= '2.00.067.02')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND NOT substring(VALUE,0,11) &gt;= '2.00.059.10')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &lt; '2.00.05') )
+     </noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+    <checkitem desc="[p2-CVSS 7.5] Note 3327896 may require XS Advanced update" id="0003327896_xsa" not_found="ignore">
+      <compliant>    COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '2' and lpad(PATCH,4,'0') &gt;= '0003' 
+      </compliant>
+      <complianttext/>
+      <noncompliant> COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '2' and lpad(PATCH,4,'0') &lt; '0003' 
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>
