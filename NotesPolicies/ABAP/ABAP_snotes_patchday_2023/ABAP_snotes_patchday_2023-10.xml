@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This FRUN CSA policy contains rules to check the following ABAP Security Notes:
+
+[p3-CVSS 5.4] 0003219846 FI-AP-AP-Q1 - [CVE-2023-42473] Missing Authorization Check In S/4HANA (Manage Withholding Tax
+[p3-CVSS 4.3] 0003222121 FI-LOC-SRF-RUN - [CVE-2023-42475] Information Disclosure Vulnerability in Statutory Reporting
+
+The policy does not check the following Security Notes:
+
+[p1-CVSS 10.0]  0002622660 BC-FES-BUS-DSK - Security updates for the browser control Google Chromium delivered with SAP Busi
+[p3-CVSS 6.5]  0003333426 BC-JAS-ADM-MON - [CVE-2023-42477] Server-Side Request Forgery in SAP NetWeaver AS Java (GRMG Hear
+[p3-CVSS 5.3]  0003324732 BC-JAS-SEC - [CVE-2023-31405] Log Injection vulnerability in SAP NetWeaver AS for Java (Log V
+[p3-CVSS 5.3]  0003371873 BC-JAS-SEC - Update 1 to Security Note 3324732: [CVE-2023-31405] Log Injection vulnerability
+[p3-CVSS 6.5]  0003357154 BC-SYB-PD - [CVE-2023-40310] Missing XML Validation vulnerability in SAP PowerDesigner Clien
+[[p3-CVSS 6.8]  0003372991 BI-RA-WBI-FE - [CVE-2023-42474] Cross-Site Scripting (XSS) vulnerability in SAP BusinessObjects
+[p3-CVSS 4.3]  0003338380 SBO-CRO-SEC - [CVE-2023-41365] Information Disclosure vulnerability in SAP Business One (B1i)
+
+SAP Security: PatchDay_2023-10
+Version: 001
+Date:    12.10.2023
+-->
+
+<targetsystem desc="SNotes of PatchDay: 2023-10" id="PatchDay_2023-10" multisql="Yes">
+
+  <!-- [p3-CVSS 5.4]  FI-AP-AP-Q1 0003219846 - [CVE-2023-42473] Missing Authorization Check In S/4HANA (Manage Withholding Tax (Version 0009)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 5.4] Note 0003219846 exists" id="0003219846" operator="check_note">
+      <compliant>NOTE = '0003219846' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 5.4] Note 0003219846 missing and solution with SP available" id="0003219846" operator="check_note:0003219846">
+     <compliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and not( (lpad(SP,4,'0'))  &lt; '0003' )   ) <!-- S4CORE 106 SAPK-10603INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and (lpad(SP,4,'0'))  &lt; '0003' )  <!-- S4CORE 106 SAPK-10603INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 5.4] Note 0003219846 missing and applicable using Correction Instruction" id="0003219846" operator="check_note:0003219846">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and lpad(SP,4,'0') between '0001' and '0002' )  <!-- S4CORE 106 SAPK-10601INS4CORE - SAPK-10602INS4CORE  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p3-CVSS 4.3]  FI-LOC-SRF-RUN 0003222121 - [CVE-2023-42475] Information Disclosure Vulnerability in Statutory Reporting (Version 0024)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 4.3] Note 0003222121 exists" id="0003222121" operator="check_note">
+      <compliant>NOTE = '0003222121' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.3] Note 0003222121 missing and solution with SP available" id="0003222121" operator="check_note:0003222121">
+     <compliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) <!-- S4CORE 102 SAPK-10211INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- S4CORE 103 SAPK-10309INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- S4CORE 104 SAPK-10407INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- S4CORE 105 SAPK-10505INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and not( (lpad(SP,4,'0'))  &lt; '0003' )   ) <!-- S4CORE 106 SAPK-10603INS4CORE --> or
+      ( COMPONENT = 'SAPSCORE' and VERSION = '128' and not( (lpad(SP,4,'0'))  &lt; '0002' )   ) <!-- SAPSCORE 128 SAPK-12802INSAPSCORE -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and (lpad(SP,4,'0'))  &lt; '0011' )  <!-- S4CORE 102 SAPK-10211INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- S4CORE 103 SAPK-10309INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- S4CORE 104 SAPK-10407INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- S4CORE 105 SAPK-10505INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and (lpad(SP,4,'0'))  &lt; '0003' )  <!-- S4CORE 106 SAPK-10603INS4CORE --> or
+      ( COMPONENT = 'SAPSCORE' and VERSION = '128' and (lpad(SP,4,'0'))  &lt; '0002' )  <!-- SAPSCORE 128 SAPK-12802INSAPSCORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.3] Note 0003222121 missing and applicable using Correction Instruction" id="0003222121" operator="check_note:0003222121">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and lpad(SP,4,'0') between '0000' and '0010' )  <!-- S4CORE 102 102 - SAPK-10210INS4CORE  --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and lpad(SP,4,'0') between '0000' and '0008' )  <!-- S4CORE 103 103 - SAPK-10308INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and lpad(SP,4,'0') between '0000' and '0006' )  <!-- S4CORE 104 104 - SAPK-10406INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- S4CORE 105 105 - SAPK-10504INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and lpad(SP,4,'0') between '0000' and '0002' )  <!-- S4CORE 106 106 - SAPK-10602INS4CORE  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+</targetsystem>
