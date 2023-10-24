@@ -31,6 +31,13 @@ The policy does not check the following Security Notes:
 
 
 SAP Security: PatchDay_2023-03
+
+    adjusted: check Note 0003302162 missing and solution with SP available for release 757 from SP03 to SP02
+Version: 002
+Date: 24.10.2023
+
+
+
 Version:      001
 Date:         16.03.2023
 -->
@@ -121,7 +128,7 @@ Date:         16.03.2023
       ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- SAP_BASIS 754 SAPK-75409INSAPBASIS -->  or
       ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- SAP_BASIS 755 SAPK-75507INSAPBASIS -->  or
       ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- SAP_BASIS 756 SAPK-75605INSAPBASIS -->  or
-      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0003' )   ) <!-- SAP_BASIS 757 SAPK-75703INSAPBASIS -->
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0002' )   ) <!-- SAP_BASIS 757 SAPK-75702INSAPBASIS -->
      )</compliant>
 			<noncompliant>(
       ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and (lpad(SP,4,'0'))  &lt; '0041' )  <!-- SAP_BASIS 700 SAPKB70041 -->  or
@@ -136,7 +143,7 @@ Date:         16.03.2023
       ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- SAP_BASIS 754 SAPK-75409INSAPBASIS -->  or
       ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- SAP_BASIS 755 SAPK-75507INSAPBASIS -->  or
       ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- SAP_BASIS 756 SAPK-75605INSAPBASIS -->  or
-      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0003' )  <!-- SAP_BASIS 757 SAPK-75703INSAPBASIS -->
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0002' )  <!-- SAP_BASIS 757 SAPK-75702INSAPBASIS -->
      )</noncompliant>
 		</checkitem>
 	</configstore>
