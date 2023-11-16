@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+This FRUN CSA policy contains rules to check the following ABAP Security Notes:
+
+[p3-CVSS 5.3]  0003362849 BC-CST-IC - [CVE-2023-41366] Information Disclosure vulnerability in SAP NetWeaver Applicati
+[p1-CVSS 9.8]  0003340576 BC-IAM-SSO-CCL - [CVE-2023-40309] Missing Authorization check in SAP CommonCryptoLib
+                 Checks for ABAP Kernel and Minimum CommonCryptoLib version
+                 No change of checks compared to PatchDay_2023-09
+
+The policy does not check the following Security Notes:
+
+[p3-CVSS 6.5]  0003333426 BC-JAS-ADM-MON - [CVE-2023-42477] Server-Side Request Forgery in SAP NetWeaver AS Java 
+[p3-CVSS 5.3]  0003366410 BC-JAS-SEC - [CVE-2023-42480] Information Disclosure in NetWeaver AS Java Logon
+[p3-CVSS 6.3]  0002494184 BC-SYB-SQA - Cross-Site Request Forgery (CSRF) vulnerability in multiple SAP Sybase products
+[p1-CVSS 9.6]  0003355658 SBO-CRO-SEC - [CVE-2023-31403] Improper Access Control vulnerability in SAP Business One
+
+SAP Security: PatchDay_2023-11
+Version: 001
+Date:    16.11.2023
+-->
+
+<targetsystem desc="SNotes of PatchDay: 2023-11" id="PatchDay_2023-11" multisql="Yes">
+
+  <!-- [p3-CVSS 5.3] 0003362849 BC-CST-IC - [CVE-2023-41366] Information Disclosure vulnerability in SAP NetWeaver Application Server ABAP and ABAP Platform (Version 5) -->
+  <configstore name="SAP_KERNEL">
+    <checkitem desc="[p3-CVSS 5.3] Kernel patch required for SNote 3362849v5" id="0003362849_k">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1312'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1312'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No">
+        <joincompliant>NAME = 'KERN_REL' and VALUE like '722%'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE like '722%'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-CVSS 5.3] Kernel patch required for SNote 3362849v5" id="0003362849_k">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1221'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1221'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-CVSS 5.3] Kernel patch required for SNote 3362849v5" id="0003362849_k">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0217'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0217'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '754_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '754_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-CVSS 5.3] Kernel patch required for SNote 3362849v5" id="0003362849_k">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0612'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0612'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '777_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '777_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-CVSS 5.3] Kernel patch required for SNote 3362849v5" id="0003362849_k">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0310'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0310'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '785_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '785_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-CVSS 5.3] Kernel patch required for SNote 3362849v5" id="0003362849_k">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0200'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0200'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '789_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '789_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-CVSS 5.3] Kernel patch required for SNote 3362849v5" id="0003362849_k">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0040'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0040'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '791_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '791_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-CVSS 5.3] Kernel patch required for SNote 3362849v5" id="0003362849_k">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0023'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0023'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '792_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '792_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-CVSS 5.3] Kernel patch required for SNote 3362849v5" id="0003362849_k">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0013'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0013'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '793_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '793_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-CVSS 5.3] Kernel patch required for SNote 3362849v5" id="0003362849_k">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0001'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0001'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '794_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '794_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+
+ <!-- [p1-CVSS 9.8] 0003340576 BC-IAM-SSO-CCL - [CVE-2023-40309] Missing Authorization check in SAP CommonCryptoLib (Version 12) -->
+ <configstore name="SAP_KERNEL">
+	<checkitem desc="[p1-CVSS 9.8] Kernel patch required for SNote 3340576v12" id="0003340576_k">
+		<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1300'</compliant>
+		<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1300'</noncompliant>
+		<joinstore name="SAP_KERNEL" no_data_found="No">
+			<joincompliant>NAME = 'KERN_REL' and VALUE like '722%'</joincompliant>
+			<joinnoncompliant>NAME = 'KERN_REL' and VALUE like '722%'</joinnoncompliant>
+		</joinstore>
+	</checkitem>
+	<checkitem desc="[p1-CVSS 9.8] Kernel patch required for SNote 3340576v12" id="0003340576_k">
+		<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1213'</compliant>
+		<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1213'</noncompliant>
+		<joinstore name="SAP_KERNEL" no_data_found="No">
+			<joincompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joincompliant>
+			<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joinnoncompliant>
+		</joinstore>
+	</checkitem>
+	<checkitem desc="[p1-CVSS 9.8] Kernel patch required for SNote 3340576v12" id="0003340576_k">
+		<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0200'</compliant>
+		<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0200'</noncompliant>
+		<joinstore name="SAP_KERNEL" no_data_found="No">
+			<joincompliant>NAME = 'KERN_REL' and VALUE = '754_REL'</joincompliant>
+			<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '754_REL'</joinnoncompliant>
+		</joinstore>
+	</checkitem>
+	<checkitem desc="[p1-CVSS 9.8] Kernel patch required for SNote 3340576v12" id="0003340576_k">
+		<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0557'</compliant>
+		<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0557'</noncompliant>
+		<joinstore name="SAP_KERNEL" no_data_found="No">
+			<joincompliant>NAME = 'KERN_REL' and VALUE = '777_REL'</joincompliant>
+			<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '777_REL'</joinnoncompliant>
+		</joinstore>
+	</checkitem>
+	<checkitem desc="[p1-CVSS 9.8] Kernel patch required for SNote 3340576v12" id="0003340576_k">
+		<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0253'</compliant>
+		<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0253'</noncompliant>
+		<joinstore name="SAP_KERNEL" no_data_found="No">
+			<joincompliant>NAME = 'KERN_REL' and VALUE = '785_REL'</joincompliant>
+			<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '785_REL'</joinnoncompliant>
+		</joinstore>
+	</checkitem>
+	<checkitem desc="[p1-CVSS 9.8] Kernel patch required for SNote 3340576v12" id="0003340576_k">
+		<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0125'</compliant>
+		<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0125'</noncompliant>
+		<joinstore name="SAP_KERNEL" no_data_found="No">
+			<joincompliant>NAME = 'KERN_REL' and VALUE = '789_REL'</joincompliant>
+			<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '789_REL'</joinnoncompliant>
+		</joinstore>
+	</checkitem>
+	<checkitem desc="[p1-CVSS 9.8] Kernel patch required for SNote 3340576v12" id="0003340576_k">
+		<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0032'</compliant>
+		<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0032'</noncompliant>
+		<joinstore name="SAP_KERNEL" no_data_found="No">
+			<joincompliant>NAME = 'KERN_REL' and VALUE = '791_REL'</joincompliant>
+			<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '791_REL'</joinnoncompliant>
+		</joinstore>
+	</checkitem>
+	<checkitem desc="[p1-CVSS 9.8] Kernel patch required for SNote 3340576v12" id="0003340576_k">
+		<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0015'</compliant>
+		<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0015'</noncompliant>
+		<joinstore name="SAP_KERNEL" no_data_found="No">
+			<joincompliant>NAME = 'KERN_REL' and VALUE = '792_REL'</joincompliant>
+			<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '792_REL'</joinnoncompliant>
+		</joinstore>
+	</checkitem>
+	<checkitem desc="[p1-CVSS 9.8] Kernel patch required for SNote 3340576v12" id="0003340576_k">
+		<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0004'</compliant>
+		<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0004'</noncompliant>
+		<joinstore name="SAP_KERNEL" no_data_found="No">
+			<joincompliant>NAME = 'KERN_REL' and VALUE = '793_REL'</joincompliant>
+			<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '793_REL'</joinnoncompliant>
+		</joinstore>
+	</checkitem>
+	<checkitem desc="[p1-CVSS 9.8] Kernel patch required for SNote 3340576v12" id="0003340576_k">
+		<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0224'</compliant>
+		<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0224'</noncompliant>
+		<joinstore name="SAP_KERNEL" no_data_found="No">
+			<joincompliant>NAME = 'KERN_REL' and VALUE = '804_REL'</joincompliant>
+			<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '804_REL'</joinnoncompliant>
+		</joinstore>
+	</checkitem>
+   </configstore>
+
+  <configstore name="CRYPTOLIB" sci_id="S00053" system_type="ABAP">
+	<checkitem desc="[p1-CVSS 9.8] Minimum CommonCryptoLib version (note 0003340576)" id="0003340576_c">
+		<compliant>(NAME = 'CCL' and ((lpad(SUBSTR_BEFORE(VALUE,'.'),2,'0') &gt; '08') 
+		or (substring(VALUE,0,1) = '8' and (lpad(SUBSTR_BEFORE(SUBSTR_AFTER (VALUE,'.'),'.'),2,'0') &gt; '05')) 
+		or (substring(VALUE,0,3) = '8.5' and (lpad(SUBSTR_AFTER(SUBSTR_AFTER(SUBSTRING_REGEXPR('[^\ ]+' IN VALUE GROUP 0),'.'),'.'),2,'0') &gt;= '50')) )) and VALUE != 'LIB_ID_UNKNOWN'
+		</compliant>
+		<noncompliant>(NAME = 'CCL' and not ((lpad(SUBSTR_BEFORE(VALUE,'.'),2,'0') &gt; '08') 
+		or (substring(VALUE,0,1) = '8' and (lpad(SUBSTR_BEFORE(SUBSTR_AFTER (VALUE,'.'),'.'),2,'0') &gt; '05')) 
+		or (substring(VALUE,0,3) = '8.5' and (lpad(SUBSTR_AFTER(SUBSTR_AFTER(SUBSTRING_REGEXPR('[^\ ]+' IN VALUE GROUP 0),'.'),'.'),2,'0') &gt;= '50')) )) 
+		or VALUE = 'LIB_ID_UNKNOWN'
+                </noncompliant>
+	</checkitem>
+   </configstore>
+</targetsystem>

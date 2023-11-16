@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This Policy contains the following Hana SNotes published on PatchDay 2023-11:
+
+
+HANA Database
+[p1-CVSS 9.8] 0003340576 BC-IAM-SSO-CCL - [CVE-2023-40309] Missing Authorization check in SAP CommonCryptoLib (Version 12)
+              checks for hana and XSA versions
+
+
+SAP Security: PatchDay_2023-11
+Version: 0001 
+Date:    16.11.2023
+-->
+<targetsystem desc="SNotes of PatchDay: 2023-09 (HANA)" id="2023-09_HANA" multisql="Yes" version="0000">
+
+	<configstore name="HDB_VERSION">
+		<checkitem desc="[p1-CVSS 9.8] Note 3340576v12 requires revision update" id="0003340576" not_found="positive" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY">
+			<compliant>
+                 (  (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,8) &gt;= '2.00.071')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' AND substring(VALUE,0,11) &gt;= '2.00.067.02')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &gt; '2.00.07' ) )  
+			</compliant>
+			<noncompliant> 
+                 (  (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND NOT substring(VALUE,0,8) &gt;= '2.00.071')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' AND NOT substring(VALUE,0,11) &gt;= '2.00.067.02') )
+     		</noncompliant>
+      	  </checkitem>
+	</configstore>
+  <!-- SAP Extended Application Services and Runtime (XSA) -->
+  <configstore name="COMP_LEVEL">
+    <checkitem desc="[p1-CVSS 9.8] Note 3340576v12 may require XS Advanced update" id="0003340576_xsa" not_found="ignore">
+      <compliant>   (( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') = '0001' and lpad(PATCH,4,'0') &gt;= '0003' )
+                     or (COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') &gt;= '0002' ))
+      </compliant>
+      <complianttext/>
+      <noncompliant>   (( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') = '0001' and not lpad(PATCH,4,'0') &gt;= '0003' )
+                     or (COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') &lt; '0001' ))
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+</targetsystem>
