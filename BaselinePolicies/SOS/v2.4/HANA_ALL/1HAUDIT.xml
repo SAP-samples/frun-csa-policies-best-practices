@@ -2,8 +2,8 @@
 <!--
 Reference:   SAP Security Baseline Template v2.4 (2022/12)
 Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
-Version:     001
-Date:        2023-04-28
+Version:     002
+Date:        2024-02-20
 -->
 <targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Audit Settings (HANA)" id="1HAUDIT" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
   <configstore name="HDB_PARAMETER">
@@ -13,13 +13,13 @@ Date:        2023-04-28
                      SECT = 'auditing configuration' and 
                      NAME = 'global_auditing_state' and 
                      UPPER(VALUE) = 'TRUE' and 
-                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+                     LAYER like '%' and HOST like '%' 
       </compliant>
       <noncompliant> FILE_NAME = 'global.ini' and 
                      SECT = 'auditing configuration' and 
                      NAME = 'global_auditing_state' and 
                      NOT (UPPER(VALUE) = 'TRUE' )  and 
-                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+                     LAYER like '%' and HOST like '%'
       </noncompliant>
     </checkitem>
     <checkitem desc="[p1-CRITICAL] Auditing enabled" id="AUDIT-H_a" system_attributes="DB_SYSTEMDB:TRUE">
@@ -27,13 +27,13 @@ Date:        2023-04-28
                      SECT = 'auditing configuration' and 
                      NAME = 'global_auditing_state' and 
                      UPPER(VALUE) = 'TRUE' and 
-                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+                     LAYER like '%' and HOST like '%'
       </compliant>
       <noncompliant> FILE_NAME = 'nameserver.ini' and 
                      SECT = 'auditing configuration' and 
                      NAME = 'global_auditing_state' and 
                      NOT (UPPER(VALUE) = 'TRUE' )  and 
-                     LAYER like '%' and HOST like '%' and TENANT like '%' 
+                     LAYER like '%' and HOST like '%'
       </noncompliant>
     </checkitem>
   </configstore>
