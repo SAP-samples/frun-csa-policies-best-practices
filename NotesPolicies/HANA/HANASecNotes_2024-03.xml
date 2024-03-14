@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This Policy contains the following Hana SNotes published on PatchDay 2024-03:
+
+
+HANA Database
+[p2-CVSS 7.5] 0003410615 HAN-WDE-XSC - [CVE-2023-44487 ] Denial of service (DOS) in SAP HANA XS Classic and HANA XS Advanced (Version 4)
+              checks for hana and XSA versions
+
+
+SAP Security: PatchDay_2024-03
+Version: 0001 
+Date:    14.03.2024
+-->
+<targetsystem desc="SNotes of PatchDay: 2024-03 (HANA)" id="2024-03_HANA" multisql="Yes" version="0000">
+	<!-- [p2-CVSS 7.5] 0003410615 HAN-WDE-XSC - [CVE-2023-44487 ] Denial of service (DOS) in SAP HANA XS Classic and HANA XS Advanced (Version 4) -->
+	<configstore name="HDB_VERSION">
+		<checkitem desc="[p2-CVSS 7.5] HAN-WDE-XSC - Note 3410615v4 requires revision update or secure parameter setting in SystemDB" id="0003410615" not_found="positive" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_TENANT:TRUE">
+			<compliant>(  
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND substring(VALUE,0,11) &gt;= '2.00.059.12' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,8) &gt;= '2.00.075' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) &gt; '2.00.07' )
+			)
+              </compliant>
+			<noncompliant>(
+            ( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND NOT substring(VALUE,0,11) &gt;= '2.00.059.12' )	or
+            ( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND NOT substring(VALUE,0,8) &gt;= '2.00.075' )	or
+            ( NAME = 'VERSION' AND substring(VALUE,0,7) &lt; '2.00.05' )
+			)
+              </noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="HDB_VERSION">
+		<checkitem desc="[p2-CVSS 7.5] HAN-WDE-XSC - Note 3410615v4 requires revision update or parameter change" id="0003410615" not_found="ignore" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_SYSTEMDB:TRUE">
+			<compliant>(  
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND substring(VALUE,0,11) &gt;= '2.00.059.12' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,8) &gt;= '2.00.075' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) &gt; '2.00.07' )
+			) 
+            </compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="HDB_PARAMETER">
+		<checkitem desc="[p2-CVSS 7.5] HAN-WDE-XSC - Note 3410615v4 requires revision update or parameter change" id="0003410615" not_found="positive" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_SYSTEMDB:TRUE">
+			<compliant>
+                        FILE_NAME = 'webdispatcher.ini'
+                    and LAYER like '%'
+                    and NAME = 'icm/HTTP/support_http2'
+                    and not UPPER(VALUE) = 'TRUE'
+      </compliant>
+			<noncompliant> 
+                        FILE_NAME = 'webdispatcher.ini'
+                    and LAYER like '%'
+                    and NAME = 'icm/HTTP/support_http2'
+                    and UPPER(VALUE) = 'TRUE'
+      </noncompliant>
+			<joinstore name="HDB_VERSION" no_data_found="Yes">
+				<joincompliant>(
+            ( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND NOT substring(VALUE,0,11) &gt;= '2.00.059.12' )	or
+            ( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND NOT substring(VALUE,0,8) &gt;= '2.00.075' )	or
+            ( NAME = 'VERSION' AND substring(VALUE,0,7) &lt; '2.00.05' )
+			)
+              </joincompliant>
+				<joinnoncompliant>(
+            ( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND NOT substring(VALUE,0,11) &gt;= '2.00.059.12' )	or
+            ( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND NOT substring(VALUE,0,8) &gt;= '2.00.075' )	or
+            ( NAME = 'VERSION' AND substring(VALUE,0,7) &lt; '2.00.05' )
+			)
+              </joinnoncompliant>
+			</joinstore>
+		</checkitem>
+	</configstore>
+	<!-- SAP Extended Application Services and Runtime (XSA) -->
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p2-CVSS 7.5] HAN-WDE-XSC - Note 3410615v4 may require XS Advanced update" id="0003410615_xsa" not_found="ignore">
+			<compliant>(
+				( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') = '0001' and lpad(PATCH,4,'0') &gt;= '0008' )  or 
+				( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') &gt;= '0002' )
+			)
+      </compliant>
+			<complianttext/>
+			<noncompliant>(
+				( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') = '0001' and not lpad(PATCH,4,'0') &gt;= '0008' )  or 
+				( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') &lt; '0001' )
+			)
+      </noncompliant>
+			<noncomplianttext/>
+		</checkitem>
+	</configstore>
+</targetsystem>

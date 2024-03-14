@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This FRUN CSA policy contains rules to check the following ABAP Security Notes:
+
+[p3-CVSS 4.3] 0003419022 BC-SRV-APS-APJ - [CVE-2024-27900]Missing Authorization check in SAP ABAP Platform
+[p3-CVSS 4.6] 0003417399 PA-FIO-LEA - [CVE-2024-22133] Improper Access Control in SAP Fiori Front End Server
+[p3-CVSS 5.4]  0003377979 BC-FES-WGU - [CVE-2024-27902] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver AS AB
+			kernel
+
+The policy does not check the following Security Notes:
+
+[p3-CVSS 5.3]  0003425682 BC-ESI-WS-JAV-RT - [CVE-2024-25644] Information Disclosure vulnerability in SAP NetWeaver (WSRM)
+[p1-CVSS 10.0]  0002622660 BC-FES-BUS-DSK - Security updates for the browser control Google Chromium delivered with SAP Business
+[p1-CVSS 9.1]  0003433192 BC-JAS-ADM-LOG - [CVE-2024-22127] Code Injection vulnerability in SAP NetWeaver AS Java (Administ
+[p3-CVSS 5.3]  0003434192 BC-XI-IBF-UI - [CVE-2024-28163] Information Disclosure vulnerability in SAP NetWeaver Process I
+[p2-CVSS 7.2]  0003414195 BI-BIP-CMC - [CVE-2023-50164] Path Traversal Vulnerability in SAP BusinessObjects Business In
+[p1-CVSS 9.4]  0003425274 CA-LCA-ACP - [CVE-2019-10744] Code Injection vulnerability in applications built with SAP Bui
+[p2-CVSS 8.8]  0003346500 CEC-SCC-PLA-PL - [CVE-2023-39439] Improper authentication in SAP Commerce Cloud
+[p3-CVSS 5.3]  0003428847 EP-PIN-APF-OPR - [CVE-2024-25645] Information Disclosure vulnerability in SAP NetWeaver (EP)
+[p2-CVSS 7.5]  0003410615 HAN-AS-XS - [CVE-2023-44487 ] Denial of service (DOS) in SAP HANA XS Classic and HANA XS Advanced
+
+SAP Security: PatchDay_2024-03
+Version: 001
+Date:    14.03.2024
+-->
+
+<targetsystem desc="SNotes of PatchDay: 2024-03" id="PatchDay_2024-03" multisql="Yes">
+  <!-- [p3-CVSS 4.3]  BC-SRV-APS-APJ 0003419022 - [CVE-2024-27900]Missing Authorization check in SAP ABAP Platform (Version 0007)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 4.3] Note 0003419022 exists" id="0003419022" operator="check_note">
+      <compliant>NOTE = '0003419022' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.3] Note 0003419022 missing and solution with SP available" id="0003419022" operator="check_note:0003419022">
+     <compliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and not( (lpad(SP,4,'0'))  &lt; '0002' )   ) <!-- SAP_BASIS 758 SAPK-75802INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '795' and not( (lpad(SP,4,'0'))  &lt; '0003' )   ) <!-- SAP_BASIS 795 SAPK-79503INSAPBASIS -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and (lpad(SP,4,'0'))  &lt; '0002' )  <!-- SAP_BASIS 758 SAPK-75802INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '795' and (lpad(SP,4,'0'))  &lt; '0003' )  <!-- SAP_BASIS 795 SAPK-79503INSAPBASIS -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.3] Note 0003419022 missing and applicable using Correction Instruction" id="0003419022" operator="check_note:0003419022">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and lpad(SP,4,'0') between '0000' and '0001' )  <!-- SAP_BASIS 758 758 - SAPK-75801INSAPBASIS  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p3-CVSS 4.6]  PA-FIO-LEA 0003417399 - [CVE-2024-22133] Improper Access Control in SAP Fiori Front End Server (Version 0016)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p3-CVSS 4.6] Note 0003417399 exists" id="0003417399" operator="check_note">
+      <compliant>NOTE = '0003417399' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.6] Note 0003417399 missing and solution with SP available" id="0003417399" operator="check_note:0003417399">
+     <compliant>(
+      ( COMPONENT = 'GBX01HR5' and VERSION = '605' and not( (lpad(SP,4,'0'))  &lt; '0030' )   ) <!-- GBX01HR5 605 SAPK-60530INGBX01HR5 -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'GBX01HR5' and VERSION = '605' and (lpad(SP,4,'0'))  &lt; '0030' )  <!-- GBX01HR5 605 SAPK-60530INGBX01HR5 -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p3-CVSS 4.6] Note 0003417399 missing and applicable using Correction Instruction" id="0003417399" operator="check_note:0003417399">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'GBX01HR5' and VERSION = '605' and lpad(SP,4,'0') between '0010' and '0029' )  <!-- GBX01HR5 605 SAPK-60510INGBX01HR5 - SAPK-60529INGBX01HR5  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+<!-- [p3-CVSS 5.4]  0003377979 BC-FES-WGU - [CVE-2024-27902] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver AS ABAP -->
+  <configstore name="SAP_KERNEL">
+    <checkitem desc="[p3-CVSS 5.4] Kernel patch required for SNote 3377979" id="0003377979_k">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0213'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0213'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '789_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '789_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p3-CVSS 5.4] Kernel patch required for SNote 3377979" id="0003377979_k">
+      <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0060'</compliant>
+      <noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0060'</noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No">
+        <joincompliant>NAME = 'KERN_REL' and VALUE = '793_REL'</joincompliant>
+        <joinnoncompliant>NAME = 'KERN_REL' and VALUE = '793_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+  </configstore>
+
+</targetsystem>
