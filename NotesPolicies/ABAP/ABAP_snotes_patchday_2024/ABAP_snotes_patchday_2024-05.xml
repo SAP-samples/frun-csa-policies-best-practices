@@ -28,8 +28,8 @@ The policy does not check the following Security Notes:
 
 
 SAP Security: PatchDay_2024-05
-Version: 001
-Date:    16.05.2024
+Version: 002   - Update check for note BC-EIM-ESH 0003460772
+Date:    23.05.2024
 -->
 
 <targetsystem desc="SNotes of PatchDay: 2024-05" id="PatchDay_2024-05" multisql="Yes">
@@ -359,7 +359,7 @@ Date:    16.05.2024
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-  <checkitem desc="[p3-CVSS 6.1] Note 0003449741 missing and solution with SP available" id="0003460772" operator="check_note:0003460772">
+  <checkitem desc="[p3-CVSS 6.1] Note 0003449741 missing and solution with SP available" id="0003460772" operator="check_note:0003449741">
      <compliant>(
       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0032' )   ) <!-- SAP_BASIS 740 SAPKB74032 -->  or
       ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0030' )   ) <!-- SAP_BASIS 750 SAPK-75030INSAPBASIS -->  or
@@ -391,7 +391,7 @@ Date:    16.05.2024
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-  <checkitem desc="[p3-CVSS 6.1] Note 0003449741 missing and applicable using Correction Instruction" id="0003460772" operator="check_note:0003460772">
+  <checkitem desc="[p3-CVSS 6.1] Note 0003449741 missing and applicable using Correction Instruction" id="0003460772" operator="check_note:0003449741">
     <compliant/>
     <noncompliant>(
       ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and lpad(SP,4,'0') between '0000' and '0031' )  <!-- SAP_BASIS 740 740 - SAPKB74031  -->  or

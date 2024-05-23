@@ -219,7 +219,7 @@ Date:    11.04.2024
     </checkitem>
   </configstore>
 	<configstore name="COMP_LEVEL">
-		<checkitem desc="[p3-CVSS 6.5] FIN-CS-CDC-DC - Note 0003442378 missing and solution with SP available; referencing to Snote 3443941" id="0003442378" operator="check_note:0003442378">
+		<checkitem desc="[p3-CVSS 6.5] FIN-CS-CDC-DC - Note 0003442378 missing and solution with SP available; referencing to Snote 3443941" id="0003442378" operator="check_note:0003443941">
      <compliant>(
       ( COMPONENT = 'S4CORE' and VERSION = '104' and not( (lpad(SP,4,'0'))  &lt; '0010' )   ) <!-- S4CORE 104 SAPK-10410INS4CORE -->  or
       ( COMPONENT = 'S4CORE' and VERSION = '105' and not( (lpad(SP,4,'0'))  &lt; '0008' )   ) <!-- S4CORE 105 SAPK-10508INS4CORE -->  or
@@ -237,7 +237,7 @@ Date:    11.04.2024
      </checkitem>
 	</configstore>
 	<configstore name="COMP_LEVEL">
-		<checkitem desc="[p3-CVSS 6.5] FIN-CS-CDC-DC - Note 0003442378 missing and applicable using Correction Instruction; referencing to Snote 3443941" id="0003442378" operator="check_note:0003442378">
+		<checkitem desc="[p3-CVSS 6.5] FIN-CS-CDC-DC - Note 0003442378 missing and applicable using Correction Instruction; referencing to Snote 3443941" id="0003442378" operator="check_note:0003443941">
     <compliant/>
     <noncompliant>(
       ( COMPONENT = 'S4CORE' and VERSION = '104' and lpad(SP,4,'0') between '0000' and '0009' )  <!-- S4CORE 104 104 - SAPK-10409INS4CORE  --> or
