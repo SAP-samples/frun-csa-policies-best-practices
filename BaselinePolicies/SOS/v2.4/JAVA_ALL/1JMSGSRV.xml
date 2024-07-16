@@ -2,8 +2,9 @@
 <!-- 
 Reference:   SAP Security Baseline Template v2.4 (2022/12)
 Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
-Version:     001
-Date:        2023-04-28
+check MSGSRV-J_e removed - parameter system/secure_communication removed as it is not JAVA related
+Version:     002
+Date:        2024-07-16
 -->
 <targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.4] Message Server Security (JAVA)" id="1JMSGSRV" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
   <configstore name="Parameters" system_type="JAVA">
@@ -18,14 +19,7 @@ Date:        2023-04-28
       </noncompliant>
       <noncomplianttext/>
     </checkitem>
-    <checkitem desc="[p1-CRITICAL] system/secure_communication (Message Server ACL)" id="MSGSRV-J_e">
-      <compliant>    NAME = 'system/secure_communication' and VALUE = 'ON'
-      </compliant>
-      <complianttext/>
-      <noncompliant> NAME = 'system/secure_communication' and NOT VALUE = 'ON'
-      </noncompliant>
-      <noncomplianttext/>
-    </checkitem>
+
     <!-- old version (BLv2.2)
     <checkitem desc="[p1-CRITICAL] File with access control list for message server" id="MSGSRV-J_d.1">
       <compliant>    NAME = 'ms/acl_info' and 
