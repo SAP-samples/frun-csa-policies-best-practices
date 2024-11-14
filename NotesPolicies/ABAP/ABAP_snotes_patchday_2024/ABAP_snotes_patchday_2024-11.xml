@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This FRUN CSA policy contains rules to check the following ABAP Security Notes:
+
+[p3-CVSS 4.3] 0003508947 BC-FES-WGU - [CVE-2024-47593] Information Disclosure Vulnerability in SAP NetWeaver Applicati
+[p2-CVSS 7.7] 0003483344 FIN-BA - [CVE-2024-39592] Missing Authorization check in SAP PDCE
+[p4-CVSS 3.5] 0003392049 FIN-FSCM-CLM-BAM - [CVE-2024-33000] Missing Authorization check in SAP Bank Account Management
+[p4-CVSS 3.5] 0003498470 FIN-FSCM-CLM-COP - [CVE-2024-47587] Missing authorization check in SAP Cash Management (Cash Operat
+[p3-CVSS 5.3]  0003504390 BC-ABA-LA - [CVE-2024-47586] NULL Pointer Dereference vulnerability in SAP NetWeaver Applica
+
+The policy does not check the following Security Notes:
+
+[p3-CVSS 6.3]  0003509619 BC-CCM-HAG - [CVE-2024-47595] Local Privilege Escalation in SAP Host Agent
+[p3-CVSS 6.5]  0003335394 BC-CCM-SLD - [CVE-2024-42372] Missing Authorization check in SAP NetWeaver AS Java (System La
+[p2-CVSS 8.8]  0003520281 BC-CST-WDP - [CVE-2024-47590] Cross-Site Scripting (XSS) vulnerability in SAP Web Dispatcher
+
+[p3-CVSS 5.3]  0003393899 BC-JAS-SEC - [CVE-2024-47592] Information Disclosure Vulnerability in SAP NetWeaver Applicati
+[p3-CVSS 4.7]  0003522953 BC-UPG-TLS-TLJ - [CVE-2024-47588] Information Disclosure vulnerability in SAP NetWeaver Java (Sof
+
+SAP Security: PatchDay_2024-11
+Version: 001
+Date:    14.11.2024
+-->
+
+<targetsystem desc="SNotes of PatchDay: 2024-11" id="PatchDay_2024-11" multisql="Yes">
+
+
+  <!-- [p3-CVSS 4.3]  BC-FES-WGU 0003508947 - [CVE-2024-47593] Information Disclosure Vulnerability in SAP NetWeaver Applicati (Version 0005)  -->
+
+<configstore name="SAP_KERNEL">
+		<checkitem desc="[p3-CVSS 4.3] BC-FES-WGU - Kernel patch required for SNote 3508947" id="0003508947_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1413'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1413'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+		<checkitem desc="[p3-CVSS 4.3] BC-FES-WGU - Kernel patch required for SNote 3508947" id="0003508947_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0411'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0411'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '754_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '754_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+		<checkitem desc="[p3-CVSS 4.3] BC-FES-WGU - Kernel patch required for SNote 3508947" id="0003508947_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0662'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0662'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '777_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '777_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+		<checkitem desc="[p3-CVSS 4.3] BC-FES-WGU - Kernel patch required for SNote 3508947" id="0003508947_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0259'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0259'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '789_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '789_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+		<checkitem desc="[p3-CVSS 4.3] BC-FES-WGU - Kernel patch required for SNote 3508947" id="0003508947_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0116'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0116'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '793_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '793_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+		<checkitem desc="[p3-CVSS 4.3] BC-FES-WGU - Kernel patch required for SNote 3508947" id="0003508947_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0015'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0015'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '912_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '912_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+	</configstore>
+
+
+  <!-- [p3-CVSS 5.3]  0003504390 BC-ABA-LA - [CVE-2024-47586] NULL Pointer Dereference vulnerability in SAP NetWeaver Application  -->
+
+<configstore name="SAP_KERNEL">
+		<checkitem desc="[p3-CVSS 5.3] BC-ABA-LA - Kernel patch required for SNote 3504390" id="0003504390_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1411'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1411'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE like '722%'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE like '722%'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+		<checkitem desc="[p3-CVSS 5.3] BC-ABA-LA - Kernel patch required for SNote 3504390" id="0003504390_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1415'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '1415'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '753_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+		<checkitem desc="[p3-CVSS 5.3] BC-ABA-LA - Kernel patch required for SNote 3504390" id="0003504390_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0410'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0410'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '754_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '754_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+		<checkitem desc="[p3-CVSS 5.3] BC-ABA-LA - Kernel patch required for SNote 3504390" id="0003504390_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0662'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0662'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '777_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '777_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+		<checkitem desc="[p3-CVSS 5.3] BC-ABA-LA - Kernel patch required for SNote 3504390" id="0003504390_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0259'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0259'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '789_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '789_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+		<checkitem desc="[p3-CVSS 5.3] BC-ABA-LA - Kernel patch required for SNote 3504390" id="0003504390_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0117'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0117'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '793_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '793_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+		<checkitem desc="[p3-CVSS 5.3] BC-ABA-LA - Kernel patch required for SNote 3504390" id="0003504390_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0233'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0233'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '804_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '804_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+		<checkitem desc="[p3-CVSS 5.3] BC-ABA-LA - Kernel patch required for SNote 3504390" id="0003504390_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0016'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0016'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '912_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '912_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+		<checkitem desc="[p3-CVSS 5.3] BC-ABA-LA - Kernel patch required for SNote 3504390" id="0003504390_k">
+			<compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0003'</compliant>
+			<noncompliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt; '0003'</noncompliant>
+			<joinstore name="SAP_KERNEL" no_data_found="No">
+				<joincompliant>NAME = 'KERN_REL' and VALUE = '913_REL'</joincompliant>
+				<joinnoncompliant>NAME = 'KERN_REL' and VALUE = '913_REL'</joinnoncompliant>
+			</joinstore>
+		</checkitem>
+	</configstore>
+
+  <!-- [p2-CVSS 7.7]  FIN-BA 3483344 - [CVE-2024-39592] Missing Authorization check in SAP PDCE (High) -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p2-CVSS 7.7] Note 0003483344 exists" id="0003483344" operator="check_note">
+      <compliant>NOTE = '0003483344' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p2-CVSS 7.7] Note 0003483344 missing and solution with SP available" id="0003483344" operator="check_note:0003483344">
+     <compliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- S4CORE 102 SAPK-10215INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) <!-- S4CORE 103 SAPK-10313INS4CORE -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '104' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) <!-- S4COREOP 104 SAPK-10411INS4COREOP -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '105' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- S4COREOP 105 SAPK-10509INS4COREOP -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '106' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- S4COREOP 106 SAPK-10607INS4COREOP -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '107' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- S4COREOP 107 SAPK-10705INS4COREOP -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '108' and not( (lpad(SP,4,'0'))  &lt; '0002' )   ) <!-- S4COREOP 108 SAPK-10802INS4COREOP -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '600' and not( (lpad(SP,4,'0'))  &lt; '0037' )   ) <!-- SEM-BW 600 SAPKGS6037 -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '602' and not( (lpad(SP,4,'0'))  &lt; '0027' )   ) <!-- SEM-BW 602 SAPK-60227INSEMBW -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '603' and not( (lpad(SP,4,'0'))  &lt; '0026' )   ) <!-- SEM-BW 603 SAPK-60326INSEMBW -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '604' and not( (lpad(SP,4,'0'))  &lt; '0027' )   ) <!-- SEM-BW 604 SAPK-60427INSEMBW -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '605' and not( (lpad(SP,4,'0'))  &lt; '0024' )   ) <!-- SEM-BW 605 SAPK-60524INSEMBW -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '736' and not( (lpad(SP,4,'0'))  &lt; '0035' )   ) <!-- SEM-BW 736 SAPK-73635INSEMBW --> or
+      ( COMPONENT = 'SEM-BW' and VERSION = '747' and not( (lpad(SP,4,'0'))  &lt; '0029' )   ) <!-- SEM-BW 747 SAPK-74729INSEMBW -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '748' and not( (lpad(SP,4,'0'))  &lt; '0023' )   ) <!-- SEM-BW 748 SAPK-74823INSEMBW -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- S4CORE 102 SAPK-10215INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and (lpad(SP,4,'0'))  &lt; '0013' )  <!-- S4CORE 103 SAPK-10313INS4CORE -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '104' and (lpad(SP,4,'0'))  &lt; '0011' )  <!-- S4COREOP 104 SAPK-10411INS4COREOP -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '105' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- S4COREOP 105 SAPK-10509INS4COREOP -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '106' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- S4COREOP 106 SAPK-10607INS4COREOP -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '107' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- S4COREOP 107 SAPK-10705INS4COREOP -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '108' and (lpad(SP,4,'0'))  &lt; '0002' )  <!-- S4COREOP 108 SAPK-10802INS4COREOP -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '600' and (lpad(SP,4,'0'))  &lt; '0037' )  <!-- SEM-BW 600 SAPKGS6037 -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '602' and (lpad(SP,4,'0'))  &lt; '0027' )  <!-- SEM-BW 602 SAPK-60227INSEMBW -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '603' and (lpad(SP,4,'0'))  &lt; '0026' )  <!-- SEM-BW 603 SAPK-60326INSEMBW -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '604' and (lpad(SP,4,'0'))  &lt; '0027' )  <!-- SEM-BW 604 SAPK-60427INSEMBW -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '605' and (lpad(SP,4,'0'))  &lt; '0024' )  <!-- SEM-BW 605 SAPK-60524INSEMBW -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '736' and (lpad(SP,4,'0'))  &lt; '0035' )  <!-- SEM-BW 736 SAPK-73635INSEMBW --> or
+      ( COMPONENT = 'SEM-BW' and VERSION = '747' and (lpad(SP,4,'0'))  &lt; '0029' )  <!-- SEM-BW 747 SAPK-74729INSEMBW -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '748' and (lpad(SP,4,'0'))  &lt; '0023' )  <!-- SEM-BW 748 SAPK-74823INSEMBW -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p2-CVSS 7.7] Note 0003483344 missing and applicable using Correction Instruction" id="0003483344" operator="check_note:0003483344">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and lpad(SP,4,'0') between '0000' and '0014' )  <!-- S4CORE 102 102 - SAPK-10214INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and lpad(SP,4,'0') between '0000' and '0012' )  <!-- S4CORE 103 103 - SAPK-10312INS4CORE  -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '104' and lpad(SP,4,'0') between '0000' and '0010' )  <!-- S4COREOP 104 104 - SAPK-10410INS4COREOP  -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '105' and lpad(SP,4,'0') between '0000' and '0008' )  <!-- S4COREOP 105 105 - SAPK-10508INS4COREOP  -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '106' and lpad(SP,4,'0') between '0000' and '0006' )  <!-- S4COREOP 106 106 - SAPK-10606INS4COREOP  -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '107' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- S4COREOP 107 107 - SAPK-10704INS4COREOP  -->  or
+      ( COMPONENT = 'S4COREOP' and VERSION = '108' and lpad(SP,4,'0') between '0000' and '0001' )  <!-- S4COREOP 108 108 - SAPK-10801INS4COREOP  -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '600' and lpad(SP,4,'0') between '0001' and '0036' )  <!-- SEM-BW 600 SAPKGS6001 - SAPKGS6036  --> or
+      ( COMPONENT = 'SEM-BW' and VERSION = '602' and lpad(SP,4,'0') between '0006' and '0026' )  <!-- SEM-BW 602 SAPK-60206INSEMBW - SAPK-60226INSEMBW  -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '603' and lpad(SP,4,'0') between '0000' and '0025' )  <!-- SEM-BW 603 603 - SAPK-60325INSEMBW  -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '604' and lpad(SP,4,'0') between '0004' and '0026' )  <!-- SEM-BW 604 SAPK-60404INSEMBW - SAPK-60426INSEMBW  -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '605' and lpad(SP,4,'0') between '0003' and '0023' )  <!-- SEM-BW 605 SAPK-60503INSEMBW - SAPK-60523INSEMBW  -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '634' and lpad(SP,4,'0') between '0000' and '0999' )  <!-- SEM-BW 634 634 - ALL_SP  -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '736' and lpad(SP,4,'0') between '0001' and '0034' )  <!-- SEM-BW 736 SAPK-73601INSEMBW - SAPK-73634INSEMBW  -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '746' and lpad(SP,4,'0') between '0000' and '0999' )  <!-- SEM-BW 746 746 - ALL_SP  -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '747' and lpad(SP,4,'0') between '0001' and '0028' )  <!-- SEM-BW 747 SAPK-74701INSEMBW - SAPK-74728INSEMBW  -->  or
+      ( COMPONENT = 'SEM-BW' and VERSION = '748' and lpad(SP,4,'0') between '0000' and '0022' )  <!-- SEM-BW 748 748 - SAPK-74822INSEMBW  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+  <!-- [p4-CVSS 3.5]  FIN-FSCM-CLM-BAM 0003392049 - [CVE-2024-33000] Missing Authorization check in SAP Bank Account Management (Version 0012) (Low) -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p4-CVSS 3.5] Note 0003392049 exists" id="0003392049" operator="check_note">
+      <compliant>NOTE = '0003392049' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p4-CVSS 3.5] Note 0003392049 missing and solution with SP available" id="0003392049" operator="check_note:0003392049">
+     <compliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and not( (lpad(SP,4,'0'))  &lt; '0014' )   ) <!-- S4CORE 102 SAPK-10214INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and not( (lpad(SP,4,'0'))  &lt; '0012' )   ) <!-- S4CORE 103 SAPK-10312INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and not( (lpad(SP,4,'0'))  &lt; '0010' )   ) <!-- S4CORE 104 SAPK-10410INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and not( (lpad(SP,4,'0'))  &lt; '0008' )   ) <!-- S4CORE 105 SAPK-10508INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- S4CORE 106 SAPK-10606INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '107' and not( (lpad(SP,4,'0'))  &lt; '0004' )   ) <!-- S4CORE 107 SAPK-10704INS4CORE --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '108' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- S4CORE 108 SAPK-10801INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and (lpad(SP,4,'0'))  &lt; '0014' )  <!-- S4CORE 102 SAPK-10214INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and (lpad(SP,4,'0'))  &lt; '0012' )  <!-- S4CORE 103 SAPK-10312INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and (lpad(SP,4,'0'))  &lt; '0010' )  <!-- S4CORE 104 SAPK-10410INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and (lpad(SP,4,'0'))  &lt; '0008' )  <!-- S4CORE 105 SAPK-10508INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- S4CORE 106 SAPK-10606INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '107' and (lpad(SP,4,'0'))  &lt; '0004' )  <!-- S4CORE 107 SAPK-10704INS4CORE --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '108' and (lpad(SP,4,'0'))  &lt; '0001' )  <!-- S4CORE 108 SAPK-10801INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p4-CVSS 3.5] Note 0003392049 missing and applicable using Correction Instruction" id="0003392049" operator="check_note:0003392049">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '100' and lpad(SP,4,'0') between '0000' and '0999' )  <!-- S4CORE 100 100 - ALL_SP  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '101' and lpad(SP,4,'0') between '0000' and '0999' )  <!-- S4CORE 101 101 - ALL_SP  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and lpad(SP,4,'0') between '0002' and '0013' )  <!-- S4CORE 102 SAPK-10202INS4CORE - SAPK-10213INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and lpad(SP,4,'0') between '0000' and '0011' )  <!-- S4CORE 103 103 - SAPK-10311INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and lpad(SP,4,'0') between '0000' and '0009' )  <!-- S4CORE 104 104 - SAPK-10409INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and lpad(SP,4,'0') between '0000' and '0007' )  <!-- S4CORE 105 105 - SAPK-10507INS4CORE  --> or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- S4CORE 106 SAPK-10601INS4CORE - SAPK-10605INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '107' and lpad(SP,4,'0') between '0000' and '0003' )  <!-- S4CORE 107 107 - SAPK-10703INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '108' and lpad(SP,4,'0') between '0000' and '0000' )  <!-- S4CORE 108 108 - 108  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+
+  <!-- [p4-CVSS 3.5]  FIN-FSCM-CLM-COP 0003498470 - [CVE-2024-47587] Missing authorization check in SAP Cash Management (Cash Operat (Version 0013)  -->
+  <configstore name="ABAP_NOTES">
+    <checkitem desc="[p4-CVSS 3.5] Note 0003498470 exists" id="0003498470" operator="check_note">
+      <compliant>NOTE = '0003498470' and PRSTATUS = 'E'</compliant>
+      <noncompliant/>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p4-CVSS 3.5] Note 0003498470 missing and solution with SP available" id="0003498470" operator="check_note:0003498470">
+     <compliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) <!-- S4CORE 103 SAPK-10313INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) <!-- S4CORE 104 SAPK-10411INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- S4CORE 105 SAPK-10509INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- S4CORE 106 SAPK-10607INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '107' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- S4CORE 107 SAPK-10705INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '108' and not( (lpad(SP,4,'0'))  &lt; '0003' )   ) <!-- S4CORE 108 SAPK-10803INS4CORE -->
+     )</compliant>
+     <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and (lpad(SP,4,'0'))  &lt; '0013' )  <!-- S4CORE 103 SAPK-10313INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and (lpad(SP,4,'0'))  &lt; '0011' )  <!-- S4CORE 104 SAPK-10411INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- S4CORE 105 SAPK-10509INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- S4CORE 106 SAPK-10607INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '107' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- S4CORE 107 SAPK-10705INS4CORE -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '108' and (lpad(SP,4,'0'))  &lt; '0003' )  <!-- S4CORE 108 SAPK-10803INS4CORE -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+  <configstore name="COMP_LEVEL">
+  <checkitem desc="[p4-CVSS 3.5] Note 0003498470 missing and applicable using Correction Instruction" id="0003498470" operator="check_note:0003498470">
+    <compliant/>
+    <noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and lpad(SP,4,'0') between '0000' and '0012' )  <!-- S4CORE 103 103 - SAPK-10312INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and lpad(SP,4,'0') between '0000' and '0010' )  <!-- S4CORE 104 104 - SAPK-10410INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '105' and lpad(SP,4,'0') between '0000' and '0008' )  <!-- S4CORE 105 105 - SAPK-10508INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '106' and lpad(SP,4,'0') between '0000' and '0006' )  <!-- S4CORE 106 106 - SAPK-10606INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '107' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- S4CORE 107 107 - SAPK-10704INS4CORE  -->  or
+      ( COMPONENT = 'S4CORE' and VERSION = '108' and lpad(SP,4,'0') between '0000' and '0002' )  <!-- S4CORE 108 108 - SAPK-10802INS4CORE  -->
+     )</noncompliant>
+    </checkitem>
+  </configstore>
+
+</targetsystem>
