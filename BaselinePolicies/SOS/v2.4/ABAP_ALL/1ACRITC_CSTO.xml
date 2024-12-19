@@ -316,7 +316,7 @@ Date:        2023-04-28
       </noncompliant>
       <noncomplianttext/>
     </checkitem>
-    <checkitem desc="[p1-CRITICAL] Roles with CHANGE ALL TABLES authorization (S_TABU_NAM)" id="CRITAU-A_c.17.2" not_found="ignore" not_found="positive">
+    <checkitem desc="[p1-CRITICAL] Roles with CHANGE ALL TABLES authorization (S_TABU_NAM)" id="CRITAU-A_c.17.2" not_found="positive">
       <compliant>         COMB_ID = 'CHANGE_ALL_TABLES1' and
                                     ( not ROLE like_regexpr '^(?!SAP).*' or
                                     ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) )
