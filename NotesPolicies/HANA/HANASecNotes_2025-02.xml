@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This Policy contains the following HANA SNotes published on PatchDay 2025-02:
+
+HANA Database
+[p2-CVSS 7.1] 0003563929 BC-XS-SEC - [CVE-2025-24868] Open Redirect Vulnerability in SAP HANA extended application services, advanced model (User Account and Authentication Services)(Version 11)
+
+
+
+SAP Security: PatchDay_2025-02
+Version: 0001
+Date:    13.02.2025
+-->
+<targetsystem desc="SNotes of PatchDay: 2025-02 (HANA)" id="2025-02_HANA" multisql="Yes" version="0000">
+	<!-- PRIO MEDIUM -->
+	<!-- [p2-CVSS 7.1] 0003563929 BC-XS-SEC - [CVE-2025-24868] Open Redirect Vulnerability in SAP HANA extended application services, advanced model (User Account and Authentication Services)(Version 11) -->
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p2-CVSS 7.1] [CVE-2025-24868] BC-XS-SEC - Note 3563929v11 may require XS Advanced update" id="0003563929_xsa" not_found="ignore">
+			<compliant> (
+        ( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0')  = '0003' and lpad(PATCH,4,'0') &gt;= '0003' ) or
+        ( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') &gt;= '0003' ) )
+    </compliant>
+			<complianttext/>
+			<noncompliant> (
+        ( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') = '0003' and lpad(PATCH,4,'0') &lt; '0003' ) or
+		( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') &lt; '0003' ) )
+    </noncompliant>
+			<noncomplianttext/>
+		</checkitem>
+	</configstore>
+</targetsystem>
