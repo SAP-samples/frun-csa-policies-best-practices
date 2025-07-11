@@ -1,0 +1,1219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This Policy contains rules to check the following ABAP Security Notes published on PatchDay 2025-07:
+
+AS ABAP
+[p1-CVSS 9.9] 0003618955 SCM-APO-PPS -    [CVE-2025-42967] Code Injection vulnerability in SAP S/4HANA and SAP SCM (Characteristic Propagation) (Version 11)
+[p2-CVSS 8.1] 0003623440 BC-CCM-CNF-OPM - [CVE-2025-42953] Missing Authorization check in SAP NetWeaver Application Server for ABAP (Version 6)
+[p2-CVSS 7.7] 0003623255 CRM-MW-ADP -     [CVE-2025-42952] Missing Authorization check in SAP Business Warehouse and SAP Plug-In Basis (Version 5)
+[p3-CVSS 6.7] 0003580384 OPU-XBE -        [CVE-2025-42993] Missing Authorization Check in SAP S/4HANA (Enterprise Event Enablement) (Version 8)
+[p3-CVSS 6.6] 0003577300 OPU-GW-V4 -      [CVE-2025-42997] Information Disclosure vulnerability in SAP Gateway Client (Version 6)
+[p3-CVSS 6.1] 0003617131 BC-FES-ITS -     [CVE-2025-42981] Multiple vulnerabilities in SAP NetWeaver Application Server ABAP (Version 10)
+[p3-CVSS 6.1] 0003604212 BW-BEX-ET-WEB -  [CVE-2025-42962] Cross-Site Scripting (XSS) vulnerability in SAP Business Warehouse (Business Explorer Web 3.5 loading animation) (Version 7)
+[p3-CVSS 6.1] 0003617380 BI-RA-CR -       [CVE-2025-42985] Open Redirect vulnerability in SAP BusinessObjects Content Administrator workbench (Version 6)
+[p3-CVSS 6.1] 0003596987 BC-MID-AC -      [CVE-2025-42969] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver Application Server ABAP and ABAP Platform (Version 9)
+[p3-CVSS 5.0] 0003621037 SV-SMG-MON-REP - [CVE-2025-42968] Missing Authorization check in SAP NetWeaver (RFC enabled function module) (Version 2)
+[p3-CVSS 4.9] 0003610322 BC-DB-DBI -      [CVE-2025-42961] Missing Authorization check in SAP NetWeaver Application Server for ABAP (Version 5)
+[p3-CVSS 4.3] 0003610056 SV-SMG-SDD -     [CVE-2025-42974] Missing Authorization Check in SAP NetWeaver and ABAP Platform (SDCCN) (Version 5)
+[p3-CVSS 4.3] 0003608991 BW-BEX-ET -      [CVE-2025-42960] Missing Authorization Check in SAP Business Warehouse and SAP BW/4HANA BEx Tools (Version 9)
+[p3-CVSS 4.3] 0003626440 SV-SMG-SDD -     [CVE-2025-42986] Missing Authorization check in SAP NetWeaver and ABAP Platform (Version 10)
+[p4-CVSS 2.7] 0003608156 BW-BEX-ET -      [CVE-2025-42954] Denial of service (DOS) in SAP NetWeaver Business Warehouse (CCAW application). (Version 6)
+
+
+
+The policy does not check the following Security Notes:
+[p1-CVSS 10.0] 0003578900 SRM-LA -    [CVE-2025-30018] Multiple vulnerabilities in SAP Supplier Relationship Management (Live Auction Cockpit) (Version 6)
+[p1-CVSS 9.1] 0003621236 BC-PIN-PCD -     [CVE-2025-42964] Insecure Deserialization in SAP NetWeaver Enterprise Portal Administration (Version 5)
+[p1-CVSS 9.1] 0003620498 EP-PIN-FPN -     [CVE-2025-42980] Insecure Deserialization in SAP NetWeaver Enterprise Portal Federated Portal Network (Version 4)
+[p1-CVSS 9.1] 0003610892 BC-ILM-DAS -     [CVE-2025-42966] Insecure Deserialization vulnerability in SAP NetWeaver (XML Data Archiving Service) (Version 11)
+[p1-CVSS 9.1] 0003621771 BC-JAS-ADM-LOG - [CVE-2025-42963] Insecure Deserialization in SAP NetWeaver Application Server for Java (Log Viewer ) (Version 8)
+[p2-CVSS 8.1] 0003600846 BC-MID-RFC - [CVE-2025-42959] Missing Authentication check after implementation of SAP Security Note 3007182 and 3537476 (Version 9)
+[p2-CVSS 8.0] 0003565279 BI-BIP-CMC  -    [CVE-2024-53677] Insecure File Operations vulnerability in SAP Business Objects Business Intelligence Platform (CMC) (Version 9)
+[p2-CVSS 7.6] 0003610591 EP-VC-INF -      [CVE-2025-42977] Directory Traversal vulnerability in SAP NetWeaver Visual Composer (Version 4)
+[p3-CVSS 6.9] 0003595143 BC-INS-TLS - [CVE-2025-43001] Multiple Privilege Escalation Vulnerabilities in SAPCAR (Version 5)
+[p3-CVSS 5.8] 0003595156 BC-INS-TLS - [CVE-2025-42970] Directory Traversal vulnerability in SAPCAR (Version 6)
+[p3-CVSS 5.6] 0003607513 BC-FES-GXT - [CVE-2025-42979] Insecure Key & Secret Management vulnerability in SAP GUI for Windows (Version 8)
+[p3-CVSS 5.4] 0003606103 EIM-DS-SVR - [CVE-2025-42973] Cross-Site Scripting (XSS) vulnerability in SAP Data Services (DQ Report) (Version 5)
+[p3-CVSS 4.1] 0003573199 BI-RA-WBI-FE-HTM - [CVE-2025-31326] HTML Injection vulnerability in SAP BusinessObjects Business Intelligence Platform (Web Intelligence) (Version 12)
+[p3-CVSS 4.1] 0003598118 BI-BIP-LCM -     [CVE-2025-42965] Server Side Request Forgery(SSRF) vulnerability in SAP BusinessObjects BI Platform Central Management Console Promo (Version 5)
+[p3-CVSS 4.0] 0003595141 BC-INS-TLS - [CVE-2025-42971] Memory Corruption vulnerability in SAPCAR (Version 5)
+[p4-CVSS 3.5] 0003557179 BC-JAS-SEC -     [CVE-2025-42978] Insufficiently Secure Hostname Verification for Outbound TLS Connections in SAP NetWeaver Application Server Java (Version 7)
+
+SAP Security: PatchDay_2025-07
+Version: 001
+Date:    10.07.2025
+-->
+<targetsystem desc="SNotes of PatchDay: 2025-07" id="PatchDay_2025-07" multisql="Yes">
+	<!-- PRIO HOTNEWS -->
+	<!-- [p1-CVSS 9.9]  0003618955 SCM-APO-PPS -  [CVE-2025-42967] Code Injection vulnerability in SAP S/4HANA and SAP SCM (Characteristic Propagation) (Version 11) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p1-CVSS 9.9] [CVE-2025-42967] SCM-APO-PPS - Note 0003618955 exists" id="0003618955" operator="check_note">
+			<compliant>NOTE = '0003618955' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p1-CVSS 9.9] [CVE-2025-42967] SCM-APO-PPS - Note 0003618955 missing and solution with SP available" id="0003618955" operator="check_note:0003618955">
+			<compliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) 
+        <!-- S4CORE 102 SAPK-10217INS4CORE -->
+          or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) 
+        <!-- S4CORE 103 SAPK-10315INS4CORE -->
+          or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) 
+        <!-- S4CORE 104 SAPK-10413INS4CORE -->
+          or
+      ( COMPONENT = 'S4COREOP' and VERSION = '105' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) 
+        <!-- S4COREOP 105 SAPK-10511INS4COREOP -->
+          or
+      ( COMPONENT = 'S4COREOP' and VERSION = '106' and not( (lpad(SP,4,'0'))  &lt; '0008' )   ) 
+        <!-- S4COREOP 106 SAPK-10608INS4COREOP -->
+          or
+      ( COMPONENT = 'S4COREOP' and VERSION = '107' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) 
+        <!-- S4COREOP 107 SAPK-10706INS4COREOP -->
+          or
+      ( COMPONENT = 'S4COREOP' and VERSION = '108' and not( (lpad(SP,4,'0'))  &lt; '0004' )   ) 
+        <!-- S4COREOP 108 SAPK-10804INS4COREOP -->
+          or
+      ( COMPONENT = 'SCM' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0030' )   ) 
+        <!-- SCM 702 SAPKY70230 -->
+         or
+      ( COMPONENT = 'SCMAPO' and VERSION = '713' and not( (lpad(SP,4,'0'))  &lt; '0031' )   ) 
+        <!-- SCMAPO 713 SAPK-71331INSCMAPO -->
+          or
+      ( COMPONENT = 'SCMAPO' and VERSION = '714' and not( (lpad(SP,4,'0'))  &lt; '0025' )   ) 
+        <!-- SCMAPO 714 SAPK-71425INSCMAPO -->
+     )
+      </compliant>
+			<noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and (lpad(SP,4,'0'))  &lt; '0017' )  
+        <!-- S4CORE 102 SAPK-10217INS4CORE -->
+          or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and (lpad(SP,4,'0'))  &lt; '0015' )  
+        <!-- S4CORE 103 SAPK-10315INS4CORE -->
+          or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and (lpad(SP,4,'0'))  &lt; '0013' )  
+        <!-- S4CORE 104 SAPK-10413INS4CORE -->
+          or
+      ( COMPONENT = 'S4COREOP' and VERSION = '105' and (lpad(SP,4,'0'))  &lt; '0011' )  
+        <!-- S4COREOP 105 SAPK-10511INS4COREOP -->
+          or
+      ( COMPONENT = 'S4COREOP' and VERSION = '106' and (lpad(SP,4,'0'))  &lt; '0008' )  
+        <!-- S4COREOP 106 SAPK-10608INS4COREOP -->
+          or
+      ( COMPONENT = 'S4COREOP' and VERSION = '107' and (lpad(SP,4,'0'))  &lt; '0006' )  
+        <!-- S4COREOP 107 SAPK-10706INS4COREOP -->
+          or
+      ( COMPONENT = 'S4COREOP' and VERSION = '108' and (lpad(SP,4,'0'))  &lt; '0004' )  
+        <!-- S4COREOP 108 SAPK-10804INS4COREOP -->
+          or
+      ( COMPONENT = 'SCM' and VERSION = '702' and (lpad(SP,4,'0'))  &lt; '0030' )  
+        <!-- SCM 702 SAPKY70230 -->
+         or
+      ( COMPONENT = 'SCMAPO' and VERSION = '713' and (lpad(SP,4,'0'))  &lt; '0031' )  
+        <!-- SCMAPO 713 SAPK-71331INSCMAPO -->
+          or
+      ( COMPONENT = 'SCMAPO' and VERSION = '714' and (lpad(SP,4,'0'))  &lt; '0025' )  
+        <!-- SCMAPO 714 SAPK-71425INSCMAPO -->
+     )
+      </noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p1-CVSS 9.9] [CVE-2025-42967] SCM-APO-PPS - Note 0003618955 missing and applicable using Correction Instruction" id="0003618955" operator="check_note:0003618955">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'S4CORE' and VERSION = '102' and lpad(SP,4,'0') between '0000' and '0016' )  
+        <!-- S4CORE 102 102 - SAPK-10216INS4CORE  -->
+          or
+      ( COMPONENT = 'S4CORE' and VERSION = '103' and lpad(SP,4,'0') between '0000' and '0014' )  
+        <!-- S4CORE 103 103 - SAPK-10314INS4CORE  -->
+          or
+      ( COMPONENT = 'S4CORE' and VERSION = '104' and lpad(SP,4,'0') between '0000' and '0012' )  
+        <!-- S4CORE 104 104 - SAPK-10412INS4CORE  -->
+          or
+      ( COMPONENT = 'S4COREOP' and VERSION = '105' and lpad(SP,4,'0') between '0000' and '0010' )  
+        <!-- S4COREOP 105 105 - SAPK-10510INS4COREOP  -->
+          or
+      ( COMPONENT = 'S4COREOP' and VERSION = '106' and lpad(SP,4,'0') between '0000' and '0007' )  
+        <!-- S4COREOP 106 106 - SAPK-10607INS4COREOP  -->
+          or
+      ( COMPONENT = 'S4COREOP' and VERSION = '107' and lpad(SP,4,'0') between '0000' and '0005' )  
+        <!-- S4COREOP 107 107 - SAPK-10705INS4COREOP  -->
+          or
+      ( COMPONENT = 'S4COREOP' and VERSION = '108' and lpad(SP,4,'0') between '0000' and '0003' )  
+        <!-- S4COREOP 108 108 - SAPK-10803INS4COREOP  -->
+          or
+      ( COMPONENT = 'SCM' and VERSION = '700' and lpad(SP,4,'0') between '0001' and '0999' )  
+        <!-- SCM 700 SAPKY70001 - ALL_SP  -->
+         or
+      ( COMPONENT = 'SCM' and VERSION = '701' and lpad(SP,4,'0') between '0004' and '0999' )  
+        <!-- SCM 701 SAPKY70104 - ALL_SP  -->
+          or
+      ( COMPONENT = 'SCM' and VERSION = '702' and lpad(SP,4,'0') between '0001' and '0029' )  
+        <!-- SCM 702 SAPKY70201 - SAPKY70229  -->
+          or
+      ( COMPONENT = 'SCM' and VERSION = '712' and lpad(SP,4,'0') between '0000' and '0999' )  
+        <!-- SCM 712 712 - ALL_SP  -->
+          or
+      ( COMPONENT = 'SCMAPO' and VERSION = '713' and lpad(SP,4,'0') between '0001' and '0030' )  
+        <!-- SCMAPO 713 SAPK-71301INSCMAPO - SAPK-71330INSCMAPO  -->
+          or
+      ( COMPONENT = 'SCMAPO' and VERSION = '714' and lpad(SP,4,'0') between '0001' and '0024' )  
+        <!-- SCMAPO 714 SAPK-71401INSCMAPO - SAPK-71424INSCMAPO  -->
+     )
+      </noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- PRIO HIGH-->
+	<!-- [p2-CVSS 8.1]  0003623440 BC-CCM-CNF-OPM - [CVE-2025-42953] Missing Authorization check in SAP NetWeaver Application Server for ABAP (Version 6) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p2-CVSS 8.1] [CVE-2025-42953] BC-CCM-CNF-OPM - Note 0003623440 exists" id="0003623440" operator="check_note">
+			<compliant>NOTE = '0003623440' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p2-CVSS 8.1] [CVE-2025-42953] BC-CCM-CNF-OPM - Note 0003623440 missing and solution with SP available" id="0003623440" operator="check_note:0003623440">
+			<compliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) 
+        <!-- SAP_BASIS 701 SAPKB70128 -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) 
+        <!-- SAP_BASIS 702 SAPKB70228 -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0037' )   ) 
+        <!-- SAP_BASIS 731 SAPKB73137 -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) 
+        <!-- SAP_BASIS 740 SAPKB74034 -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) 
+        <!-- SAP_BASIS 750 SAPK-75034INSAPBASIS -->
+         or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) 
+        <!-- SAP_BASIS 751 SAPK-75121INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) 
+        <!-- SAP_BASIS 752 SAPK-75217INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) 
+        <!-- SAP_BASIS 753 SAPK-75315INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) 
+        <!-- SAP_BASIS 754 SAPK-75413INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) 
+        <!-- SAP_BASIS 755 SAPK-75511INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) 
+        <!-- SAP_BASIS 756 SAPK-75609INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) 
+        <!-- SAP_BASIS 757 SAPK-75707INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) 
+        <!-- SAP_BASIS 758 SAPK-75805INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '816' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) 
+        <!-- SAP_BASIS 816 SAPK-81601INSAPBASIS -->
+     )
+      </compliant>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0028' )  
+        <!-- SAP_BASIS 701 SAPKB70128 -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and (lpad(SP,4,'0'))  &lt; '0028' )  
+        <!-- SAP_BASIS 702 SAPKB70228 -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0037' )  
+        <!-- SAP_BASIS 731 SAPKB73137 -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0034' )  
+        <!-- SAP_BASIS 740 SAPKB74034 -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0034' )  
+        <!-- SAP_BASIS 750 SAPK-75034INSAPBASIS -->
+         or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0021' )  
+        <!-- SAP_BASIS 751 SAPK-75121INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0017' )  
+        <!-- SAP_BASIS 752 SAPK-75217INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0015' )  
+        <!-- SAP_BASIS 753 SAPK-75315INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0013' )  
+        <!-- SAP_BASIS 754 SAPK-75413INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0011' )  
+        <!-- SAP_BASIS 755 SAPK-75511INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0009' )  
+        <!-- SAP_BASIS 756 SAPK-75609INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0007' )  
+        <!-- SAP_BASIS 757 SAPK-75707INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and (lpad(SP,4,'0'))  &lt; '0005' )  
+        <!-- SAP_BASIS 758 SAPK-75805INSAPBASIS -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '816' and (lpad(SP,4,'0'))  &lt; '0001' )  
+        <!-- SAP_BASIS 816 SAPK-81601INSAPBASIS -->
+     )
+      </noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p2-CVSS 8.1] [CVE-2025-42953] BC-CCM-CNF-OPM - Note 0003623440 missing and applicable using Correction Instruction" id="0003623440" operator="check_note:0003623440">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and lpad(SP,4,'0') between '0000' and '0027' )  
+        <!-- SAP_BASIS 701 701 - SAPKB70127  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and lpad(SP,4,'0') between '0001' and '0027' )  
+        <!-- SAP_BASIS 702 SAPKB70201 - SAPKB70227  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and lpad(SP,4,'0') between '0001' and '0036' )  
+        <!-- SAP_BASIS 731 SAPKB73101 - SAPKB73136  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and lpad(SP,4,'0') between '0000' and '0033' )  
+        <!-- SAP_BASIS 740 740 - SAPKB74033  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and lpad(SP,4,'0') between '0000' and '0033' )  
+        <!-- SAP_BASIS 750 750 - SAPK-75033INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and lpad(SP,4,'0') between '0000' and '0020' )  
+        <!-- SAP_BASIS 751 751 - SAPK-75120INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and lpad(SP,4,'0') between '0000' and '0016' )  
+        <!-- SAP_BASIS 752 752 - SAPK-75216INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and lpad(SP,4,'0') between '0000' and '0014' )  
+        <!-- SAP_BASIS 753 753 - SAPK-75314INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and lpad(SP,4,'0') between '0000' and '0012' )  
+        <!-- SAP_BASIS 754 754 - SAPK-75412INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0010' )  
+        <!-- SAP_BASIS 755 755 - SAPK-75510INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0008' )  
+        <!-- SAP_BASIS 756 756 - SAPK-75608INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0006' )  
+        <!-- SAP_BASIS 757 757 - SAPK-75706INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and lpad(SP,4,'0') between '0000' and '0004' )  
+        <!-- SAP_BASIS 758 758 - SAPK-75804INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '816' and lpad(SP,4,'0') between '0000' and '0000' )  
+        <!-- SAP_BASIS 816 816 - 816  -->
+     )
+      </noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- [p2-CVSS 7.7]  0003623255 CRM-MW-ADP - [CVE-2025-42952] Missing Authorization check in SAP Business Warehouse and SAP Plug-In Basis (Version 5) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p2-CVSS 7.7] [CVE-2025-42952] CRM-MW-ADP - Note 0003623255 exists" id="0003623255" operator="check_note">
+			<compliant>NOTE = '0003623255' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p2-CVSS 7.7] [CVE-2025-42952] CRM-MW-ADP - Note 0003623255 missing and solution with SP available" id="0003623255" operator="check_note:0003623255">
+			<compliant>(
+      ( COMPONENT = 'PI_BASIS' and VERSION = '2006_1_700' and not( (lpad(SP,4,'0'))  &lt; '0033' )   ) 
+        <!-- PI_BASIS 2006_1_700 SAPKIPYM33 -->
+          or
+      ( COMPONENT = 'PI_BASIS' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) 
+        <!-- PI_BASIS 701 SAPK-70128INPIBASIS -->
+          or
+      ( COMPONENT = 'PI_BASIS' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) 
+        <!-- PI_BASIS 702 SAPK-70228INPIBASIS -->
+          or
+      ( COMPONENT = 'PI_BASIS' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0037' )   ) 
+        <!-- PI_BASIS 731 SAPK-73137INPIBASIS -->
+          or
+      ( COMPONENT = 'PI_BASIS' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) 
+        <!-- PI_BASIS 740 SAPK-74034INPIBASIS -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) 
+        <!-- SAP_BW 750 SAPK-75034INSAPBW -->
+         or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) 
+        <!-- SAP_BW 751 SAPK-75121INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) 
+        <!-- SAP_BW 752 SAPK-75217INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) 
+        <!-- SAP_BW 753 SAPK-75315INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) 
+        <!-- SAP_BW 754 SAPK-75413INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) 
+        <!-- SAP_BW 755 SAPK-75511INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) 
+        <!-- SAP_BW 756 SAPK-75609INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) 
+        <!-- SAP_BW 757 SAPK-75707INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) 
+        <!-- SAP_BW 758 SAPK-75805INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) 
+        <!-- SAP_BW 816 SAPK-81601INSAPBW -->
+     )
+      </compliant>
+			<noncompliant>(
+      ( COMPONENT = 'PI_BASIS' and VERSION = '2006_1_700' and (lpad(SP,4,'0'))  &lt; '0033' )  
+        <!-- PI_BASIS 2006_1_700 SAPKIPYM33 -->
+          or
+      ( COMPONENT = 'PI_BASIS' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0028' )  
+        <!-- PI_BASIS 701 SAPK-70128INPIBASIS -->
+          or
+      ( COMPONENT = 'PI_BASIS' and VERSION = '702' and (lpad(SP,4,'0'))  &lt; '0028' )  
+        <!-- PI_BASIS 702 SAPK-70228INPIBASIS -->
+          or
+      ( COMPONENT = 'PI_BASIS' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0037' )  
+        <!-- PI_BASIS 731 SAPK-73137INPIBASIS -->
+          or
+      ( COMPONENT = 'PI_BASIS' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0034' )  
+        <!-- PI_BASIS 740 SAPK-74034INPIBASIS -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0034' )  
+        <!-- SAP_BW 750 SAPK-75034INSAPBW -->
+         or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0021' )  
+        <!-- SAP_BW 751 SAPK-75121INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0017' )  
+        <!-- SAP_BW 752 SAPK-75217INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0015' )  
+        <!-- SAP_BW 753 SAPK-75315INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0013' )  
+        <!-- SAP_BW 754 SAPK-75413INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0011' )  
+        <!-- SAP_BW 755 SAPK-75511INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0009' )  
+        <!-- SAP_BW 756 SAPK-75609INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0007' )  
+        <!-- SAP_BW 757 SAPK-75707INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and (lpad(SP,4,'0'))  &lt; '0005' )  
+        <!-- SAP_BW 758 SAPK-75805INSAPBW -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and (lpad(SP,4,'0'))  &lt; '0001' )  
+        <!-- SAP_BW 816 SAPK-81601INSAPBW -->
+     )
+      </noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p2-CVSS 7.7] [CVE-2025-42952] CRM-MW-ADP - Note 0003623255 missing and applicable using Correction Instruction" id="0003623255" operator="check_note:0003623255">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'PI_BASIS' and VERSION = '2006_1_700' and lpad(SP,4,'0') between '0000' and '0032' )  
+        <!-- PI_BASIS 2006_1_700 2006_1_700 - SAPKIPYM32  -->
+          or
+      ( COMPONENT = 'PI_BASIS' and VERSION = '701' and lpad(SP,4,'0') between '0000' and '0027' )  
+        <!-- PI_BASIS 701 701 - SAPK-70127INPIBASIS  -->
+          or
+      ( COMPONENT = 'PI_BASIS' and VERSION = '702' and lpad(SP,4,'0') between '0001' and '0027' )  
+        <!-- PI_BASIS 702 SAPK-70201INPIBASIS - SAPK-70227INPIBASIS  -->
+          or
+      ( COMPONENT = 'PI_BASIS' and VERSION = '731' and lpad(SP,4,'0') between '0001' and '0036' )  
+        <!-- PI_BASIS 731 SAPK-73101INPIBASIS - SAPK-73136INPIBASIS  -->
+          or
+      ( COMPONENT = 'PI_BASIS' and VERSION = '740' and lpad(SP,4,'0') between '0000' and '0033' )  
+        <!-- PI_BASIS 740 740 - SAPK-74033INPIBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and lpad(SP,4,'0') between '0000' and '0033' )  
+        <!-- SAP_BW 750 750 - SAPK-75033INSAPBW  -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and lpad(SP,4,'0') between '0000' and '0020' )  
+        <!-- SAP_BW 751 751 - SAPK-75120INSAPBW  -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and lpad(SP,4,'0') between '0000' and '0016' )  
+        <!-- SAP_BW 752 752 - SAPK-75216INSAPBW  -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and lpad(SP,4,'0') between '0000' and '0014' )  
+        <!-- SAP_BW 753 753 - SAPK-75314INSAPBW  -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and lpad(SP,4,'0') between '0000' and '0012' )  
+        <!-- SAP_BW 754 754 - SAPK-75412INSAPBW  -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0010' )  
+        <!-- SAP_BW 755 755 - SAPK-75510INSAPBW  -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0008' )  
+        <!-- SAP_BW 756 756 - SAPK-75608INSAPBW  -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0006' )  
+        <!-- SAP_BW 757 757 - SAPK-75706INSAPBW  -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and lpad(SP,4,'0') between '0000' and '0004' )  
+        <!-- SAP_BW 758 758 - SAPK-75804INSAPBW  -->
+          or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and lpad(SP,4,'0') between '0000' and '0000' )  
+        <!-- SAP_BW 816 816 - 816  -->
+     )
+      </noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- PRIO MEDIUM -->
+	<!-- [p3-CVSS 6.7]  0003580384 OPU-XBE - [CVE-2025-42993] Missing Authorization Check in SAP S/4HANA (Enterprise Event Enablement) (Version 8) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p3-CVSS 6.7] [CVE-2025-42993] OPU-XBE - Note 0003580384 exists" id="0003580384" operator="check_note">
+			<compliant>NOTE = '0003580384' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 6.7] [CVE-2025-42993] OPU-XBE - Note 0003580384 missing and solution with SP available" id="0003580384" operator="check_note:0003580384">
+			<compliant>(
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- SAP_GWFND 757 SAPK-75706INSAPGWFND -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '758' and not( (lpad(SP,4,'0'))  &lt; '0004' )   ) <!-- SAP_GWFND 758 SAPK-75804INSAPGWFND -->
+     )</compliant>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- SAP_GWFND 757 SAPK-75706INSAPGWFND -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '758' and (lpad(SP,4,'0'))  &lt; '0004' )  <!-- SAP_GWFND 758 SAPK-75804INSAPGWFND -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 6.7] [CVE-2025-42993] OPU-XBE - Note 0003580384 missing and applicable using Correction Instruction" id="0003580384" operator="check_note:0003580384">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- SAP_GWFND 757 757 - SAPK-75705INSAPGWFND  -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '758' and lpad(SP,4,'0') between '0000' and '0003' )  <!-- SAP_GWFND 758 758 - SAPK-75803INSAPGWFND  -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- [p3-CVSS 6.6]  0003577300 OPU-GW-V4 - [CVE-2025-42997] Information Disclosure vulnerability in SAP Gateway Client (Version 6) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p3-CVSS 6.6] [CVE-2025-42997] OPU-GW-V4 - Note 0003577300 exists" id="0003577300" operator="check_note">
+			<compliant>NOTE = '0003577300' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 6.6] [CVE-2025-42997] OPU-GW-V4 - Note 0003577300 missing and solution with SP available" id="0003577300" operator="check_note:0003577300">
+			<compliant>(
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) <!-- SAP_GWFND 752 SAPK-75217INSAPGWFND -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- SAP_GWFND 753 SAPK-75315INSAPGWFND --> or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0012' )   ) <!-- SAP_GWFND 754 SAPK-75412INSAPGWFND -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0010' )   ) <!-- SAP_GWFND 755 SAPK-75510INSAPGWFND -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0008' )   ) <!-- SAP_GWFND 756 SAPK-75608INSAPGWFND -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- SAP_GWFND 757 SAPK-75706INSAPGWFND -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '758' and not( (lpad(SP,4,'0'))  &lt; '0004' )   ) <!-- SAP_GWFND 758 SAPK-75804INSAPGWFND -->
+     )</compliant>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0017' )  <!-- SAP_GWFND 752 SAPK-75217INSAPGWFND -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- SAP_GWFND 753 SAPK-75315INSAPGWFND --> or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0012' )  <!-- SAP_GWFND 754 SAPK-75412INSAPGWFND -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0010' )  <!-- SAP_GWFND 755 SAPK-75510INSAPGWFND -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0008' )  <!-- SAP_GWFND 756 SAPK-75608INSAPGWFND -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- SAP_GWFND 757 SAPK-75706INSAPGWFND -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '758' and (lpad(SP,4,'0'))  &lt; '0004' )  <!-- SAP_GWFND 758 SAPK-75804INSAPGWFND -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 6.6] [CVE-2025-42997] OPU-GW-V4 - Note 0003577300 missing and applicable using Correction Instruction" id="0003577300" operator="check_note:0003577300">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '752' and lpad(SP,4,'0') between '0010' and '0016' )  <!-- SAP_GWFND 752 SAPK-75210INSAPGWFND - SAPK-75216INSAPGWFND  -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '753' and lpad(SP,4,'0') between '0008' and '0014' )  <!-- SAP_GWFND 753 SAPK-75308INSAPGWFND - SAPK-75314INSAPGWFND  -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '754' and lpad(SP,4,'0') between '0006' and '0011' )  <!-- SAP_GWFND 754 SAPK-75406INSAPGWFND - SAPK-75411INSAPGWFND  -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '755' and lpad(SP,4,'0') between '0004' and '0009' )  <!-- SAP_GWFND 755 SAPK-75504INSAPGWFND - SAPK-75509INSAPGWFND  -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '756' and lpad(SP,4,'0') between '0002' and '0007' )  <!-- SAP_GWFND 756 SAPK-75602INSAPGWFND - SAPK-75607INSAPGWFND  -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- SAP_GWFND 757 757 - SAPK-75705INSAPGWFND  -->  or
+      ( COMPONENT = 'SAP_GWFND' and VERSION = '758' and lpad(SP,4,'0') between '0000' and '0003' )  <!-- SAP_GWFND 758 758 - SAPK-75803INSAPGWFND  --> 
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- [p3-CVSS 6.1]  0003617131 BC-FES-ITS - [CVE-2025-42981] Multiple vulnerabilities in SAP NetWeaver Application Server ABAP (Version 10) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p3-CVSS 6.1] [CVE-2025-42981] BC-FES-ITS - Note 0003617131 exists" id="0003617131" operator="check_note">
+			<compliant>NOTE = '0003617131' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 6.1] [CVE-2025-42981] BC-FES-ITS - Note 0003617131 missing and solution with SP available" id="0003617131" operator="check_note:0003617131">
+			<compliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and not( (lpad(SP,4,'0'))  &lt; '0043' )   ) <!-- SAP_BASIS 700 SAPKB70043 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) <!-- SAP_BASIS 701 SAPKB70128 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) <!-- SAP_BASIS 702 SAPKB70228 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0037' )   ) <!-- SAP_BASIS 731 SAPKB73137 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) <!-- SAP_BASIS 740 SAPKB74034 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0033' )   ) <!-- SAP_BASIS 750 SAPK-75033INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- SAP_BASIS 751 SAPK-75121INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) <!-- SAP_BASIS 752 SAPK-75217INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- SAP_BASIS 753 SAPK-75315INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) <!-- SAP_BASIS 754 SAPK-75413INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) <!-- SAP_BASIS 755 SAPK-75511INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- SAP_BASIS 756 SAPK-75609INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- SAP_BASIS 757 SAPK-75707INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- SAP_BASIS 758 SAPK-75805INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '816' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- SAP_BASIS 816 SAPK-81601INSAPBASIS -->
+     )</compliant>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and (lpad(SP,4,'0'))  &lt; '0043' )  <!-- SAP_BASIS 700 SAPKB70043 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0028' )  <!-- SAP_BASIS 701 SAPKB70128 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and (lpad(SP,4,'0'))  &lt; '0028' )  <!-- SAP_BASIS 702 SAPKB70228 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0037' )  <!-- SAP_BASIS 731 SAPKB73137 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0034' )  <!-- SAP_BASIS 740 SAPKB74034 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0033' )  <!-- SAP_BASIS 750 SAPK-75033INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- SAP_BASIS 751 SAPK-75121INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0017' )  <!-- SAP_BASIS 752 SAPK-75217INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- SAP_BASIS 753 SAPK-75315INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0013' )  <!-- SAP_BASIS 754 SAPK-75413INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0011' )  <!-- SAP_BASIS 755 SAPK-75511INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- SAP_BASIS 756 SAPK-75609INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- SAP_BASIS 757 SAPK-75707INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- SAP_BASIS 758 SAPK-75805INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '816' and (lpad(SP,4,'0'))  &lt; '0001' )  <!-- SAP_BASIS 816 SAPK-81601INSAPBASIS -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 6.1] [CVE-2025-42981] BC-FES-ITS - Note 0003617131 missing and applicable using Correction Instruction" id="0003617131" operator="check_note:0003617131">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and lpad(SP,4,'0') between '0004' and '0042' )  <!-- SAP_BASIS 700 SAPKB70004 - SAPKB70042 manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and lpad(SP,4,'0') between '0000' and '0027' )  <!-- SAP_BASIS 701 701 - SAPKB70127 manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and lpad(SP,4,'0') between '0001' and '0027' )  <!-- SAP_BASIS 702 SAPKB70201 - SAPKB70227 manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and lpad(SP,4,'0') between '0001' and '0036' )  <!-- SAP_BASIS 731 SAPKB73101 - SAPKB73136 manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and lpad(SP,4,'0') between '0000' and '0033' )  <!-- SAP_BASIS 740 740 - SAPKB74033 manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and lpad(SP,4,'0') between '0000' and '0032' )  <!-- SAP_BASIS 750 750 - SAPK-75032INSAPBASIS manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and lpad(SP,4,'0') between '0000' and '0020' )  <!-- SAP_BASIS 751 751 - SAPK-75120INSAPBASIS manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and lpad(SP,4,'0') between '0000' and '0016' )  <!-- SAP_BASIS 752 752 - SAPK-75216INSAPBASIS manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and lpad(SP,4,'0') between '0000' and '0014' )  <!-- SAP_BASIS 753 753 - SAPK-75314INSAPBASIS manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and lpad(SP,4,'0') between '0000' and '0012' )  <!-- SAP_BASIS 754 754 - SAPK-75412INSAPBASIS manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0010' )  <!-- SAP_BASIS 755 755 - SAPK-75510INSAPBASIS manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0008' )  <!-- SAP_BASIS 756 756 - SAPK-75608INSAPBASIS manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0006' )  <!-- SAP_BASIS 757 757 - SAPK-75706INSAPBASIS manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- SAP_BASIS 758 758 - SAPK-75804INSAPBASIS manual -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '816' and lpad(SP,4,'0') between '0000' and '0000' )  <!-- SAP_BASIS 816 816 - 816 manual -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- [p3-CVSS 6.1]  0003604212 BW-BEX-ET-WEB - [CVE-2025-42962] Cross-Site Scripting (XSS) vulnerability in SAP Business Warehouse (Business Explorer Web 3.5 loading animation) (Version 7) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p3-CVSS 6.1] [CVE-2025-42962] BW-BEX-ET-WEB - Note 0003604212 exists" id="0003604212" operator="check_note">
+			<compliant>NOTE = '0003604212' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 6.1] [CVE-2025-42962] BW-BEX-ET-WEB - Note 0003604212 missing and solution with SP available" id="0003604212" operator="check_note:0003604212">
+			<compliant>(
+      ( COMPONENT = 'DW4CORE' and VERSION = '100' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- DW4CORE 100 SAPK-10021INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '200' and not( (lpad(SP,4,'0'))  &lt; '0018' )   ) <!-- DW4CORE 200 SAPK-20018INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '300' and not( (lpad(SP,4,'0'))  &lt; '0012' )   ) <!-- DW4CORE 300 SAPK-30012INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '400' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- DW4CORE 400 SAPK-40006INDW4CORE -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0037' )   ) <!-- SAP_BW 731 SAPKW73137 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) <!-- SAP_BW 740 SAPKW74034 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0033' )   ) <!-- SAP_BW 750 SAPK-75033INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- SAP_BW 751 SAPK-75121INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) <!-- SAP_BW 752 SAPK-75217INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- SAP_BW 753 SAPK-75315INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) <!-- SAP_BW 754 SAPK-75413INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) <!-- SAP_BW 755 SAPK-75511INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- SAP_BW 756 SAPK-75609INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- SAP_BW 757 SAPK-75707INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- SAP_BW 758 SAPK-75805INSAPBW -->
+     )</compliant>
+			<noncompliant>(
+      ( COMPONENT = 'DW4CORE' and VERSION = '100' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- DW4CORE 100 SAPK-10021INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '200' and (lpad(SP,4,'0'))  &lt; '0018' )  <!-- DW4CORE 200 SAPK-20018INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '300' and (lpad(SP,4,'0'))  &lt; '0012' )  <!-- DW4CORE 300 SAPK-30012INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '400' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- DW4CORE 400 SAPK-40006INDW4CORE -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0037' )  <!-- SAP_BW 731 SAPKW73137 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0034' )  <!-- SAP_BW 740 SAPKW74034 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0033' )  <!-- SAP_BW 750 SAPK-75033INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- SAP_BW 751 SAPK-75121INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0017' )  <!-- SAP_BW 752 SAPK-75217INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- SAP_BW 753 SAPK-75315INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0013' )  <!-- SAP_BW 754 SAPK-75413INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0011' )  <!-- SAP_BW 755 SAPK-75511INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- SAP_BW 756 SAPK-75609INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- SAP_BW 757 SAPK-75707INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- SAP_BW 758 SAPK-75805INSAPBW -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 6.1] [CVE-2025-42962] BW-BEX-ET-WEB - Note 0003604212 missing and applicable using Correction Instruction" id="0003604212" operator="check_note:0003604212">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'DW4CORE' and VERSION = '100' and lpad(SP,4,'0') between '0000' and '0020' )  <!-- DW4CORE 100 100 - SAPK-10020INDW4CORE  -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '200' and lpad(SP,4,'0') between '0000' and '0017' )  <!-- DW4CORE 200 200 - SAPK-20017INDW4CORE  -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '300' and lpad(SP,4,'0') between '0000' and '0011' )  <!-- DW4CORE 300 300 - SAPK-30011INDW4CORE  -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '400' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- DW4CORE 400 400 - SAPK-40005INDW4CORE  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '730' and lpad(SP,4,'0') between '0010' and '0999' )  <!-- SAP_BW 730 SAPKW73010 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '731' and lpad(SP,4,'0') between '0023' and '0036' )  <!-- SAP_BW 731 SAPKW73123 - SAPKW73136  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '740' and lpad(SP,4,'0') between '0020' and '0033' )  <!-- SAP_BW 740 SAPKW74020 - SAPKW74033  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and lpad(SP,4,'0') between '0004' and '0032' )  <!-- SAP_BW 750 SAPK-75004INSAPBW - SAPK-75032INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and lpad(SP,4,'0') between '0006' and '0020' )  <!-- SAP_BW 751 SAPK-75106INSAPBW - SAPK-75120INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and lpad(SP,4,'0') between '0002' and '0016' )  <!-- SAP_BW 752 SAPK-75202INSAPBW - SAPK-75216INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and lpad(SP,4,'0') between '0000' and '0014' )  <!-- SAP_BW 753 753 - SAPK-75314INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and lpad(SP,4,'0') between '0000' and '0012' )  <!-- SAP_BW 754 754 - SAPK-75412INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0010' )  <!-- SAP_BW 755 755 - SAPK-75510INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0008' )  <!-- SAP_BW 756 756 - SAPK-75608INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0006' )  <!-- SAP_BW 757 757 - SAPK-75706INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- SAP_BW 758 758 - SAPK-75804INSAPBW  -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- [p3-CVSS 6.1]  0003617380 BI-RA-CR - [CVE-2025-42985] Open Redirect vulnerability in SAP BusinessObjects Content Administrator workbench (Version 6) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p3-CVSS 6.1] [CVE-2025-42985] BI-RA-CR - Note 0003617380 exists" id="0003617380" operator="check_note">
+			<compliant>NOTE = '0003617380' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 6.1] [CVE-2025-42985] BI-RA-CR - Note 0003617380 missing and solution with SP available" id="0003617380" operator="check_note:0003617380">
+			<compliant>(
+      ( COMPONENT = 'DW4CORE' and VERSION = '100' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- DW4CORE 100 SAPK-10021INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '200' and not( (lpad(SP,4,'0'))  &lt; '0019' )   ) <!-- DW4CORE 200 SAPK-20019INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '300' and not( (lpad(SP,4,'0'))  &lt; '0012' )   ) <!-- DW4CORE 300 SAPK-30012INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '400' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- DW4CORE 400 SAPK-40006INDW4CORE -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '700' and not( (lpad(SP,4,'0'))  &lt; '0045' )   ) <!-- SAP_BW 700 SAPKW70045 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) <!-- SAP_BW 701 SAPKW70128 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) <!-- SAP_BW 702 SAPKW70228 --> or
+      ( COMPONENT = 'SAP_BW' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0037' )   ) <!-- SAP_BW 731 SAPKW73137 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) <!-- SAP_BW 740 SAPKW74034 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) <!-- SAP_BW 750 SAPK-75034INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- SAP_BW 751 SAPK-75121INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) <!-- SAP_BW 752 SAPK-75217INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- SAP_BW 753 SAPK-75315INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) <!-- SAP_BW 754 SAPK-75413INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) <!-- SAP_BW 755 SAPK-75511INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- SAP_BW 756 SAPK-75609INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- SAP_BW 757 SAPK-75707INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- SAP_BW 758 SAPK-75805INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- SAP_BW 816 SAPK-81601INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW_VIRTUAL_COMP' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0081' )   ) <!-- SAP_BW_VIRTUAL_COMP 701 SAPK-70181INVCBWTECH -->
+     )</compliant>
+			<noncompliant>(
+      ( COMPONENT = 'DW4CORE' and VERSION = '100' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- DW4CORE 100 SAPK-10021INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '200' and (lpad(SP,4,'0'))  &lt; '0019' )  <!-- DW4CORE 200 SAPK-20019INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '300' and (lpad(SP,4,'0'))  &lt; '0012' )  <!-- DW4CORE 300 SAPK-30012INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '400' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- DW4CORE 400 SAPK-40006INDW4CORE -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '700' and (lpad(SP,4,'0'))  &lt; '0045' )  <!-- SAP_BW 700 SAPKW70045 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0028' )  <!-- SAP_BW 701 SAPKW70128 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '702' and (lpad(SP,4,'0'))  &lt; '0028' )  <!-- SAP_BW 702 SAPKW70228 --> or
+      ( COMPONENT = 'SAP_BW' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0037' )  <!-- SAP_BW 731 SAPKW73137 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0034' )  <!-- SAP_BW 740 SAPKW74034 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0034' )  <!-- SAP_BW 750 SAPK-75034INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- SAP_BW 751 SAPK-75121INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0017' )  <!-- SAP_BW 752 SAPK-75217INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- SAP_BW 753 SAPK-75315INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0013' )  <!-- SAP_BW 754 SAPK-75413INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0011' )  <!-- SAP_BW 755 SAPK-75511INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- SAP_BW 756 SAPK-75609INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- SAP_BW 757 SAPK-75707INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- SAP_BW 758 SAPK-75805INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and (lpad(SP,4,'0'))  &lt; '0001' )  <!-- SAP_BW 816 SAPK-81601INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW_VIRTUAL_COMP' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0081' )  <!-- SAP_BW_VIRTUAL_COMP 701 SAPK-70181INVCBWTECH -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 6.1] [CVE-2025-42985] BI-RA-CR - Note 0003617380 missing and applicable using Correction Instruction" id="0003617380" operator="check_note:0003617380">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'DW4CORE' and VERSION = '100' and lpad(SP,4,'0') between '0000' and '0020' )  <!-- DW4CORE 100 100 - SAPK-10020INDW4CORE  -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '200' and lpad(SP,4,'0') between '0000' and '0018' )  <!-- DW4CORE 200 200 - SAPK-20018INDW4CORE  -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '300' and lpad(SP,4,'0') between '0000' and '0011' )  <!-- DW4CORE 300 300 - SAPK-30011INDW4CORE  -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '400' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- DW4CORE 400 400 - SAPK-40005INDW4CORE  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '700' and lpad(SP,4,'0') between '0032' and '0044' )  <!-- SAP_BW 700 SAPKW70032 - SAPKW70044  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '701' and lpad(SP,4,'0') between '0015' and '0027' )  <!-- SAP_BW 701 SAPKW70115 - SAPKW70127  --> or
+      ( COMPONENT = 'SAP_BW' and VERSION = '702' and lpad(SP,4,'0') between '0014' and '0027' )  <!-- SAP_BW 702 SAPKW70214 - SAPKW70227  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '731' and lpad(SP,4,'0') between '0001' and '0036' )  <!-- SAP_BW 731 SAPKW73101 - SAPKW73136  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '740' and lpad(SP,4,'0') between '0000' and '0033' )  <!-- SAP_BW 740 740 - SAPKW74033  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and lpad(SP,4,'0') between '0000' and '0033' )  <!-- SAP_BW 750 750 - SAPK-75033INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and lpad(SP,4,'0') between '0000' and '0020' )  <!-- SAP_BW 751 751 - SAPK-75120INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and lpad(SP,4,'0') between '0000' and '0016' )  <!-- SAP_BW 752 752 - SAPK-75216INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and lpad(SP,4,'0') between '0000' and '0014' )  <!-- SAP_BW 753 753 - SAPK-75314INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and lpad(SP,4,'0') between '0000' and '0012' )  <!-- SAP_BW 754 754 - SAPK-75412INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0010' )  <!-- SAP_BW 755 755 - SAPK-75510INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0008' )  <!-- SAP_BW 756 756 - SAPK-75608INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- SAP_BW 757 757 - SAPK-75705INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- SAP_BW 758 758 - SAPK-75804INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and lpad(SP,4,'0') between '0000' and '0000' )  <!-- SAP_BW 816 816 - 816  -->  or
+      ( COMPONENT = 'SAP_BW_VIRTUAL_COMP' and VERSION = '701' and lpad(SP,4,'0') between '0041' and '0080' )  <!-- SAP_BW_VIRTUAL_COMP 701 SAPK-70141INVCBWTECH - SAPK-70180INVCBWTECH  -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- [p3-CVSS 6.1]  0003596987 BC-MID-AC - [CVE-2025-42969] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver Application Server ABAP and ABAP Platform (Version 9) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p3-CVSS 6.1] [CVE-2025-42969] BC-MID-AC - Note 0003596987 exists" id="0003596987" operator="check_note">
+			<compliant>NOTE = '0003596987' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 6.1] [CVE-2025-42969] BC-MID-AC - Note 0003596987 missing and solution with SP available" id="0003596987" operator="check_note:0003596987">
+			<compliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) <!-- SAP_BASIS 740 SAPKB74034 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0033' )   ) <!-- SAP_BASIS 750 SAPK-75033INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- SAP_BASIS 751 SAPK-75121INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) <!-- SAP_BASIS 752 SAPK-75217INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- SAP_BASIS 753 SAPK-75315INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) <!-- SAP_BASIS 754 SAPK-75413INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) <!-- SAP_BASIS 755 SAPK-75511INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- SAP_BASIS 756 SAPK-75609INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- SAP_BASIS 757 SAPK-75707INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- SAP_BASIS 758 SAPK-75805INSAPBASIS -->
+     )</compliant>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0034' )  <!-- SAP_BASIS 740 SAPKB74034 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0033' )  <!-- SAP_BASIS 750 SAPK-75033INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- SAP_BASIS 751 SAPK-75121INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0017' )  <!-- SAP_BASIS 752 SAPK-75217INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- SAP_BASIS 753 SAPK-75315INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0013' )  <!-- SAP_BASIS 754 SAPK-75413INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0011' )  <!-- SAP_BASIS 755 SAPK-75511INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- SAP_BASIS 756 SAPK-75609INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- SAP_BASIS 757 SAPK-75707INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- SAP_BASIS 758 SAPK-75805INSAPBASIS -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 6.1] [CVE-2025-42969] BC-MID-AC - Note 0003596987 missing and applicable using Correction Instruction" id="0003596987" operator="check_note:0003596987">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and lpad(SP,4,'0') between '0025' and '0033' )  <!-- SAP_BASIS 740 SAPKB74025 - SAPKB74033  --> or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and lpad(SP,4,'0') between '0023' and '0032' )  <!-- SAP_BASIS 750 SAPK-75023INSAPBASIS - SAPK-75032INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and lpad(SP,4,'0') between '0014' and '0020' )  <!-- SAP_BASIS 751 SAPK-75114INSAPBASIS - SAPK-75120INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and lpad(SP,4,'0') between '0010' and '0016' )  <!-- SAP_BASIS 752 SAPK-75210INSAPBASIS - SAPK-75216INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and lpad(SP,4,'0') between '0005' and '0014' )  <!-- SAP_BASIS 753 SAPK-75305INSAPBASIS - SAPK-75314INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and lpad(SP,4,'0') between '0001' and '0012' )  <!-- SAP_BASIS 754 SAPK-75401INSAPBASIS - SAPK-75412INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0010' )  <!-- SAP_BASIS 755 755 - SAPK-75510INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0008' )  <!-- SAP_BASIS 756 756 - SAPK-75608INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0006' )  <!-- SAP_BASIS 757 757 - SAPK-75706INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- SAP_BASIS 758 758 - SAPK-75804INSAPBASIS  -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- [p3-CVSS 5.0]  0003621037 SV-SMG-MON-REP - [CVE-2025-42968] Missing Authorization check in SAP NetWeaver (RFC enabled function module) (Version 2) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p3-CVSS 5.0] [CVE-2025-42968]  SV-SMG-MON-REP - Note 0003621037 exists" id="0003621037" operator="check_note">
+			<compliant>NOTE = '0003621037' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 5.0] [CVE-2025-42968]  SV-SMG-MON-REP - Note 0003621037 missing and solution with SP available" id="0003621037" operator="check_note:0003621037">
+			<compliant>(
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) <!-- SAP_BW 750 SAPK-75034INSAPBW --> or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- SAP_BW 751 SAPK-75121INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) <!-- SAP_BW 752 SAPK-75217INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- SAP_BW 753 SAPK-75315INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) <!-- SAP_BW 754 SAPK-75413INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) <!-- SAP_BW 755 SAPK-75511INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- SAP_BW 756 SAPK-75609INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- SAP_BW 757 SAPK-75707INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- SAP_BW 758 SAPK-75805INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- SAP_BW 816 SAPK-81601INSAPBW -->
+     )</compliant>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0034' )  <!-- SAP_BW 750 SAPK-75034INSAPBW --> or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- SAP_BW 751 SAPK-75121INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0017' )  <!-- SAP_BW 752 SAPK-75217INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- SAP_BW 753 SAPK-75315INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0013' )  <!-- SAP_BW 754 SAPK-75413INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0011' )  <!-- SAP_BW 755 SAPK-75511INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- SAP_BW 756 SAPK-75609INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- SAP_BW 757 SAPK-75707INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- SAP_BW 758 SAPK-75805INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and (lpad(SP,4,'0'))  &lt; '0001' )  <!-- SAP_BW 816 SAPK-81601INSAPBW -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 5.0] [CVE-2025-42968]  SV-SMG-MON-REP - Note 0003621037 missing and applicable using Correction Instruction" id="0003621037" operator="check_note:0003621037">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_BW' and VERSION = '700' and lpad(SP,4,'0') between '0004' and '0999' )  <!-- SAP_BW 700 SAPKW70004 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '701' and lpad(SP,4,'0') between '0000' and '0999' )  <!-- SAP_BW 701 701 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '702' and lpad(SP,4,'0') between '0001' and '0999' )  <!-- SAP_BW 702 SAPKW70201 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '710' and lpad(SP,4,'0') between '0000' and '0999' )  <!-- SAP_BW 710 710 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '731' and lpad(SP,4,'0') between '0001' and '0999' )  <!-- SAP_BW 731 SAPKW73101 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '740' and lpad(SP,4,'0') between '0000' and '0999' )  <!-- SAP_BW 740 740 - ALL_SP  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and lpad(SP,4,'0') between '0000' and '0033' )  <!-- SAP_BW 750 750 - SAPK-75033INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and lpad(SP,4,'0') between '0000' and '0020' )  <!-- SAP_BW 751 751 - SAPK-75120INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and lpad(SP,4,'0') between '0000' and '0016' )  <!-- SAP_BW 752 752 - SAPK-75216INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and lpad(SP,4,'0') between '0000' and '0014' )  <!-- SAP_BW 753 753 - SAPK-75314INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and lpad(SP,4,'0') between '0000' and '0012' )  <!-- SAP_BW 754 754 - SAPK-75412INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0010' )  <!-- SAP_BW 755 755 - SAPK-75510INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0008' )  <!-- SAP_BW 756 756 - SAPK-75608INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0006' )  <!-- SAP_BW 757 757 - SAPK-75706INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- SAP_BW 758 758 - SAPK-75804INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and lpad(SP,4,'0') between '0000' and '0000' )  <!-- SAP_BW 816 816 - 816  -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- [p3-CVSS 4.9]  0003610322 BC-DB-DBI - [CVE-2025-42961] Missing Authorization check in SAP NetWeaver Application Server for ABAP (Version 5) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p3-CVSS 4.9] [CVE-2025-42961] BC-DB-DBI - Note 0003610322 exists" id="0003610322" operator="check_note">
+			<compliant>NOTE = '0003610322' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 4.9] [CVE-2025-42961] BC-DB-DBI - Note 0003610322 missing and solution with SP available" id="0003610322" operator="check_note:0003610322">
+			<compliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and not( (lpad(SP,4,'0'))  &lt; '0043' )   ) <!-- SAP_BASIS 700 SAPKB70043 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) <!-- SAP_BASIS 701 SAPKB70128 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) <!-- SAP_BASIS 702 SAPKB70228 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0037' )   ) <!-- SAP_BASIS 731 SAPKB73137 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) <!-- SAP_BASIS 740 SAPKB74034 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0033' )   ) <!-- SAP_BASIS 750 SAPK-75033INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- SAP_BASIS 751 SAPK-75121INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) <!-- SAP_BASIS 752 SAPK-75217INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- SAP_BASIS 753 SAPK-75315INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) <!-- SAP_BASIS 754 SAPK-75413INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) <!-- SAP_BASIS 755 SAPK-75511INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- SAP_BASIS 756 SAPK-75609INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- SAP_BASIS 757 SAPK-75707INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- SAP_BASIS 758 SAPK-75805INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '816' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- SAP_BASIS 816 SAPK-81601INSAPBASIS -->
+     )</compliant>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and (lpad(SP,4,'0'))  &lt; '0043' )  <!-- SAP_BASIS 700 SAPKB70043 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0028' )  <!-- SAP_BASIS 701 SAPKB70128 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and (lpad(SP,4,'0'))  &lt; '0028' )  <!-- SAP_BASIS 702 SAPKB70228 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0037' )  <!-- SAP_BASIS 731 SAPKB73137 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0034' )  <!-- SAP_BASIS 740 SAPKB74034 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0033' )  <!-- SAP_BASIS 750 SAPK-75033INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- SAP_BASIS 751 SAPK-75121INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0017' )  <!-- SAP_BASIS 752 SAPK-75217INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- SAP_BASIS 753 SAPK-75315INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0013' )  <!-- SAP_BASIS 754 SAPK-75413INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0011' )  <!-- SAP_BASIS 755 SAPK-75511INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- SAP_BASIS 756 SAPK-75609INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- SAP_BASIS 757 SAPK-75707INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- SAP_BASIS 758 SAPK-75805INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '816' and (lpad(SP,4,'0'))  &lt; '0001' )  <!-- SAP_BASIS 816 SAPK-81601INSAPBASIS -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 4.9] [CVE-2025-42961] BC-DB-DBI - Note 0003610322 missing and applicable using Correction Instruction" id="0003610322" operator="check_note:0003610322">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and lpad(SP,4,'0') between '0020' and '0042' )  
+        <!-- SAP_BASIS 700 SAPKB70020 - SAPKB70042  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and lpad(SP,4,'0') between '0015' and '0027' )  
+        <!-- SAP_BASIS 701 SAPKB70115 - SAPKB70127  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and lpad(SP,4,'0') between '0002' and '0027' )  
+        <!-- SAP_BASIS 702 SAPKB70202 - SAPKB70227  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and lpad(SP,4,'0') between '0001' and '0036' )  
+        <!-- SAP_BASIS 731 SAPKB73101 - SAPKB73136  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and lpad(SP,4,'0') between '0018' and '0033' )  
+        <!-- SAP_BASIS 740 SAPKB74018 - SAPKB74033  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and lpad(SP,4,'0') between '0000' and '0032' )  
+        <!-- SAP_BASIS 750 750 - SAPK-75032INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and lpad(SP,4,'0') between '0000' and '0020' )  
+        <!-- SAP_BASIS 751 751 - SAPK-75120INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and lpad(SP,4,'0') between '0000' and '0016' )  
+        <!-- SAP_BASIS 752 752 - SAPK-75216INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and lpad(SP,4,'0') between '0000' and '0014' )  
+        <!-- SAP_BASIS 753 753 - SAPK-75314INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and lpad(SP,4,'0') between '0000' and '0012' )  
+        <!-- SAP_BASIS 754 754 - SAPK-75412INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0010' )  
+        <!-- SAP_BASIS 755 755 - SAPK-75510INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0008' )  
+        <!-- SAP_BASIS 756 756 - SAPK-75608INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0006' )  
+        <!-- SAP_BASIS 757 757 - SAPK-75706INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '758' and lpad(SP,4,'0') between '0000' and '0004' )  
+        <!-- SAP_BASIS 758 758 - SAPK-75804INSAPBASIS  -->
+          or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '816' and lpad(SP,4,'0') between '0000' and '0000' )  
+        <!-- SAP_BASIS 816 816 - 816  -->
+     )
+      </noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- [p3-CVSS 4.3]  0003610056 SV-SMG-SDD - [CVE-2025-42974] Missing Authorization Check in SAP NetWeaver and ABAP Platform (SDCCN) (Version 5) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p3-CVSS 4.3] [CVE-2025-42974] SV-SMG-SDD - Note 0003610056 exists" id="0003610056" operator="check_note">
+			<compliant>NOTE = '0003610056' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 4.3] [CVE-2025-42974] SV-SMG-SDD - Note 0003610056 missing and solution with SP available" id="0003610056" operator="check_note:0003610056">
+			<compliant>(
+      ( COMPONENT = 'ST-PI' and VERSION = '2008_1_700' and not( (lpad(SP,4,'0'))  &lt; '0040' )   ) <!-- ST-PI 2008_1_700 SAPK-70040INSTPI -->  or
+      ( COMPONENT = 'ST-PI' and VERSION = '2008_1_710' and not( (lpad(SP,4,'0'))  &lt; '0040' )   ) <!-- ST-PI 2008_1_710 SAPK-71040INSTPI -->  or
+      ( COMPONENT = 'ST-PI' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0031' )   ) <!-- ST-PI 740 SAPK-74031INSTPI -->
+     )</compliant>
+			<noncompliant>(
+      ( COMPONENT = 'ST-PI' and VERSION = '2008_1_700' and (lpad(SP,4,'0'))  &lt; '0040' )  <!-- ST-PI 2008_1_700 SAPK-70040INSTPI -->  or
+      ( COMPONENT = 'ST-PI' and VERSION = '2008_1_710' and (lpad(SP,4,'0'))  &lt; '0040' )  <!-- ST-PI 2008_1_710 SAPK-71040INSTPI -->  or
+      ( COMPONENT = 'ST-PI' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0031' )  <!-- ST-PI 740 SAPK-74031INSTPI -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 4.3] [CVE-2025-42974] SV-SMG-SDD - Note 0003610056 missing and applicable using Correction Instruction" id="0003610056" operator="check_note:0003610056">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'ST-PI' and VERSION = '2008_1_700' and lpad(SP,4,'0') between '0000' and '0040' )  <!-- ST-PI 2008_1_700 2008_1_700 - SAPK-70040INSTPI  -->  or
+      ( COMPONENT = 'ST-PI' and VERSION = '2008_1_710' and lpad(SP,4,'0') between '0000' and '0040' )  <!-- ST-PI 2008_1_710 2008_1_710 - SAPK-71040INSTPI  --> or
+      ( COMPONENT = 'ST-PI' and VERSION = '740' and lpad(SP,4,'0') between '0000' and '0031' )  <!-- ST-PI 740 740 - SAPK-74031INSTPI  -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- [p3-CVSS 4.3]  0003608991 BW-BEX-ET - [CVE-2025-42960] Missing Authorization Check in SAP Business Warehouse and SAP BW/4HANA BEx Tools (Version 9) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p3-CVSS 4.3] [CVE-2025-42960] BW-BEX-ET - Note 0003608991 exists" id="0003608991" operator="check_note">
+			<compliant>NOTE = '0003608991' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 4.3] [CVE-2025-42960] BW-BEX-ET - Note 0003608991 missing and solution with SP available" id="0003608991" operator="check_note:0003608991">
+			<compliant>(
+      ( COMPONENT = 'DW4CORE' and VERSION = '100' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- DW4CORE 100 SAPK-10021INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '200' and not( (lpad(SP,4,'0'))  &lt; '0019' )   ) <!-- DW4CORE 200 SAPK-20019INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '300' and not( (lpad(SP,4,'0'))  &lt; '0012' )   ) <!-- DW4CORE 300 SAPK-30012INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '400' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- DW4CORE 400 SAPK-40006INDW4CORE -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '700' and not( (lpad(SP,4,'0'))  &lt; '0045' )   ) <!-- SAP_BW 700 SAPKW70045 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) <!-- SAP_BW 701 SAPKW70128 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) <!-- SAP_BW 702 SAPKW70228 --> or
+      ( COMPONENT = 'SAP_BW' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0037' )   ) <!-- SAP_BW 731 SAPKW73137 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) <!-- SAP_BW 740 SAPKW74034 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) <!-- SAP_BW 750 SAPK-75034INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- SAP_BW 751 SAPK-75121INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) <!-- SAP_BW 752 SAPK-75217INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- SAP_BW 753 SAPK-75315INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) <!-- SAP_BW 754 SAPK-75413INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) <!-- SAP_BW 755 SAPK-75511INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- SAP_BW 756 SAPK-75609INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- SAP_BW 757 SAPK-75707INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- SAP_BW 758 SAPK-75805INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- SAP_BW 816 SAPK-81601INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW_VIRTUAL_COMP' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0081' )   ) <!-- SAP_BW_VIRTUAL_COMP 701 SAPK-70181INVCBWTECH -->
+     )</compliant>
+			<noncompliant>(
+      ( COMPONENT = 'DW4CORE' and VERSION = '100' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- DW4CORE 100 SAPK-10021INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '200' and (lpad(SP,4,'0'))  &lt; '0019' )  <!-- DW4CORE 200 SAPK-20019INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '300' and (lpad(SP,4,'0'))  &lt; '0012' )  <!-- DW4CORE 300 SAPK-30012INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '400' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- DW4CORE 400 SAPK-40006INDW4CORE -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '700' and (lpad(SP,4,'0'))  &lt; '0045' )  <!-- SAP_BW 700 SAPKW70045 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0028' )  <!-- SAP_BW 701 SAPKW70128 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '702' and (lpad(SP,4,'0'))  &lt; '0028' )  <!-- SAP_BW 702 SAPKW70228 --> or
+      ( COMPONENT = 'SAP_BW' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0037' )  <!-- SAP_BW 731 SAPKW73137 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0034' )  <!-- SAP_BW 740 SAPKW74034 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0034' )  <!-- SAP_BW 750 SAPK-75034INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- SAP_BW 751 SAPK-75121INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0017' )  <!-- SAP_BW 752 SAPK-75217INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- SAP_BW 753 SAPK-75315INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0013' )  <!-- SAP_BW 754 SAPK-75413INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0011' )  <!-- SAP_BW 755 SAPK-75511INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- SAP_BW 756 SAPK-75609INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- SAP_BW 757 SAPK-75707INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- SAP_BW 758 SAPK-75805INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and (lpad(SP,4,'0'))  &lt; '0001' )  <!-- SAP_BW 816 SAPK-81601INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW_VIRTUAL_COMP' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0081' )  <!-- SAP_BW_VIRTUAL_COMP 701 SAPK-70181INVCBWTECH -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 4.3] [CVE-2025-42960] BW-BEX-ET - Note 0003608991 missing and applicable using Correction Instruction" id="0003608991" operator="check_note:0003608991">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'DW4CORE' and VERSION = '100' and lpad(SP,4,'0') between '0000' and '0020' )  <!-- DW4CORE 100 100 - SAPK-10020INDW4CORE  -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '200' and lpad(SP,4,'0') between '0000' and '0018' )  <!-- DW4CORE 200 200 - SAPK-20018INDW4CORE  -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '300' and lpad(SP,4,'0') between '0000' and '0011' )  <!-- DW4CORE 300 300 - SAPK-30011INDW4CORE  -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '400' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- DW4CORE 400 400 - SAPK-40005INDW4CORE  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '700' and lpad(SP,4,'0') between '0019' and '0044' )  <!-- SAP_BW 700 SAPKW70019 - SAPKW70044  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '701' and lpad(SP,4,'0') between '0000' and '0027' )  <!-- SAP_BW 701 701 - SAPKW70127  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '702' and lpad(SP,4,'0') between '0000' and '0027' )  <!-- SAP_BW 702 702 - SAPKW70227  --> or
+      ( COMPONENT = 'SAP_BW' and VERSION = '731' and lpad(SP,4,'0') between '0007' and '0036' )  <!-- SAP_BW 731 SAPKW73107 - SAPKW73136  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '740' and lpad(SP,4,'0') between '0005' and '0033' )  <!-- SAP_BW 740 SAPKW74005 - SAPKW74033  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and lpad(SP,4,'0') between '0000' and '0033' )  <!-- SAP_BW 750 750 - SAPK-75033INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and lpad(SP,4,'0') between '0000' and '0020' )  <!-- SAP_BW 751 751 - SAPK-75120INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and lpad(SP,4,'0') between '0000' and '0016' )  <!-- SAP_BW 752 752 - SAPK-75216INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and lpad(SP,4,'0') between '0000' and '0014' )  <!-- SAP_BW 753 753 - SAPK-75314INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and lpad(SP,4,'0') between '0000' and '0012' )  <!-- SAP_BW 754 754 - SAPK-75412INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0010' )  <!-- SAP_BW 755 755 - SAPK-75510INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0008' )  <!-- SAP_BW 756 756 - SAPK-75608INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0006' )  <!-- SAP_BW 757 757 - SAPK-75706INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- SAP_BW 758 758 - SAPK-75804INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and lpad(SP,4,'0') between '0000' and '0000' )  <!-- SAP_BW 816 816 - 816  -->  or
+      ( COMPONENT = 'SAP_BW_VIRTUAL_COMP' and VERSION = '701' and lpad(SP,4,'0') between '0000' and '0080' )  <!-- SAP_BW_VIRTUAL_COMP 701 701 - SAPK-70180INVCBWTECH  -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- [p3-CVSS 4.3]  0003626440 SV-SMG-SDD - [CVE-2025-42986] Missing Authorization check in SAP NetWeaver and ABAP Platform (Version 10) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p3-CVSS 4.3] [CVE-2025-42986] SV-SMG-SDD - Note 0003626440 exists" id="0003626440" operator="check_note">
+			<compliant>NOTE = '0003626440' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 4.3] [CVE-2025-42986] SV-SMG-SDD - Note 0003626440 missing and solution with SP available" id="0003626440" operator="check_note:0003626440">
+			<compliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and not( (lpad(SP,4,'0'))  &lt; '0043' )   ) <!-- SAP_BASIS 700 SAPKB70043 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) <!-- SAP_BASIS 701 SAPKB70128 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) <!-- SAP_BASIS 702 SAPKB70228 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0037' )   ) <!-- SAP_BASIS 731 SAPKB73137 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) <!-- SAP_BASIS 740 SAPKB74034 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) <!-- SAP_BASIS 750 SAPK-75034INSAPBASIS --> or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- SAP_BASIS 751 SAPK-75121INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) <!-- SAP_BASIS 752 SAPK-75217INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- SAP_BASIS 753 SAPK-75315INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) <!-- SAP_BASIS 754 SAPK-75413INSAPBASIS -->
+     )</compliant>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and (lpad(SP,4,'0'))  &lt; '0043' )  <!-- SAP_BASIS 700 SAPKB70043 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0028' )  <!-- SAP_BASIS 701 SAPKB70128 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and (lpad(SP,4,'0'))  &lt; '0028' )  <!-- SAP_BASIS 702 SAPKB70228 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0037' )  <!-- SAP_BASIS 731 SAPKB73137 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0034' )  <!-- SAP_BASIS 740 SAPKB74034 -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0034' )  <!-- SAP_BASIS 750 SAPK-75034INSAPBASIS --> or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- SAP_BASIS 751 SAPK-75121INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0017' )  <!-- SAP_BASIS 752 SAPK-75217INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- SAP_BASIS 753 SAPK-75315INSAPBASIS -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0013' )  <!-- SAP_BASIS 754 SAPK-75413INSAPBASIS -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p3-CVSS 4.3] [CVE-2025-42986] SV-SMG-SDD - Note 0003626440 missing and applicable using Correction Instruction" id="0003626440" operator="check_note:0003626440">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '700' and lpad(SP,4,'0') between '0004' and '0042' )  <!-- SAP_BASIS 700 SAPKB70004 - SAPKB70042  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '701' and lpad(SP,4,'0') between '0000' and '0027' )  <!-- SAP_BASIS 701 701 - SAPKB70127  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '702' and lpad(SP,4,'0') between '0001' and '0027' )  <!-- SAP_BASIS 702 SAPKB70201 - SAPKB70227  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and lpad(SP,4,'0') between '0001' and '0036' )  <!-- SAP_BASIS 731 SAPKB73101 - SAPKB73136  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and lpad(SP,4,'0') between '0000' and '0033' )  <!-- SAP_BASIS 740 740 - SAPKB74033  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and lpad(SP,4,'0') between '0000' and '0033' )  <!-- SAP_BASIS 750 750 - SAPK-75033INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '751' and lpad(SP,4,'0') between '0000' and '0020' )  <!-- SAP_BASIS 751 751 - SAPK-75120INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '752' and lpad(SP,4,'0') between '0000' and '0016' )  <!-- SAP_BASIS 752 752 - SAPK-75216INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '753' and lpad(SP,4,'0') between '0000' and '0014' )  <!-- SAP_BASIS 753 753 - SAPK-75314INSAPBASIS  -->  or
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '754' and lpad(SP,4,'0') between '0000' and '0012' )  <!-- SAP_BASIS 754 754 - SAPK-75412INSAPBASIS  -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- PRIO LOW -->
+	<!-- [p4-CVSS 2.7] BW-BEX-ET 0003608156 - [CVE-2025-42954] Denial of service (DOS) in SAP NetWeaver Business Warehouse (CCAW application). (Version 6) -->
+	<configstore name="ABAP_NOTES">
+		<checkitem desc="[p4-CVSS 2.7] [CVE-2025-42954]  BW-BEX-ET - Note 0003608156 exists" id="0003608156" operator="check_note">
+			<compliant>NOTE = '0003608156' and PRSTATUS = 'E'</compliant>
+			<noncompliant/>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p4-CVSS 2.7] [CVE-2025-42954]  BW-BEX-ET - Note 0003608156 missing and solution with SP available" id="0003608156" operator="check_note:0003608156">
+			<compliant>(
+      ( COMPONENT = 'DW4CORE' and VERSION = '100' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- DW4CORE 100 SAPK-10021INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '200' and not( (lpad(SP,4,'0'))  &lt; '0019' )   ) <!-- DW4CORE 200 SAPK-20019INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '300' and not( (lpad(SP,4,'0'))  &lt; '0012' )   ) <!-- DW4CORE 300 SAPK-30012INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '400' and not( (lpad(SP,4,'0'))  &lt; '0006' )   ) <!-- DW4CORE 400 SAPK-40006INDW4CORE -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '700' and not( (lpad(SP,4,'0'))  &lt; '0045' )   ) <!-- SAP_BW 700 SAPKW70045 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) <!-- SAP_BW 701 SAPKW70128 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '702' and not( (lpad(SP,4,'0'))  &lt; '0028' )   ) <!-- SAP_BW 702 SAPKW70228 --> or
+      ( COMPONENT = 'SAP_BW' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0037' )   ) <!-- SAP_BW 731 SAPKW73137 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '740' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) <!-- SAP_BW 740 SAPKW74034 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and not( (lpad(SP,4,'0'))  &lt; '0034' )   ) <!-- SAP_BW 750 SAPK-75034INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and not( (lpad(SP,4,'0'))  &lt; '0021' )   ) <!-- SAP_BW 751 SAPK-75121INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and not( (lpad(SP,4,'0'))  &lt; '0017' )   ) <!-- SAP_BW 752 SAPK-75217INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and not( (lpad(SP,4,'0'))  &lt; '0015' )   ) <!-- SAP_BW 753 SAPK-75315INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and not( (lpad(SP,4,'0'))  &lt; '0013' )   ) <!-- SAP_BW 754 SAPK-75413INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and not( (lpad(SP,4,'0'))  &lt; '0011' )   ) <!-- SAP_BW 755 SAPK-75511INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and not( (lpad(SP,4,'0'))  &lt; '0009' )   ) <!-- SAP_BW 756 SAPK-75609INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and not( (lpad(SP,4,'0'))  &lt; '0007' )   ) <!-- SAP_BW 757 SAPK-75707INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and not( (lpad(SP,4,'0'))  &lt; '0005' )   ) <!-- SAP_BW 758 SAPK-75805INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and not( (lpad(SP,4,'0'))  &lt; '0001' )   ) <!-- SAP_BW 816 SAPK-81601INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW_VIRTUAL_COMP' and VERSION = '701' and not( (lpad(SP,4,'0'))  &lt; '0081' )   ) <!-- SAP_BW_VIRTUAL_COMP 701 SAPK-70181INVCBWTECH -->
+     )</compliant>
+			<noncompliant>(
+      ( COMPONENT = 'DW4CORE' and VERSION = '100' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- DW4CORE 100 SAPK-10021INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '200' and (lpad(SP,4,'0'))  &lt; '0019' )  <!-- DW4CORE 200 SAPK-20019INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '300' and (lpad(SP,4,'0'))  &lt; '0012' )  <!-- DW4CORE 300 SAPK-30012INDW4CORE -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '400' and (lpad(SP,4,'0'))  &lt; '0006' )  <!-- DW4CORE 400 SAPK-40006INDW4CORE -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '700' and (lpad(SP,4,'0'))  &lt; '0045' )  <!-- SAP_BW 700 SAPKW70045 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0028' )  <!-- SAP_BW 701 SAPKW70128 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '702' and (lpad(SP,4,'0'))  &lt; '0028' )  <!-- SAP_BW 702 SAPKW70228 --> or
+      ( COMPONENT = 'SAP_BW' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0037' )  <!-- SAP_BW 731 SAPKW73137 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0034' )  <!-- SAP_BW 740 SAPKW74034 -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0034' )  <!-- SAP_BW 750 SAPK-75034INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and (lpad(SP,4,'0'))  &lt; '0021' )  <!-- SAP_BW 751 SAPK-75121INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and (lpad(SP,4,'0'))  &lt; '0017' )  <!-- SAP_BW 752 SAPK-75217INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and (lpad(SP,4,'0'))  &lt; '0015' )  <!-- SAP_BW 753 SAPK-75315INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and (lpad(SP,4,'0'))  &lt; '0013' )  <!-- SAP_BW 754 SAPK-75413INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and (lpad(SP,4,'0'))  &lt; '0011' )  <!-- SAP_BW 755 SAPK-75511INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and (lpad(SP,4,'0'))  &lt; '0009' )  <!-- SAP_BW 756 SAPK-75609INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and (lpad(SP,4,'0'))  &lt; '0007' )  <!-- SAP_BW 757 SAPK-75707INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and (lpad(SP,4,'0'))  &lt; '0005' )  <!-- SAP_BW 758 SAPK-75805INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and (lpad(SP,4,'0'))  &lt; '0001' )  <!-- SAP_BW 816 SAPK-81601INSAPBW -->  or
+      ( COMPONENT = 'SAP_BW_VIRTUAL_COMP' and VERSION = '701' and (lpad(SP,4,'0'))  &lt; '0081' )  <!-- SAP_BW_VIRTUAL_COMP 701 SAPK-70181INVCBWTECH -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+	<configstore name="COMP_LEVEL">
+		<checkitem desc="[p4-CVSS 2.7] [CVE-2025-42954]  BW-BEX-ET - Note 0003608156 missing and applicable using Correction Instruction" id="0003608156" operator="check_note:0003608156">
+			<compliant/>
+			<noncompliant>(
+      ( COMPONENT = 'DW4CORE' and VERSION = '100' and lpad(SP,4,'0') between '0000' and '0020' )  <!-- DW4CORE 100 100 - SAPK-10020INDW4CORE  -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '200' and lpad(SP,4,'0') between '0000' and '0018' )  <!-- DW4CORE 200 200 - SAPK-20018INDW4CORE  -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '300' and lpad(SP,4,'0') between '0000' and '0011' )  <!-- DW4CORE 300 300 - SAPK-30011INDW4CORE  -->  or
+      ( COMPONENT = 'DW4CORE' and VERSION = '400' and lpad(SP,4,'0') between '0000' and '0005' )  <!-- DW4CORE 400 400 - SAPK-40005INDW4CORE  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '700' and lpad(SP,4,'0') between '0032' and '0044' )  <!-- SAP_BW 700 SAPKW70032 - SAPKW70044  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '701' and lpad(SP,4,'0') between '0015' and '0027' )  <!-- SAP_BW 701 SAPKW70115 - SAPKW70127  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '702' and lpad(SP,4,'0') between '0015' and '0027' )  <!-- SAP_BW 702 SAPKW70215 - SAPKW70227  --> or
+      ( COMPONENT = 'SAP_BW' and VERSION = '731' and lpad(SP,4,'0') between '0001' and '0036' )  <!-- SAP_BW 731 SAPKW73101 - SAPKW73136  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '740' and lpad(SP,4,'0') between '0000' and '0033' )  <!-- SAP_BW 740 740 - SAPKW74033  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '750' and lpad(SP,4,'0') between '0000' and '0033' )  <!-- SAP_BW 750 750 - SAPK-75033INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '751' and lpad(SP,4,'0') between '0000' and '0020' )  <!-- SAP_BW 751 751 - SAPK-75120INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '752' and lpad(SP,4,'0') between '0000' and '0016' )  <!-- SAP_BW 752 752 - SAPK-75216INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '753' and lpad(SP,4,'0') between '0000' and '0014' )  <!-- SAP_BW 753 753 - SAPK-75314INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '754' and lpad(SP,4,'0') between '0000' and '0012' )  <!-- SAP_BW 754 754 - SAPK-75412INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0010' )  <!-- SAP_BW 755 755 - SAPK-75510INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0008' )  <!-- SAP_BW 756 756 - SAPK-75608INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0006' )  <!-- SAP_BW 757 757 - SAPK-75706INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '758' and lpad(SP,4,'0') between '0000' and '0004' )  <!-- SAP_BW 758 758 - SAPK-75804INSAPBW  -->  or
+      ( COMPONENT = 'SAP_BW' and VERSION = '816' and lpad(SP,4,'0') between '0000' and '0000' )  <!-- SAP_BW 816 816 - 816  -->  or
+      ( COMPONENT = 'SAP_BW_VIRTUAL_COMP' and VERSION = '701' and lpad(SP,4,'0') between '0042' and '0080' )  <!-- SAP_BW_VIRTUAL_COMP 701 SAPK-70142INVCBWTECH - SAPK-70180INVCBWTECH  -->
+     )</noncompliant>
+		</checkitem>
+	</configstore>
+</targetsystem>
