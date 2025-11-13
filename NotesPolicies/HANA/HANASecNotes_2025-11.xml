@@ -63,7 +63,7 @@ Date:    13.11.2025
 			)
               </compliant>
 			<noncompliant>(
-            ( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND NOT substring(VALUE,0,11) &gt;= '2.00.059.12' )	or
+            ( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND NOT substring(VALUE,0,11) &gt;= '2.00.059.19' )	or
             ( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' )	or
 			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND NOT substring(VALUE,0,8) &gt;= '2.00.079.07' )	or
 			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND NOT substring(VALUE,0,8) &gt;= '2.00.088' )	or
