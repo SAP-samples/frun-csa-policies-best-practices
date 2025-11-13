@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This Policy contains the following HANA SNotes published on PatchDay 2025-11:
+
+HANA Database
+[p2-CVSS 7.5] 0003633049 BC-IAM-SSO-CCL - [CVE-2025-42940] Memory Corruption vulnerability in SAP CommonCryptoLib (Version 7)
+[p3-CVSS 6.9] 0003643385 HAN-DB-CLI - [CVE-2025-42895 ] Code Injection vulnerability in SAP HANA JDBC Client (Version 17)
+[p3-CVSS 5.8] 0003639264 HAN-DB-ENG- [CVE-2025-42885] Missing authentication in SAP HANA 2.0 (hdbrss) (Version 9)
+
+
+
+SAP Security: PatchDay_2025-11
+Version: 0001
+Date:    13.11.2025
+-->
+<targetsystem desc="SNotes of PatchDay: 2025-11 (HANA)" id="HPATCHDAY_2025-11" multisql="Yes" version="0000">
+	<!-- PRIO HIGH -->
+	<!-- SAP HANA -->
+	<configstore name="HDB_VERSION">
+		<checkitem desc="[p2-CVSS 7.5] Note 3633049v7 requires HANA revision update" id="0003633049" not_found="positive" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY">
+			<compliant>
+                 (  (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND substring(VALUE,0,11) &gt;= '2.00.059.19')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,11) &gt;= '2.00.079.06')
+				 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND substring(VALUE,0,8) &gt;= '2.00.087')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &gt; '2.00.08' )
+				 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &lt; '2.00.07' )
+				 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &lt; '2.00.05' ))  
+			</compliant>
+			<noncompliant> 
+                 ( (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND NOT substring(VALUE,0,11) &gt;= '2.00.059.19') 
+				 OR(NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND NOT substring(VALUE,0,11) &gt;= '2.00.079.06')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND NOT substring(VALUE,0,8) &gt;= '2.00.087')
+				 )
+     </noncompliant>
+		</checkitem>
+	</configstore>
+	<!-- PRIO MEDIUM -->
+	<!-- [p3-CVSS 6.9] 0003643385 HAN-DB-CLI - [CVE-2025-42895 ] Code Injection vulnerability in SAP HANA JDBC Client (Version 17) -->
+	<configstore name="COMP_LEVEL" sci_id="S00343">
+		<checkitem desc="[p3-CVSS 6.9] [CVE-2025-42895] HAN-DB-CLI - HDB_CLIENT patch required for SNote 3643385v17" id="0003643385" operator="check_note:0003643385">
+			<compliant>
+        ( component = 'HDB_CLIENT' and version = '2.0' and (lpad(SP,4,'0') = '0025') and (lpad(PATCH,4,'0') &gt;= '0031')   )	or
+        ( component = 'HDB_CLIENT' and version = '2.0' and (lpad(SP,4,'0') = '0026') and (lpad(PATCH,4,'0') &gt;= '0006')   )	or 
+ ( component = 'HDB_CLIENT' and version = '2.0' and (lpad(SP,4,'0') &gt;= '0027') ) 
+      </compliant>
+			<complianttext/>
+			<noncompliant>
+        ( component = 'HDB_CLIENT' and version = '2.0' and (lpad(SP,4,'0') = '0025') and (lpad(PATCH,4,'0') &lt; '0031')   ) or
+        ( component = 'HDB_CLIENT' and version = '2.0' and (lpad(SP,4,'0') = '0026') and (lpad(PATCH,4,'0') &lt; '0006')   )	or
+        ( component = 'HDB_CLIENT' and version = '2.0' and (lpad(SP,4,'0') &lt; '0025') )
+      </noncompliant>
+			<noncomplianttext/>
+		</checkitem>
+	</configstore>
+	<!-- [p3-CVSS 5.8] HAN-DB-ENG 0003639264 - [CVE-2025-42885] Missing authentication in SAP HANA 2.0 (hdbrss) (Version 9)  -->
+	<configstore name="HDB_VERSION">
+		<checkitem desc="[p3-CVSS 5.8] [CVE-2025-42885] HAN-DB-ENG - Note 3639264v9 requires revision update" id="0003639264" not_found="positive" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY">
+			<compliant>(  
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND substring(VALUE,0,11) &gt;= '2.00.059.19' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,8) &gt;= '2.00.079.07' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND substring(VALUE,0,8) &gt;= '2.00.088' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) &gt; '2.00.08' )
+			)
+              </compliant>
+			<noncompliant>(
+            ( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND NOT substring(VALUE,0,11) &gt;= '2.00.059.12' )	or
+            ( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND NOT substring(VALUE,0,8) &gt;= '2.00.079.07' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND NOT substring(VALUE,0,8) &gt;= '2.00.088' )	or
+            ( NAME = 'VERSION' AND substring(VALUE,0,7) &lt; '2.00.05' )
+			)
+              </noncompliant>
+		</checkitem>
+	</configstore>
+</targetsystem> 
