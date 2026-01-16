@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This FRUN CSA policy contains rules to check the following HANA Security Notes published on PatchDay 2026-01:
+
+
+[p2-CVSS 8.8] 0003691059 HAN-DB-SEC - [CVE-2026-0492] Privilege escalation vulnerability in SAP HANA database (Version 7)
+
+
+The policy does not check the following Security Notes:
+
+[p1-CVSS 9.9] 0003687749 FI-GL-GL-G - [CVE-2026-0501] SQL Injection Vulnerability in SAP S/4HANA Private Cloud and On-Premise (Financials – General Ledger) (Version 18)
+[p1-CVSS 9.6] 0003668679 SV-SMG-DIA-WLY - [CVE-2026-0500] Remote code execution in SAP Wily Introscope Enterprise Manager (WorkStation) (Version 26)
+[p1-CVSS 9.1] 0003685286 BC-SYB-SDK - [CVE-2025-42928] Deserialization Vulnerability in SAP jConnect - SDK for ASE (Version 19)
+[p1-CVSS 9.1] 0003697979 CA-LT-ANA - [CVE-2026-0491] Code Injection vulnerability in SAP Landscape Transformation (Version 5)
+[p1-CVSS 9.1] 0003694242 CA-DT-ANA -    [CVE-2026-0498] Code Injection vulnerability in SAP S/4HANA (Private Cloud and On-Premise) (Version 3)
+[p2-CVSS 8.1] 0003688703 BC-DWB-DIC-F4 - [CVE-2026-0506] Missing Authorization check in SAP NetWeaver Application Server ABAP and ABAP Platform (Version 5)
+[p2-CVSS 8.1] 0003565506 FI-LOC-FI-RU - [CVE-2026-0511] Multiple vulnerabilities in SAP Fiori App (Intercompany Balance Reconciliation) (Version 15) 
+[p2-CVSS 8.4] 0003675151 BC-MID-RFC-SDK - [CVE-2026-0507] OS Command Injection vulnerability in SAP Application Server for ABAP and SAP NetWeaver RFCSDK (Version 10)
+[p3-CVSS 6.4] 0003681523 EHS-SAF - [CVE-2026-0503] Missing Authorization check in SAP ERP Central Component and SAP S/4HANA (SAP EHS Management) (Version 11)
+[p3-CVSS 6.1] 0003666061 BC-MID-BUS - [CVE-2026-0514] Cross-Site Scripting (XSS) vulnerability in SAP Business Connector (Version 6)
+[p3-CVSS 6.1] 0003687372 EP-PIN-NAV - [CVE-2026-0499] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver Enterprise Portal (Version 5)
+[p3-CVSS 4.7] 0003638716 SRM-EBP-CAT - [CVE-2026-0513] Open Redirect Vulnerability in SAP Supplier Relationship Management (SICF Handler in SRM Catalog) (Version 5)
+[p3-CVSS 4.3] 0003655227 FI-LOC-FI-RU - [CVE-2026-0494] Information Disclosure vulnerability in SAP Fiori App (Intercompany Balance Reconciliation) (Version 8)
+[p3-CVSS 4.3] 0003655229 FI-LOC-FI-RU - [CVE-2026-0493] Cross-Site Request Forgery (CSRF) vulnerability in SAP Fiori App (Intercompany Balance Reconciliation) (Version 7)
+[p3-CVSS 4.3] 0003677111 PLM-PPM-PDN - [CVE-2026-0497] Missing Authorization check in Business Server Pages Application (Product Designer Web UI) (Version 3)
+[p4-CVSS 3.8] 0003657998 BC-IAM-IDM - [CVE-2026-0504] Insufficient Input Handling in JNDI Operations of SAP Identity Management (Version 16)
+[p4-CVSS 3.0] 0003593356 BC-JAS-SEC-UME - [CVE-2026-0510] Obsolete Encryption Algorithm Used in NW AS Java UME User Mapping (Version 6)
+
+
+SAP Security: PatchDay_2026-01
+Version: 001
+Date:    15.01.2026
+-->
+<targetsystem desc="SNotes of PatchDay: 2026-01 (HANA)" id="HPATCHDAY_2026-01" multisql="Yes" version="0000">
+  <!-- PRIO HIGH -->
+  <!-- SAP HANA -->
+  <!-- [p2-CVSS 8.8] HAN-DB-SEC 0003691059 - [CVE-2026-0492] Privilege escalation vulnerability in SAP HANA database (Version 7) -->
+  <configstore name="HDB_VERSION">
+    <checkitem desc="[p2-CVSS 8.8] Note 3691059v7 requires HANA revision update" id="0003691059" not_found="positive" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY">
+      <compliant>
+                 (  
+                 (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,11) &gt;= '2.00.079.07')
+				 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND substring(VALUE,0,8) &gt;= '2.00.088')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &gt;= '2.00.09' )
+				 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' )
+				 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' ))  
+			</compliant>
+      <noncompliant> 
+                 ( 
+				 (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND NOT substring(VALUE,0,11) &gt;= '2.00.079.07')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND NOT substring(VALUE,0,8) &gt;= '2.00.088')
+				 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &lt; '2.00.05')
+				 )
+     </noncompliant>
+    </checkitem>
+  </configstore>
+</targetsystem>
