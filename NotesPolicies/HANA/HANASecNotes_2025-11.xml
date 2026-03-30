@@ -57,16 +57,16 @@ Date:    13.11.2025
 		<checkitem desc="[p3-CVSS 5.8] [CVE-2025-42885] HAN-DB-ENG - Note 3639264v9 requires revision update" id="0003639264" not_found="positive" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY">
 			<compliant>(  
 			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND substring(VALUE,0,11) &gt;= '2.00.059.19' )	or
-			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,8) &gt;= '2.00.079.07' )	or
-			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND substring(VALUE,0,8) &gt;= '2.00.088' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,11) &gt;= '2.00.079.07' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND substring(VALUE,0,11) &gt;= '2.00.088' )	or
 			( NAME = 'VERSION' AND substring(VALUE,0,7) &gt; '2.00.08' )
 			)
               </compliant>
 			<noncompliant>(
             ( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.05' AND NOT substring(VALUE,0,11) &gt;= '2.00.059.19' )	or
             ( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.06' )	or
-			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND NOT substring(VALUE,0,8) &gt;= '2.00.079.07' )	or
-			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND NOT substring(VALUE,0,8) &gt;= '2.00.088' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND NOT substring(VALUE,0,11) &gt;= '2.00.079.07' )	or
+			( NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND NOT substring(VALUE,0,11) &gt;= '2.00.088' )	or
             ( NAME = 'VERSION' AND substring(VALUE,0,7) &lt; '2.00.05' )
 			)
               </noncompliant>
