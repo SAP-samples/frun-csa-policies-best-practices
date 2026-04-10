@@ -2,8 +2,8 @@
 <!--
 This FRUN CSA policy contains rules to check the following ABAP Security Notes published on PatchDay 2025-11:
 
-[p1-CVSS 9.9] 0003647332 SRM-UIA-SHP-BD - [CVE-2025-42910] Unrestricted File Upload Vulnerability in SAP Supplier Relationship Management (Version 5)
-[p1-CVSS 9.0] 0003668705 SV-SMG-SVD-SWB - [CVE-2025-42887] Code Injection vulnerability in SAP Solution Manager (Version 12)
+[p1-CVSS 9.0] 0003647332 SRM-UIA-SHP-BD - [CVE-2025-42910] Unrestricted File Upload Vulnerability in SAP Supplier Relationship Management (Version 5)
+[p1-CVSS 9.9] 0003668705 SV-SMG-SVD-SWB - [CVE-2025-42887] Code Injection vulnerability in SAP Solution Manager (Version 12)
 [p2-CVSS 7.5] 0003633049 BC-IAM-SSO-CCL - [CVE-2025-42940] Memory Corruption vulnerability in SAP CommonCryptoLib (Version 7)
 [p3-CVSS 6.1] 0003642398 PA-ER - [CVE-2025-42924] Open Redirect vulnerabilities in SAP S/4HANA landscape (SAP E-Recruiting BSP) (Version 2)
 [p3-CVSS 6.1] 0003597355 BC-MID-ICF - [CVE-2025-42942] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver Application Server for ABAP (Version 7)
@@ -68,15 +68,15 @@ Date:    13.11.2025
       </noncompliant>
     </checkitem>
   </configstore>
-  <!-- [p1-CVSS 9.0] SRM-UIA-SHP-BD 0003647332 - [CVE-2025-48913] Security Misconfiguration vulnerability in SAP Data Hub Integration Suite (Version 5)  -->
+  <!-- [p1-CVSS 9.0] SRM-UIA-SHP-BD 0003647332 - [CVE-2025-42910] Unrestricted File Upload Vulnerability in SAP Supplier Relationship Management (Version 5)  -->
   <configstore name="ABAP_NOTES">
-    <checkitem desc="[p1-CVSS 9.0] [CVE-2025-48913] SRM-UIA-SHP-BD - Note 0003647332 exists" id="0003647332" operator="check_note">
+    <checkitem desc="[p1-CVSS 9.0] [CVE-2025-42910] SRM-UIA-SHP-BD - Note 0003647332 exists" id="0003647332" operator="check_note">
       <compliant>NOTE = '0003647332' and PRSTATUS = 'E'</compliant>
       <noncompliant/>
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-    <checkitem desc="[p1-CVSS 9.0] [CVE-2025-48913] SRM-UIA-SHP-BD - Note 0003647332 missing and solution with SP available" id="0003647332" operator="check_note:0003647332">
+    <checkitem desc="[p1-CVSS 9.0] [CVE-2025-42910] SRM-UIA-SHP-BD - Note 0003647332 missing and solution with SP available" id="0003647332" operator="check_note:0003647332">
       <compliant>(
 		  ( COMPONENT = 'SRMNXP01' and VERSION = '100' and not( (lpad(SP,4,'0'))  &lt; '0033' )   ) 
         <!-- SRMNXP01 100 SAPK-10033INSRMNXP01 -->
@@ -96,7 +96,7 @@ Date:    13.11.2025
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-    <checkitem desc="[p1-CVSS 9.0] [CVE-2025-48913] SRM-UIA-SHP-BD - Note 0003647332 missing and applicable using Correction Instruction" id="0003647332" operator="check_note:0003647332">
+    <checkitem desc="[p1-CVSS 9.0] [CVE-2025-42910] SRM-UIA-SHP-BD - Note 0003647332 missing and applicable using Correction Instruction" id="0003647332" operator="check_note:0003647332">
       <compliant/>
       <noncompliant>(
 		  ( COMPONENT = 'SRMNXP01' and VERSION = '100' and lpad(SP,4,'0') between '0001' and '0032' )  
