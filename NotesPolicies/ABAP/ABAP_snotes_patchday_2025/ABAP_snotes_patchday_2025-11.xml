@@ -201,6 +201,22 @@ Date:    13.11.2025
       </joinstore>
     </checkitem>
   </configstore>
+		<configstore name="CRYPTOLIB" sci_id="S00053" system_type="ABAP">
+		<checkitem desc="[p2-CVSS 7.5] Minimum CommonCryptoLib version (note 0003633049)" id="0003633049_c">
+			<compliant>(NAME = 'CCL' 
+				and ((lpad(SUBSTR_BEFORE(VALUE,'.'),2,'0') &gt; '08') 
+					or (substring(VALUE,0,1) = '8' and (lpad(SUBSTR_BEFORE(SUBSTR_AFTER (VALUE,'.'),'.'),2,'0') &gt; '05')) 
+					or (substring(VALUE,0,3) = '8.5' and (lpad(SUBSTR_AFTER(SUBSTR_AFTER(SUBSTRING_REGEXPR('[^\ ]+' IN VALUE GROUP 0),'.'),'.'),2,'0') &gt;= '60')) )) 
+				and VALUE != 'LIB_ID_UNKNOWN'
+			</compliant>
+			<noncompliant>(NAME = 'CCL' 
+				and not ((lpad(SUBSTR_BEFORE(VALUE,'.'),2,'0') &gt; '08') 
+					or (substring(VALUE,0,1) = '8' and (lpad(SUBSTR_BEFORE(SUBSTR_AFTER (VALUE,'.'),'.'),2,'0') &gt; '05')) 
+					or (substring(VALUE,0,3) = '8.5' and (lpad(SUBSTR_AFTER(SUBSTR_AFTER(SUBSTRING_REGEXPR('[^\ ]+' IN VALUE GROUP 0),'.'),'.'),2,'0') &gt;= '60')) )) 
+				or VALUE = 'LIB_ID_UNKNOWN'
+                        </noncompliant>
+		</checkitem>
+	</configstore>
   <!-- PRIO MEDIUM -->
   <!-- [p3-CVSS 6.1] PA-ER 0003642398 - [CVE-2025-42924] Open Redirect vulnerabilities in SAP S/4HANA landscape (SAP E-Recruiting BSP) (Version 2) -->
   <configstore name="ABAP_NOTES">
