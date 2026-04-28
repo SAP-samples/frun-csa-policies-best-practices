@@ -110,7 +110,18 @@ Date:    13.11.2025
   </configstore>
   <!-- PRIO HIGH -->
   <!-- [p1-CVSS 7.5] 0003633049 BC-IAM-SSO-CCL - [CVE-2025-42940] Memory Corruption vulnerability in SAP CommonCryptoLib (Version 7) -->
-  <!-- ABAP Kernel -->
+    <!--  CommonCryptoLib version check in ABAP system-->
+  <configstore name="CRYPTOLIB" sci_id="S00053" system_type="ABAP">
+    <checkitem desc="[p2-CVSS 7.5] Minimum CommonCryptoLib version (note 3633049v7)" id="0003633049_c">
+      <compliant>
+      NAME = 'CCL' and VALUE like_regexpr '^(8\.5\.60|8\.5\.[6789]\d|8\.[6789]\.\d+|8\.\d{2,}\.\d+)[ ].*'
+    </compliant>
+      <noncompliant>
+      NAME = 'CCL' and not VALUE like_regexpr '^(8\.5\.60|8\.5\.[6789]\d|8\.[6789]\.\d+|8\.\d{2,}\.\d+)[ ].*'
+    </noncompliant>
+    </checkitem>
+  </configstore>
+	<!-- ABAP Kernel -->
   <configstore name="SAP_KERNEL">
     <checkitem desc="[p2-CVSS 7.5] Kernel patch required for SNote 3633049v7" id="0003633049_k">
       <compliant>NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1510'</compliant>
