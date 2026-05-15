@@ -9,6 +9,7 @@ This FRUN CSA policy contains rules to check the following ABAP Security Notes p
 [p3-CVSS 6.1] 0003727717 SV-SMG-TWB-CBT - [CVE-2026-40137] Cross-Site Scripting (XSS) vulnerability in Business Server Pages Application (TAF_APPLAUNCHER) (Version 17)
 [p3-CVSS 5.4] 0003721959 FIN-SEM-CPM-BSC - [CVE-2026-40132] Missing Authorization Check in SAP Strategic Enterprise Management (BSP application Balanced Scorecard Wizard) (Version 8)
 [p3-CVSS 4.7] 0003728690 BC-BSP - [CVE-2026-27682] Reflected Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver Application Server ABAP (Applications based on (Version 3)
+[p3-CVSS 4.7] 0003726583 HAN-AS-INA-UI - [CVE-2026-34258] Content Spoofing vulnerability in SAPUI5 (Search UI) (Version 2)
 [p3-CVSS 4.3] 0003735359 BC-MID-ICF - [CVE-2026-40129] Code Injection vulnerability in SAP Application Server ABAP for SAP NetWeaver and ABAP Platform (Version 9)
 [p3-CVSS 4.3] 0003718508 ICM - [CVE-2026-40134] Missing Authorization Check in SAP Incentive and Commission Management (Version 7)
 
@@ -18,7 +19,6 @@ The policy does not check the following Security Notes:
 [p1-CVSS 9.6] 0003733064 CEC-SCC-CDM-BO-APP - [CVE-2026-34263] Missing authentication check in SAP Commerce Cloud configuration (Version 13)
 [p3-CVSS 5.4] 0003667593 BI-BIP-INV - [CVE-2026-0502] Cross Site Request Forgery (CSRF) in SAP BusinessObjects Business Intelligence Platform (Version 10)
 [p3-CVSS 4.8] 0003716450 CEC-SCC-PLA-PL - [CVE-2025-68161] Potential Improper Certificate Validation in SAP Commerce Cloud (Apache Log4j) (Version 9)
-[p3-CVSS 4.7] 0003726583 HAN-AS-INA-UI - [CVE-2026-34258] Content Spoofing vulnerability in SAPUI5 (Search UI) (Version 2)
 [p3-CVSS 4.3] 0003713521 EPM-BFC-PSI - [CVE-2026-40136] Denial of service (DoS) in SAP Financial Consolidation (Version 5)
 [p4-CVSS 3.4] 0003726962 HAN-DB-DI - [CVE-2026-40131] SQL Injection vulnerability in SAP HANA Deployment Infrastructure (HDI) deploy library (Version 9)
 
@@ -535,7 +535,6 @@ Date:    14.05.2026
       </noncompliant>
     </checkitem>
   </configstore>
-
   <!-- [p3-CVSS 4.7] BC-BSP 0003728690 - [CVE-2026-27682] Reflected Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver Application Server ABAP (Applications based on (Version 03)  -->
   <configstore name="ABAP_NOTES">
     <checkitem desc="[p3-CVSS 4.7] [CVE-2026-27682] BC-BSP - Note 0003728690 exists" id="0003728690" operator="check_note">
@@ -672,6 +671,31 @@ Date:    14.05.2026
       ( COMPONENT = 'SAP_BASIS' and VERSION = '816' and lpad(SP,4,'0') between '0000' and '0001' )  
         <!-- SAP_BASIS 816 816 - SAPK-81601INSAPBASIS  -->
      )
+      </noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- [p3-CVSS 4.7] HAN-AS-INA-UI 0003726583 - [CVE-2026-34258] Content Spoofing vulnerability in SAPUI5 (Search UI) (Version 2) -->
+  <configstore name="SAPUI5_VERSION">
+    <checkitem desc="[p3-CVSS 4.7] HAN-AS-INA-UI - SAPUI5 library patch required for SNote 3726583v2" id="0003726583" not_found="ignore">
+      <compliant>
+          ( name = 'VERSION' and substring(VALUE,0,5) = '1.71.' and lpad(substr_after(VALUE,'1.71.'),4,'0') &gt;= '0081' ) or
+          ( name = 'VERSION' and substring(VALUE,0,5) = '1.84.' and lpad(substr_after(VALUE,'1.84.'),4,'0') &gt;= '0058' ) or
+          ( name = 'VERSION' and substring(VALUE,0,5) = '1.96.' and lpad(substr_after(VALUE,'1.96.'),4,'0') &gt;= '0047' ) or
+          ( name = 'VERSION' and substring(VALUE,0,6) = '1.108.' and lpad(substr_after(VALUE,'1.108.'),4,'0') &gt;= '0051' ) or
+          ( name = 'VERSION' and substring(VALUE,0,6) = '1.120.' and lpad(substr_after(VALUE,'1.120.'),4,'0') &gt;= '0043' ) or
+          ( name = 'VERSION' and substring(VALUE,0,6) = '1.136.' and lpad(substr_after(VALUE,'1.136.'),4,'0') &gt;= '0015' ) or
+          ( name = 'VERSION' and substring(VALUE,0,6) = '1.142.' and lpad(substr_after(VALUE,'1.142.'),4,'0') &gt;= '0008' ) or
+          ( name = 'VERSION' and lpad(SUBSTRING(VALUE, LOCATE(VALUE, '.')+1, (IFNULL(NULLIF(LOCATE(VALUE, '.', LOCATE(VALUE, '.')+1), 0), LENGTH(VALUE)+1) - LOCATE(VALUE, '.') - 1)), 3, '0') &gt;= '143' )
+      </compliant>
+      <noncompliant>
+          ( name = 'VERSION' and substring(VALUE,0,5) = '1.71.' and lpad(substr_after(VALUE,'1.71.'),4,'0') &lt; '0081' ) or
+          ( name = 'VERSION' and substring(VALUE,0,5) = '1.84.' and lpad(substr_after(VALUE,'1.84.'),4,'0') &lt; '0058' ) or
+          ( name = 'VERSION' and substring(VALUE,0,5) = '1.96.' and lpad(substr_after(VALUE,'1.96.'),4,'0') &lt; '0047' ) or
+          ( name = 'VERSION' and substring(VALUE,0,6) = '1.108.' and lpad(substr_after(VALUE,'1.108.'),4,'0') &lt; '0051' ) or
+          ( name = 'VERSION' and substring(VALUE,0,6) = '1.120.' and lpad(substr_after(VALUE,'1.120.'),4,'0') &lt; '0043' ) or
+          ( name = 'VERSION' and substring(VALUE,0,6) = '1.136.' and lpad(substr_after(VALUE,'1.136.'),4,'0') &lt; '0015' ) or
+          ( name = 'VERSION' and substring(VALUE,0,6) = '1.142.' and lpad(substr_after(VALUE,'1.142.'),4,'0') &lt; '0008' ) or
+          ( name = 'VERSION' and lpad(SUBSTRING(VALUE, LOCATE(VALUE, '.')+1, (IFNULL(NULLIF(LOCATE(VALUE, '.', LOCATE(VALUE, '.')+1), 0), LENGTH(VALUE)+1) - LOCATE(VALUE, '.') - 1)), 3, '0') &lt; '071' )
       </noncompliant>
     </checkitem>
   </configstore>
