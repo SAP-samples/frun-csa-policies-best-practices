@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This Policy contains the following HANA SNotes published on PatchDay 2026-07:
+
+SAP HANA
+[p4-CVSS 3.7] 0003732522 HAN-AS-XS - [CVE-2026-44753] Information Disclosure vulnerability in SAP HANA Extended Application Services classic model (User Self Service) (Version 8)
+
+
+
+SAP Security: PatchDay_2026-07
+Version: 0001
+Date:    16.07.2026
+-->
+<targetsystem desc="SNotes of PatchDay: 2026-07 (HANA)" id="HPATCHDAY_2026-07" multisql="Yes" version="0000">
+  <!-- PRIO LOW -->
+  <!-- SAP HANA -->
+  <!-- [p4-CVSS 3.7] HAN-AS-XS 0003732522 - [CVE-2026-44753] Information Disclosure vulnerability in SAP HANA Extended Application Services classic model (User Self Service) (Version 8) -->
+  <configstore name="HDB_VERSION">
+    <checkitem desc="[p4-CVSS 3.7] [CVE-2026-44753] HAN-AS-XS - Note 3732522v8 requires HANA revision update" id="0003732522" not_found="positive" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>
+        (
+          (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,11) &gt;= '2.00.079.10')
+          OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND substring(VALUE,0,11) &gt;= '2.00.089.03')
+          OR (NAME = 'VERSION' AND substring(VALUE,0,7) &gt;= '2.00.09')
+        )
+      </compliant>
+      <noncompliant>
+        (
+          (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND NOT substring(VALUE,0,11) &gt;= '2.00.079.10')
+          OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND NOT substring(VALUE,0,11) &gt;= '2.00.089.03')
+          OR (NAME = 'VERSION' AND substring(VALUE,0,7) &lt; '2.00.07')
+        )
+      </noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- OPTIONAL WORKAROUND: Uncomment the block below only if the permanent patch cannot be applied immediately. -->
+  <!-- SAP Note 3732522 states the XSC User Self Service functionality can be disabled to address this vulnerability. -->
+  <!-- This check validates that no parameter in the [user_self_service] section of xsengine.ini is enabled (VALUE = 'true'). -->
+  <!-- USS is disabled by default - systems with no parameter row present are treated as compliant (not_found="positive"). -->
+  <!--
+  <configstore name="HDB_PARAMETER">
+    <checkitem desc="[p4-CVSS 3.7] Note 3732522v8 - XSC User Self Service disabled (workaround)" id="0003732522_WA" not_found="positive">
+      <compliant>
+        FILE_NAME = 'xsengine.ini'
+        AND SECT = 'user_self_service'
+        AND VALUE = 'false'
+      </compliant>
+      <noncompliant>
+        FILE_NAME = 'xsengine.ini'
+        AND SECT = 'user_self_service'
+        AND VALUE = 'true'
+      </noncompliant>
+    </checkitem>
+  </configstore>
+  -->
+</targetsystem>
