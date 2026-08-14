@@ -484,170 +484,126 @@ Date:    13.08.2026
   </configstore>
   <!-- [p3-CVSS 6.3] BC-WD-UR 0003721424 - [CVE-2026-66779] Cross-Site Scripting (XSS) vulnerability in SAP NetWeaver Application Server ABAP (Version 6) -->
   <!-- ABAP -->
-  <!-- ============================================================
-       SP Fix Available
-       SP thresholds  : Derived from SP package references listed in
-                        each TCI note, as documented in SAP Note 2090746
-                        TCI validity table (section 1.1 for SAP_UI,
-                        section 1.2 for SAP_BASIS).
-                        SP threshold = TCI validity upper bound + 1 SP,
-                        i.e. the first SP that natively includes the fix.
-       UR codelines   : SAP_UI 754-757 = UR Lightspeed
-                        SAP_UI 758, 816 = UR C2
-                        SAP_BASIS 731   = UR Lightspeed
-                        (per SAP Note 2090746, footnote 7)
-       ============================================================ -->
-  <configstore name="COMP_LEVEL">
-    <checkitem desc="[p3-CVSS 6.3] [CVE-2026-66779] BC-WD-UR - Note 0003721424 missing and solution with SP available" id="0003721424" operator="check_note:0003721424">
+  <configstore name="COMP_LEVEL" system_type="ABAP">
+    <checkitem desc="[p3-CVSS 6.3] [CVE-2026-66779] BC-WD-UR - Note 0003721424 missing and solution with SP available" id="0003721424_ur">
       <compliant>(
         ( COMPONENT = 'SAP_UI' and VERSION = '754' and not( (lpad(SP,4,'0')) &lt; '0020' ) )
         <!-- SAP_UI 754 SP20+: UR 2604 fix natively included in SP.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776707 validity = SP01-19 (SAP Note 2090746, section 1.1).
-                                 First fix SP = SP20, ref SAPK-75420INSAPUI (confirmed). -->
+               SP threshold: TCI 3776707 validity = SP01-19 (SAP Note 2090746, section 1.1).
+               First fix SP = SP20. -->
             or
         ( COMPONENT = 'SAP_UI' and VERSION = '755' and not( (lpad(SP,4,'0')) &lt; '0017' ) )
         <!-- SAP_UI 755 SP17+: UR 2604 fix natively included in SP.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776706 validity = SP00-16 (SAP Note 2090746, section 1.1).
-                                 First fix SP = SP17, ref SAPK-75517INSAPUI (confirmed). -->
+               SP threshold: TCI 3776706 validity = SP00-16 (SAP Note 2090746, section 1.1).
+               First fix SP = SP17. -->
             or
         ( COMPONENT = 'SAP_UI' and VERSION = '756' and not( (lpad(SP,4,'0')) &lt; '0014' ) )
         <!-- SAP_UI 756 SP14+: UR 2604 fix natively included in SP.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776705 validity = SP00-13 (SAP Note 2090746, section 1.1).
-                                 First fix SP = SP14, ref SAPK-75614INSAPUI (confirmed). -->
+               SP threshold: TCI 3776705 validity = SP00-13 (SAP Note 2090746, section 1.1).
+               First fix SP = SP14. -->
             or
         ( COMPONENT = 'SAP_UI' and VERSION = '757' and not( (lpad(SP,4,'0')) &lt; '0011' ) )
         <!-- SAP_UI 757 SP11+: UR 2604 fix natively included in SP.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776704 validity = SP00-10 (SAP Note 2090746, section 1.1).
-                                 First fix SP = SP11, ref SAPK-75711INSAPUI (confirmed). -->
+               SP threshold: TCI 3776704 validity = SP00-10 (SAP Note 2090746, section 1.1).
+               First fix SP = SP11. -->
             or
         ( COMPONENT = 'SAP_UI' and VERSION = '758' and not( (lpad(SP,4,'0')) &lt; '0007' ) )
         <!-- SAP_UI 758 SP07+: UR 2604 fix natively included in SP.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776703 validity = SP01-06 (SAP Note 2090746, section 1.1).
-                                 First fix SP = SP07, ref SAPK-75807INSAPUI (confirmed).
-                                 UR codeline: UR C2 (SAP Note 2090746, footnote 7). -->
+               SP threshold: TCI 3776703 validity = SP01-06 (SAP Note 2090746, section 1.1).
+               First fix SP = SP07. UR codeline: UR C2. -->
             or
         ( COMPONENT = 'SAP_UI' and VERSION = '816' and not( (lpad(SP,4,'0')) &lt; '0003' ) )
         <!-- SAP_UI 816 SP03+: UR 2604 fix natively included in SP.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776652 validity = SP00-02 (SAP Note 2090746, section 1.1).
-                                 First fix SP = SP03, ref SAPK-81603INSAPUI (confirmed).
-                                 UR codeline: UR C2 (SAP Note 2090746, footnote 7). -->
+               SP threshold: TCI 3776652 validity = SP00-02 (SAP Note 2090746, section 1.1).
+               First fix SP = SP03. UR codeline: UR C2. -->
             or
         ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( (lpad(SP,4,'0')) &lt; '0039' ) )
         <!-- SAP_BASIS 731 SP39+: UR 2604 fix natively included in SP.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776708 validity = SP17-38 (SAP Note 2090746, section 1.2).
-                                 First fix SP = SP39, ref SAPK-73139INSAPBAS (confirmed).
-                                 UR codeline: UR Lightspeed (SAP Note 2090746, section 1.2). -->
+               SP threshold: TCI 3776708 validity = SP17-38 (SAP Note 2090746, section 1.2).
+               First fix SP = SP39. UR codeline: UR Lightspeed. -->
        )
       </compliant>
       <noncompliant>(
         ( COMPONENT = 'SAP_UI' and VERSION = '754' and (lpad(SP,4,'0')) &lt; '0020' )
-        <!-- SAP_UI 754 below SP20: SP fix not yet applied.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776707 validity = SP01-19 (SAP Note 2090746, section 1.1).
-                                 First fix SP = SP20, ref SAPK-75420INSAPUI (confirmed). -->
+        <!-- SAP_UI 754 below SP20: SP fix not yet applied. -->
             or
         ( COMPONENT = 'SAP_UI' and VERSION = '755' and (lpad(SP,4,'0')) &lt; '0017' )
-        <!-- SAP_UI 755 below SP17: SP fix not yet applied.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776706 validity = SP00-16 (SAP Note 2090746, section 1.1).
-                                 First fix SP = SP17, ref SAPK-75517INSAPUI (confirmed). -->
+        <!-- SAP_UI 755 below SP17: SP fix not yet applied. -->
             or
         ( COMPONENT = 'SAP_UI' and VERSION = '756' and (lpad(SP,4,'0')) &lt; '0014' )
-        <!-- SAP_UI 756 below SP14: SP fix not yet applied.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776705 validity = SP00-13 (SAP Note 2090746, section 1.1).
-                                 First fix SP = SP14, ref SAPK-75614INSAPUI (confirmed). -->
+        <!-- SAP_UI 756 below SP14: SP fix not yet applied. -->
             or
         ( COMPONENT = 'SAP_UI' and VERSION = '757' and (lpad(SP,4,'0')) &lt; '0011' )
-        <!-- SAP_UI 757 below SP11: SP fix not yet applied.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776704 validity = SP00-10 (SAP Note 2090746, section 1.1).
-                                 First fix SP = SP11, ref SAPK-75711INSAPUI (confirmed). -->
+        <!-- SAP_UI 757 below SP11: SP fix not yet applied. -->
             or
         ( COMPONENT = 'SAP_UI' and VERSION = '758' and (lpad(SP,4,'0')) &lt; '0007' )
-        <!-- SAP_UI 758 below SP07: SP fix not yet applied.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776703 validity = SP01-06 (SAP Note 2090746, section 1.1).
-                                 First fix SP = SP07, ref SAPK-75807INSAPUI (confirmed).
-                                 UR codeline: UR C2 (SAP Note 2090746, footnote 7). -->
+        <!-- SAP_UI 758 below SP07: SP fix not yet applied. -->
             or
         ( COMPONENT = 'SAP_UI' and VERSION = '816' and (lpad(SP,4,'0')) &lt; '0003' )
-        <!-- SAP_UI 816 below SP03: SP fix not yet applied.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776652 validity = SP00-02 (SAP Note 2090746, section 1.1).
-                                 First fix SP = SP03, ref SAPK-81603INSAPUI (confirmed).
-                                 UR codeline: UR C2 (SAP Note 2090746, footnote 7). -->
+        <!-- SAP_UI 816 below SP03: SP fix not yet applied. -->
             or
         ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and (lpad(SP,4,'0')) &lt; '0039' )
-        <!-- SAP_BASIS 731 below SP39: SP fix not yet applied.
-               Fix requirement : SAP Note 3721424 Solution — UR >= 2604 required.
-               SP threshold    : TCI 3776708 validity = SP17-38 (SAP Note 2090746, section 1.2).
-                                 First fix SP = SP39, ref SAPK-73139INSAPBAS (confirmed).
-                                 UR codeline: UR Lightspeed (SAP Note 2090746, section 1.2). -->
+        <!-- SAP_BASIS 731 below SP39: SP fix not yet applied. -->
        )
       </noncompliant>
     </checkitem>
   </configstore>
   <!-- ============================================================
-       Correction Instruction (TCI) applicable
-       TCI validity   : SP ranges per SAP Note 2090746 TCI validity
-                        table (section 1.1 for SAP_UI,
-                        section 1.2 for SAP_BASIS).
-       UR codelines   : SAP_UI 754-757 = UR Lightspeed
-                        SAP_UI 758, 816 = UR C2
-                        SAP_BASIS 731   = UR Lightspeed
-                        (per SAP Note 2090746, footnote 7)
+       ABAP Block 3: Direct UR patch version check
+       Configstore    : ABAP_UR_VERSION (NAME='urpatch', VALUE=<number>)
+       Fix requirement: urpatch >= 2604 (SAP Note 3721424 Solution section)
+       Joinstore      : Scoped to systems within TCI validity ranges
+                        (systems that need the manual UR patch, per
+                        SAP Note 2090746 sections 1.1 and 1.2).
+       Note           : Systems at or above the fix SP level already
+                        include urpatch >= 2604 natively — Block 1
+                        handles those. This block validates that systems
+                        within TCI ranges have actually applied the patch.
        ============================================================ -->
-  <configstore name="COMP_LEVEL">
-    <checkitem desc="[p3-CVSS 6.3] [CVE-2026-66779] BC-WD-UR - Note 0003721424 missing and applicable using Correction Instruction (TCI)" id="0003721424" operator="check_note:0003721424">
-      <compliant/>
-      <noncompliant>(
-        ( COMPONENT = 'SAP_UI' and VERSION = '754' and lpad(SP,4,'0') between '0001' and '0019' )
-        <!-- SAP_UI 754 SP01-19: apply TCI 3776707 (urpatch >= 2604, UR Lightspeed).
-               TCI validity range: SP01-19 per SAP Note 2090746, section 1.1.
-               Fix requirement   : SAP Note 3721424 Solution — UR >= 2604 required. -->
-            or
-        ( COMPONENT = 'SAP_UI' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0016' )
-        <!-- SAP_UI 755 SP00-16: apply TCI 3776706 (urpatch >= 2604, UR Lightspeed).
-               TCI validity range: SP00-16 per SAP Note 2090746, section 1.1.
-               Fix requirement   : SAP Note 3721424 Solution — UR >= 2604 required. -->
-            or
-        ( COMPONENT = 'SAP_UI' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0013' )
-        <!-- SAP_UI 756 SP00-13: apply TCI 3776705 (urpatch >= 2604, UR Lightspeed).
-               TCI validity range: SP00-13 per SAP Note 2090746, section 1.1.
-               Fix requirement   : SAP Note 3721424 Solution — UR >= 2604 required. -->
-            or
-        ( COMPONENT = 'SAP_UI' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0010' )
-        <!-- SAP_UI 757 SP00-10: apply TCI 3776704 (urpatch >= 2604, UR Lightspeed).
-               TCI validity range: SP00-10 per SAP Note 2090746, section 1.1.
-               Fix requirement   : SAP Note 3721424 Solution — UR >= 2604 required. -->
-            or
-        ( COMPONENT = 'SAP_UI' and VERSION = '758' and lpad(SP,4,'0') between '0001' and '0006' )
-        <!-- SAP_UI 758 SP01-06: apply TCI 3776703 (urpatch >= 2604, UR C2).
-               TCI validity range: SP01-06 per SAP Note 2090746, section 1.1.
-               Fix requirement   : SAP Note 3721424 Solution — UR >= 2604 required.
-               UR codeline       : UR C2 — SAP_UI 758 onwards (SAP Note 2090746, footnote 7). -->
-            or
-        ( COMPONENT = 'SAP_UI' and VERSION = '816' and lpad(SP,4,'0') between '0000' and '0002' )
-        <!-- SAP_UI 816 SP00-02: apply TCI 3776652 (urpatch >= 2604, UR C2).
-               TCI validity range: SP00-02 per SAP Note 2090746, section 1.1.
-               Fix requirement   : SAP Note 3721424 Solution — UR >= 2604 required.
-               UR codeline       : UR C2 — SAP_UI 758 onwards (SAP Note 2090746, footnote 7). -->
-            or
-        ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and lpad(SP,4,'0') between '0017' and '0038' )
-        <!-- SAP_BASIS 731 SP17-38: apply TCI 3776708 (urpatch >= 2604, UR Lightspeed).
-               TCI validity range: SP17-38 per SAP Note 2090746, section 1.2.
-               Fix requirement   : SAP Note 3721424 Solution — UR >= 2604 required.
-               UR codeline       : UR Lightspeed — SAP_BASIS 731 (SAP Note 2090746, section 1.2). -->
-       )
+  <configstore name="ABAP_UR_VERSION">
+    <checkitem desc="[p3-CVSS 6.3] [CVE-2026-66779] BC-WD-UR - UR patch &gt;= 2604 required for SNote 3721424v6" id="0003721424_ur" operator="check_note:0003721424">
+      <compliant>
+        ( NAME = 'urpatch' and lpad(VALUE,4,'0') &gt;= '2604' )
+      </compliant>
+      <noncompliant>
+        ( NAME = 'urpatch' and lpad(VALUE,4,'0') &lt; '2604' )
       </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="Yes" system_type="ABAP">
+        <joincompliant>
+          ( COMPONENT = 'SAP_UI' and VERSION = '754' and lpad(SP,4,'0') between '0001' and '0019' )
+            or
+          ( COMPONENT = 'SAP_UI' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0016' )
+            or
+          ( COMPONENT = 'SAP_UI' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0013' )
+            or
+          ( COMPONENT = 'SAP_UI' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0010' )
+            or
+          ( COMPONENT = 'SAP_UI' and VERSION = '758' and lpad(SP,4,'0') between '0001' and '0006' )
+            or
+          ( COMPONENT = 'SAP_UI' and VERSION = '816' and lpad(SP,4,'0') between '0000' and '0002' )
+            or
+          ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and lpad(SP,4,'0') between '0017' and '0038' )
+          <!-- Scoped to TCI validity ranges per SAP Note 2090746.
+               Systems at fix SP or above are handled by Block 1. -->
+        </joincompliant>
+        <joinnoncompliant>
+          ( COMPONENT = 'SAP_UI' and VERSION = '754' and lpad(SP,4,'0') between '0001' and '0019' )
+            or
+          ( COMPONENT = 'SAP_UI' and VERSION = '755' and lpad(SP,4,'0') between '0000' and '0016' )
+            or
+          ( COMPONENT = 'SAP_UI' and VERSION = '756' and lpad(SP,4,'0') between '0000' and '0013' )
+            or
+          ( COMPONENT = 'SAP_UI' and VERSION = '757' and lpad(SP,4,'0') between '0000' and '0010' )
+            or
+          ( COMPONENT = 'SAP_UI' and VERSION = '758' and lpad(SP,4,'0') between '0001' and '0006' )
+            or
+          ( COMPONENT = 'SAP_UI' and VERSION = '816' and lpad(SP,4,'0') between '0000' and '0002' )
+            or
+          ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and lpad(SP,4,'0') between '0017' and '0038' )
+          <!-- Scoped to TCI validity ranges per SAP Note 2090746.
+               Systems at fix SP or above are handled by Block 1. -->
+        </joinnoncompliant>
+      </joinstore>
     </checkitem>
   </configstore>
   <!-- ABAP -->
