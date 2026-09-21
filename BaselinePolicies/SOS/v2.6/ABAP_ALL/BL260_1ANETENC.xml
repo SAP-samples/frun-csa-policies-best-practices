@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          NETENC-A: Encryption of Network Connections – ABAP
+        Security level:                             Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-06-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Encryption of Network Connections (ABAP)" id="BL260_1ANETENC" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: system/secure_communication = ON ≥ 7.40 (see SAP Notes 2040644, 2362078)" id="NETENC-A_e">
+      <compliant>       NAME = 'system/secure_communication' and UPPER(VALUE)  = 'ON'  </compliant>
+      <noncompliant>    NAME = 'system/secure_communication' and UPPER(VALUE) != 'ON'  </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>     ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and SP &gt;= '0008' ) OR ( COMPONENT = 'SAP_BASIS' and VERSION &gt; '740' ) </joincompliant>
+        <joinnoncompliant>  ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and SP &gt;= '0008' ) OR ( COMPONENT = 'SAP_BASIS' and VERSION &gt; '740' ) </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: system/secure_communication = ON ≥ 7.40 (see SAP Notes 2040644, 2362078)" id="NETENC-A_e" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'system/secure_communication' and UPPER(VALUE)  = 'ON'  </compliant>
+      <noncompliant>    NAME = 'system/secure_communication' and UPPER(VALUE) != 'ON'  </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>     ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and SP &gt;= '0008' ) OR ( COMPONENT = 'SAP_BASIS' and VERSION &gt; '740' ) </joincompliant>
+        <joinnoncompliant>  ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and SP &gt;= '0008' ) OR ( COMPONENT = 'SAP_BASIS' and VERSION &gt; '740' ) </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>
