@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      MSGSRV-A: Message Server Security
+        Security level:                         Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-08-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem desc="[BL2.6.0] Message Server Security (ABAP)" id="BL260_1AMSGSRV" multisql="Yes" version="0000">
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <!-- This checks are critical if system/secure_communication is not ON.  Hence included in Critical Check using Join.  It uses a regular expression with or conditions to validate the path in Windows or Linux environments.-->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: ms/acl_info path is maintained (Message Server Security, pointing to access control list file for Message Server" id="MSGSRV-A_d.1">
+      <compliant>       NAME = 'ms/acl_info' 
+                        and     VALUE like_regexpr '(\w:)?([\/\\]usr[\/\\]sap|[\/\\]sapmnt)[\/\\](\w{3})([\/\\]SYS)?[\/\\]global[\/\\]ms_acl(_info)?(\.DAT|\.dat|\.txt)?'  </compliant>
+      <noncompliant>    NAME = 'ms/acl_info' 
+                        and not VALUE like_regexpr '(\w:)?([\/\\]usr[\/\\]sap|[\/\\]sapmnt)[\/\\](\w{3})([\/\\]SYS)?[\/\\]global[\/\\]ms_acl(_info)?(\.DAT|\.dat|\.txt)?'  </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'system/secure_communication' and VALUE != 'ON'      </joincompliant>
+        <joinnoncompliant>  NAME = 'system/secure_communication' and VALUE != 'ON'      </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <!-- OLD SYNTAX retained for reference:
+    <checkitem desc="[p1-CRITICAL] Profile parameter: ms/acl_info is maintained (Message Server Security, pointing to access control list file for Message Server" id="MSGSRV-A_d.1">
+      <compliant>       NAME = 'ms/acl_info' 
+                        and     (  VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/ms_acl_info'
+                                or VALUE like_regexpr '^/sapmnt/(\w{3})/SYS/global/ms_acl_info'
+                                or VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' )         </compliant>
+      <noncompliant>    NAME = 'ms/acl_info' 
+                        and not (  VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/ms_acl_info'
+                                or VALUE like_regexpr '^/sapmnt/(\w{3})/SYS/global/ms_acl_info'
+                                or VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' )         </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'system/secure_communication' and VALUE != 'ON'      </joincompliant>
+        <joinnoncompliant>  NAME = 'system/secure_communication' and VALUE != 'ON'      </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    -->
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile Parameter: ms/server_port_nn uses ACLFILE sub-parameter if parameter defined (Message Server Security, see Note 3272585)" id="MSGSRV-A_f.1">
+      <compliant>       s0.NAME = s1.NAME 
+                        and     (   ( VALUE like '%ACLFILE=%' and VALUE like '%HTTP%' ) 
+                                 or ( length(VALUE) = 0 )
+                                )
+                                </compliant>
+      <noncompliant>    s0.NAME = s1.NAME 
+                        and not (   ( VALUE like '%ACLFILE=%' and VALUE like '%HTTP%' ) 
+                                 or ( length(VALUE) = 0 )
+                                )
+                                </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     NAME like 'ms/server_port_%' and VALUE like '%'     </joincompliant>
+        <joinnoncompliant>  NAME like 'ms/server_port_%' and VALUE like '%'     </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <!-- This checks are critical if system/secure_communication is not ON.  Hence included in Critical Check using Join.  It uses a regular expression with or conditions to validate the path in Windows or Linux environments.-->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: ms/acl_info path is maintained (Message Server Security, pointing to access control list file for Message Server" id="MSGSRV-A_d.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'ms/acl_info' 
+                        and     VALUE like_regexpr '(\w:)?([\/\\]usr[\/\\]sap|[\/\\]sapmnt)[\/\\](\w{3})([\/\\]SYS)?[\/\\]global[\/\\]ms_acl(_info)?(\.DAT|\.dat|\.txt)?'  </compliant>
+      <noncompliant>    NAME = 'ms/acl_info' 
+                        and not VALUE like_regexpr '(\w:)?([\/\\]usr[\/\\]sap|[\/\\]sapmnt)[\/\\](\w{3})([\/\\]SYS)?[\/\\]global[\/\\]ms_acl(_info)?(\.DAT|\.dat|\.txt)?'  </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'system/secure_communication' and VALUE != 'ON'      </joincompliant>
+        <joinnoncompliant>  NAME = 'system/secure_communication' and VALUE != 'ON'      </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile Parameter: ms/server_port_nn uses ACLFILE sub-parameter if parameter defined (Message Server Security, see Note 3272585)" id="MSGSRV-A_f.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       s0.NAME = s1.NAME 
+                        and     (   ( VALUE like '%ACLFILE=%' and VALUE like '%HTTP%' ) 
+                                 or ( length(VALUE) = 0 )
+                                )
+                                </compliant>
+      <noncompliant>    s0.NAME = s1.NAME 
+                        and not (   ( VALUE like '%ACLFILE=%' and VALUE like '%HTTP%' ) 
+                                 or ( length(VALUE) = 0 )
+                                )
+                                </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     NAME like 'ms/server_port_%' and VALUE like '%'     </joincompliant>
+        <joinnoncompliant>  NAME like 'ms/server_port_%' and VALUE like '%'     </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="MS_SECINFO">
+    <!-- -->
+    <!-- The following compliance rule will accept entries such as HOST=ABC, or HOST=*.ABC where partial qualification has been considered. -->
+    <checkitem desc="[p1-CRITICAL] Message Server ACL should not contain generic entries, such as HOST=* (ACL file, Message Server Security)" id="MSGSRV-A_e.1">
+      <compliant>       line like '%' and     text like_regexpr 'HOST=[ \t]*([^* \t]|[*][a-zA-Z0-9.]).*'    </compliant>
+      <noncompliant>    line like '%' and not text like_regexpr 'HOST=[ \t]*([^* \t]|[*][a-zA-Z0-9.]).*'    </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'system/secure_communication' and VALUE != 'ON'       </joincompliant>
+        <joinnoncompliant>  NAME = 'system/secure_communication' and VALUE != 'ON'       </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="MS_SECINFO">
+    <!-- -->
+    <!-- The following compliance rule will accept entries such as HOST=ABC, or HOST=*.ABC where partial qualification has been considered. -->
+    <checkitem desc="[p1-CRITICAL] Message Server ACL should not contain generic entries, such as HOST=* (ACL file, Message Server Security)" id="MSGSRV-A_e.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       line like '%' and     text like_regexpr 'HOST=[ \t]*([^* \t]|[*][a-zA-Z0-9.]).*'    </compliant>
+      <noncompliant>    line like '%' and not text like_regexpr 'HOST=[ \t]*([^* \t]|[*][a-zA-Z0-9.]).*'    </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'system/secure_communication' and VALUE != 'ON'       </joincompliant>
+        <joinnoncompliant>  NAME = 'system/secure_communication' and VALUE != 'ON'       </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>
