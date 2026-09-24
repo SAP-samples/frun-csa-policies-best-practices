@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      SECUPD-O: Regular Security Updates – WEBDISP
+        Security level:                         Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Configuration Store COMP_LEVEL (S00120) contains Software Component versions of ABAP, Web Dispatcher, and JAVA type systems, hence system_attributes="SYSTEM_TYPE:WEBDISP" used at check level.
+
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Regular Security Updates (WebDispatcher)" id="BL260_1OSECUPD" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="COMP_LEVEL">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] WebDispatcher component level last reported change in CCDB: within last 12 months" id="SECUPD-O_a.1" system_attributes="SYSTEM_TYPE:WEBDISP">
+      <compliant>       COMPONENT like '%' and version like '%' and SP like '%' and SP_REL_DATE like '%' and PATCH like '%' and VENDOR like '%' and SP_INST_TS like '%' 
+                        and CD_HIST_MOD like '%' 
+                        and     TO_DATE(CD_HIST_DATE) &gt;= ADD_DAYS(CURRENT_UTCTIMESTAMP,-365)     </compliant>
+      <noncompliant>    COMPONENT like '%' and version like '%' and SP like '%' and SP_REL_DATE like '%' and PATCH like '%' and VENDOR like '%' and SP_INST_TS like '%' 
+                        and CD_HIST_MOD like '%' 
+                        and not TO_DATE(CD_HIST_DATE) &gt;= ADD_DAYS(CURRENT_UTCTIMESTAMP,-365)     </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>
