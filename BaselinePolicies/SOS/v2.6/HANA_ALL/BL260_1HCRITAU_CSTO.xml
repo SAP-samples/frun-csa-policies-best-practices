@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Critical Authorizations (HANA)" id="BL260_1HCRITAU_CSTO" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+  <!-- -->
+  <!--    SAP Security Baseline requirement:      CRITAU-H: Critical Authorizations – HANA
+        Security level:                         Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   original for GA.  As CSA doesn’t get data of HANA secondary Database in Disaster Recovery LOGREPLAY mode, we have to exclude those from validation.  Check are only applied to physical (non-virtualized) environments.
+
+        NOTE:   This Policy requires the creation and maintenance of a customized store. 
+        Custom Store variant definition can be performed in CSA-Administration application for HANA-based systems (Related Links > Template Configuration > Template Management) based on samples here, or own requirements. 
+        In the Template Management area, click '+' icon and use the Wizard to create the Store template.
+        Choose Wizard Template Type: HANA: Granted Privileges.
+        The sci_id will be given Znnnnn proposal.  Note the sci_id.
+        Give the Customized Store a Description and Store Name. Configstore name is up to your choice, description is beneficial. 
+
+        An example of Store customizing could be:
+            REGEXPRFLAG_PRIVILEGE can be set to 'i' for case insensitive entries.
+            REGEXPR_PRIVILEGE can be defined with desired text pattern, for example, DATA ADMIN
+                                                                                or
+                                                                                     ^.*ADMIN.*$|^.*OPERATOR.*$|^.*CREATE.*$
+        Tip: avoid loading large volumes of data into a single store.  It might be kinder to distribute collection to several Configuration Stores.  Configuration Stores can share the same name, but they will have unique sci-ids.
+        Click Confirm.
+        For the techncial definition of the Collector, Click Save.
+        Assign Transport Request reference if needed.
+
+        In CSA Administration, for the HANA database systems, rerun the Setup so the new Collector is created on the Host and setup.
+
+        This store MUST exist before the policy can be generated into SQL version.
+
+ -->
+  <!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- Update the Configuration Store name and store collector ID to reflect your own customized store. -->
+  <!-- The following sample rule exempts SYSTEM and _SYS_REPO users for the DATA ADMIN privilege.  Maintain rules as per your corporate needs. -->
+  <configstore name="Z_HANA_GRANTED_PRIVILEGES">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] No User with DATA ADMIN (critical privilege)" id="CRITAU-H_a.1" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       PRIVILEGE = 'DATA ADMIN' 
+                        and     GRANTEE in ( 'SYSTEM', '_SYS_REPO' ) 
+                        and GRANTEE_TYPE = 'USER' 
+                        and GRANTOR like '%'
+                        </compliant>
+      <noncompliant>    PRIVILEGE = 'DATA ADMIN' 
+                        and not GRANTEE in ( 'SYSTEM', '_SYS_REPO' ) 
+                        and GRANTEE_TYPE = 'USER' 
+                        and GRANTOR like '%'
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following rule checks that no role exists with DATA Admin, hence check attribute operator NOT_EXIST is used, and the compliant and non-compliant rules are the same.  -->
+    <checkitem desc="[p1-CRITICAL] No Role with DATA ADMIN (critical privilege)" id="CRITAU-H_a.2" operator="NOT_EXIST" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       PRIVILEGE = 'DATA ADMIN' 
+                        and GRANTEE like '%'
+                        and GRANTEE_TYPE = 'ROLE' 
+                        and GRANTOR like '%'
+                        </compliant>
+      <noncompliant>    PRIVILEGE = 'DATA ADMIN' 
+                        and GRANTEE like '%'
+                        and GRANTEE_TYPE = 'ROLE' 
+                        and GRANTOR like '%'
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

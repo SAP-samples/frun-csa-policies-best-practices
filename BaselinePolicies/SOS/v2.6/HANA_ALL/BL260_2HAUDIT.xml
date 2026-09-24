@@ -1,0 +1,1759 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      AUDIT-H: Audit Settings – HANA
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   As CSA doesn’t get data of HANA secondary Database in Disaster Recovery LOGREPLAY mode, we have to exclude those from validation.  Check are only applied to physical (non-virtualized) environments.
+
+        The rules below reflect Mandatory HANA Audit Policies as per SAP Note 3016478 - HANA Audit Policies for S/4HANA (version 6).  This is provided as a courtesy and without obligation to be maintained.
+        Maintain these samples as per your corporate requirements.
+
+        Audit policies settings for the system database are in the nameserver.ini Configuration File.
+        Audit policies settings for the tenant database are in the global.ini Configuration File.
+
+
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Audit Settings (HANA)" id="BL260_2HAUDIT" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="HDB_PARAMETER">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Audit trail target (default_audit_trail_type = SYSLOGPROTOCOL or CSTABLE) (DB_TENANT, global.ini)" id="AUDIT-H_b.1 Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'global.ini'
+                        and SECT = 'auditing configuration' 
+                        and NAME = 'default_audit_trail_type' 
+                        and     UPPER(VALUE) in ('SYSLOGPROTOCOL','CSTABLE') 
+                        and LAYER like '%' and HOST like '%'
+      </compliant>
+      <noncompliant>    FILE_NAME = 'global.ini'
+                        and SECT = 'auditing configuration' 
+                        and NAME = 'default_audit_trail_type' 
+                        and NOT UPPER(VALUE) in ('SYSLOGPROTOCOL','CSTABLE') 
+                        and LAYER like '%' and HOST like '%'
+      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Audit trail target (default_audit_trail_type = SYSLOGPROTOCOL or CSTABLE) (SYSTEMDB, nameserver.ini)" id="AUDIT-H_b.1 Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'nameserver.ini'
+                        and SECT = 'auditing configuration' 
+                        and NAME = 'default_audit_trail_type' 
+                        and     UPPER(VALUE) in ('SYSLOGPROTOCOL','CSTABLE') 
+                        and LAYER like '%' and HOST like '%'
+      </compliant>
+      <noncompliant>    FILE_NAME = 'nameserver.ini'
+                        and SECT = 'auditing configuration' 
+                        and NAME = 'default_audit_trail_type' 
+                        and NOT UPPER(VALUE) in ('SYSLOGPROTOCOL','CSTABLE') 
+                        and LAYER like '%' and HOST like '%'
+      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] sr_audit_trail_type_cstable_override = SYSLOGPROTOCOL (DB_TENANT, global.ini)" id="AUDIT-H_b.2 Ten" not_found="positive" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'global.ini'
+                        and SECT = 'auditing configuration' 
+                        and NAME = 'sr_audit_trail_type_cstable_override' 
+                        and UPPER(VALUE) = 'SYSLOGPROTOCOL' 
+                        and LAYER like '%' and HOST like '%'
+      </compliant>
+      <noncompliant>    FILE_NAME = 'global.ini'
+                        and SECT = 'auditing configuration' 
+                        and NAME = 'sr_audit_trail_type_cstable_override' 
+                        and not UPPER(VALUE) = 'SYSLOGPROTOCOL' 
+                        and LAYER like '%' and HOST like '%'
+      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] sr_audit_trail_type_cstable_override = SYSLOGPROTOCOL (SYSTEMDB, nameserver.ini)" id="AUDIT-H_b.2 Sys" not_found="positive" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'nameserver.ini'
+                        and SECT = 'auditing configuration' 
+                        and NAME = 'sr_audit_trail_type_cstable_override' 
+                        and     UPPER(VALUE) = 'SYSLOGPROTOCOL' 
+                        and LAYER like '%' and HOST like '%'
+      </compliant>
+      <noncompliant>    FILE_NAME = 'nameserver.ini'
+                        and SECT = 'auditing configuration' 
+                        and NAME = 'sr_audit_trail_type_cstable_override' 
+                        and not UPPER(VALUE) = 'SYSLOGPROTOCOL' 
+                        and LAYER like '%' and HOST like '%'
+      </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="HDB_AUDIT_POLICIES">
+    <!-- -->
+    <!-- Log unsuccessful connect attempts
+        Purpose: Intrusion detection 
+        Details: 
+        - Many unsuccessful connect attempts may hint a brute force attack.
+        - The result of the policy should be evaluated by an IDS (Intrusion Detection System)
+        Applicable for: Tenant and System DB.
+        -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_session connect with event CONNECT with expected subsettings" id="AUDIT-H_c.011" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and EVENT_ACTION = 'CONNECT' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and USER_NAME       like '%'
+                        and ( 
+                            EVENT_STATUS        = 'UNSUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'ALERT'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            and EXCEPT_USER_NAME = 'SYSTEM'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and EVENT_ACTION = 'CONNECT' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and USER_NAME       like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'UNSUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'ALERT'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            or EXCEPT_USER_NAME = 'SYSTEM'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_session connect (SYSTEM Logins) with event CONNECT with expected subsettings" id="AUDIT-H_c.010" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and EVENT_ACTION = 'CONNECT' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and USER_NAME       like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       =  'SYSTEM'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and EVENT_ACTION = 'CONNECT' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and USER_NAME       like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'SYSTEM'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!--Log all VALIDATE attempts
+        Purpose: Intrusion detection 
+        Details: 
+        - Many VALIDATE attempts may hint a brute force attack.
+        - The result of the policy should be evaluated by an IDS.  
+        Applicable for: Tenant and System DB.
+        -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_session validate with event VALIDATE USER with expected subsettings" id="AUDIT-H_c.012" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'VALIDATE USER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'ALERT'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'VALIDATE USER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'ALERT'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Log changes for authorization assignments
+  Purpose: Security changelog 
+  Details: 
+    - In case an Identity Management system (IDM) system is used the IDM DB user should be excluded, otherwise the HANA and IDM systems changelogs contain redundant information.
+  Applicable for: Tenant and System DB
+-->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_authorizations with event GRANT ANY with expected subsettings" id="AUDIT-H_c.013" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'GRANT ANY' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'GRANT ANY' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_authorizations with event REVOKE ANY with expected subsettings" id="AUDIT-H_c.014" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'REVOKE ANY' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'REVOKE ANY' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!--Log changes for roles, user groups and users
+  Purpose: Security changelog
+  Details: 
+    - In case an IDM system is used the IDM DB user should be excluded, otherwise the HANA and IDM systems changelogs contain redundant information.
+    - In case HDI (HANA Deployment Infrastructure) is used exclude the _SYS_HDI user for the Dev and Q systems.
+  Applicable for: Tenant and System DB
+-->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_user administration with event ALTER ROLE with expected subsettings" id="AUDIT-H_c.015" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER ROLE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER ROLE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_user administration with event CREATE ROLE with expected subsettings" id="AUDIT-H_c.016" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE ROLE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE ROLE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_user administration with event DROP ROLE with expected subsettings" id="AUDIT-H_c.017" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP ROLE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP ROLE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_user administration with event ALTER USER with expected subsettings" id="AUDIT-H_c.018" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER USER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER USER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_user administration with event CREATE USER with expected subsettings" id="AUDIT-H_c.019" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE USER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE USER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_user administration with event DROP USER with expected subsettings" id="AUDIT-H_c.020" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP USER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP USER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_user administration with event ALTER USERGROUP with expected subsettings" id="AUDIT-H_c.021" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER USERGROUP' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER USERGROUP' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_user administration with event CREATE USERGROUP with expected subsettings" id="AUDIT-H_c.022" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE USERGROUP' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE USERGROUP' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_user administration with event DROP USERGROUP with expected subsettings" id="AUDIT-H_c.023" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP USERGROUP' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP USERGROUP' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Log changes for structured privileges in development systems. 
+  Purpose: Security changelog
+  Details: 
+    - Since structured privileges are part of the development process, more entries for development systems are expected.
+  Applicable for: Tenant and System DB
+-->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_structured privileges with event ALTER STRUCTURED PRIVILEGE with expected subsettings" id="AUDIT-H_c.024" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER STRUCTURED PRIVILEGE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER STRUCTURED PRIVILEGE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_structured privileges with event CREATE STRUCTURED PRIVILEGE with expected subsettings" id="AUDIT-H_c.025" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE STRUCTURED PRIVILEGE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE STRUCTURED PRIVILEGE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_structured privileges with event DROP STRUCTURED PRIVILEGE with expected subsettings" id="AUDIT-H_c.026" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP STRUCTURED PRIVILEGE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP STRUCTURED PRIVILEGE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Log changes for Personal Security Environments (PSE) and certificates
+  Purpose: System changelog
+  Details: 
+    - There are not many entries expected for this policy in the audit log.  
+  Applicable for: Tenant and System DB
+-->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_certificates with event ALTER PSE with expected subsettings" id="AUDIT-H_c.027" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER PSE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER PSE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_certificates with event CREATE CERTIFICATE with expected subsettings" id="AUDIT-H_c.028" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE CERTIFICATE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE CERTIFICATE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_certificates with event CREATE PSE with expected subsettings" id="AUDIT-H_c.029" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE PSE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE PSE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_certificates with event DROP CERTIFICATE with expected subsettings" id="AUDIT-H_c.030" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP CERTIFICATE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP CERTIFICATE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_certificates with event DROP PSE with expected subsettings" id="AUDIT-H_c.031" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP PSE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP PSE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Log changes for authentication provider
+  Purpose: System changelog 
+  Details: 
+    - There are not many entries expected for this policy in the audit log.  
+  Applicable for: Tenant and System DB
+-->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_authentication provider with event ALTER JWT PROVIDER with expected subsettings" id="AUDIT-H_c.032" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER JWT PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER JWT PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_authentication provider with event ALTER LDAP PROVIDER with expected subsettings" id="AUDIT-H_c.033" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER LDAP PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER LDAP PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_authentication provider with event ALTER SAML PROVIDER with expected subsettings" id="AUDIT-H_c.034" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER SAML PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER SAML PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_authentication provider with event CREATE JWT PROVIDER with expected subsettings" id="AUDIT-H_c.035" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE JWT PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE JWT PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_authentication provider with event CREATE LDAP PROVIDER with expected subsettings" id="AUDIT-H_c.036" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE LDAP PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE LDAP PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_authentication provider with event CREATE SAML PROVIDER with expected subsettings" id="AUDIT-H_c.037" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE SAML PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE SAML PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_authentication provider with event DROP JWT PROVIDER with expected subsettings" id="AUDIT-H_c.038" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP JWT PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP JWT PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_authentication provider with event DROP LDAP PROVIDER with expected subsettings" id="AUDIT-H_c.039" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP LDAP PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP LDAP PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_authentication provider with event DROP SAML PROVIDER with expected subsettings" id="AUDIT-H_c.040" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP SAML PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP SAML PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_authentication provider with event VALIDATE LDAP PROVIDER with expected subsettings" id="AUDIT-H_c.041" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'VALIDATE LDAP PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'VALIDATE LDAP PROVIDER' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Log changes for encryption setting
+  Purpose: System changelog
+  Details:
+    - There are not many entries expected for this policy in the audit log.  
+  Applicable for: Tenant and System DB
+-->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_clientside encryption with event ALTER CLIENTSIDE ENCRYPTION COLUMN KEY with expected subsettings" id="AUDIT-H_c.042" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER CLIENTSIDE ENCRYPTION COLUMN KEY' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER CLIENTSIDE ENCRYPTION COLUMN KEY' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_clientside encryption with event ALTER CLIENTSIDE ENCRYPTION KEYPAIR with expected subsettings" id="AUDIT-H_c.043" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER CLIENTSIDE ENCRYPTION KEYPAIR' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'ALTER CLIENTSIDE ENCRYPTION KEYPAIR' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_clientside encryption with event CREATE CLIENTSIDE ENCRYPTION COLUMN KEY with expected subsettings" id="AUDIT-H_c.044" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE CLIENTSIDE ENCRYPTION COLUMN KEY' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE CLIENTSIDE ENCRYPTION COLUMN KEY' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_clientside encryption with event CREATE CLIENTSIDE ENCRYPTION KEYPAIR with expected subsettings" id="AUDIT-H_c.045" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE CLIENTSIDE ENCRYPTION KEYPAIR' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'CREATE CLIENTSIDE ENCRYPTION KEYPAIR' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_clientside encryption with event DROP CLIENTSIDE ENCRYPTION COLUMN KEY with expected subsettings" id="AUDIT-H_c.046" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP CLIENTSIDE ENCRYPTION COLUMN KEY' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP CLIENTSIDE ENCRYPTION COLUMN KEY' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_clientside encryption with event DROP CLIENTSIDE ENCRYPTION KEYPAIR with expected subsettings" id="AUDIT-H_c.047" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP CLIENTSIDE ENCRYPTION KEYPAIR' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'CRITICAL'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'DROP CLIENTSIDE ENCRYPTION KEYPAIR' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'CRITICAL'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Log changes for _SYS_REPO authorizations in development systems
+  Purpose: System changelog
+  Details: 
+    - There are not many entries expected for this policy in the audit log.
+    - In case an IDM system is used the IDM DB user should be excluded, otherwise the HANA and IDM systems changelogs contain redundant information.
+    - If there is no development with HANA XSC, not many entries in the audit log are expected.  
+  Applicable for: Tenant and System DB
+-->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_designtime privileges with event EXECUTE on _SYS_REPO GRANT_ACTIVATED_ANALYTICAL_PRIVILEGE" id="AUDIT-H_c.048" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_TYPE     = 'PROCEDURE'
+                            and OBJECT_SCHEMA   = '_SYS_REPO'
+                            and OBJECT_NAME     = 'GRANT_ACTIVATED_ANALYTICAL_PRIVILEGE'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_TYPE     = 'PROCEDURE'
+                            or OBJECT_SCHEMA   = '_SYS_REPO'
+                            or OBJECT_NAME     = 'GRANT_ACTIVATED_ANALYTICAL_PRIVILEGE'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_designtime privileges with event EXECUTE on _SYS_REPO GRANT_ACTIVATED_ROLE" id="AUDIT-H_c.049" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_TYPE     = 'PROCEDURE'
+                            and OBJECT_SCHEMA   = '_SYS_REPO'
+                            and OBJECT_NAME     = 'GRANT_ACTIVATED_ROLE'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_TYPE     = 'PROCEDURE'
+                            or OBJECT_SCHEMA   = '_SYS_REPO'
+                            or OBJECT_NAME     = 'GRANT_ACTIVATED_ROLE'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_designtime privileges with event EXECUTE on _SYS_REPO GRANT_APPLICATION_PRIVILEGE" id="AUDIT-H_c.050" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_TYPE     = 'PROCEDURE'
+                            and OBJECT_SCHEMA   = '_SYS_REPO'
+                            and OBJECT_NAME     = 'GRANT_APPLICATION_PRIVILEGE'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_TYPE     = 'PROCEDURE'
+                            or OBJECT_SCHEMA   = '_SYS_REPO'
+                            or OBJECT_NAME     = 'GRANT_APPLICATION_PRIVILEGE'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_designtime privileges with event EXECUTE on _SYS_REPO GRANT_PRIVILEGE_ON_ACTIVATED_CONTENT" id="AUDIT-H_c.051" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_TYPE     = 'PROCEDURE'
+                            and OBJECT_SCHEMA   = '_SYS_REPO'
+                            and OBJECT_NAME     = 'GRANT_PRIVILEGE_ON_ACTIVATED_CONTENT'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_TYPE     = 'PROCEDURE'
+                            or OBJECT_SCHEMA   = '_SYS_REPO'
+                            or OBJECT_NAME     = 'GRANT_PRIVILEGE_ON_ACTIVATED_CONTENT'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_designtime privileges with event EXECUTE on _SYS_REPO GRANT_SCHEMA_PRIVILEGE_ON_ACTIVATED_CONTENT" id="AUDIT-H_c.052" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_TYPE     = 'PROCEDURE'
+                            and OBJECT_SCHEMA   = '_SYS_REPO'
+                            and OBJECT_NAME     = 'GRANT_SCHEMA_PRIVILEGE_ON_ACTIVATED_CONTENT'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_TYPE     = 'PROCEDURE'
+                            or OBJECT_SCHEMA   = '_SYS_REPO'
+                            or OBJECT_NAME     = 'GRANT_SCHEMA_PRIVILEGE_ON_ACTIVATED_CONTENT'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_designtime privileges with event EXECUTE on _SYS_REPO REVOKE_ACTIVATED_ANALYTICAL_PRIVILEGE" id="AUDIT-H_c.053" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_TYPE     = 'PROCEDURE'
+                            and OBJECT_SCHEMA   = '_SYS_REPO'
+                            and OBJECT_NAME     = 'REVOKE_ACTIVATED_ANALYTICAL_PRIVILEGE'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_TYPE     = 'PROCEDURE'
+                            or OBJECT_SCHEMA   = '_SYS_REPO'
+                            or OBJECT_NAME     = 'REVOKE_ACTIVATED_ANALYTICAL_PRIVILEGE'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_designtime privileges with event EXECUTE on _SYS_REPO REVOKE_ACTIVATED_ROLE" id="AUDIT-H_c.054" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_TYPE     = 'PROCEDURE'
+                            and OBJECT_SCHEMA   = '_SYS_REPO'
+                            and OBJECT_NAME     = 'REVOKE_ACTIVATED_ROLE'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_TYPE     = 'PROCEDURE'
+                            or OBJECT_SCHEMA   = '_SYS_REPO'
+                            or OBJECT_NAME     = 'REVOKE_ACTIVATED_ROLE'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_designtime privileges with event EXECUTE on _SYS_REPO REVOKE_APPLICATION_PRIVILEGE" id="AUDIT-H_c.055" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_TYPE     = 'PROCEDURE'
+                            and OBJECT_SCHEMA   = '_SYS_REPO'
+                            and OBJECT_NAME     = 'REVOKE_APPLICATION_PRIVILEGE'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_TYPE     = 'PROCEDURE'
+                            or OBJECT_SCHEMA   = '_SYS_REPO'
+                            or OBJECT_NAME     = 'REVOKE_APPLICATION_PRIVILEGE'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_designtime privileges with event EXECUTE on _SYS_REPO REVOKE_PRIVILEGE_ON_ACTIVATED_CONTENT" id="AUDIT-H_c.056" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_TYPE     = 'PROCEDURE'
+                            and OBJECT_SCHEMA   = '_SYS_REPO'
+                            and OBJECT_NAME     = 'REVOKE_PRIVILEGE_ON_ACTIVATED_CONTENT'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_TYPE     = 'PROCEDURE'
+                            or OBJECT_SCHEMA   = '_SYS_REPO'
+                            or OBJECT_NAME     = 'REVOKE_PRIVILEGE_ON_ACTIVATED_CONTENT'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_designtime privileges with event EXECUTE on _SYS_REPO REVOKE_SCHEMA_PRIVILEGE_ON_ACTIVATED_CONTENT" id="AUDIT-H_c.057" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'SUCCESSFUL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_TYPE     = 'PROCEDURE'
+                            and OBJECT_SCHEMA   = '_SYS_REPO'
+                            and OBJECT_NAME     = 'REVOKE_SCHEMA_PRIVILEGE_ON_ACTIVATED_CONTENT'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'EXECUTE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_TYPE     = 'PROCEDURE'
+                            or OBJECT_SCHEMA   = '_SYS_REPO'
+                            or OBJECT_NAME     = 'REVOKE_SCHEMA_PRIVILEGE_ON_ACTIVATED_CONTENT'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Log changes to system configuration
+  Purpose: System changelog 
+  Details: 
+    - There are not many entries expected for this policy in the audit log.  
+  Applicable for: Tenant and System DB
+-->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_configuration changes with event STOP SERVICE with expected subsettings" id="AUDIT-H_c.058" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'STOP SERVICE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'STOP SERVICE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_configuration changes with event SYSTEM CONFIGURATION CHANGE with expected subsettings" id="AUDIT-H_c.059" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'SYSTEM CONFIGURATION CHANGE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'SYSTEM CONFIGURATION CHANGE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Log changes for system licenses
+  Purpose: System changelog 
+  Details: 
+    - There are not many entries expected for this policy in the audit log.  
+  Applicable for: Tenant and System DB
+-->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_license addition changes with event SET SYSTEM LICENSE CHANGE with expected subsettings" id="AUDIT-H_c.060" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'SET SYSTEM LICENSE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'SET SYSTEM LICENSE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_license deletion changes with event UNSET SYSTEM LICENSE with expected subsettings" id="AUDIT-H_c.061" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'UNSET SYSTEM LICENSE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'UNSET SYSTEM LICENSE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'SUCCESSFUL EVENTS'
+                            or EVENT_LEVEL     = 'ALERT'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Log backup and recovery activities
+  Purpose: Monitoring
+  Details: 
+    - There are not many entries expected for this policy in the audit log.  
+  Applicable for: Tenant and System DB
+-->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_recover database changes with event BACKUP CATALOG DELETE with expected subsettings" id="AUDIT-H_c.062" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'BACKUP CATALOG DELETE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'BACKUP CATALOG DELETE' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_recover database changes with event BACKUP DATA with expected subsettings" id="AUDIT-H_c.063" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'BACKUP DATA' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'BACKUP DATA' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] HANA Audit Policy: _SAP_recover database changes with event RECOVER DATA with expected subsettings" id="AUDIT-H_c.064" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'RECOVER DATA' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and ( 
+                            EVENT_STATUS        = 'ALL EVENTS'
+                            and EVENT_LEVEL     = 'INFO'
+                            and IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            and IS_VALID        = 'TRUE'
+                            and USER_NAME       = 'ALL USERS'
+                            and OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </compliant>
+      <noncompliant>   	AUDIT_POLICY_NAME like '%' and      EVENT_ACTION = 'RECOVER DATA' 
+                        and AUDIT_POLICY_OID like '%'
+                        and TRAIL_TYPE like '%'
+                        and not ( 
+                            EVENT_STATUS       = 'ALL EVENTS'
+                            or EVENT_LEVEL     = 'INFO'
+                            or IS_AUDIT_POLICY_ACTIVE = 'TRUE' 
+                            or IS_VALID        = 'TRUE'
+                            or USER_NAME       = 'ALL USERS'
+                            or OBJECT_NAME     = 'ALL OBJECTS'
+                            )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          STDUSR-H: STANDARD Users in HANA
+        Security level:                             Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   As CSA doesn’t get data of HANA secondary Database in Disaster Recovery LOGREPLAY mode, we have to exclude those from validation.  Check are only applied to physical (non-virtualized) environments.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Standard Users (HANA)" id="BL260_2HSTDUSR" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <configstore name="HDB_SYSTEM_USER">
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Standard User: SYSTEM user is deactivated (USER_DEACTIVATED = TRUE)" id="STDUSR-H_a.1" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       USER_NAME = 'SYSTEM' and UPPER(USER_DEACTIVATED)  = 'TRUE'
+                        and VALID_FROM like '%' and VALID_UNTIL like '%' and DEACTIVATION_TIME like '%' and LAST_INVALID_CONNECT_ATTEMPT like '%' 
+                        </compliant>
+      <noncompliant>    USER_NAME = 'SYSTEM' and UPPER(USER_DEACTIVATED) != 'TRUE'
+                        and VALID_FROM like '%' and VALID_UNTIL like '%' and DEACTIVATION_TIME like '%' and LAST_INVALID_CONNECT_ATTEMPT like '%' 
+                        </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!--
+    <checkitem desc="[p2-STANDARD] Standard User: DBADMIN user is deactivated (USER_DEACTIVATED = TRUE)" id="STDUSR-H_a.2" not_found="ignore" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       USER_NAME = 'DBADMIN' and UPPER(USER_DEACTIVATED)  = 'TRUE'
+                        and VALID_FROM like '%' and VALID_UNTIL like '%' and DEACTIVATION_TIME like '%' and LAST_INVALID_CONNECT_ATTEMPT like '%' 
+                        </compliant>
+      <noncompliant>    USER_NAME = 'DBADMIN' and UPPER(USER_DEACTIVATED) != 'TRUE'
+                        and VALID_FROM like '%' and VALID_UNTIL like '%' and DEACTIVATION_TIME like '%' and LAST_INVALID_CONNECT_ATTEMPT like '%' 
+                        </noncompliant>
+    </checkitem>
+    -->
+    <!--  -->
+  </configstore>
+  <!--  -->
+</targetsystem>
