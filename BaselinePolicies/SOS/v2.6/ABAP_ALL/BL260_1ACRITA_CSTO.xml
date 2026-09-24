@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] No use of critical auth. profile SAP_ALL (ABAP)" id="BL260_1ACRITA_CSTO" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+  <!-- -->
+  <!--    SAP Security Baseline requirement:          CRITAU-A: 1-CRITICAL Authorizations – ABAP
+        Security level:                             Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-07-17      XX-SER-SECCHK   
+
+        NOTE:   This Policy requires the creation and maintenance of a customized store. 
+        Custom Store variant definition can be performed in CSA-Administration application (Related Links > Template Configuration > Store Customizing) based on samples from the Configuration Validation Template from the above zip folder reference, or own requirements. 
+        Then create an associated collector template (Related Links > Template Configuration > Template Management) and note the sci_id. Configstore name is up to your choice, description is beneficial, the sci_id must commence with Znnnnn. 
+        Then in the policy below, update the configstore name and sci-id so the checks are inspecting the correct store.
+        This store MUST exist before the policy can be generated into SQL version.
+ -->
+  <!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- This Policy requires creation of a customized store, maintain configstore name and sci_id.  At least gather data for the profile SAP_ALL in the Store customizing variant. -->
+  <!-- -->
+  <configstore name="AUTH_PROFILE_USER_CHANGE_DOC" sci_id="Z00021">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Critical profile SAP_ALL has been added to user in last 30 days - Review if needed" id="CRITAU-A_a.2" not_found="positive">
+      <compliant>       USER like '%' and ACTION = 'ADDED' and PROFILE = 'SAP_ALL' and USER_TYPE like '%' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'
+                        and MODIFIED_BY     like_regexpr '^\s*$' 
+                        and CD_HIST_DATE &gt; to_decimal(to_varchar(add_seconds(CURRENT_UTCTIMESTAMP,-86400*30), 'YYYYMMDDHH24MISS')) 
+                        </compliant>
+      <noncompliant>    USER like '%' and ACTION = 'ADDED' and PROFILE = 'SAP_ALL' and USER_TYPE like '%' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'
+                        and MODIFIED_BY not like_regexpr '^\s*$' 
+                        and CD_HIST_DATE &gt; to_decimal(to_varchar(add_seconds(CURRENT_UTCTIMESTAMP,-86400*30), 'YYYYMMDDHH24MISS')) 
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      FILE-A: Directory Traversal Protection – ABAP
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-07-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+        -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Directory Traversal Protection (ABAP)" id="BL260_2AFILE" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <!--  Basic version of rule. -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: abap/path_normalization != off (Directory Traversal Protection, see Notes 1497003, 2551541, 2562089)" id="FILE-A_a.1">
+      <compliant>       NAME = 'abap/path_normalization' and LOWER(VALUE) != 'off'     </compliant>
+      <noncompliant>    NAME = 'abap/path_normalization' and LOWER(VALUE)  = 'off'     </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and VERSION like '%'    </joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and VERSION like '%'    </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <!-- If a more version-dependant form of the previous check is required, consider the following Check for SAP_BASIS version less than 753 and Check for SAP_BASIS version greater than 753 by removing the comment tags..-->
+    <!--
+    <checkitem desc="[p2-STANDARD] Profile parameter: abap/path_normalization = on or ext (for SAP_BASIS lt 753) (Directory Traversal Protection, see Notes 1497003, 2551541, 2562089)" id="FILE-A_a.1">
+      <compliant>       NAME = 'abap/path_normalization' and     LOWER(VALUE) in ('on','ext')   </compliant>
+      <noncompliant>    NAME = 'abap/path_normalization' and not LOWER(VALUE) in ('on','ext')   </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and lpad(VERSION, 3, '0') &lt; '753'      </joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and lpad(VERSION, 3, '0') &lt; '753'      </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Profile parameter: abap/path_normalization = ext (for SAP_BASIS ≥ 753) (Directory Traversal Protection, see Notes 1497003, 2551541, 2562089, 3411349)" id="FILE-A_a.1">
+      <compliant>      NAME = 'abap/path_normalization' and      LOWER(VALUE) = 'ext'      </compliant>
+      <noncompliant>   NAME = 'abap/path_normalization' and not (LOWER(VALUE) = 'ext')     </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>      COMPONENT = 'SAP_BASIS' and lpad(VERSION, 3, '0') &gt;= '753'      </joincompliant>
+        <joinnoncompliant>   COMPONENT = 'SAP_BASIS' and lpad(VERSION, 3, '0') &gt;= '753'      </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    -->
+    <!-- -->
+    <!--  The profile parameter abap/path_norm_Windows should not have a different value than the default value '0' according to Note 2634476. -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: abap/path_norm_Windows = 0 (Directory Traversal Protection, see Note 2634476)" id="FILE-A_a.2">
+      <compliant>       NAME = 'abap/path_norm_Windows' and VALUE  = '0'     </compliant>
+      <noncompliant>    NAME = 'abap/path_norm_Windows' and VALUE != '0'     </noncompliant>
+      <joinstore name="SAP_ITSAMOperatingSystem" no_data_found="No" not_in_output="No">
+        <joincompliant>     AREA = 'SAP_ITSAMOperatingSystem' and NAME = 'PPMSName' and VALUE like 'WINDOWS%'      </joincompliant>
+        <joinnoncompliant>  AREA = 'SAP_ITSAMOperatingSystem' and NAME = 'PPMSName' and VALUE like 'WINDOWS%'      </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <!--  Basic version of rule. -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: abap/path_normalization != off (Directory Traversal Protection, see Notes 1497003, 2551541, 2562089)" id="FILE-A_a.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'abap/path_normalization' and LOWER(VALUE) != 'off'     </compliant>
+      <noncompliant>    NAME = 'abap/path_normalization' and LOWER(VALUE)  = 'off'     </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and VERSION like '%'    </joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and VERSION like '%'    </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <!-- If a more version-dependant form of the previous check is required, consider the following Check for SAP_BASIS version less than 753 and Check for SAP_BASIS version greater than 753 by removing the comment tags..-->
+    <!--
+    <checkitem desc="[p2-STANDARD] Profile parameter: abap/path_normalization = on or ext (for SAP_BASIS lt 753) (Directory Traversal Protection, see Notes 1497003, 2551541, 2562089)" id="FILE-A_a.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'abap/path_normalization' and     LOWER(VALUE) in ('on','ext')   </compliant>
+      <noncompliant>    NAME = 'abap/path_normalization' and not LOWER(VALUE) in ('on','ext')   </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and lpad(VERSION, 3, '0') &lt; '753'      </joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and lpad(VERSION, 3, '0') &lt; '753'      </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Profile parameter: abap/path_normalization = ext (for SAP_BASIS ≥ 753) (Directory Traversal Protection, see Notes 1497003, 2551541, 2562089, 3411349)" id="FILE-A_a.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>      NAME = 'abap/path_normalization' and      LOWER(VALUE) = 'ext'      </compliant>
+      <noncompliant>   NAME = 'abap/path_normalization' and not (LOWER(VALUE) = 'ext')     </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>      COMPONENT = 'SAP_BASIS' and lpad(VERSION, 3, '0') &gt;= '753'      </joincompliant>
+        <joinnoncompliant>   COMPONENT = 'SAP_BASIS' and lpad(VERSION, 3, '0') &gt;= '753'      </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    -->
+    <!-- -->
+    <!--  The profile parameter abap/path_norm_Windows should not have a different value than the default value '0' according to Note 2634476. -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: abap/path_norm_Windows = 0 (Directory Traversal Protection, see Note 2634476)" id="FILE-A_a.2" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'abap/path_norm_Windows' and VALUE  = '0'     </compliant>
+      <noncompliant>    NAME = 'abap/path_norm_Windows' and VALUE != '0'     </noncompliant>
+      <joinstore name="SAP_ITSAMOperatingSystem" no_data_found="No" not_in_output="No">
+        <joincompliant>     AREA = 'SAP_ITSAMOperatingSystem' and NAME = 'PPMSName' and VALUE like 'WINDOWS%'      </joincompliant>
+        <joinnoncompliant>  AREA = 'SAP_ITSAMOperatingSystem' and NAME = 'PPMSName' and VALUE like 'WINDOWS%'      </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="FILECMCUST">
+    <!--  The parameter UNCONF_PATH_AS_EMPTY should not have a different value than the default value ON, according to the Note 3286256.   
+    The check attribute not_found="positive" is appropriate since alternative compliance is that parameter is not existing.-->
+    <checkitem desc="[p2-STANDARD] Customizing parameter: UNCONF_PATH_AS_EMPTY = ON (or not existing) (Directory Traversal Protection, see Note 3286256)" id="FILE-A_e" not_found="positive">
+      <compliant>       PARAM = 'UNCONF_PATH_AS_EMPTY' and  UPPER(VALUE)  = 'ON'   </compliant>
+      <noncompliant>    PARAM = 'UNCONF_PATH_AS_EMPTY' and  UPPER(VALUE) != 'ON'   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

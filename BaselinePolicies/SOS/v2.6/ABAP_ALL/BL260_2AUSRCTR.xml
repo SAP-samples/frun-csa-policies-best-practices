@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      USRCTR-A: User Control of Action – ABAP
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-08-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] User Control of Action (ABAP)" id="BL260_2AUSRCTR" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!--  -->
+    <!-- one must use only switch one of the two parameters to ON according to SAP Note 2999707. Never both!-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: dynp/checkskip1screen value = ALL and dynp/confirmskip1screen value = OFF or not set (User Control of Action) (see Note 2999707)" id="USRCTR-A_a.1" not_found="negative">
+      <compliant>           NAME = 'dynp/checkskip1screen' and VALUE   = 'ALL'  </compliant>
+      <noncompliant>        NAME = 'dynp/checkskip1screen' and VALUE  != 'ALL'  </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'dynp/confirmskip1screen' and (VALUE = 'OFF' OR Length(VALUE) = '0' ) </joincompliant>
+        <joinnoncompliant>  NAME = 'dynp/confirmskip1screen' and (VALUE = 'OFF' OR Length(VALUE) = '0' ) </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: dynp/checkskip1screen value != ALL IF dynp/confirmskip1screen value = 'ALL' (User Control of Action) (see Note 2999707)" id="USRCTR-A_a.2" not_found="negative">
+      <compliant>           NAME = 'dynp/checkskip1screen' and VALUE != 'ALL'   </compliant>
+      <noncompliant>        NAME = 'dynp/checkskip1screen' and VALUE  = 'ALL'   </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'dynp/confirmskip1screen' and VALUE = 'ALL'  </joincompliant>
+        <joinnoncompliant>  NAME = 'dynp/confirmskip1screen' and VALUE = 'ALL'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: dynp/confirmskip1screen value = ALL and dynp/checkskip1screen value = OFF or not set (User Control of Action) (see Note 1956086)" id="USRCTR-A_a.3" not_found="negative">
+      <compliant>           NAME = 'dynp/confirmskip1screen' and VALUE  = 'ALL'     </compliant>
+      <noncompliant>        NAME = 'dynp/confirmskip1screen' and VALUE != 'ALL'     </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'dynp/checkskip1screen' and (VALUE = 'OFF' OR Length(VALUE) = '0' )  </joincompliant>
+        <joinnoncompliant>  NAME = 'dynp/checkskip1screen' and (VALUE = 'OFF' OR Length(VALUE) = '0' )  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: dynp/confirmskip1screen value != ALL IF dynp/checkskip1screen value = 'ALL' (User Control of Action) (see Note 1956086)" id="USRCTR-A_a.4" not_found="negative">
+      <compliant>           NAME = 'dynp/confirmskip1screen' and VALUE != 'ALL'     </compliant>
+      <noncompliant>        NAME = 'dynp/confirmskip1screen' and VALUE  = 'ALL'     </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'dynp/checkskip1screen' and VALUE = 'ALL'    </joincompliant>
+        <joinnoncompliant>  NAME = 'dynp/checkskip1screen' and VALUE = 'ALL'    </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: auth/check/calltransaction = 2 or 3 (recommended) (User Control of Action) (see Note 515130)" id="USRCTR-A_b">
+      <compliant>       NAME = 'auth/check/calltransaction'  and     VALUE in ('2','3')   </compliant>
+      <noncompliant>    NAME = 'auth/check/calltransaction'  and not VALUE in ('2','3')   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: auth/no_check_in_some_cases = Y (User Control of Action) (see Note 1723881)" id="USRCTR-A_c">
+      <compliant>       NAME = 'auth/no_check_in_some_cases' and UPPER(VALUE)  = 'Y'    </compliant>
+      <noncompliant>    NAME = 'auth/no_check_in_some_cases' and UPPER(VALUE) != 'Y'    </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: auth/object_disabling_active = N (User Control of Action) (see Note 2926224)" id="USRCTR-A_d">
+      <compliant>       NAME = 'auth/object_disabling_active' and UPPER(VALUE)  = 'N'   </compliant>
+      <noncompliant>    NAME = 'auth/object_disabling_active' and UPPER(VALUE) != 'N'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!-- The following regular expression, checks entries numeric values from 1 to 3600 without units meaning seconds, or time expressed with units of H or M.  A value of 0 would be deemed non-compliant.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rdisp/gui_auto_logout ≤ 3600 seconds (User Control of Action)" id="USRCTR-A_e">
+      <compliant>       NAME = 'rdisp/gui_auto_logout' 
+                        and     VALUE like_regexpr '^(1 ?H|[1-9] ?M|[1-5]\d ?M|60 ?M|[1-9]\d{0,2}|[12]\d\d\d|3[0-5]\d\d|3600)$'  </compliant>
+      <noncompliant>    NAME = 'rdisp/gui_auto_logout' 
+                        and not VALUE like_regexpr '^(1 ?H|[1-9] ?M|[1-5]\d ?M|60 ?M|[1-9]\d{0,2}|[12]\d\d\d|3[0-5]\d\d|3600)$'  </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rdisp/vbdelete ≥ 400 days (User Control of Action)" id="USRCTR-A_f">
+      <compliant>       NAME = 'rdisp/vbdelete' and     lpad(VALUE,6,'0') &gt;= '000400'  </compliant>
+      <noncompliant>    NAME = 'rdisp/vbdelete' and not lpad(VALUE,6,'0') &gt;= '000400'  </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!-- A correction to the original SAP Security Baseline template requirement based on SAP Note 3674774. -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rfc/authCheckInPlayback = 2 (User Control of Action) (see Notes 3674774, 3717541, 3676372)" id="USRCTR-A_j">
+      <compliant>       NAME = 'rfc/authCheckInPlayback' and VALUE  = '2'  </compliant>
+      <noncompliant>    NAME = 'rfc/authCheckInPlayback' and VALUE != '2'  </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!--  -->
+  <configstore name="Parameters">
+    <!--  -->
+    <!-- one must use only switch one of the two parameters to ON according to SAP Note 2999707. Never both!-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: dynp/checkskip1screen value = ALL and dynp/confirmskip1screen value = OFF or not set (User Control of Action) (see Note 2999707)" id="USRCTR-A_a.1" not_found="negative" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>           NAME = 'dynp/checkskip1screen' and VALUE   = 'ALL'  </compliant>
+      <noncompliant>        NAME = 'dynp/checkskip1screen' and VALUE  != 'ALL'  </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'dynp/confirmskip1screen' and (VALUE = 'OFF' OR Length(VALUE) = '0' ) </joincompliant>
+        <joinnoncompliant>  NAME = 'dynp/confirmskip1screen' and (VALUE = 'OFF' OR Length(VALUE) = '0' ) </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: dynp/checkskip1screen value != ALL IF dynp/confirmskip1screen value = 'ALL' (User Control of Action) (see Note 2999707)" id="USRCTR-A_a.2" not_found="negative" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>           NAME = 'dynp/checkskip1screen' and VALUE != 'ALL'   </compliant>
+      <noncompliant>        NAME = 'dynp/checkskip1screen' and VALUE  = 'ALL'   </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'dynp/confirmskip1screen' and VALUE = 'ALL'  </joincompliant>
+        <joinnoncompliant>  NAME = 'dynp/confirmskip1screen' and VALUE = 'ALL'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: dynp/confirmskip1screen value = ALL and dynp/checkskip1screen value = OFF or not set (User Control of Action) (see Note 1956086)" id="USRCTR-A_a.3" not_found="negative" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>           NAME = 'dynp/confirmskip1screen' and VALUE  = 'ALL'     </compliant>
+      <noncompliant>        NAME = 'dynp/confirmskip1screen' and VALUE != 'ALL'     </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'dynp/checkskip1screen' and (VALUE = 'OFF' OR Length(VALUE) = '0' )  </joincompliant>
+        <joinnoncompliant>  NAME = 'dynp/checkskip1screen' and (VALUE = 'OFF' OR Length(VALUE) = '0' )  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: dynp/confirmskip1screen value != ALL IF dynp/checkskip1screen value = 'ALL' (User Control of Action) (see Note 1956086)" id="USRCTR-A_a.4" not_found="negative" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>           NAME = 'dynp/confirmskip1screen' and VALUE != 'ALL'     </compliant>
+      <noncompliant>        NAME = 'dynp/confirmskip1screen' and VALUE  = 'ALL'     </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'dynp/checkskip1screen' and VALUE = 'ALL'    </joincompliant>
+        <joinnoncompliant>  NAME = 'dynp/checkskip1screen' and VALUE = 'ALL'    </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: auth/check/calltransaction = 2 or 3 (recommended) (User Control of Action) (see Note 515130)" id="USRCTR-A_b" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'auth/check/calltransaction'  and     VALUE in ('2','3')   </compliant>
+      <noncompliant>    NAME = 'auth/check/calltransaction'  and not VALUE in ('2','3')   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: auth/no_check_in_some_cases = Y (User Control of Action) (see Note 1723881)" id="USRCTR-A_c" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'auth/no_check_in_some_cases' and UPPER(VALUE)  = 'Y'    </compliant>
+      <noncompliant>    NAME = 'auth/no_check_in_some_cases' and UPPER(VALUE) != 'Y'    </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: auth/object_disabling_active = N (User Control of Action) (see Note 2926224)" id="USRCTR-A_d" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'auth/object_disabling_active' and UPPER(VALUE)  = 'N'   </compliant>
+      <noncompliant>    NAME = 'auth/object_disabling_active' and UPPER(VALUE) != 'N'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!-- The following regular expression, checks entries numeric values from 1 to 3600 without units meaning seconds, or time expressed with units of H or M.  A value of 0 would be deemed non-compliant.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rdisp/gui_auto_logout ≤ 3600 seconds (User Control of Action)" id="USRCTR-A_e" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rdisp/gui_auto_logout' 
+                        and     VALUE like_regexpr '^(1 ?H|[1-9] ?M|[1-5]\d ?M|60 ?M|[1-9]\d{0,2}|[12]\d\d\d|3[0-5]\d\d|3600)$'  </compliant>
+      <noncompliant>    NAME = 'rdisp/gui_auto_logout' 
+                        and not VALUE like_regexpr '^(1 ?H|[1-9] ?M|[1-5]\d ?M|60 ?M|[1-9]\d{0,2}|[12]\d\d\d|3[0-5]\d\d|3600)$'  </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rdisp/vbdelete ≥ 400 days (User Control of Action)" id="USRCTR-A_f" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rdisp/vbdelete' and     lpad(VALUE,6,'0') &gt;= '000400'  </compliant>
+      <noncompliant>    NAME = 'rdisp/vbdelete' and not lpad(VALUE,6,'0') &gt;= '000400'  </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!-- A correction to the original SAP Security Baseline template requirement based on SAP Note 3674774. -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rfc/authCheckInPlayback = 2 (User Control of Action) (see Notes 3674774, 3717541, 3676372)" id="USRCTR-A_j">
+      <compliant>       NAME = 'rfc/authCheckInPlayback' and VALUE  = '2'  </compliant>
+      <noncompliant>    NAME = 'rfc/authCheckInPlayback' and VALUE != '2'  </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!--  -->
+  <configstore name="ABAP_STARTAUTHCHECK">
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Start authorization check for Web Dynpro ABAP, OBJ_TYPE = WDYA active (see Notes 1413011, 3064888)" id="USRCTR-A_i.1">
+      <compliant>       PGMID = 'R3TR' and OBJ_TYPE = 'WDYA' and CHECK_INACTIVE != 'X'  </compliant>
+      <noncompliant>    PGMID = 'R3TR' and OBJ_TYPE = 'WDYA' and CHECK_INACTIVE  = 'X'  </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Start authorization check for Web Dynpro ABAP, OBJ_TYPE = WDCA active (see Notes 1413011, 3064888)" id="USRCTR-A_i.2">
+      <compliant>       PGMID = 'R3TR' and OBJ_TYPE = 'WDCA' and CHECK_INACTIVE != 'X'  </compliant>
+      <noncompliant>    PGMID = 'R3TR' and OBJ_TYPE = 'WDCA' and CHECK_INACTIVE  = 'X'  </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+</targetsystem>

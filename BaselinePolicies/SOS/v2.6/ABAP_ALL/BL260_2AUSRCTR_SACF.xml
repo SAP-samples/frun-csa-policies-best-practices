@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      USRCTR-A: User Control of Action – ABAP (SACF scenarios)
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   original for GA
+ -->
+<!-- Most SACF Scenarios are shipped inactive by SAP. They have to be processed. A decision is required to set. As a result the scenario may be active or inactive.
+    Check Item must be created for each scenario.
+    Scenarios should be decided within the CERT process
+    Background on SACF: Note 1922808 - SACF | FAQ | Supplementary information about the application
+        -Scenario status - The general behavior of a scenario-based authorization check can be modified by defining a scenario status. The following statuses are of note (amongst others see Note 1922808):
+            A - Scenario in "Active" status (check valuation in acc. w.list)
+            I - Scenario in status "Inactive" (ignore all checks)
+
+        -Security audit log (SAL) status - In productive switchable authorization scenarios, you have the option to log authorization checks in Security Audit Log (SAL). Here, you can choose between the following options:
+            N  - "No recording in the Security Audit Log" (default)
+            E  - "Record authorization error in the Security Log" (for critical processes)
+            A  - "Record all checks in the Security Audit Log" (exceptional case for error analyses)
+      -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] User Control of Action - SACF (ABAP)" id="BL260_2AUSRCTR_SACF" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <configstore name="ABAP_SACF_INFO">
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] SACF Scenarios are active (CHK_HMODE_A = A, Scenario status Active) (User Control of Action)" id="USRCTR-A.g.1">
+      <compliant>       SCENARIO_NAME like '%' and DESCRIPTION like '%' and NOTE_ID like '%' 
+                        and CHK_HMODE_A  = 'A' 
+                        and SAL_MODE_A like '%'
+                        </compliant>
+      <noncompliant>    SCENARIO_NAME like '%' and DESCRIPTION like '%' and NOTE_ID like '%' 
+                        and CHK_HMODE_A != 'A' 
+                        and SAL_MODE_A like '%'
+                        </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] SACF Scenarios recorded in Security Audit Log SAL (SAL_MODE = A or E, Security audit log (SAL) status) (User Control of Action)" id="USRCTR-A.g.2">
+      <compliant>       SCENARIO_NAME like '%' and DESCRIPTION like '%' and NOTE_ID like '%' 
+                        and CHK_HMODE_A like '%' 
+                        and     (SAL_MODE_A = 'A' or SAL_MODE_A = 'E')
+                        </compliant>
+      <noncompliant>    SCENARIO_NAME like '%' and DESCRIPTION like '%' and NOTE_ID like '%' 
+                        and CHK_HMODE_A like '%' 
+                        and not (SAL_MODE_A = 'A' or SAL_MODE_A = 'E')
+                        </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+</targetsystem>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      SSO-A: Single Sign-On – ABAP
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-07-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Single Sign-On (ABAP)" id="BL260_2ASSO" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/ticket_only_by_https = 1 (to generate ticket only via https, see Notes 1531399 and 2068872)" id="SSO-A_a">
+      <compliant>       NAME = 'login/ticket_only_by_https' and VALUE  = '1'    </compliant>
+      <noncompliant>    NAME = 'login/ticket_only_by_https' and VALUE != '1'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/ticket_only_to_host = 1 (ticket only back to creating host)" id="SSO-A_b">
+      <compliant>       NAME = 'login/ticket_only_to_host' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'login/ticket_only_to_host' and VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icf/set_HTTPonly_flag_on_cookies != 1 or 3 (recommended 0) (to set HTTPonly-Flag for Cookies, see Notes 2068872 and 1277022)" id="SSO-A_c">
+      <compliant>       NAME = 'icf/set_HTTPonly_flag_on_cookies' and not ( VALUE = '1' or VALUE = '3')     </compliant>
+      <noncompliant>    NAME = 'icf/set_HTTPonly_flag_on_cookies' and     ( VALUE = '1' or VALUE = '3')     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- As per SAP note 3584984 
+   login/accept_sso2_ticket = 1: Both SAP Assertion Tickets and SAP Logon Tickets are accepted by the system 
+   login/accept_sso2_ticket = 2: SAP Assertion Tickets are accepted by the system, SAP Logon Tickets are not accepted as of Kernel release 916.
+   As per SAP Note 2117110, SAP recommends that customers do not implement NEW end-user single sign-on solutions based on SAP Logon Tickets.
+    -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/accept_sso2_ticket = 2 or 1 if SAP Kernel lt 916 (to accept SAP Assertion Tickets but reject SAP Logon Tickets, see Note 3584984)" id="SSO-A_d">
+      <compliant>       NAME = 'login/accept_sso2_ticket' and VALUE     in ('1','2')      </compliant>
+      <noncompliant>    NAME = 'login/accept_sso2_ticket' and VALUE not in ('1','2')      </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'KERN_REL' and substring(VALUE,0,3) &lt; '916'   </joincompliant>
+        <joinnoncompliant>  NAME = 'KERN_REL' and substring(VALUE,0,3) &lt; '916'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/accept_sso2_ticket = 2 (SAP Kernel &gt;= 916) (to accept SAP Assertion Tickets but reject SAP Logon Tickets, see Note 3584984)" id="SSO-A_d">
+      <compliant>       NAME = 'login/accept_sso2_ticket' and VALUE  = '2'      </compliant>
+      <noncompliant>    NAME = 'login/accept_sso2_ticket' and VALUE != '2'      </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'KERN_REL' and substring(VALUE,0,3) &gt;= '916'   </joincompliant>
+        <joinnoncompliant>  NAME = 'KERN_REL' and substring(VALUE,0,3) &gt;= '916'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/ticket_only_by_https = 1 (to generate ticket only via https, see Notes 1531399 and 2068872)" id="SSO-A_a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/ticket_only_by_https' and VALUE  = '1'    </compliant>
+      <noncompliant>    NAME = 'login/ticket_only_by_https' and VALUE != '1'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/ticket_only_to_host = 1 (ticket only back to creating host)" id="SSO-A_b" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/ticket_only_to_host' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'login/ticket_only_to_host' and VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icf/set_HTTPonly_flag_on_cookies != 1 or 3 (recommended 0) (to set HTTPonly-Flag for Cookies, see Notes 2068872 and 1277022)" id="SSO-A_c" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'icf/set_HTTPonly_flag_on_cookies' and not ( VALUE = '1' or VALUE = '3')     </compliant>
+      <noncompliant>    NAME = 'icf/set_HTTPonly_flag_on_cookies' and     ( VALUE = '1' or VALUE = '3')     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- As per SAP note 3584984 
+   login/accept_sso2_ticket = 1: Both SAP Assertion Tickets and SAP Logon Tickets are accepted by the system 
+   login/accept_sso2_ticket = 2: SAP Assertion Tickets are accepted by the system, SAP Logon Tickets are not accepted as of Kernel release 916.
+   As per SAP Note 2117110, SAP recommends that customers do not implement NEW end-user single sign-on solutions based on SAP Logon Tickets.
+    -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/accept_sso2_ticket = 2 or 1 if SAP Kernel lt 916 (to accept SAP Assertion Tickets but reject SAP Logon Tickets, see Note 3584984)" id="SSO-A_d">
+      <compliant>       NAME = 'login/accept_sso2_ticket' and VALUE     in ('1','2')      </compliant>
+      <noncompliant>    NAME = 'login/accept_sso2_ticket' and VALUE not in ('1','2')      </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'KERN_REL' and substring(VALUE,0,3) &lt; '916'   </joincompliant>
+        <joinnoncompliant>  NAME = 'KERN_REL' and substring(VALUE,0,3) &lt; '916'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/accept_sso2_ticket = 2 (SAP Kernel &gt;= 916) (to accept SAP Assertion Tickets but reject SAP Logon Tickets, see Note 3584984)" id="SSO-A_d">
+      <compliant>       NAME = 'login/accept_sso2_ticket' and VALUE  = '2'      </compliant>
+      <noncompliant>    NAME = 'login/accept_sso2_ticket' and VALUE != '2'      </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'KERN_REL' and substring(VALUE,0,3) &gt;= '916'   </joincompliant>
+        <joinnoncompliant>  NAME = 'KERN_REL' and substring(VALUE,0,3) &gt;= '916'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

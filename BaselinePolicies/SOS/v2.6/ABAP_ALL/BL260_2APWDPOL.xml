@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      PWDPOL-A: Password Policy – ABAP
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-07-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Password Policy (ABAP)" id="BL260_2APWDPOL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/password_compliance_to_current_policy = 1 (compliance with current password policy must be enforced)" id="PWDPOL-A_e.1">
+      <compliant>       NAME = 'login/password_compliance_to_current_policy' and VALUE  = '1'       </compliant>
+      <noncompliant>    NAME = 'login/password_compliance_to_current_policy' and VALUE != '1'       </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icf/reject_expired_passwd = 1 (http(s) calls with expired passwords must be rejected, see Note 2579165)" id="PWDPOL-A_g">
+      <compliant>       NAME = 'icf/reject_expired_passwd' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'icf/reject_expired_passwd' and VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rfc/reject_expired_passwd = 1 (RFC calls with expired passwords must be rejected, see Note 1591259)" id="PWDPOL-A_h">
+      <compliant>       NAME = 'rfc/reject_expired_passwd' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'rfc/reject_expired_passwd' and VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!--  -->
+  <configstore name="Parameters">
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/password_compliance_to_current_policy = 1 (compliance with current password policy must be enforced)" id="PWDPOL-A_e.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/password_compliance_to_current_policy' and VALUE  = '1'       </compliant>
+      <noncompliant>    NAME = 'login/password_compliance_to_current_policy' and VALUE != '1'       </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icf/reject_expired_passwd = 1 (http(s) calls with expired passwords must be rejected, see Note 2579165)" id="PWDPOL-A_g" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'icf/reject_expired_passwd' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'icf/reject_expired_passwd' and VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rfc/reject_expired_passwd = 1 (RFC calls with expired passwords must be rejected, see Note 1591259)" id="PWDPOL-A_h" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rfc/reject_expired_passwd' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'rfc/reject_expired_passwd' and VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!--  -->
+  <configstore name="AUTH_SECURITY_POLICY">
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] SECPOL attribute: PASSWORD_COMPLIANCE_TO_CURRENT_POLICY = 1 (compliance with current password policy must be enforced) (security policy attribute)" id="PWDPOL-A_e.2" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'PASSWORD_COMPLIANCE_TO_CURRENT_POLICY' and NAME like '%' and CLIENT != '[XXX]' and ATTRIB_VALUE  = '1'     </compliant>
+      <noncompliant>    ATTRIB_KEY = 'PASSWORD_COMPLIANCE_TO_CURRENT_POLICY' and NAME like '%' and CLIENT != '[XXX]' and ATTRIB_VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+</targetsystem>

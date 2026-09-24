@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          TRUST-A: Trusting relations and trusted destinations – ABAP
+        Security level:                             Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-08-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Trusting relations and trusted destinations (ABAP)" id="BL260_2ATRUST" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rfc/selftrust = 0 (block implicit self-trust, see Notes 2449757, 2614667)" id="TRUST-A_f">
+      <compliant>       NAME = 'rfc/selftrust' and VALUE  = '0'    </compliant>
+      <noncompliant>    NAME = 'rfc/selftrust' and VALUE != '0'    </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rfc/selftrust = 0 (block implicit self-trust, see Notes 2449757, 2614667)" id="TRUST-A_f" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rfc/selftrust' and VALUE  = '0'    </compliant>
+      <noncompliant>    NAME = 'rfc/selftrust' and VALUE != '0'    </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!-- -->
+</targetsystem>

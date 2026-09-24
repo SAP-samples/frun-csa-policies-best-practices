@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          TRUST-A: Trusting relations and trusted destinations – ABAP
+        Security level:                             Extended (Level 3)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Trusting relations and trusted destinations (ABAP)" id="BL260_3ATRUST" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <configstore name="RFCDES_TYPE_3" sci_id="S00036">
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Trusted Type 3 connections use SNC (see Note 3089413)" id="TRUST-A_d.1" not_found="ignore">
+      <compliant>   	RFCDEST like '%' and RFCTYPE like '%' and SERVER_NAME like '%' and TRUST_SERVERSYSID like '%' 
+                        and TRUSTED_SYSTEM = 'X' and SNC_ACTIVE  = 'X'
+                        </compliant>
+      <noncompliant>    RFCDEST like '%' and RFCTYPE like '%' and SERVER_NAME like '%' and TRUST_SERVERSYSID like '%' 
+                        and TRUSTED_SYSTEM = 'X' and SNC_ACTIVE != 'X'
+                        </noncompliant>
+      <noncomplianttext>No SNC encryption for trusted RFC connection</noncomplianttext>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Trusted Type 3 connections use S_ICF (AUTHORIZATION_PARAMETER maintained)" id="TRUST-A_i.1" not_found="ignore">
+      <compliant>       RFCDEST like '%' and RFCTYPE like '%' and SERVER_NAME like '%' and TRUST_SERVERSYSID like '%' 
+                        and TRUSTED_SYSTEM = 'X' and SNC_ACTIVE = 'X' and Length(AUTHORIZATION_PARAMETER) != 0
+                        </compliant>
+      <noncompliant>    RFCDEST like '%' and RFCTYPE like '%' and SERVER_NAME like '%' and TRUST_SERVERSYSID like '%' 
+                        and TRUSTED_SYSTEM = 'X' and SNC_ACTIVE = 'X' and Length(AUTHORIZATION_PARAMETER)  = 0
+                        </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!--  -->
+  <configstore name="RFCDES_TYPE_H" sci_id="S00043">
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Trusted Type H connections use TLS (see Note 3089413)" id="TRUST-A_d.2" not_found="ignore">
+      <compliant>       RFCDEST like '%' and RFCTYPE like '%' and SERVER_NAME like '%' and LENGTH(TRUST_SERVERSYSID) &gt; 0 and SSL_ACTIVE  = 'X'	    </compliant>
+      <noncompliant>    RFCDEST like '%' and RFCTYPE like '%' and SERVER_NAME like '%' and LENGTH(TRUST_SERVERSYSID) &gt; 0 and SSL_ACTIVE != 'X'       </noncompliant>
+      <noncomplianttext>No TLS encryption for trusted RFC connection</noncomplianttext>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Trusted Type H connections use S_ICF (AUTHORIZATION_PARAMETER maintained)" id="TRUST-A_i.2" not_found="ignore">
+      <compliant>       RFCDEST like '%' and RFCTYPE like '%' and SERVER_NAME like '%' and LENGTH(TRUST_SERVERSYSID) &gt; 0 and SSL_ACTIVE = 'X' and Length(AUTHORIZATION_PARAMETER) != 0	    </compliant>
+      <noncompliant>    RFCDEST like '%' and RFCTYPE like '%' and SERVER_NAME like '%' and LENGTH(TRUST_SERVERSYSID) &gt; 0 and SSL_ACTIVE = 'X' and Length(AUTHORIZATION_PARAMETER)  = 0	    </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!--  -->
+  <configstore name="RFCDES_TYPE_W" sci_id="S00473">
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Trusted Type W connections use TLS (see Note 3089413)" id="TRUST-A_d.3" not_found="ignore">
+      <compliant>   	RFCDEST like '%' and RFCTYPE like '%' and SERVER_NAME like '%' and LENGTH(TRUST_SERVERSYSID) &gt; 0 and SSL_ACTIVE  = 'X'	    </compliant>
+      <noncompliant>    RFCDEST like '%' and RFCTYPE like '%' and SERVER_NAME like '%' and LENGTH(TRUST_SERVERSYSID) &gt; 0 and SSL_ACTIVE != 'X'       </noncompliant>
+      <noncomplianttext>No TLS encryption for trusted RFC connection</noncomplianttext>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!--  -->
+  <configstore name="RFCSYSACL">
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Trust relationship uses the transaction code field RFC_TCODE of S_RFCACL (RFCTCDCHK = X)" id="TRUST-A_e">
+      <compliant>       RFCSYSID like '%' and TLICENSE_NR like '%' and RFCTRUSTSY like '%' and RFCDEST like '%' and RFCTCDCHK  = 'X'     </compliant>
+      <noncompliant>    RFCSYSID like '%' and TLICENSE_NR like '%' and RFCTRUSTSY like '%' and RFCDEST like '%' and RFCTCDCHK != 'X'     </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!--  -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: rfc/allowoldticket4tt = no (to block old trusted tickets, see Note 3157268)" id="TRUST-A_j">
+      <compliant>       NAME = 'rfc/allowoldticket4tt' and LOWER(VALUE)  = 'no'    </compliant>
+      <noncompliant>    NAME = 'rfc/allowoldticket4tt' and LOWER(VALUE) != 'no'    </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!--  -->
+  <configstore name="Parameters">
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: rfc/allowoldticket4tt = no (to block old trusted tickets, see Note 3157268)" id="TRUST-A_j" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rfc/allowoldticket4tt' and LOWER(VALUE)  = 'no'    </compliant>
+      <noncompliant>    NAME = 'rfc/allowoldticket4tt' and LOWER(VALUE) != 'no'    </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+</targetsystem>

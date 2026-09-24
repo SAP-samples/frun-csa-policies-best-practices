@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      FILE-A: Directory Traversal Protection – ABAP
+        Security level:                         Extended (Level 3)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   original for GA
+        -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Directory Traversal Protection (ABAP)" id="BL260_3AFILE" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="FILECMCUST">
+    <!--  The parameter UNCONF_PATH_AS_EMPTY should not have a different value than the default value ON, according to the Notes 2251231 and 2395138. -->
+    <checkitem desc="[p3-EXTENDED] Customizing parameter: REJECT_EMPTY_PATH = ON (Directory Traversal Protection, see Notes 2251231 and 2395138)" id="FILE-A_d.001" not_found="ignore">
+      <compliant>       PARAM = 'REJECT_EMPTY_PATH' and  UPPER(VALUE)  = 'ON'   </compliant>
+      <noncompliant>    PARAM = 'REJECT_EMPTY_PATH' and  UPPER(VALUE) != 'ON'   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- AUDIT SLOTS -->
+  <!-- The approach in the following example rules for Standard Users checks if a filter exists in the first place, followed by a check of the detailed settings using the classical selection criteria and audit classes. -->
+  <!--   Mapping of the Security Audit Log classical interface to the fields of the Configuration Store "AUDIT_CONFIGURATION_SLOT is as follows:
+            Filter number:		SLOTINDEX 
+            Filter active:		STATUS
+
+            Selection criteria:
+            Client:			CLIENT
+            User:			UNAME
+
+            Audit Classes:
+            Dialog logon:		LOGIN
+            RFC/CPIC logon:		RFCLOGIN
+            RFC call:		    RFCSTART
+            Transaction start:	TASTART
+            Report start:		REPOSTART
+            User master change:	USERMASTER
+            System:			    SYSTEM
+            Other events:		MISC
+
+            Events:
+            All:			    LOWBUTTON
+            Severe & Critical:	MEDBUTTON
+            Only Critical:		IGHBUTTON
+
+            Detailed Display:
+            detail used if not 0:	MSGVECT
+            message events:		MSGLIST
+            -->
+  <!-- -->
+  <!-- The following checks for custom events are more granular to assist the end user understanding which Detailed Message event is missing.
+    They are provided as examples and support the requirements set out in FILE-A_d. 
+    Maintain further entries as per your corporate requriements where Dstailed Display is relected in MSGVECT not being '0000...' and event is in MSGLIST.-->
+  <!-- -->
+  <configstore name="AUDIT_CONFIGURATION_SLOT">
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Audit Slot for all users (*) all clients includes custom event CUQ" id="FILE-A_d.002" operator="EXIST">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and STATUS = 'X'
+                       and UNAME = '*' 
+                       and CLIENT = '*'
+                       and MSGVECT not like_regexpr '0{128,}'
+                       and MSGLIST like '%CUQ%'
+      </compliant>
+      <noncompliant/>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Audit Slot for all users (*) all clients includes custom event CUR" id="FILE-A_d.003" operator="EXIST">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and STATUS = 'X'
+                       and UNAME = '*' 
+                       and CLIENT = '*' 
+                       and MSGVECT not like_regexpr '0{128,}'
+                       and MSGLIST like '%CUR%'
+      </compliant>
+      <noncompliant/>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Audit Slot for all users (*) all clients includes custom event CUS" id="FILE-A_d.004" operator="EXIST">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and STATUS = 'X'
+                       and UNAME = '*' 
+                       and CLIENT = '*' 
+                       and MSGVECT not like_regexpr '0{128,}'
+                       and MSGLIST like '%CUS%'
+      </compliant>
+      <noncompliant/>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Audit Slot for all users (*) all clients includes custom event CUT" id="FILE-A_d.005" operator="EXIST">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and STATUS = 'X'
+                       and UNAME = '*' 
+                       and CLIENT = '*' 
+                       and MSGVECT not like_regexpr '0{128,}'
+                       and MSGLIST like '%CUT%'
+      </compliant>
+      <noncompliant/>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Audit Slot for all users (*) all clients includes custom event DU5" id="FILE-A_d.006" operator="EXIST">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and STATUS = 'X'
+                       and UNAME = '*' 
+                       and CLIENT = '*' 
+                       and MSGVECT not like_regexpr '0{128,}'
+                       and MSGLIST like '%DU5%'
+      </compliant>
+      <noncompliant/>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Audit Slot for all users (*) all clients includes custom event EU4" id="FILE-A_d.007" operator="EXIST">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and STATUS = 'X'
+                       and UNAME = '*' 
+                       and CLIENT = '*' 
+                       and MSGVECT not like_regexpr '0{128,}'
+                       and MSGLIST like '%EU4%'
+      </compliant>
+      <noncompliant/>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

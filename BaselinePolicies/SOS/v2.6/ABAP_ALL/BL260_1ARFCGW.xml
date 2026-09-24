@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      RFCGW-A: RFC Gateway Security (part of application server ABAP)
+        Security level:                         Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-06-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] RFC Gateway Security (ABAP)" id="BL260_1ARFCGW" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="GW_SECINFO">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] RFC Gateway ACL: reflects gw/sec_info file not found" id="RFCGW-A_a secinfo.1" operator="NOT_EXIST">
+      <compliant>       LINE like '%' and TEXT like_regexpr '^gw/sec_info file not found'   </compliant>
+      <noncompliant>    LINE like '%' and TEXT like_regexpr '^gw/sec_info file not found'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following rule checks the line entries that commence with P, it does not consider the line entries that commence with D or #.-->
+    <!-- The following non-compliant rule checks the entry TP is present and that it does not have generic value (if absent then a generic value is implicit), similar for HOST etc. This is an example. The compliance rule is the inverse of the non-compliant rule. -->
+    <!-- The following rule includes the mandatory sub-attributes and optional sub-attribute USER-HOST, if the latter is not required then remove the asociated lines in the compliance and non-compliance rules. -->
+    <!-- Tip: be careful when defining rules that combine multiple conditions with logical AND and ORs with NOTs, and keep De Morgan's law in mind.  The following rule caters for the entries to be in any order. -->
+    <checkitem desc="[p1-CRITICAL] RFC gateway ACL: secinfo file entries not fully generic (RFC Gateway hardening)" id="RFCGW-A_a secinfo.2">
+      <compliant>       line like '%' 
+                        and TEXT like_regexpr '^P.*' 
+                        and not (
+                                    ( text like_regexpr '\bTP=[\*]' or not text like '%TP=%' )
+                                and ( text like_regexpr '\bHOST=[\*]' or not text like '% HOST=%' ) 
+                                and ( text like_regexpr '\bUSER=[\*]' or not text like '%USER=%' )
+                                and ( text like_regexpr '\bUSER-HOST=[\*]' or not text like '%USER-HOST=%' )
+                                )
+                                </compliant>
+      <noncompliant>    line like '%' 
+                        and TEXT like_regexpr '^P.*' 
+                        and     (
+                                    ( text like_regexpr '\bTP=[\*]' or not text like '%TP=%' )
+                                and ( text like_regexpr '\bHOST=[\*]' or not text like '% HOST=%' ) 
+                                and ( text like_regexpr '\bUSER=[\*]' or not text like '%USER=%' )
+                                and ( text like_regexpr '\bUSER-HOST=[\*]' or not text like '%USER-HOST=%' )
+                                )
+                                </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="GW_REGINFO">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] RFC Gateway ACL: reflects gw/reg_info file not found" id="RFCGW-A_a reginfo.1" operator="NOT_EXIST">
+      <compliant>       LINE like '%' and TEXT like_regexpr '^gw/reg_info file not found'   </compliant>
+      <noncompliant>    LINE like '%' and TEXT like_regexpr '^gw/reg_info file not found'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following rule checks the line entries that commence with P, it does not consider the line entries that commence with D or #.-->
+    <!-- The following non-compliant rule checks the entry TP is present and that it does not have generic value (if absent then a generic value is implicit), similar for HOST etc. This is an example. The compliance rule is the inverse of the non-compliant rule. -->
+    <!-- The following rule includes the mandatory sub-attributes TP and optional sub-attributes HOST, ACCESS, CANCEL, if any of the optional subattributes ares not required then remove the asociated lines in the compliance and non-compliance rules. -->
+    <!-- Tip: be careful when defining rules that combine multiple conditions with logical AND and ORs with NOTs, and keep De Morgan's law in mind.  The following rule caters for the entries to be in any order. -->
+    <checkitem desc="[p1-CRITICAL] RFC gateway ACL: reginfo file entries not fully generic (RFC Gateway hardening)" id="RFCGW-A_a reginfo.2">
+      <compliant>       line like '%' 
+                        and TEXT like_regexpr '^P.*' 
+                        and not (
+                                    ( text like_regexpr '\bTP=[\*]' or not text like '%TP=%' )
+                                and ( text like_regexpr '\bHOST=[\*]' or not text like '% HOST=%' ) 
+                                and ( text like_regexpr '\bACCESS=[\*]' or not text like '%ACCESS=%' )
+                                and ( text like_regexpr '\bCANCEL=[\*]' or not text like '%CANCEL=%' )
+                                )
+                                </compliant>
+      <noncompliant>    line like '%' 
+                        and TEXT like_regexpr '^P.*' 
+                        and     (
+                                    ( text like_regexpr '\bTP=[\*]' or not text like '%TP=%' )
+                                and ( text like_regexpr '\bHOST=[\*]' or not text like '% HOST=%' ) 
+                                and ( text like_regexpr '\bACCESS=[\*]' or not text like '%ACCESS=%' )
+                                and ( text like_regexpr '\bCANCEL=[\*]' or not text like '%CANCEL=%' )
+                                )
+                                </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <!-- The following simple rule validates if parameter value contains 2x // or \\ to ensure it's a path-like value - Consider replacing with check for actual path. -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/sec_info (mount path defined to ACL file)" id="RFCGW-A_b secinfo.1">
+      <compliant>       NAME = 'gw/sec_info' and     length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0     </compliant>
+      <noncompliant>    NAME = 'gw/sec_info' and NOT length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0     </noncompliant>
+    </checkitem>
+    <!--       
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/sec_info (global path defined to central directory)" id="RFCGW-A_b.1">
+      <compliant>       NAME = 'gw/sec_info' and     ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/sec[_]?info$' 
+                                                    or VALUE like_regexpr '^(\w{1}):\\usr\\sap\\(\w{3})\\SYS\\global\\sec[_]?info(|\.DAT|\.dat|\.txt)?$' 
+                                                    )      </compliant>
+      <noncompliant>    NAME = 'gw/sec_info' and NOT ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/sec[_]?info$' 
+                                                    or VALUE like_regexpr '^(\w{1}):\\usr\\sap\\(\w{3})\\SYS\\global\\sec[_]?info(|\.DAT|\.dat|\.txt)?$' 
+                                                    )      </noncompliant>
+    </checkitem>
+    -->
+    <!-- -->
+    <!-- The following simple rule validates if parameter value contains 2x // or \\ to ensure it's a path-like value - Consider replacing with check for actual path. -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/reg_info (mount path defined to ACL file)" id="RFCGW-A_b reginfo.1">
+      <compliant>       NAME = 'gw/reg_info' and     length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0     </compliant>
+      <noncompliant>    NAME = 'gw/reg_info' and NOT length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0     </noncompliant>
+    </checkitem>
+    <!--       
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/reg_info (global path defined to central directory)" id="RFCGW-A_b.2">
+      <compliant>       NAME = 'gw/reg_info' and     ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/reg[_]?info$' 
+                                                    or VALUE like_regexpr '^(\w{1}):\\usr\\sap\\(\w{3})\\SYS\\global\\sec[_]?info(|\.DAT|\.dat|\.txt)?$' 
+                                                    )      </compliant>
+      <noncompliant>    NAME = 'gw/reg_info' and NOT ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/reg[_]?info$' 
+                                                    or VALUE like_regexpr '^(\w{1}):\\usr\\sap\\(\w{3})\\SYS\\global\\sec[_]?info(|\.DAT|\.dat|\.txt)?$' 
+                                                    )      </noncompliant>
+    </checkitem>
+    -->
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/reg_no_conn_info as recommended (Gateway security options Kernel lt 7.40)" id="RFCGW-A_c.1">
+      <compliant>    NAME = 'gw/reg_no_conn_info' and     VALUE in ( '15','31','47','63','79','95','111','127','143','159','175','191','207','223','239','255' )      </compliant>
+      <noncompliant> NAME = 'gw/reg_no_conn_info' and not VALUE in ( '15','31','47','63','79','95','111','127','143','159','175','191','207','223','239','255' )      </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'KERN_REL' and substring(VALUE,0,3) &lt; '740'   </joincompliant>
+        <joinnoncompliant>  NAME = 'KERN_REL' and substring(VALUE,0,3) &lt; '740'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <!-- As per SAP Note 2776748, the default value for the parameter gw/reg_no_conn_info is 1; since of kernel release 74X onward only the options 1, 64 and 128 still exist.  It is recommended to set the parameter value to 255 to activate all options. -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/reg_no_conn_info = 255 (recommended) or uneven (Gateway security options Kernel ≥ 7.40, see Note 2776748)" id="RFCGW-A_c.2">
+      <compliant>       NAME = 'gw/reg_no_conn_info' and     VALUE in ('1','65','129','255')       </compliant>
+      <noncompliant>    NAME = 'gw/reg_no_conn_info' and not VALUE in ('1','65','129','255')       </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'KERN_REL' and substring(VALUE,0,3) &gt;= '740'  </joincompliant>
+        <joinnoncompliant>  NAME = 'KERN_REL' and substring(VALUE,0,3) &gt;= '740'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/acl_mode = 1 (Mode for non existing ACL file)" id="RFCGW-A_d">
+      <compliant>       NAME = 'gw/acl_mode' and VALUE  = '1'   </compliant>
+      <noncompliant>    NAME = 'gw/acl_mode' and VALUE != '1'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/monitor = 1 (Enable gateway monitor commands)" id="RFCGW-A_e">
+      <compliant>       NAME = 'gw/monitor' and VALUE  = '1'    </compliant>
+      <noncompliant>    NAME = 'gw/monitor' and VALUE != '1'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/sim_mode = 0 (Disable simulation mode for reg_info and sec_info)" id="RFCGW-A_f">
+      <compliant>       NAME = 'gw/sim_mode' and VALUE  = '0'   </compliant>
+      <noncompliant>    NAME = 'gw/sim_mode' and VALUE != '0'   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <!-- The following simple rule validates if parameter value contains 2x // or \\ to ensure it's a path-like value - Consider replacing with check for actual path. -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/sec_info (mount path defined to ACL file)" id="RFCGW-A_b secinfo.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'gw/sec_info' and     length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0     </compliant>
+      <noncompliant>    NAME = 'gw/sec_info' and NOT length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0     </noncompliant>
+    </checkitem>
+    <!--       
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/sec_info (global path defined to central directory)" id="RFCGW-A_b.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'gw/sec_info' and     ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/sec[_]?info$' 
+                                                    or VALUE like_regexpr '^(\w{1}):\\usr\\sap\\(\w{3})\\SYS\\global\\sec[_]?info(|\.DAT|\.dat|\.txt)?$' 
+                                                    )      </compliant>
+      <noncompliant>    NAME = 'gw/sec_info' and NOT ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/sec[_]?info$' 
+                                                    or VALUE like_regexpr '^(\w{1}):\\usr\\sap\\(\w{3})\\SYS\\global\\sec[_]?info(|\.DAT|\.dat|\.txt)?$' 
+                                                    )      </noncompliant>
+    </checkitem>
+    -->
+    <!-- -->
+    <!-- The following simple rule validates if parameter value contains 2x // or \\ to ensure it's a path-like value - Consider replacing with check for actual path. -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/reg_info (mount path defined to ACL file)" id="RFCGW-A_b reginfo.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'gw/reg_info' and     length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0     </compliant>
+      <noncompliant>    NAME = 'gw/reg_info' and NOT length(substr_after(substr_after(replace(VALUE,'\','/'),'/'),'/')) &gt; 0     </noncompliant>
+    </checkitem>
+    <!--       
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/reg_info (global path defined to central directory)" id="RFCGW-A_b.2" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'gw/reg_info' and     ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/reg[_]?info$' 
+                                                    or VALUE like_regexpr '^(\w{1}):\\usr\\sap\\(\w{3})\\SYS\\global\\sec[_]?info(|\.DAT|\.dat|\.txt)?$' 
+                                                    )      </compliant>
+      <noncompliant>    NAME = 'gw/reg_info' and NOT ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/reg[_]?info$' 
+                                                    or VALUE like_regexpr '^(\w{1}):\\usr\\sap\\(\w{3})\\SYS\\global\\sec[_]?info(|\.DAT|\.dat|\.txt)?$' 
+                                                    )      </noncompliant>
+    </checkitem>
+    -->
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/reg_no_conn_info as recommended (Gateway security options Kernel lt 7.40)" id="RFCGW-A_c.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>    NAME = 'gw/reg_no_conn_info' and     VALUE in ( '15','31','47','63','79','95','111','127','143','159','175','191','207','223','239','255' )      </compliant>
+      <noncompliant> NAME = 'gw/reg_no_conn_info' and not VALUE in ( '15','31','47','63','79','95','111','127','143','159','175','191','207','223','239','255' )      </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'KERN_REL' and substring(VALUE,0,3) &lt; '740'   </joincompliant>
+        <joinnoncompliant>  NAME = 'KERN_REL' and substring(VALUE,0,3) &lt; '740'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <!-- As per SAP Note 2776748, the default value for the parameter gw/reg_no_conn_info is 1; since of kernel release 74X onward only the options 1, 64 and 128 still exist.  It is recommended to set the parameter value to 255 to activate all options. -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/reg_no_conn_info = 255 (recommended) or uneven (Gateway security options Kernel ≥ 7.40, see Note 2776748)" id="RFCGW-A_c.2" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'gw/reg_no_conn_info' and     VALUE in ('1','65','129','255')       </compliant>
+      <noncompliant>    NAME = 'gw/reg_no_conn_info' and not VALUE in ('1','65','129','255')       </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'KERN_REL' and substring(VALUE,0,3) &gt;= '740'  </joincompliant>
+        <joinnoncompliant>  NAME = 'KERN_REL' and substring(VALUE,0,3) &gt;= '740'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/acl_mode = 1 (Mode for non existing ACL file)" id="RFCGW-A_d" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'gw/acl_mode' and VALUE  = '1'   </compliant>
+      <noncompliant>    NAME = 'gw/acl_mode' and VALUE != '1'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/monitor = 1 (Enable gateway monitor commands)" id="RFCGW-A_e" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'gw/monitor' and VALUE  = '1'    </compliant>
+      <noncompliant>    NAME = 'gw/monitor' and VALUE != '1'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: gw/sim_mode = 0 (Disable simulation mode for reg_info and sec_info)" id="RFCGW-A_f" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'gw/sim_mode' and VALUE  = '0'   </compliant>
+      <noncompliant>    NAME = 'gw/sim_mode' and VALUE != '0'   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

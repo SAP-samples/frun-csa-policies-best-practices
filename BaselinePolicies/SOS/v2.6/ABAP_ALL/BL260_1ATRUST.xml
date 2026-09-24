@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          TRUST-A: Trusting relations and trusted destinations – ABAP
+        Security level:                             Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-06-17      XX-SER-SECCHK   original for GA
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Trusting relations and trusted destinations (ABAP)" id="BL260_1ATRUST" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <configstore name="RFCSYSACL">
+    <!-- Store info:
+      Fields RFCSYSID and TLICENSE_NR describe the systems whose calls are trusted (i.e. trusted calling system, SID and installation).  These are KEY fields.
+      Fields RFCTRUSTSY and LLICENSE_NR describe the trusting called system. Field RFCREGDEST relates to trusting system target host.
+      Field  RFCSLOPT = 3 indicates using the latest security method. In this case field RFCSECKEY is empty. -->
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] Migrated trust relationships should use the latest security method: RFCSLOPT = 3 (see SAP Notes 3157268, 3089413)" id="TRUST-A_c">
+      <compliant>       RFCSYSID like '%' and TLICENSE_NR like '%' and RFCTRUSTSY like '%' and RFCDEST like '%' and RFCTCDCHK like '%' and RFCSNC like '%' 
+                        and     RFCSLOPT like '3%'
+                        </compliant>
+      <noncompliant>    RFCSYSID like '%' and TLICENSE_NR like '%' and RFCTRUSTSY like '%' and RFCDEST like '%' and RFCTCDCHK like '%' and RFCSNC like '%' 
+                        and not RFCSLOPT like '3%'
+                        </noncompliant>
+      <noncomplianttext>Trust Relations are not migrated</noncomplianttext>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx   -->
+  <!--  -->
+  <!-- Sample rule, maintain as per your corporate requirements.
+  <configstore name="RFCSYSACL">
+    <checkitem desc="[p1-CRITICAL] Candidates for Review -  remove any unused or unwanted trusting relationships in called system (as hosts not defined)" id="TRUST-A_a.1" not_found="ignore)">
+      <compliant>       RFCSYSID like '%' and TLICENSE_NR like '%' and RFCTRUSTSY like '%' and RFCDEST like '%' and RFCTCDCHK like '%' and RFCSNC like '%' 
+                        and     ( length(RFCCREDEST) &gt; 0 and length(RFCREGDEST) &gt; 0 )                                                                 </compliant>
+      <noncompliant>    RFCSYSID like '%' and TLICENSE_NR like '%' and RFCTRUSTSY like '%' and RFCDEST like '%' and RFCTCDCHK like '%' and RFCSNC like '%' 
+                        and not ( length(RFCCREDEST) &gt; 0 and length(RFCREGDEST) &gt; 0 )                                                                 </noncompliant>
+    </checkitem>
+  </configstore>
+  -->
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx   -->
+  <!--  -->
+  <!-- Sample rule, maintain as per your corporate requirements.
+  <configstore name="RFCDES_TYPE_3">
+    <checkitem desc="[p1-CRITICAL] Candidates for Review -  remove any unused or unwanted trusted destinations" id="TRUST-A_b.1" not_found="ignore)">
+      <compliant/>
+      <noncompliant>    RFCDEST like '%' and TRUSTED_SYSTEM = 'X' and LOGON_CLIENT like '%' and SAME_USER like '%' and SYSTEM_IDENTIFIER like '%' and SYSTEM_NUMBER like '%'    </noncompliant>
+    </checkitem>
+  </configstore>
+  -->
+  <!--  -->
+</targetsystem>

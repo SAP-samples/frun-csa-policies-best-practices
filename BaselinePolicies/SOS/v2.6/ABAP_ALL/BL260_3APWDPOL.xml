@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      PWDPOL-A: Password Policy – ABAP
+        Security level:                         Extended (Level 3)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Password Policy (ABAP)" id="BL260_3APWDPOL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_expiration_time between 1 and 183 (rule for validity period of passwords in days)" id="PWDPOL-A_c.1a">
+      <compliant>       NAME = 'login/password_expiration_time' and     lpad(VALUE,4,'0') between '0001' and '0183' </compliant>
+      <noncompliant>    NAME = 'login/password_expiration_time' and NOT lpad(VALUE,4,'0') between '0001' and '0183' </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/min_password_digits ≥ 1 (rule for password complexity, digits)" id="PWDPOL-A_i.1a">
+      <compliant>       NAME = 'login/min_password_digits' and     lpad(VALUE,4,'0') &gt;= '0001'   </compliant>
+      <noncompliant>    NAME = 'login/min_password_digits' and not lpad(VALUE,4,'0') &gt;= '0001'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/min_password_letters ≥ 1 (rule for password complexity, letters)" id="PWDPOL-A_i.2a">
+      <compliant>       NAME = 'login/min_password_letters' and     lpad(VALUE,4,'0') &gt;= '0001'  </compliant>
+      <noncompliant>    NAME = 'login/min_password_letters' and not lpad(VALUE,4,'0') &gt;= '0001'  </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/min_password_lowercase ≥ 1 (rule for password complexity, lowercase)" id="PWDPOL-A_i.3a">
+      <compliant>       NAME = 'login/min_password_lowercase' and     lpad(VALUE,4,'0') &gt;= '0001'    </compliant>
+      <noncompliant>    NAME = 'login/min_password_lowercase' and not lpad(VALUE,4,'0') &gt;= '0001'    </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/min_password_uppercase ≥ 1 (rule for password complexity, uppercase)" id="PWDPOL-A_i.4a">
+      <compliant>       NAME = 'login/min_password_uppercase' and     lpad(VALUE,4,'0') &gt;= '0001'    </compliant>
+      <noncompliant>    NAME = 'login/min_password_uppercase' and not lpad(VALUE,4,'0') &gt;= '0001'    </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/min_password_specials ≥ 1 (rule for password complexity, special characters)" id="PWDPOL-A_i.5a">
+      <compliant>       NAME = 'login/min_password_specials' and     lpad(VALUE,4,'0') &gt;= '0001'     </compliant>
+      <noncompliant>    NAME = 'login/min_password_specials' and not lpad(VALUE,4,'0') &gt;= '0001'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/min_password_diff ≥ 3 (rule for number of different characters in new passwords)" id="PWDPOL-A_i.6a">
+      <compliant>       NAME = 'login/min_password_diff' and     lpad(VALUE,4,'0') &gt;= '0003' </compliant>
+      <noncompliant>    NAME = 'login/min_password_diff' and not lpad(VALUE,4,'0') &gt;= '0003' </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!-- xxxxxxxxxxxxxxxxxxxx -->
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/disable_password_logon must be set (rule for disabling password logon)" id="PWDPOL-A_j.1a">
+      <compliant>       NAME = 'login/disable_password_logon' and     length(VALUE) &gt;= '1'       </compliant>
+      <noncompliant>    NAME = 'login/disable_password_logon' and not length(VALUE) &gt;= '1'       </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/fails_to_user_lock between 1 and 5 (rule for maximum failed logon attempts)" id="PWDPOL-A_j.2a">
+      <compliant>       NAME = 'login/fails_to_user_lock' and     lpad(VALUE,4,'0') between '0001' and '0005'   </compliant>
+      <noncompliant>    NAME = 'login/fails_to_user_lock' and not lpad(VALUE,4,'0') between '0001' and '0005'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/failed_user_auto_unlock = 0 (rule for automatic user unlock after failed logins)" id="PWDPOL-A_j.3a">
+      <compliant>       NAME = 'login/failed_user_auto_unlock' and VALUE  = '0' </compliant>
+      <noncompliant>    NAME = 'login/failed_user_auto_unlock' and VALUE != '0' </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_max_idle_productive between 1 and 180 (rule for maximum idle time of productive passwords)" id="PWDPOL-A_j.4a">
+      <compliant>       NAME = 'login/password_max_idle_productive' and     lpad(VALUE,4,'0') between '0001' and '0180'     </compliant>
+      <noncompliant>    NAME = 'login/password_max_idle_productive' and not lpad(VALUE,4,'0') between '0001' and '0180'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED]  Profile parameter: login/password_change_waittime must be set (rule for password change wait time)" id="PWDPOL-A_j.5a" not_found="positive">
+      <compliant>       NAME = 'login/password_change_waittime' and     length(VALUE) &gt; '0'   </compliant>
+      <noncompliant>    NAME = 'login/password_change_waittime' and NOT length(VALUE) &gt; '0'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_change_for_SSO = 1 (rule for password change for SSO)" id="PWDPOL-A_j.6a">
+      <compliant>       NAME = 'login/password_change_for_SSO' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'login/password_change_for_SSO' and VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_history_size ≥ 5 (rule for password history size)" id="PWDPOL-A_j.7a">
+      <compliant>       NAME = 'login/password_history_size' and     lpad(VALUE,4,'0') &gt;= '0005' </compliant>
+      <noncompliant>    NAME = 'login/password_history_size' and not lpad(VALUE,4,'0') &gt;= '0005' </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_hash_algorithm set as required (see Note 2140269)" id="PWDPOL-A_k">
+      <compliant>       NAME = 'login/password_hash_algorithm' 
+                        and VALUE like_regexpr 'encoding=RFC2307, ?algorithm=(iSSHA-256|iSSHA-384|iSSHA-512), ?iterations=(\d{5,}), ?saltsize=(128|256)'
+      </compliant>
+      <noncompliant>    NAME = 'login/password_hash_algorithm' 
+                        and not VALUE like_regexpr 'encoding=RFC2307, ?algorithm=(iSSHA-256|iSSHA-384|iSSHA-512), ?iterations=(\d{5,}), ?saltsize=(128|256)'
+      </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!-- Alternative Syntax supporting different order of entries, maintain as needed
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_hash_algorithm set as required" id="PWDPOL-A_k">
+      <compliant>       NAME = 'login/password_hash_algorithm'
+                        and VALUE like_regexpr 'encoding=RFC2307'
+                        and ( VALUE like_regexpr 'algorithm=iSSHA-256' OR VALUE like_regexpr 'algorithm=iSSHA-384' OR VALUE like_regexpr 'algorithm=iSSHA-512') 
+                        and ( VALUE like_regexpr 'saltsize=128' OR VALUE like_regexpr 'saltsize=256' )
+      </compliant>
+      <noncompliant>    NAME = 'login/password_hash_algorithm'
+                        and (   (not VALUE like_regexpr 'encoding=RFC2307') 
+                                OR (not VALUE like_regexpr 'algorithm=iSSHA-256' AND not VALUE like_regexpr 'algorithm=iSSHA-384' AND not VALUE like_regexpr 'algorithm=iSSHA-512') 
+                                OR (not VALUE like_regexpr 'saltsize=128' AND not VALUE like_regexpr 'saltsize=256' ) 
+                            )
+      </noncompliant>
+    </checkitem>
+-->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_logon_usergroup maintained if login/disable_password_logon = 1 (rule for groups allowed to logon with passwords)" id="PWDPOL-A_l" not_found="positive">
+      <compliant>       NAME = 'login/password_logon_usergroup' and     length(VALUE) &gt; '0'   </compliant>
+      <noncompliant>    NAME = 'login/password_logon_usergroup' and NOT length(VALUE) &gt; '0'   </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="No">
+        <joincompliant>      NAME = 'login/disable_password_logon' and VALUE = '1'    </joincompliant>
+        <joinnoncompliant>   NAME = 'login/disable_password_logon' and VALUE = '1'    </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!--  -->
+  <configstore name="Parameters">
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_expiration_time between 1 and 183 (rule for validity period of passwords in days)" id="PWDPOL-A_c.1a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/password_expiration_time' and     lpad(VALUE,4,'0') between '0001' and '0183' </compliant>
+      <noncompliant>    NAME = 'login/password_expiration_time' and NOT lpad(VALUE,4,'0') between '0001' and '0183' </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/min_password_digits ≥ 1 (rule for password complexity, digits)" id="PWDPOL-A_i.1a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/min_password_digits' and     lpad(VALUE,4,'0') &gt;= '0001'   </compliant>
+      <noncompliant>    NAME = 'login/min_password_digits' and not lpad(VALUE,4,'0') &gt;= '0001'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/min_password_letters ≥ 1 (rule for password complexity, letters)" id="PWDPOL-A_i.2a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/min_password_letters' and     lpad(VALUE,4,'0') &gt;= '0001'  </compliant>
+      <noncompliant>    NAME = 'login/min_password_letters' and not lpad(VALUE,4,'0') &gt;= '0001'  </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/min_password_lowercase ≥ 1 (rule for password complexity, lowercase)" id="PWDPOL-A_i.3a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/min_password_lowercase' and     lpad(VALUE,4,'0') &gt;= '0001'    </compliant>
+      <noncompliant>    NAME = 'login/min_password_lowercase' and not lpad(VALUE,4,'0') &gt;= '0001'    </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/min_password_uppercase ≥ 1 (rule for password complexity, uppercase)" id="PWDPOL-A_i.4a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/min_password_uppercase' and     lpad(VALUE,4,'0') &gt;= '0001'    </compliant>
+      <noncompliant>    NAME = 'login/min_password_uppercase' and not lpad(VALUE,4,'0') &gt;= '0001'    </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/min_password_specials ≥ 1 (rule for password complexity, special characters)" id="PWDPOL-A_i.5a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/min_password_specials' and     lpad(VALUE,4,'0') &gt;= '0001'     </compliant>
+      <noncompliant>    NAME = 'login/min_password_specials' and not lpad(VALUE,4,'0') &gt;= '0001'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/min_password_diff ≥ 3 (rule for number of different characters in new passwords)" id="PWDPOL-A_i.6a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/min_password_diff' and     lpad(VALUE,4,'0') &gt;= '0003' </compliant>
+      <noncompliant>    NAME = 'login/min_password_diff' and not lpad(VALUE,4,'0') &gt;= '0003' </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!-- xxxxxxxxxxxxxxxxxxxx -->
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/disable_password_logon must be set (rule for disabling password logon)" id="PWDPOL-A_j.1a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/disable_password_logon' and     length(VALUE) &gt;= '1'       </compliant>
+      <noncompliant>    NAME = 'login/disable_password_logon' and not length(VALUE) &gt;= '1'       </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/fails_to_user_lock between 1 and 5 (rule for maximum failed logon attempts)" id="PWDPOL-A_j.2a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/fails_to_user_lock' and     lpad(VALUE,4,'0') between '0001' and '0005'   </compliant>
+      <noncompliant>    NAME = 'login/fails_to_user_lock' and not lpad(VALUE,4,'0') between '0001' and '0005'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/failed_user_auto_unlock = 0 (rule for automatic user unlock after failed logins)" id="PWDPOL-A_j.3a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/failed_user_auto_unlock' and VALUE  = '0' </compliant>
+      <noncompliant>    NAME = 'login/failed_user_auto_unlock' and VALUE != '0' </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_max_idle_productive between 1 and 180 (rule for maximum idle time of productive passwords)" id="PWDPOL-A_j.4a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/password_max_idle_productive' and     lpad(VALUE,4,'0') between '0001' and '0180'     </compliant>
+      <noncompliant>    NAME = 'login/password_max_idle_productive' and not lpad(VALUE,4,'0') between '0001' and '0180'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED]  Profile parameter: login/password_change_waittime must be set (rule for password change wait time)" id="PWDPOL-A_j.5a" not_found="positive">
+      <compliant>       NAME = 'login/password_change_waittime' and     length(VALUE) &gt; '0'   </compliant>
+      <noncompliant>    NAME = 'login/password_change_waittime' and NOT length(VALUE) &gt; '0'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_change_for_SSO = 1 (rule for password change for SSO)" id="PWDPOL-A_j.6a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/password_change_for_SSO' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'login/password_change_for_SSO' and VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_history_size ≥ 5 (rule for password history size)" id="PWDPOL-A_j.7a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/password_history_size' and     lpad(VALUE,4,'0') &gt;= '0005' </compliant>
+      <noncompliant>    NAME = 'login/password_history_size' and not lpad(VALUE,4,'0') &gt;= '0005' </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_hash_algorithm set as required (see Note 2140269)" id="PWDPOL-A_k" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/password_hash_algorithm' 
+                        and VALUE like_regexpr 'encoding=RFC2307, ?algorithm=(iSSHA-256|iSSHA-384|iSSHA-512), ?iterations=(\d{5,}), ?saltsize=(128|256)'
+      </compliant>
+      <noncompliant>    NAME = 'login/password_hash_algorithm' 
+                        and not VALUE like_regexpr 'encoding=RFC2307, ?algorithm=(iSSHA-256|iSSHA-384|iSSHA-512), ?iterations=(\d{5,}), ?saltsize=(128|256)'
+      </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!-- Alternative Syntax supporting different order of entries, maintain as needed
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_hash_algorithm set as required" id="PWDPOL-A_k" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/password_hash_algorithm'
+                        and VALUE like_regexpr 'encoding=RFC2307'
+                        and ( VALUE like_regexpr 'algorithm=iSSHA-256' OR VALUE like_regexpr 'algorithm=iSSHA-384' OR VALUE like_regexpr 'algorithm=iSSHA-512') 
+                        and ( VALUE like_regexpr 'saltsize=128' OR VALUE like_regexpr 'saltsize=256' )
+      </compliant>
+      <noncompliant>    NAME = 'login/password_hash_algorithm'
+                        and (   (not VALUE like_regexpr 'encoding=RFC2307') 
+                                OR (not VALUE like_regexpr 'algorithm=iSSHA-256' AND not VALUE like_regexpr 'algorithm=iSSHA-384' AND not VALUE like_regexpr 'algorithm=iSSHA-512') 
+                                OR (not VALUE like_regexpr 'saltsize=128' AND not VALUE like_regexpr 'saltsize=256' ) 
+                            )
+      </noncompliant>
+    </checkitem>
+-->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: login/password_logon_usergroup maintained if login/disable_password_logon = 1 (rule for groups allowed to logon with passwords)" id="PWDPOL-A_l" not_found="positive" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/password_logon_usergroup' and     length(VALUE) &gt; '0'   </compliant>
+      <noncompliant>    NAME = 'login/password_logon_usergroup' and NOT length(VALUE) &gt; '0'   </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="No">
+        <joincompliant>      NAME = 'login/disable_password_logon' and VALUE = '1'    </joincompliant>
+        <joinnoncompliant>   NAME = 'login/disable_password_logon' and VALUE = '1'    </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!--  -->
+  <configstore name="AUTH_SECURITY_POLICY">
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: PASSWORD_CHANGE_INTERVAL between 1 and 183 (rule for validity period of passwords in days) (security policy attribute)" id="PWDPOL-A_c.1b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'PASSWORD_CHANGE_INTERVAL' and NAME like '%' and CLIENT != '[XXX]' and     lpad(ATTRIB_VALUE,4,'0') between '0001' and '0183'  </compliant>
+      <noncompliant>    ATTRIB_KEY = 'PASSWORD_CHANGE_INTERVAL' and NAME like '%' and CLIENT != '[XXX]' and NOT lpad(ATTRIB_VALUE,4,'0') between '0001' and '0183'  </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: MIN_PASSWORD_DIGITS ≥ 1 (rule for password complexity, digits) (security policy attribute)" id="PWDPOL-A_i.1b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'MIN_PASSWORD_DIGITS' and NAME like '%' and CLIENT != '[XXX]' and     lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001'       </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MIN_PASSWORD_DIGITS' and NAME like '%' and CLIENT != '[XXX]' and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001'       </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: MIN_PASSWORD_LETTERS ≥ 1 (rule for password complexity, letters) (security policy attribute)" id="PWDPOL-A_i.2b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'MIN_PASSWORD_LETTERS' and NAME like '%' and CLIENT != '[XXX]' and     lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001'      </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MIN_PASSWORD_LETTERS' and NAME like '%' and CLIENT != '[XXX]' and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001'      </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: MIN_PASSWORD_LOWERCASE ≥ 1 (rule for password complexity, lowercase) (security policy attribute)" id="PWDPOL-A_i.3b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'MIN_PASSWORD_LOWERCASE' and NAME like '%' and CLIENT != '[XXX]' and     lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001'    </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MIN_PASSWORD_LOWERCASE' and NAME like '%' and CLIENT != '[XXX]' and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001'    </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: MIN_PASSWORD_UPPERCASE ≥ 1 (rule for password complexity, uppercase) (security policy attribute)" id="PWDPOL-A_i.4b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'MIN_PASSWORD_UPPERCASE' and NAME like '%' and CLIENT != '[XXX]' and     lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001'    </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MIN_PASSWORD_UPPERCASE' and NAME like '%' and CLIENT != '[XXX]' and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001'    </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: MIN_PASSWORD_SPECIALS ≥ 1 (rule for password complexity, special characters) (security policy attribute)" id="PWDPOL-A_i.5b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'MIN_PASSWORD_SPECIALS' and NAME like '%' and CLIENT != '[XXX]' and     lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001'     </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MIN_PASSWORD_SPECIALS' and NAME like '%' and CLIENT != '[XXX]' and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0001'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: MIN_PASSWORD_DIFFERENCE ≥ 3 (rule for number of different characters in new passwords) (security policy attribute)" id="PWDPOL-A_i.6b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'MIN_PASSWORD_DIFFERENCE' and NAME like '%' and CLIENT != '[XXX]' and     lpad(ATTRIB_VALUE,4,'0')  &gt;= '0003'   </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MIN_PASSWORD_DIFFERENCE' and NAME like '%' and CLIENT != '[XXX]' and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0003'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!-- xxxxxxxxxxxxxxxxxxxx -->
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: DISABLE_PASSWORD_LOGON must be set (rule for disabling password logon) (security policy attribute)" id="PWDPOL-A_j.1b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'DISABLE_PASSWORD_LOGON' and NAME like '%' and CLIENT != '[XXX]' and     length(ATTRIB_VALUE) &gt;= '1'   </compliant>
+      <noncompliant>    ATTRIB_KEY = 'DISABLE_PASSWORD_LOGON' and NAME like '%' and CLIENT != '[XXX]' and NOT length(ATTRIB_VALUE) &gt;= '1'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: MAX_FAILED_PASSWORD_LOGON_ATTEMPTS (rule for maximum failed logon attempts) (security policy attribute)" id="PWDPOL-A_j.2b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'MAX_FAILED_PASSWORD_LOGON_ATTEMPTS' and NAME like '%' and CLIENT != '[XXX]' and     lpad(ATTRIB_VALUE,4,'0')  &lt;= '0005'    </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MAX_FAILED_PASSWORD_LOGON_ATTEMPTS' and NAME like '%' and CLIENT != '[XXX]' and NOT lpad(ATTRIB_VALUE,4,'0')  &lt;= '0005'    </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: PASSWORD_LOCK_EXPIRATION = 0 (rule for automatic user unlock after failed logins) (security policy attribute)" id="PWDPOL-A_j.3b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'PASSWORD_LOCK_EXPIRATION' and NAME like '%' and CLIENT != '[XXX]' and ATTRIB_VALUE  = '0'      </compliant>
+      <noncompliant>    ATTRIB_KEY = 'PASSWORD_LOCK_EXPIRATION' and NAME like '%' and CLIENT != '[XXX]' and ATTRIB_VALUE != '0'      </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: MAX_PASSWORD_IDLE_PRODUCTIVE between 1 and 180, recommended 180 (rule for maximum idle time of productive passwords) (security policy attribute)" id="PWDPOL-A_j.4b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'MAX_PASSWORD_IDLE_PRODUCTIVE' and NAME like '%' and CLIENT != '[XXX]' and      lpad(ATTRIB_VALUE,4,'0') between '0001' and '0180'     </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MAX_PASSWORD_IDLE_PRODUCTIVE' and NAME like '%' and CLIENT != '[XXX]' and  NOT lpad(ATTRIB_VALUE,4,'0') between '0001' and '0180'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: MIN_PASSWORD_CHANGE_WAITTIME must be set (rule for password change wait time) (security policy attribute)" id="PWDPOL-A_j.5b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'MIN_PASSWORD_CHANGE_WAITTIME' and NAME like '%' and CLIENT != '[XXX]' and     length(ATTRIB_VALUE) &gt; '0'   </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MIN_PASSWORD_CHANGE_WAITTIME' and NAME like '%' and CLIENT != '[XXX]' and NOT length(ATTRIB_VALUE) &gt; '0'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: PASSWORD_CHANGE_FOR_SSO = 1 (rule for password change for SSO) (security policy attribute)" id="PWDPOL-A_j.6b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'PASSWORD_CHANGE_FOR_SSO' and NAME like '%' and CLIENT != '[XXX]' and ATTRIB_VALUE  = '1'      </compliant>
+      <noncompliant>    ATTRIB_KEY = 'PASSWORD_CHANGE_FOR_SSO' and NAME like '%' and CLIENT != '[XXX]' and ATTRIB_VALUE != '1'      </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: PASSWORD_HISTORY_SIZE ≥ 5 (rule for password history size) (security policy attribute)" id="PWDPOL-A_j.7b" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'PASSWORD_HISTORY_SIZE' and NAME like '%' and CLIENT != '[XXX]' and     lpad(ATTRIB_VALUE,4,'0')  &gt;= '0005'     </compliant>
+      <noncompliant>    ATTRIB_KEY = 'PASSWORD_HISTORY_SIZE' and NAME like '%' and CLIENT != '[XXX]' and NOT lpad(ATTRIB_VALUE,4,'0')  &gt;= '0005'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!-- xxxxxxxxxxxxxxxxxxxx -->
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] SECPOL attribute: DISABLE_TICKET_LOGON ≥ 1 (rule for disabling ticket logon) (security policy attribute)" id="PWDPOL-A_m" not_found="positive">
+      <compliant>       ATTRIB_KEY = 'DISABLE_TICKET_LOGON' and NAME like '%' and CLIENT != '[XXX]' and     length(ATTRIB_VALUE) &gt;= '1'      </compliant>
+      <noncompliant>    ATTRIB_KEY = 'DISABLE_TICKET_LOGON' and NAME like '%' and CLIENT != '[XXX]' and NOT length(ATTRIB_VALUE) &gt;= '1'      </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+</targetsystem>

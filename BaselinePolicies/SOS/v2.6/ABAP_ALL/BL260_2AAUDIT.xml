@@ -1,0 +1,1704 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      AUDIT-A: Audit Settings – ABAP
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Audit Settings (ABAP)" id="BL260_2AAUDIT" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <!-- KERNEL PARAMETERS for Auditing -->
+  <!-- The config store AUDIT_CONFIGURATION contains the effective current settings (whether set by profile parameter or kernel parameter. -->
+  <!-- -->
+  <configstore name="AUDIT_CONFIGURATION">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Security Audit Log: enabled = Yes (Runtime Configuration) (≥ 740)" id="AUDIT-A_a.1">
+      <compliant>       NAME = 'Enabled' and VALUE  = 'Yes' </compliant>
+      <noncompliant>    NAME = 'Enabled' and VALUE != 'Yes' </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>    COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &gt;= '740'  </joincompliant>
+        <joinnoncompliant> COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &gt;= '740'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <!-- The following rule counts the Security Audit Log filter slots that are actually in runtime use.  Adjust threshold according to corporate needs based on the expected number of filter definitions that are expected to be defined. -->
+    <checkitem desc="[p2-STANDARD] Security Audit Log: count of active selection slots (currently in use)" id="AUDIT-A_a.2">
+      <compliant>       NAME = 'SlotCount' and     lpad(VALUE,4,'0') &gt;= '0007'   </compliant>
+      <noncompliant>    NAME = 'SlotCount' and not lpad(VALUE,4,'0') &gt;= '0007'   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- Audit Log KERNEL Parameter Configuration for SAP_BASIS ge 740 -->
+  <!-- Some kernel parameters are dominant over equivalent Profile Parameters.  Kernel parameter checks are marked with suffix 'k'. -->
+  <!-- -->
+  <configstore name="AUDIT_CONFIGURATION_PARA">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Kernel parameter: Maximum Filters per Profile ≥ 10 (≥ 740)" id="AUDIT-A_a.3k">
+      <compliant>       NAME = 'SLOTS' and     lpad(VALUE,4,'0') &gt;= '0010' </compliant>
+      <noncompliant>    NAME = 'SLOTS' and not lpad(VALUE,4,'0') &gt;= '0010' </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>    COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &gt;= '740'</joincompliant>
+        <joinnoncompliant> COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &gt;= '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Kernel parameter: Integrity Protection Format = X (active) (≥ 740)" id="AUDIT-A_a.4k">
+      <compliant>       NAME = 'INTEGRITY' and VALUE  = 'X' </compliant>
+      <noncompliant>    NAME = 'INTEGRITY' and VALUE != 'X' </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>    COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &gt;= '740'</joincompliant>
+        <joinnoncompliant> COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &gt;= '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Kernel parameter: Log peer address X=active (≥ 740)" id="AUDIT-A_a.5k">
+      <compliant>       NAME = 'PEER_ADR' and VALUE  = 'X' </compliant>
+      <noncompliant>    NAME = 'PEER_ADR' and VALUE != 'X' </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>    COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &gt;= '740'</joincompliant>
+        <joinnoncompliant> COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &gt;= '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Kernel parameter: Generic user selection X=active (≥ 740)" id="AUDIT-A_a.6k">
+      <compliant>    NAME = 'GEN_USER' and VALUE  = 'X' </compliant>
+      <noncompliant> NAME = 'GEN_USER' and VALUE != 'X' </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>    COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &gt;= '740'</joincompliant>
+        <joinnoncompliant> COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &gt;= '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- Checks for profile parameters in SAP_BASIS lt 740 (current values), so there is Component check first via a JOIN statement.-->
+  <!-- The same check numbers for kernel parameters are used where they are equivalent but are marked with 'p' for Profile Parameters-->
+  <!-- The ABAP_INSTANCE_PAHI store yields the runtime configuration of Dialog Instances.  ACSC and ERS instances are represented separately via the Parameters Store. -->
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameters: rsau/enable = 1 (lt 740)" id="AUDIT-A_a.1p">
+      <compliant>       NAME = 'rsau/enable' and VALUE  = '1'   </compliant>
+      <noncompliant>    NAME = 'rsau/enable' and VALUE != '1'   </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rsau/selection_slots ≥ 10 (lt 740)" id="AUDIT-A_a.3p">
+      <compliant>       NAME = 'rsau/selection_slots' and     lpad(VALUE,4,'0') &gt;= '0010' </compliant>
+      <noncompliant>    NAME = 'rsau/selection_slots' and NOT lpad(VALUE,4,'0') &gt;= '0010' </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rsau/integrity = 1 (lt 740)" id="AUDIT-A_a.4p">
+      <compliant>       NAME = 'rsau/integrity' and VALUE  = '1' </compliant>
+      <noncompliant>    NAME = 'rsau/integrity' and VALUE != '1' </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rsau/log_peer_address = 1 (lt 740)" id="AUDIT-A_a.5p">
+      <compliant>       NAME = 'rsau/log_peer_address' and VALUE  = '1' </compliant>
+      <noncompliant>    NAME = 'rsau/log_peer_address' and VALUE != '1' </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rsau/user_selection = 1 (lt 740)" id="AUDIT-A_a.6p">
+      <compliant>       NAME = 'rsau/user_selection' and VALUE  = '1' </compliant>
+      <noncompliant>    NAME = 'rsau/user_selection' and VALUE != '1' </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/logging_0 exists" id="AUDIT-A_c.1a" operator="EXIST">
+      <compliant>    NAME = 'icm/HTTP/logging_0' and VALUE like '%' </compliant>
+      <noncompliant> NAME = 'icm/HTTP/logging_0' and VALUE like '%' </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following rule is a sample and is defined to check security settings in S/4HANA (as per Note 2926224 v11) or mandatory Security settings for ECS (as per 3250501 v 46).  If you use different settings, then  maintain the rule as per your requirements.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/logging_0 set as expected" id="AUDIT-A_c.1b">
+      <compliant>       NAME = 'icm/HTTP/logging_0'
+                        and (   
+                                ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=(\/usr\/sap|\/sapmnt|\w:\\usr\\sap)[\/\\](\w{3})[\/\\](\w{3,12})[\/\\](log[\/\\])(http-)(\w{3})-(\w{3,12})(-\%y\%m)'
+                                    and VALUE like_regexpr 'MAXSIZEKB=10000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=\%t \%a \%u - "\%r" \%s \%b \%Lms \%{[Hh]ost}i \%P \%w1 \%w2 \%y1 \%y2'
+                                )
+                                or
+                                ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=http_%y_%m.log'
+                                    and VALUE like_regexpr 'MAXFILES=2'
+                                    and VALUE like_regexpr 'MAXSIZEKB=50000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=%t %a %u1 \"%r\" %s %b %Lms %{[Hh]ost}i %w1 %w2'
+                                )
+                            )
+                                </compliant>
+      <noncompliant>    NAME = 'icm/HTTP/logging_0'
+                              and not (
+                                ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=(\/usr\/sap|\/sapmnt|\w:\\usr\\sap)[\/\\](\w{3})[\/\\](\w{3,12})[\/\\](log[\/\\])(http-)(\w{3})-(\w{3,12})(-\%y\%m)'
+                                    and VALUE like_regexpr 'MAXSIZEKB=10000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=\%t \%a \%u - "\%r" \%s \%b \%Lms \%{[Hh]ost}i \%P \%w1 \%w2 \%y1 \%y2'
+                                )
+                                or
+                                ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=http_%y_%m.log'
+                                    and VALUE like_regexpr 'MAXFILES=2'
+                                    and VALUE like_regexpr 'MAXSIZEKB=50000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=%t %a %u1 \"%r\" %s %b %Lms %{[Hh]ost}i %w1 %w2'
+                                )
+                            )
+      </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     NAME = 'icm/HTTP/logging_0' and VALUE like '%'   </joincompliant>
+        <joinnoncompliant>  NAME = 'icm/HTTP/logging_0' and VALUE like '%'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/logging_client_0 exists" id="AUDIT-A_c.2a" operator="EXIST">
+      <compliant>       NAME = 'icm/HTTP/logging_client_0' and VALUE like '%' </compliant>
+      <noncompliant>    NAME = 'icm/HTTP/logging_client_0' and VALUE like '%' </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following rule is a sample and is defined to check security settings in S/4HANA (as per Note 2926224 v11) or mandatory Security settings for ECS (as per 3250501 v 46).  If you use different settings, then  maintain the rule as per your requirements.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/logging_client_0 set as expected" id="AUDIT-A_c.2b">
+      <compliant>       NAME = 'icm/HTTP/logging_client_0' 
+                        and     (
+                                    ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=(\/usr\/sap|\/sapmnt|\w:\\usr\\sap)[\/\\](\w{3})[\/\\](\w{3,12})[\/\\](log[\/\\])(http-client-)(\w{3})-(\w{3,12})(-\%y\%m)'
+                                    and VALUE like_regexpr 'MAXSIZEKB=10000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=\%t \%a \%u - "\%r" \%s \%b \%Lms \%{[Hh]ost}i \%P \%w1 \%w2 \%y1 \%y2'
+                                    )
+                                    or
+                                    ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=http_client_%y_%m.log'
+                                    and VALUE like_regexpr 'MAXFILES=2'
+                                    and VALUE like_regexpr 'MAXSIZEKB=50000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=%t %a %u1 \"%r\" %s %b %Lms %{[Hh]ost}i'
+                                    )
+                                )
+                                </compliant>
+      <noncompliant>    NAME = 'icm/HTTP/logging_client_0' 
+                        and not (
+                                    ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=(\/usr\/sap|\/sapmnt|\w:\\usr\\sap)[\/\\](\w{3})[\/\\](\w{3,12})[\/\\](log[\/\\])(http-client-)(\w{3})-(\w{3,12})(-\%y\%m)'
+                                    and VALUE like_regexpr 'MAXSIZEKB=10000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=\%t \%a \%u - "\%r" \%s \%b \%Lms \%{[Hh]ost}i \%P \%w1 \%w2 \%y1 \%y2'
+                                    )
+                                    or
+                                    ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=http_client_%y_%m.log'
+                                    and VALUE like_regexpr 'MAXFILES=2'
+                                    and VALUE like_regexpr 'MAXSIZEKB=50000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=%t %a %u1 \"%r\" %s %b %Lms %{[Hh]ost}i'
+                                    )
+                                )
+                                </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     NAME = 'icm/HTTP/logging_client_0' and VALUE like '%'  </joincompliant>
+        <joinnoncompliant>  NAME = 'icm/HTTP/logging_client_0' and VALUE like '%'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/security_log exists" id="AUDIT-A_c.3a" operator="EXIST">
+      <compliant>       NAME = 'icm/security_log' and VALUE like '%'   </compliant>
+      <noncompliant>    NAME = 'icm/security_log' and VALUE like '%'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/security_log set as expected (see Note 3581719) (LOGFILE=%dev_icm_sec-%y-%m-%d%z,LEVEL=3,MAXFILES=7,MAXSIZEKB=50000,SWITCHTF=day,FORMAT=TABLE)" id="AUDIT-A_c.3b">
+      <compliant>       NAME = 'icm/security_log' 
+                        and     VALUE like_regexpr 'LOGFILE=%dev_icm_sec-%y-%m-%d%z,LEVEL=3,MAXFILES=7,MAXSIZEKB=50000,SWITCHTF=day,FORMAT=TABLE' </compliant>
+      <noncompliant>    NAME = 'icm/security_log' 
+                        and not VALUE like_regexpr 'LOGFILE=%dev_icm_sec-%y-%m-%d%z,LEVEL=3,MAXFILES=7,MAXSIZEKB=50000,SWITCHTF=day,FORMAT=TABLE' </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     NAME = 'icm/security_log' and VALUE like '%'    </joincompliant>
+        <joinnoncompliant>  NAME = 'icm/security_log' and VALUE like '%'    </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: ms/HTTP/logging_0 exists" id="AUDIT-A_d.1a" operator="EXIST">
+      <compliant>       NAME = 'ms/HTTP/logging_0' and VALUE like '%'   </compliant>
+      <noncompliant>    NAME = 'ms/HTTP/logging_0' and VALUE like '%'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following rule is a sample and is defined to check security settings in S/4HANA (as per Note 2926224 v11).  If you use different settings, then  maintain the rule as per your requirements.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: ms/HTTP/logging_0 set as expected" id="AUDIT-A_d.1b">
+      <compliant>       NAME = 'ms/HTTP/logging_0' 
+                        and     (
+                                    ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=\$\(DIR_LOGGING\)\/ms-http-%y-%m-%d\.log%o'
+                                    and VALUE like_regexpr 'MAXFILES=7'
+                                    and VALUE like_regexpr 'MAXSIZEKB=10000'
+                                    and VALUE like_regexpr 'SWITCHTF=day'
+                                    and VALUE like_regexpr 'LOGFORMAT=%t %a %u %r %s %b %{[Hh]ost}i'
+                                    )
+                                )
+                                </compliant>
+      <noncompliant>    NAME = 'ms/HTTP/logging_0' 
+                        and not (
+                                    ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=\$\(DIR_LOGGING\)\/ms-http-%y-%m-%d\.log%o'
+                                    and VALUE like_regexpr 'MAXFILES=7'
+                                    and VALUE like_regexpr 'MAXSIZEKB=10000'
+                                    and VALUE like_regexpr 'SWITCHTF=day'
+                                    and VALUE like_regexpr 'LOGFORMAT=%t %a %u %r %s %b %{[Hh]ost}i'
+                                    )
+                                )
+                                </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="Yes">
+        <joincompliant>    NAME = 'ms/HTTP/logging_0' and VALUE like '%'  </joincompliant>
+        <joinnoncompliant> NAME = 'ms/HTTP/logging_0' and VALUE like '%'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: ms/http_logging = 1 (monitoring of the Message Server active)" id="AUDIT-A_d.2a">
+      <compliant>       NAME = 'ms/http_logging' and VALUE  = '1'   </compliant>
+      <noncompliant>    NAME = 'ms/http_logging' and VALUE != '1'   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameters: rsau/enable = 1 (lt 740)" id="AUDIT-A_a.1p" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rsau/enable' and VALUE  = '1'   </compliant>
+      <noncompliant>    NAME = 'rsau/enable' and VALUE != '1'   </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rsau/selection_slots ≥ 10 (lt 740)" id="AUDIT-A_a.3p" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rsau/selection_slots' and     lpad(VALUE,4,'0') &gt;= '0010' </compliant>
+      <noncompliant>    NAME = 'rsau/selection_slots' and NOT lpad(VALUE,4,'0') &gt;= '0010' </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rsau/integrity = 1 (lt 740)" id="AUDIT-A_a.4p" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rsau/integrity' and VALUE  = '1' </compliant>
+      <noncompliant>    NAME = 'rsau/integrity' and VALUE != '1' </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rsau/log_peer_address = 1 (lt 740)" id="AUDIT-A_a.5p" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rsau/log_peer_address' and VALUE  = '1' </compliant>
+      <noncompliant>    NAME = 'rsau/log_peer_address' and VALUE != '1' </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rsau/user_selection = 1 (lt 740)" id="AUDIT-A_a.6p" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rsau/user_selection' and VALUE  = '1' </compliant>
+      <noncompliant>    NAME = 'rsau/user_selection' and VALUE != '1' </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="no" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and lpad(VERSION,3,'0') &lt; '740'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/logging_0 exists" id="AUDIT-A_c.1a" operator="EXIST" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>    NAME = 'icm/HTTP/logging_0' and VALUE like '%' </compliant>
+      <noncompliant> NAME = 'icm/HTTP/logging_0' and VALUE like '%' </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following rule is a sample and is defined to check security settings in S/4HANA (as per Note 2926224 v11) or mandatory Security settings for ECS (as per 3250501 v 46).  If you use different settings, then  maintain the rule as per your requirements.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/logging_0 set as expected" id="AUDIT-A_c.1b" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'icm/HTTP/logging_0'
+                        and (   
+                                ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=(\/usr\/sap|\/sapmnt|\w:\\usr\\sap)[\/\\](\w{3})[\/\\](\w{3,12})[\/\\](log[\/\\])(http-)(\w{3})-(\w{3,12})(-\%y\%m)'
+                                    and VALUE like_regexpr 'MAXSIZEKB=10000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=\%t \%a \%u - "\%r" \%s \%b \%Lms \%{[Hh]ost}i \%P \%w1 \%w2 \%y1 \%y2'
+                                )
+                                or
+                                ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=http_%y_%m.log'
+                                    and VALUE like_regexpr 'MAXFILES=2'
+                                    and VALUE like_regexpr 'MAXSIZEKB=50000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=%t %a %u1 \"%r\" %s %b %Lms %{[Hh]ost}i %w1 %w2'
+                                )
+                            )
+                                </compliant>
+      <noncompliant>    NAME = 'icm/HTTP/logging_0'
+                              and not (
+                                ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=(\/usr\/sap|\/sapmnt|\w:\\usr\\sap)[\/\\](\w{3})[\/\\](\w{3,12})[\/\\](log[\/\\])(http-)(\w{3})-(\w{3,12})(-\%y\%m)'
+                                    and VALUE like_regexpr 'MAXSIZEKB=10000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=\%t \%a \%u - "\%r" \%s \%b \%Lms \%{[Hh]ost}i \%P \%w1 \%w2 \%y1 \%y2'
+                                )
+                                or
+                                ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=http_%y_%m.log'
+                                    and VALUE like_regexpr 'MAXFILES=2'
+                                    and VALUE like_regexpr 'MAXSIZEKB=50000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=%t %a %u1 \"%r\" %s %b %Lms %{[Hh]ost}i %w1 %w2'
+                                )
+                            )
+      </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     NAME = 'icm/HTTP/logging_0' and VALUE like '%'   </joincompliant>
+        <joinnoncompliant>  NAME = 'icm/HTTP/logging_0' and VALUE like '%'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/logging_client_0 exists" id="AUDIT-A_c.2a" operator="EXIST" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'icm/HTTP/logging_client_0' and VALUE like '%' </compliant>
+      <noncompliant>    NAME = 'icm/HTTP/logging_client_0' and VALUE like '%' </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following rule is a sample and is defined to check security settings in S/4HANA (as per Note 2926224 v11) or mandatory Security settings for ECS (as per 3250501 v 46).  If you use different settings, then  maintain the rule as per your requirements.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/logging_client_0 set as expected" id="AUDIT-A_c.2b" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'icm/HTTP/logging_client_0' 
+                        and     (
+                                    ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=(\/usr\/sap|\/sapmnt|\w:\\usr\\sap)[\/\\](\w{3})[\/\\](\w{3,12})[\/\\](log[\/\\])(http-client-)(\w{3})-(\w{3,12})(-\%y\%m)'
+                                    and VALUE like_regexpr 'MAXSIZEKB=10000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=\%t \%a \%u - "\%r" \%s \%b \%Lms \%{[Hh]ost}i \%P \%w1 \%w2 \%y1 \%y2'
+                                    )
+                                    or
+                                    ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=http_client_%y_%m.log'
+                                    and VALUE like_regexpr 'MAXFILES=2'
+                                    and VALUE like_regexpr 'MAXSIZEKB=50000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=%t %a %u1 \"%r\" %s %b %Lms %{[Hh]ost}i'
+                                    )
+                                )
+                                </compliant>
+      <noncompliant>    NAME = 'icm/HTTP/logging_client_0' 
+                        and not (
+                                    ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=(\/usr\/sap|\/sapmnt|\w:\\usr\\sap)[\/\\](\w{3})[\/\\](\w{3,12})[\/\\](log[\/\\])(http-client-)(\w{3})-(\w{3,12})(-\%y\%m)'
+                                    and VALUE like_regexpr 'MAXSIZEKB=10000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=\%t \%a \%u - "\%r" \%s \%b \%Lms \%{[Hh]ost}i \%P \%w1 \%w2 \%y1 \%y2'
+                                    )
+                                    or
+                                    ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=http_client_%y_%m.log'
+                                    and VALUE like_regexpr 'MAXFILES=2'
+                                    and VALUE like_regexpr 'MAXSIZEKB=50000'
+                                    and VALUE like_regexpr 'SWITCHTF=month'
+                                    and VALUE like_regexpr 'LOGFORMAT=%t %a %u1 \"%r\" %s %b %Lms %{[Hh]ost}i'
+                                    )
+                                )
+                                </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     NAME = 'icm/HTTP/logging_client_0' and VALUE like '%'  </joincompliant>
+        <joinnoncompliant>  NAME = 'icm/HTTP/logging_client_0' and VALUE like '%'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/security_log exists" id="AUDIT-A_c.3a" operator="EXIST" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'icm/security_log' and VALUE like '%'   </compliant>
+      <noncompliant>    NAME = 'icm/security_log' and VALUE like '%'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/security_log set as expected (see Note 3581719) (LOGFILE=%dev_icm_sec-%y-%m-%d%z,LEVEL=3,MAXFILES=7,MAXSIZEKB=50000,SWITCHTF=day,FORMAT=TABLE)" id="AUDIT-A_c.3b" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'icm/security_log' 
+                        and     VALUE like_regexpr 'LOGFILE=%dev_icm_sec-%y-%m-%d%z,LEVEL=3,MAXFILES=7,MAXSIZEKB=50000,SWITCHTF=day,FORMAT=TABLE' </compliant>
+      <noncompliant>    NAME = 'icm/security_log' 
+                        and not VALUE like_regexpr 'LOGFILE=%dev_icm_sec-%y-%m-%d%z,LEVEL=3,MAXFILES=7,MAXSIZEKB=50000,SWITCHTF=day,FORMAT=TABLE' </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     NAME = 'icm/security_log' and VALUE like '%'    </joincompliant>
+        <joinnoncompliant>  NAME = 'icm/security_log' and VALUE like '%'    </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: ms/HTTP/logging_0 exists" id="AUDIT-A_d.1a" operator="EXIST" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'ms/HTTP/logging_0' and VALUE like '%'   </compliant>
+      <noncompliant>    NAME = 'ms/HTTP/logging_0' and VALUE like '%'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following rule is a sample and is defined to check security settings in S/4HANA (as per Note 2926224 v11).  If you use different settings, then  maintain the rule as per your requirements.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: ms/HTTP/logging_0 set as expected" id="AUDIT-A_d.1b" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'ms/HTTP/logging_0' 
+                        and     (
+                                    ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=\$\(DIR_LOGGING\)\/ms-http-%y-%m-%d\.log%o'
+                                    and VALUE like_regexpr 'MAXFILES=7'
+                                    and VALUE like_regexpr 'MAXSIZEKB=10000'
+                                    and VALUE like_regexpr 'SWITCHTF=day'
+                                    and VALUE like_regexpr 'LOGFORMAT=%t %a %u %r %s %b %{[Hh]ost}i'
+                                    )
+                                )
+                                </compliant>
+      <noncompliant>    NAME = 'ms/HTTP/logging_0' 
+                        and not (
+                                    ( VALUE like_regexpr 'PREFIX=\/'
+                                    and VALUE like_regexpr 'LOGFILE=\$\(DIR_LOGGING\)\/ms-http-%y-%m-%d\.log%o'
+                                    and VALUE like_regexpr 'MAXFILES=7'
+                                    and VALUE like_regexpr 'MAXSIZEKB=10000'
+                                    and VALUE like_regexpr 'SWITCHTF=day'
+                                    and VALUE like_regexpr 'LOGFORMAT=%t %a %u %r %s %b %{[Hh]ost}i'
+                                    )
+                                )
+                                </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="Yes">
+        <joincompliant>    NAME = 'ms/HTTP/logging_0' and VALUE like '%'  </joincompliant>
+        <joinnoncompliant> NAME = 'ms/HTTP/logging_0' and VALUE like '%'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: ms/http_logging = 1 (monitoring of the Message Server active)" id="AUDIT-A_d.2a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'ms/http_logging' and VALUE  = '1'   </compliant>
+      <noncompliant>    NAME = 'ms/http_logging' and VALUE != '1'   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- AUDIT SLOTS -->
+  <!-- The following checks are as per SAP KBA 2546993 - Analysis and Recommended Settings of the Security Audit Log (SM19 / SM20) where audit filters are defined based using the classical interface for the ABAP Security Audit Log.  These are samples.  Maintain checks are per your Corporate Security Hardening Guide. -->
+  <!-- The approach in the following example rules for Standard Users checks if a filter exists in the first place, followed by a check of the detailed settings using the classical selection criteria and audit classes. -->
+  <!-- Mapping of the Security Audit Log classical interface to the fields of the Configuration Store "AUDIT_CONFIGURATION_SLOT is as follows:
+            Filter number:		SLOTINDEX 
+            Filter active:		STATUS
+
+            Selection criteria:
+            Client:			CLIENT
+            User:			UNAME
+
+            Audit Classes:
+            Dialog logon:		LOGIN
+            RFC/CPIC logon:		RFCLOGIN
+            RFC call:		    RFCSTART
+            Transaction start:	TASTART
+            Report start:		REPOSTART
+            User master change:	USERMASTER
+            System:			    SYSTEM
+            Other events:		MISC
+
+            Events:
+            All:			    LOWBUTTON
+            Severe & Critical:	MEDBUTTON
+            Only Critical:		IGHBUTTON
+
+            Detailed Display:
+            detail used if not 0:	MSGVECT
+            message events:		MSGLIST
+            -->
+  <!-- -->
+  <configstore name="AUDIT_CONFIGURATION_SLOT">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Audit Slot for SAP* user exists (Filter SAP#*)" id="AUDIT-A_b.1a" operator="EXIST">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'SAP#*' </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'SAP#*' </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- adding the Join condition avoids No Data Found in results for other usernames.-->
+    <checkitem desc="[p2-STANDARD] Audit Slot for SAP* user set as recommended" id="AUDIT-A_b.1b">
+      <compliant>   
+                       SLOTINDEX like '%'
+                       and UNAME = 'SAP#*' 
+
+                       and STATUS = 'X'
+                       and CLIENT = '*' 
+
+                       and LOWBUTTON = 'X'
+
+                       and LOGIN = 'X'
+                       and RFCLOGIN = 'X'
+                       and TASTART = 'X'
+                       and REPOSTART = 'X'
+                       and USERMASTER = 'X'
+                       and RFCSTART = 'X'
+                       and MISC = 'X'                          
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and UNAME = 'SAP#*' 
+
+                       and (
+                         STATUS != 'X'
+                         or CLIENT != '*'
+
+                         or LOWBUTTON != 'X'
+
+                         or LOGIN != 'X'
+                         or RFCLOGIN != 'X'
+                         or TASTART != 'X'
+                         or REPOSTART != 'X'
+                         or USERMASTER != 'X'
+                         or RFCSTART != 'X'
+                         or MISC != 'X'
+                       )
+      </noncompliant>
+      <joinstore name="AUDIT_CONFIGURATION_SLOT" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     SLOTINDEX like '%' and UNAME = 'SAP#*'  </joincompliant>
+        <joinnoncompliant>  SLOTINDEX like '%' and UNAME = 'SAP#*'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Audit Slot for SAP* user for event EUP all clients is active" id="AUDIT-A_b.1c" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME in ('SAP#*','*') and MSGLIST like_regexpr 'EUP'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME in ('SAP#*','*') and MSGLIST like_regexpr 'EUP'  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Audit Slot for DDIC user exists" id="AUDIT-A_b.2a" operator="EXIST">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'DDIC'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'DDIC'  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Audit Slot for DDIC user set as recommended" id="AUDIT-A_b.2b">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and UNAME = 'DDIC' 
+
+                       and STATUS = 'X'
+                       and CLIENT = '*' 
+
+                       and ( MEDBUTTON = 'X' or LOWBUTTON = 'X' )
+
+                       and LOGIN = 'X'
+                       and RFCLOGIN = 'X'
+                       and TASTART = 'X'
+                       and REPOSTART = 'X'
+                       and USERMASTER = 'X'
+                       and RFCSTART = 'X'
+                       and MISC = 'X'                          
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and UNAME = 'DDIC' 
+
+                       and (
+                         STATUS != 'X'
+                         or CLIENT != '*'
+
+                         or ( MEDBUTTON != 'X' and LOWBUTTON != 'X' )
+
+                         or LOGIN != 'X'
+                         or RFCLOGIN != 'X'
+                         or TASTART != 'X'
+                         or REPOSTART != 'X'
+                         or USERMASTER != 'X'
+                         or RFCSTART != 'X'
+                         or MISC != 'X'
+                       )
+      </noncompliant>
+      <joinstore name="AUDIT_CONFIGURATION_SLOT" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'DDIC'  </joincompliant>
+        <joinnoncompliant>  SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'DDIC'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Audit Slot for SAPCPIC user exists" id="AUDIT-A_b.3a" operator="EXIST">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'SAPCPIC'   </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'SAPCPIC'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Audit Slot for SAPCPIC user set as recommended" id="AUDIT-A_b.3b">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and UNAME = 'SAPCPIC' 
+
+                       and STATUS = 'X'
+                       and CLIENT = '*' 
+
+                       and ( MEDBUTTON = 'X' or LOWBUTTON = 'X' )
+
+                       and LOGIN = 'X'
+                       and RFCLOGIN = 'X'
+                       and TASTART = 'X'
+                       and REPOSTART = 'X'
+                       and USERMASTER = 'X'
+                       and RFCSTART = 'X'
+                       and MISC = 'X'                          
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and UNAME = 'SAPCPIC' 
+
+                       and (
+                         STATUS != 'X'
+                         or CLIENT != '*'
+
+                         or ( MEDBUTTON != 'X' and LOWBUTTON != 'X' )
+
+                         or LOGIN != 'X'
+                         or RFCLOGIN != 'X'
+                         or TASTART != 'X'
+                         or REPOSTART != 'X'
+                         or USERMASTER != 'X'
+                         or RFCSTART != 'X'
+                         or MISC != 'X'
+                       )
+      </noncompliant>
+      <joinstore name="AUDIT_CONFIGURATION_SLOT" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'SAPCPIC' </joincompliant>
+        <joinnoncompliant>  SLOTINDEX like '%' and STATUS = 'X' and UNAME = 'SAPCPIC'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <!-- The following example rule checks for emergency accounts that have a naming pattern of EAM### or FF###.  Maintain the naming pattern for Emergency accounts according to your corporate needs. -->
+    <checkitem desc="[p2-STANDARD] Audit Slot for Emergency FIREFIGHTER Users exists" id="AUDIT-A_b.4a" operator="EXIST">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and ( UNAME like 'EAM%' or UNAME like 'FF%' )    </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and ( UNAME like 'EAM%' or UNAME like 'FF%' )    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Audit Slot for Emergency FIREFIGHTER users set as expected" id="AUDIT-A_b.4b">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and ( s0.UNAME = s1.UNAME )  
+
+                       and STATUS = 'X'
+                       and CLIENT = '*' 
+
+                       and LOWBUTTON = 'X'
+
+                       and LOGIN = 'X'
+                       and RFCLOGIN = 'X'
+                       and TASTART = 'X'
+                       and REPOSTART = 'X'
+                       and USERMASTER = 'X'
+                       and RFCSTART = 'X'
+                       and MISC = 'X'                          
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and ( s0.UNAME = s1.UNAME )  
+                       and (
+                         STATUS != 'X'
+                         or CLIENT != '*'
+
+                         or LOWBUTTON != 'X'
+
+                         or LOGIN != 'X'
+                         or RFCLOGIN != 'X'
+                         or TASTART != 'X'
+                         or REPOSTART != 'X'
+                         or USERMASTER != 'X'
+                         or RFCSTART != 'X'
+                         or MISC != 'X'
+                       )
+      </noncompliant>
+      <joinstore name="AUDIT_CONFIGURATION_SLOT" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     SLOTINDEX like '%' and STATUS = 'X' and ( UNAME like 'EAM%' or UNAME like 'FF%' ) </joincompliant>
+        <joinnoncompliant>  SLOTINDEX like '%' and STATUS = 'X' and ( UNAME like 'EAM%' or UNAME like 'FF%' ) </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <!-- Maintain naming pattern for SAPSUPPORT accounts if different. -->
+    <checkitem desc="[p2-STANDARD] Audit Slot for SAPSUPPORT users exists" id="AUDIT-A_b.5a" operator="EXIST">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and ( UNAME like 'SAPSUPPORT%' )    </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and ( UNAME like 'SAPSUPPORT%' )    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Audit Slot for SAPSUPPORT users set as expected" id="AUDIT-A_b.5b">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and ( s0.UNAME = s1.UNAME )  
+
+                       and STATUS = 'X'
+                       and CLIENT = '*' 
+
+                       and LOWBUTTON = 'X'
+
+                       and LOGIN = 'X'
+                       and RFCLOGIN = 'X'
+                       and TASTART = 'X'
+                       and REPOSTART = 'X'
+                       and USERMASTER = 'X'
+                       and RFCSTART = 'X'
+                       and MISC = 'X'                          
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and ( s0.UNAME = s1.UNAME )  
+
+                       and (
+                         STATUS != 'X'
+                         or CLIENT != '*'
+
+                         or LOWBUTTON != 'X'
+
+                         or LOGIN != 'X'
+                         or RFCLOGIN != 'X'
+                         or TASTART != 'X'
+                         or REPOSTART != 'X'
+                         or USERMASTER != 'X'
+                         or RFCSTART != 'X'
+                         or MISC != 'X'
+                       )
+      </noncompliant>
+      <joinstore name="AUDIT_CONFIGURATION_SLOT" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     SLOTINDEX like '%' and STATUS = 'X' and ( UNAME like 'SAPSUPPORT%' ) </joincompliant>
+        <joinnoncompliant>  SLOTINDEX like '%' and STATUS = 'X' and ( UNAME like 'SAPSUPPORT%' ) </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <!-- Policy checks filter for all Users in all clients exists. -->
+    <checkitem desc="[p2-STANDARD] Audit Slot for ALL users ALL clients exists" id="AUDIT-A_b.6a" operator="EXIST">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and UNAME = '*' and CLIENT = '*'    </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and UNAME = '*' and CLIENT = '*'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Policy checks filter for all Users for ALL Audit Classes in all clients for Critical events (HIGHBUTTON). -->
+    <checkitem desc="[p2-STANDARD] Audit Slot for ALL users ALL clients correctly specified for Critical events" id="AUDIT-A_b.6b">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and UNAME = '*' 
+
+                       and STATUS = 'X'
+                       and CLIENT = '*' 
+
+                       and HIGHBUTTON = 'X'
+
+                       and LOGIN = 'X'
+                       and RFCLOGIN = 'X'
+                       and TASTART = 'X'
+                       and REPOSTART = 'X'
+                       and USERMASTER = 'X'
+                       and RFCSTART = 'X'
+                       and MISC = 'X'                          
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and UNAME = '*' 
+
+                       and (
+                         STATUS != 'X'
+                         or CLIENT != '*'
+
+                         or HIGHBUTTON != 'X'
+
+                         or LOGIN != 'X'
+                         or RFCLOGIN != 'X'
+                         or TASTART != 'X'
+                         or REPOSTART != 'X'
+                         or USERMASTER != 'X'
+                         or RFCSTART != 'X'
+                         or MISC != 'X'
+                       )
+      </noncompliant>
+      <joinstore name="AUDIT_CONFIGURATION_SLOT" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     SLOTINDEX like '%' and STATUS = 'X' and UNAME = '*' </joincompliant>
+        <joinnoncompliant>  SLOTINDEX like '%' and STATUS = 'X' and UNAME = '*' </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <!-- Policy checks filter for non-Standard Users exists. Maintain user names as per corporate requriements.-->
+    <checkitem desc="[p2-STANDARD] Audit Slot for CRITICAL USERS exists" id="AUDIT-A_b.7a" operator="EXIST">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and ( UNAME != 'SAP#*' and UNAME != 'DDIC' and UNAME != 'SAPCPIC' and UNAME != '*' )    </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and ( UNAME != 'SAP#*' and UNAME != 'DDIC' and UNAME != 'SAPCPIC' and UNAME != '*' )    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Policy checks filter for non-Standard Users for ALL events (LOWBUTTON) in ALL Audit CLasses. -->
+    <checkitem desc="[p2-STANDARD] Audit Slot for CRITICAL USERS correctly specified for ALL events" id="AUDIT-A_b.7b">
+      <compliant>
+                       SLOTINDEX like '%'
+                       and ( UNAME != 'SAP#*' and UNAME != 'DDIC' and UNAME != 'SAPCPIC' and UNAME != '*' ) 
+
+                       and STATUS = 'X'
+                       and CLIENT = '*' 
+
+                       and LOWBUTTON = 'X'
+
+                       and LOGIN = 'X'
+                       and RFCLOGIN = 'X'
+                       and TASTART = 'X'
+                       and REPOSTART = 'X'
+                       and USERMASTER = 'X'
+                       and RFCSTART = 'X'
+                       and MISC = 'X'
+      </compliant>
+      <noncompliant>
+                       SLOTINDEX like '%'  
+                       and ( UNAME != 'SAP#*' and UNAME != 'DDIC' and UNAME != 'SAPCPIC' and UNAME != '*' ) 
+
+                       and (
+                         STATUS != 'X'
+                         or CLIENT != '*'
+
+                         or LOWBUTTON != 'X'
+
+                         or LOGIN != 'X'
+                         or RFCLOGIN != 'X'
+                         or TASTART != 'X'
+                         or REPOSTART != 'X'
+                         or USERMASTER != 'X'
+                         or RFCSTART != 'X'
+                         or MISC != 'X'
+                       )
+      </noncompliant>
+      <joinstore name="AUDIT_CONFIGURATION_SLOT" no_data_found="No" not_in_output="Yes">
+        <joincompliant>     SLOTINDEX like '%' and STATUS = 'X' and ( UNAME != 'SAP#*' and UNAME != 'DDIC' and UNAME != 'SAPCPIC' and UNAME != '*' )    </joincompliant>
+        <joinnoncompliant>  SLOTINDEX like '%' and STATUS = 'X' and ( UNAME != 'SAP#*' and UNAME != 'DDIC' and UNAME != 'SAPCPIC' and UNAME != '*' )    </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- If you have a requirement to check for specific Security Audit Log filter events, then these can be explicitly checked using MSGLIST.  Maintain the following samples as per your corporate requirements. -->
+  <!--
+  <configstore name="AUDIT_CONFIGURATION_SLOT">
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AU0 for all users all clients is active" id="3250501 SAL AU0" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU0'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU0'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AU1 for all users all clients is active" id="3250501 SAL AU1" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU1'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU1'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AU2 for all users all clients is active" id="3250501 SAL AU2" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU2'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU2'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AU3 for all users all clients is active" id="3250501 SAL AU3" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU3'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU3'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AU4 for all users all clients is active" id="3250501 SAL AU4" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU4'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU4'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AU6 for all users all clients is active" id="3250501 SAL AU6" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU6'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU6'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AU7 for all users all clients is active" id="3250501 SAL AU7" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU7'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU7'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AU8 for all users all clients is active" id="3250501 SAL AU8" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU8'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU8'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AU9 for all users all clients is active" id="3250501 SAL AU9" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU9'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AU9'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUA for all users all clients is active" id="3250501 SAL AUA" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUA'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUA'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUB for all users all clients is active" id="3250501 SAL AUB" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUB'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUB'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUC for all users all clients is active" id="3250501 SAL AUC" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUC'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUC'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUD for all users all clients is active" id="3250501 SAL AUD" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUD'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUD'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUE for all users all clients is active" id="3250501 SAL AUE" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUE'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUE'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUF for all users all clients is active" id="3250501 SAL AUF" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUF'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUF'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUG for all users all clients is active" id="3250501 SAL AUG" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUG'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUG'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUH for all users all clients is active" id="3250501 SAL AUH" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUH'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUH'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUI for all users all clients is active" id="3250501 SAL AUI" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUI'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUI'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUJ for all users all clients is active" id="3250501 SAL AUJ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUJ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUJ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUL for all users all clients is active" id="3250501 SAL AUL" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUL'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUL'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUM for all users all clients is active" id="3250501 SAL AUM" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUM'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUM'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUN for all users all clients is active" id="3250501 SAL AUN" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUN'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUN'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUO for all users all clients is active" id="3250501 SAL AUO" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUO'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUO'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUP for all users all clients is active" id="3250501 SAL AUP" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUP'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUP'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUQ for all users all clients is active" id="3250501 SAL AUQ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUQ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUQ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUR for all users all clients is active" id="3250501 SAL AUR" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUR'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUR'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUS for all users all clients is active" id="3250501 SAL AUS" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUS'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUS'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUT for all users all clients is active" id="3250501 SAL AUT" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUT'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUT'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUU for all users all clients is active" id="3250501 SAL AUU" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUU'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUU'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUV for all users all clients is active" id="3250501 SAL AUV" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUV'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUV'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUX for all users all clients is active" id="3250501 SAL AUX" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUX'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUX'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUY for all users all clients is active" id="3250501 SAL AUY" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUY'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUY'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event AUZ for all users all clients is active" id="3250501 SAL AUZ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUZ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'AUZ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BU0 for all users all clients is active" id="3250501 SAL BU0" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU0'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU0'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BU1 for all users all clients is active" id="3250501 SAL BU1" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU1'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU1'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BU2 for all users all clients is active" id="3250501 SAL BU2" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU2'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU2'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BU3 for all users all clients is active" id="3250501 SAL BU3" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU3'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU3'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BU4 for all users all clients is active" id="3250501 SAL BU4" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU4'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU4'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BU5 for all users all clients is active" id="3250501 SAL BU5" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU5'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU5'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BU6 for all users all clients is active" id="3250501 SAL BU6" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU6'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU6'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BU7 for all users all clients is active" id="3250501 SAL BU7" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU7'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU7'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BU8 for all users all clients is active" id="3250501 SAL BU8" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU8'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU8'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BU9 for all users all clients is active" id="3250501 SAL BU9" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU9'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BU9'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUA for all users all clients is active" id="3250501 SAL BUA" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUA'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUA'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUB for all users all clients is active" id="3250501 SAL BUB" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUB'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUB'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUC for all users all clients is active" id="3250501 SAL BUC" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUC'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUC'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUD for all users all clients is active" id="3250501 SAL BUD" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUD'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUD'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUE for all users all clients is active" id="3250501 SAL BUE" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUE'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUE'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUF for all users all clients is active" id="3250501 SAL BUF" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUF'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUF'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUG for all users all clients is active" id="3250501 SAL BUG" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUG'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUG'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUH for all users all clients is active" id="3250501 SAL BUH" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUH'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUH'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUI for all users all clients is active" id="3250501 SAL BUI" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUI'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUI'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUJ for all users all clients is active" id="3250501 SAL BUJ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUJ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUJ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUK for all users all clients is active" id="3250501 SAL BUK" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUK'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUK'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUL for all users all clients is active" id="3250501 SAL BUL" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUL'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUL'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUM for all users all clients is active" id="3250501 SAL BUM" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUM'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUM'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUN for all users all clients is active" id="3250501 SAL BUN" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUN'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUN'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUO for all users all clients is active" id="3250501 SAL BUO" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUO'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUO'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUP for all users all clients is active" id="3250501 SAL BUP" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUP'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUP'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUQ for all users all clients is active" id="3250501 SAL BUQ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUQ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUQ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUR for all users all clients is active" id="3250501 SAL BUR" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUR'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUR'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUS for all users all clients is active" id="3250501 SAL BUS" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUS'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUS'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUT for all users all clients is active" id="3250501 SAL BUT" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUT'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUT'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUU for all users all clients is active" id="3250501 SAL BUU" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUU'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUU'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUV for all users all clients is active" id="3250501 SAL BUV" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUV'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUV'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUW for all users all clients is active" id="3250501 SAL BUW" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUW'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUW'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUX for all users all clients is active" id="3250501 SAL BUX" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUX'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUX'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUY for all users all clients is active" id="3250501 SAL BUY" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUY'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUY'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event BUZ for all users all clients is active" id="3250501 SAL BUZ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUZ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'BUZ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CU0 for all users all clients is active" id="3250501 SAL CU0" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU0'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU0'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CU1 for all users all clients is active" id="3250501 SAL CU1" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU1'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU1'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CU2 for all users all clients is active" id="3250501 SAL CU2" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU2'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU2'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CU3 for all users all clients is active" id="3250501 SAL CU3" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU3'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU3'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CU4 for all users all clients is active" id="3250501 SAL CU4" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU4'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU4'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CU5 for all users all clients is active" id="3250501 SAL CU5" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU5'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU5'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CU6 for all users all clients is active" id="3250501 SAL CU6" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU6'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU6'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CU7 for all users all clients is active" id="3250501 SAL CU7" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU7'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU7'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CU8 for all users all clients is active" id="3250501 SAL CU8" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU8'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU8'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CU9 for all users all clients is active" id="3250501 SAL CU9" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU9'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CU9'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUA for all users all clients is active" id="3250501 SAL CUA" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUA'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUA'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUB for all users all clients is active" id="3250501 SAL CUB" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUB'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUB'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUC for all users all clients is active" id="3250501 SAL CUC" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUC'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUC'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUD for all users all clients is active" id="3250501 SAL CUD" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUD'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUD'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUE for all users all clients is active" id="3250501 SAL CUE" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUE'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUE'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUF for all users all clients is active" id="3250501 SAL CUF" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUF'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUF'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUG for all users all clients is active" id="3250501 SAL CUG" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUG'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUG'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUH for all users all clients is active" id="3250501 SAL CUH" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUH'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUH'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUI for all users all clients is active" id="3250501 SAL CUI" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUI'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUI'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUJ for all users all clients is active" id="3250501 SAL CUJ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUJ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUJ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUK for all users all clients is active" id="3250501 SAL CUK" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUK'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUK'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUL for all users all clients is active" id="3250501 SAL CUL" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUL'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUL'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUM for all users all clients is active" id="3250501 SAL CUM" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUM'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUM'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUN for all users all clients is active" id="3250501 SAL CUN" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUN'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUN'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUO for all users all clients is active" id="3250501 SAL CUO" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUO'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUO'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUP for all users all clients is active" id="3250501 SAL CUP" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUP'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUP'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUQ for all users all clients is active" id="3250501 SAL CUQ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUQ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUQ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUR for all users all clients is active" id="3250501 SAL CUR" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUR'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUR'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUS for all users all clients is active" id="3250501 SAL CUS" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUS'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUS'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUT for all users all clients is active" id="3250501 SAL CUT" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUT'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUT'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUU for all users all clients is active" id="3250501 SAL CUU" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUU'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUU'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUW for all users all clients is active" id="3250501 SAL CUW" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUW'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUW'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUX for all users all clients is active" id="3250501 SAL CUX" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUX'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUX'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUY for all users all clients is active" id="3250501 SAL CUY" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUY'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUY'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event CUZ for all users all clients is active" id="3250501 SAL CUZ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUZ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'CUZ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DU0 for all users all clients is active" id="3250501 SAL DU0" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU0'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU0'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DU1 for all users all clients is active" id="3250501 SAL DU1" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU1'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU1'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DU2 for all users all clients is active" id="3250501 SAL DU2" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU2'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU2'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DU3 for all users all clients is active" id="3250501 SAL DU3" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU3'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU3'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DU4 for all users all clients is active" id="3250501 SAL DU4" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU4'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU4'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DU5 for all users all clients is active" id="3250501 SAL DU5" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU5'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU5'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DU6 for all users all clients is active" id="3250501 SAL DU6" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU6'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU6'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DU7 for all users all clients is active" id="3250501 SAL DU7" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU7'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU7'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DU8 for all users all clients is active" id="3250501 SAL DU8" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU8'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU8'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DU9 for all users all clients is active" id="3250501 SAL DU9" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU9'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DU9'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUA for all users all clients is active" id="3250501 SAL DUA" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUA'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUA'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUB for all users all clients is active" id="3250501 SAL DUB" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUB'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUB'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUC for all users all clients is active" id="3250501 SAL DUC" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUC'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUC'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUD for all users all clients is active" id="3250501 SAL DUD" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUD'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUD'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUE for all users all clients is active" id="3250501 SAL DUE" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUE'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUE'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUF for all users all clients is active" id="3250501 SAL DUF" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUF'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUF'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUG for all users all clients is active" id="3250501 SAL DUG" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUG'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUG'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUH for all users all clients is active" id="3250501 SAL DUH" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUH'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUH'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUJ for all users all clients is active" id="3250501 SAL DUJ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUJ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUJ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUK for all users all clients is active" id="3250501 SAL DUK" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUK'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUK'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUL for all users all clients is active" id="3250501 SAL DUL" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUL'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUL'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUM for all users all clients is active" id="3250501 SAL DUM" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUM'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUM'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUN for all users all clients is active" id="3250501 SAL DUN" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUN'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUN'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUO for all users all clients is active" id="3250501 SAL DUO" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUO'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUO'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUP for all users all clients is active" id="3250501 SAL DUP" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUP'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUP'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUQ for all users all clients is active" id="3250501 SAL DUQ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUQ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUQ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUS for all users all clients is active" id="3250501 SAL DUS" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUS'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUS'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUT for all users all clients is active" id="3250501 SAL DUT" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUT'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUT'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUU for all users all clients is active" id="3250501 SAL DUU" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUU'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUU'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUV for all users all clients is active" id="3250501 SAL DUV" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUV'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUV'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUW for all users all clients is active" id="3250501 SAL DUW" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUW'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUW'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUX for all users all clients is active" id="3250501 SAL DUX" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUX'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUX'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUY for all users all clients is active" id="3250501 SAL DUY" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUY'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUY'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event DUZ for all users all clients is active" id="3250501 SAL DUZ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUZ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'DUZ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EU0 for all users all clients is active" id="3250501 SAL EU0" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU0'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU0'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EU1 for all users all clients is active" id="3250501 SAL EU1" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU1'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU1'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EU2 for all users all clients is active" id="3250501 SAL EU2" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU2'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU2'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EU3 for all users all clients is active" id="3250501 SAL EU3" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU3'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU3'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EU4 for all users all clients is active" id="3250501 SAL EU4" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU4'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU4'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EU5 for all users all clients is active" id="3250501 SAL EU5" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU5'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU5'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EU6 for all users all clients is active" id="3250501 SAL EU6" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU6'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU6'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EU7 for all users all clients is active" id="3250501 SAL EU7" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU7'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EU7'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUA for all users all clients is active" id="3250501 SAL EUA" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUA'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUA'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUB for all users all clients is active" id="3250501 SAL EUB" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUB'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUB'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUC for all users all clients is active" id="3250501 SAL EUC" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUC'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUC'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUD for all users all clients is active" id="3250501 SAL EUD" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUD'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUD'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUF for all users all clients is active" id="3250501 SAL EUF" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUF'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUF'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUG for all users all clients is active" id="3250501 SAL EUG" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUG'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUG'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUH for all users all clients is active" id="3250501 SAL EUH" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUH'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUH'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUI for all users all clients is active" id="3250501 SAL EUI" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUI'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUI'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUJ for all users all clients is active" id="3250501 SAL EUJ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUJ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUJ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUK for all users all clients is active" id="3250501 SAL EUK" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUK'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUK'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUL for all users all clients is active" id="3250501 SAL EUL" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUL'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUL'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUM for all users all clients is active" id="3250501 SAL EUM" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUM'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUM'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUN for all users all clients is active" id="3250501 SAL EUN" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUN'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUN'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUO for all users all clients is active" id="3250501 SAL EUO" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUO'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUO'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUP for all users all clients is active" id="3250501 SAL EUP" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUP'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUP'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUQ for all users all clients is active" id="3250501 SAL EUQ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUQ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUQ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUR for all users all clients is active" id="3250501 SAL EUR" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUR'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUR'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUS for all users all clients is active" id="3250501 SAL EUS" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUS'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUS'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUT for all users all clients is active" id="3250501 SAL EUT" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUT'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUT'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUU for all users all clients is active" id="3250501 SAL EUU" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUU'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUU'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUV for all users all clients is active" id="3250501 SAL EUV" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUV'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUV'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUW for all users all clients is active" id="3250501 SAL EUW" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUW'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUW'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUX for all users all clients is active" id="3250501 SAL EUX" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUX'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUX'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUY for all users all clients is active" id="3250501 SAL EUY" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUY'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUY'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event EUZ for all users all clients is active" id="3250501 SAL EUZ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUZ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'EUZ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FU0 for all users all clients is active" id="3250501 SAL FU0" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU0'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU0'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FU1 for all users all clients is active" id="3250501 SAL FU1" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU1'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU1'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FU2 for all users all clients is active" id="3250501 SAL FU2" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU2'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU2'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FU3 for all users all clients is active" id="3250501 SAL FU3" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU3'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU3'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FU4 for all users all clients is active" id="3250501 SAL FU4" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU4'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU4'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FU5 for all users all clients is active" id="3250501 SAL FU5" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU5'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU5'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FU8 for all users all clients is active" id="3250501 SAL FU8" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU8'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU8'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FU9 for all users all clients is active" id="3250501 SAL FU9" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU9'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FU9'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUA for all users all clients is active" id="3250501 SAL FUA" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUA'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUA'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUB for all users all clients is active" id="3250501 SAL FUB" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUB'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUB'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUC for all users all clients is active" id="3250501 SAL FUC" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUC'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUC'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUD for all users all clients is active" id="3250501 SAL FUD" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUD'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUD'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUE for all users all clients is active" id="3250501 SAL FUE" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUE'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUE'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUF for all users all clients is active" id="3250501 SAL FUF" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUF'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUF'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUG for all users all clients is active" id="3250501 SAL FUG" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUG'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUG'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUH for all users all clients is active" id="3250501 SAL FUH" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUH'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUH'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUI for all users all clients is active" id="3250501 SAL FUI" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUI'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUI'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUJ for all users all clients is active" id="3250501 SAL FUJ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUJ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUJ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUK for all users all clients is active" id="3250501 SAL FUK" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUK'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUK'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUL for all users all clients is active" id="3250501 SAL FUL" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUL'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUL'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUM for all users all clients is active" id="3250501 SAL FUM" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUM'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUM'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUN for all users all clients is active" id="3250501 SAL FUN" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUN'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUN'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUO for all users all clients is active" id="3250501 SAL FUO" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUO'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUO'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUP for all users all clients is active" id="3250501 SAL FUP" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUP'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUP'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUQ for all users all clients is active" id="3250501 SAL FUQ" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUQ'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUQ'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event FUR for all users all clients is active" id="3250501 SAL FUR" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUR'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'FUR'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event GU1 for all users all clients is active" id="3250501 SAL GU1" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'GU1'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'GU1'  </noncompliant>
+    </checkitem>
+    <checkitem desc="Corporate Configuration of SAL: Filter for event GU2 for all users all clients is active" id="3250501 SAL GU2" operator="exist">
+      <compliant>       SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'GU2'  </compliant>
+      <noncompliant>    SLOTINDEX like '%' and STATUS = 'X' and CLIENT = '*' and UNAME = '*' and MSGLIST like_regexpr 'GU2'  </noncompliant>
+    </checkitem>
+  </configstore>
+  -->
+</targetsystem>
