@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      NETCF-O: Secure Network Configuration – WebDispatcher
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-06-17      XX-SER-SECCHK   
+
+        Note: There are multiple Parameters Configuration Stores, hence sci_id added to restrict to Web Dispatcher component-specific Parameters Store.
+
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem desc="[BL2.6.0] Secure Network Configuration (WebDispatcher)" id="BL260_2ONETCF" multisql="Yes" version="0000">
+  <!--  -->
+  <configstore name="Parameters" sci_id="S00444">
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter wdisp/add_xforwardedfor_header" id="NETCF-A_g">
+      <compliant>    NAME = 'wdisp/add_xforwardedfor_header' and     ( VALUE = '1' or UPPER(VALUE) = 'TRUE' )      </compliant>
+      <noncompliant> NAME = 'wdisp/add_xforwardedfor_header' and not ( VALUE = '1' or UPPER(VALUE) = 'TRUE' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>
