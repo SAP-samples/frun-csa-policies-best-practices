@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      SECUPD-P: Regular Security Updates – BTP
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-04-17      XX-SER-SECCHK   original for GA
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Regular Security Updates (BTP)" id="BL260_2PSECUPD" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="SCC_VERSION" sci_id="S00368">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Last detected SCC Update in CCDB: within last 12 months" id="SECUPD-P_a.1">
+      <compliant>       NAME = 'scc.version' and VALUE like '%' 
+                        and     TO_DATE(CD_HIST_DATE) &gt;= ADD_DAYS(CURRENT_UTCTIMESTAMP,-365)     </compliant>
+      <noncompliant>    NAME = 'scc.version' and VALUE like '%'  
+                        and not TO_DATE(CD_HIST_DATE) &gt;= ADD_DAYS(CURRENT_UTCTIMESTAMP,-365)     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- SAP Note 3302250 v16, refers to latest Cloud Connector version as 2.19.1, and that SAP will support the latest 2 feature versions in parallel, hence check commences from 2.17.  This policy may require update as the Note evolves. -->
+    <checkitem desc="[p2-STANDARD] Most current SAP Cloud Connector Version (see Note 3302250)" id="SECUPD-P_a.2">
+      <compliant>
+                       ( NAME = 'scc.version' AND substring(VALUE,0,1) = '2' AND substring(VALUE,0,4) = '2.17' AND substring(VALUE,0,6) &gt;= '2.17.0' )
+                    OR ( NAME = 'scc.version' AND substring(VALUE,0,1) = '2' AND substring(VALUE,0,4) &gt;= '2.18' ) 
+                    OR ( NAME = 'scc.version' AND substring(VALUE,0,1) &gt;= '3' ) 
+      </compliant>
+      <noncompliant>
+                       ( NAME = 'scc.version' AND substring(VALUE,0,1) = '2' AND substring(VALUE,0,4) &lt;= '2.16' ) 
+                    OR ( NAME = 'scc.version' AND substring(VALUE,0,1) &lt; '2' ) 
+      </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>
