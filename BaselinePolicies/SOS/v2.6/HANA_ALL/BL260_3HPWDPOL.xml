@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      PWDPOL-H: Password Policy – HANA
+        Security level:                         Extended (Level 3)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   original for GA.  
+
+        Note:
+        Check items must specify file and section. A parameter placed in wrong file or section is not active. Added system_attributes to checkitem, so the correct file is checked in systemdb and tenantdb.
+            system_attributes="DB_TENANT:TRUE       where FILE_NAME = 'indexserver.ini'
+            system_attributes="DB_SYSTEMDB:TRUE"    where FILE_NAME = 'nameserver.ini'
+        Checks enhanced with system_attributes="DB_REPL_OP_MODE:!LOGREPLAY" to avoid false findings with regard to system replication sites.
+        As CSA doesn’t get data of HANA secondary Database in Disaster Recovery LOGREPLAY mode, we have to exclude those from validation.  Check are only applied to physical (non-virtualized) environments.
+    -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Password Policy (HANA)" id="BL260_3HPWDPOL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="HDB_PARAMETER">
+    <!-- -->
+    <!-- CHECK OF SYSTEM DB PARAMETERS ON THE NAMESERVER.INI file -->
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (maximum_password_lifetime ≤ 183 not 0) (SYSTEMDB)" id="PWDPOL-H_c Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'maximum_password_lifetime' and     LPAD(VALUE,4,'0') between '0001' and '0183'      </compliant>
+      <noncompliant>    FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'maximum_password_lifetime' and not LPAD(VALUE,4,'0') between '0001' and '0183'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (maximum_unused_productive_password_lifetime ≤ 180 not 0) (SYSTEMDB)" id="PWDPOL-H_d Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'maximum_unused_productive_password_lifetime' and     LPAD(VALUE,4,'0') between '0001' and '0180'      </compliant>
+      <noncompliant>    FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'maximum_unused_productive_password_lifetime' and not LPAD(VALUE,4,'0') between '0001' and '0180'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (last_used_passwords ≥ 5) (SYSTEMDB)" id="PWDPOL-H_e Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'last_used_passwords' and     LPAD(VALUE,4,'0') &gt;= '0005'        </compliant>
+      <noncompliant>    FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'last_used_passwords' and not LPAD(VALUE,4,'0') &gt;= '0005'        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following rule checks character classes that might occur in any order. -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (password_layout = A1a_) (SYSTEMDB)" id="PWDPOL-H_f Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_layout' 
+                        and     (   VALUE like_regexpr '.*[a-z]{1}.*'
+                                AND VALUE like_regexpr '.*[A-Z]{1}.*'
+                                AND VALUE like_regexpr '.*[0-1]{1}.*'
+                                AND VALUE like_regexpr '.*[[:punct:]]{1}.*' )        </compliant>
+      <noncompliant>    FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_layout' 
+                        and not (   VALUE like_regexpr '.*[a-z]{1}.*'
+                                AND VALUE like_regexpr '.*[A-Z]{1}.*'
+                                AND VALUE like_regexpr '.*[0-1]{1}.*'
+                                AND VALUE like_regexpr '.*[[:punct:]]{1}.*' )       </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (maximum_invalid_connect_attempts ≤ 6 NOT 0) (SYSTEMDB)" id="PWDPOL-H_g Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'maximum_invalid_connect_attempts' and     LPAD(VALUE,4,'0') between '0001' and '0006'      </compliant>
+      <noncompliant>    FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'maximum_invalid_connect_attempts' and not LPAD(VALUE,4,'0') between '0001' and '0006'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (password_lock_for_system_user = TRUE) (SYSTEMDB)" id="PWDPOL-H_h Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_lock_for_system_user' and UPPER(VALUE)  = 'TRUE'        </compliant>
+      <noncompliant>    FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_lock_for_system_user' and UPPER(VALUE) != 'TRUE'       </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (password_lock_time ≥ 1440) (SYSTEMDB)" id="PWDPOL-H_i Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_lock_time' and     ( LPAD(VALUE,6,'0')  &gt;= '001440' OR VALUE = '-1' )       </compliant>
+      <noncompliant>    FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_lock_time' and not ( LPAD(VALUE,6,'0')  &gt;= '001440' OR VALUE = '-1' )       </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (minimum_password_lifetime ≥ 1) (SYSTEMDB)" id="PWDPOL-H_j Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'minimum_password_lifetime' and     LPAD(VALUE,4,'0')  &gt;= '0001'        </compliant>
+      <noncompliant>    FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'minimum_password_lifetime' and not LPAD(VALUE,4,'0')  &gt;= '0001'        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (password_expire_warning_time ≥ 7) (SYSTEMDB)" id="PWDPOL-H_k Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_expire_warning_time' and     LPAD(VALUE,4,'0')  &gt;= '0001'        </compliant>
+      <noncompliant>    FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_expire_warning_time' and not LPAD(VALUE,4,'0')  &gt;= '0001'        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- CHECK OF DB_TENANT PARAMETERS ON THE INDEXSERVER.INI file -->
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (maximum_password_lifetime ≤ 183 not 0) (DB_TENANT)" id="PWDPOL-H_c Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'maximum_password_lifetime' and     LPAD(VALUE,4,'0') between '0001' and '0183'      </compliant>
+      <noncompliant>    FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'maximum_password_lifetime' and not LPAD(VALUE,4,'0') between '0001' and '0183'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (maximum_unused_productive_password_lifetime ≤ 180 not 0) (DB_TENANT)" id="PWDPOL-H_d Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'maximum_unused_productive_password_lifetime' and     LPAD(VALUE,4,'0') between '0001' and '0180'      </compliant>
+      <noncompliant>    FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'maximum_unused_productive_password_lifetime' and not LPAD(VALUE,4,'0') between '0001' and '0180'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (last_used_passwords ≥ 5) (DB_TENANT)" id="PWDPOL-H_e Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'last_used_passwords' and     LPAD(VALUE,4,'0') &gt;= '0005'     </compliant>
+      <noncompliant>    FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'last_used_passwords' and not LPAD(VALUE,4,'0') &gt;= '0005'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following rule checks character classes that might occur in any order. -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (password_layout = A1a_) (DB_TENANT)" id="PWDPOL-H_f Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_layout' 
+                        and     (   VALUE like_regexpr '.*[a-z]{1}.*'
+                                AND VALUE like_regexpr '.*[A-Z]{1}.*'
+                                AND VALUE like_regexpr '.*[0-1]{1}.*'
+                                AND VALUE like_regexpr '.*[[:punct:]]{1}.*' )        </compliant>
+      <noncompliant>    FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_layout' 
+                        and not (   VALUE like_regexpr '.*[a-z]{1}.*'
+                                AND VALUE like_regexpr '.*[A-Z]{1}.*'
+                                AND VALUE like_regexpr '.*[0-1]{1}.*'
+                                AND VALUE like_regexpr '.*[[:punct:]]{1}.*' )       </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (maximum_invalid_connect_attempts ≤ 6 NOT 0) (DB_TENANT)" id="PWDPOL-H_g Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'maximum_invalid_connect_attempts' and     LPAD(VALUE,4,'0') between '0001' and '0006'      </compliant>
+      <noncompliant>    FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'maximum_invalid_connect_attempts' and not LPAD(VALUE,4,'0') between '0001' and '0006'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (password_lock_for_system_user = TRUE) (DB_TENANT)" id="PWDPOL-H_h Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_lock_for_system_user' and UPPER(VALUE)  = 'TRUE'        </compliant>
+      <noncompliant>    FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_lock_for_system_user' and UPPER(VALUE) != 'TRUE'       </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (password_lock_time ≥ 1440) (DB_TENANT)" id="PWDPOL-H_i Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_lock_time' and     ( LPAD(VALUE,6,'0') &gt;= '001440' OR VALUE = '-1' )        </compliant>
+      <noncompliant>    FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_lock_time' and not ( LPAD(VALUE,6,'0') &gt;= '001440' OR VALUE = '-1' )        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (minimum_password_lifetime ≥ 1) (DB_TENANT)" id="PWDPOL-H_j Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'minimum_password_lifetime' and     LPAD(VALUE,4,'0')  &gt;= '0001'      </compliant>
+      <noncompliant>    FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'minimum_password_lifetime' and not LPAD(VALUE,4,'0')  &gt;= '0001'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (password_expire_warning_time ≥ 7) (DB_TENANT)" id="PWDPOL-H_k Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_expire_warning_time' and     LPAD(VALUE,4,'0') &gt;= '0007'     </compliant>
+      <noncompliant>    FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy' 
+                        and NAME = 'password_expire_warning_time' and not LPAD(VALUE,4,'0') &gt;= '0007'     </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- USERGROUP SPECIFIC PASSWORD POLICY PARAMETERS 
+       In a case where (known) usergroup_names needs to be exempted here {insert the following: and USERGROUP_NAME not in ('...','...') }.  Maintain as per your needs.    -->
+  <!-- -->
+  <configstore name="HDB_USERGROUP_PARAMETERS">
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (maximum_password_lifetime ≤ 183 not 0) (any usergroup)" id="PWDPOL-H_c grp" not_found="ignore" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'maximum_password_lifetime' and     LPAD(PARAMETER_VALUE,4,'0') between '0001' and '0183'     </compliant>
+      <noncompliant> 	USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'maximum_password_lifetime' and not LPAD(PARAMETER_VALUE,4,'0') between '0001' and '0183'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (maximum_unused_productive_password_lifetime ≤ 180 not 0) (any usergroup)" id="PWDPOL-H_d grp" not_found="ignore" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'maximum_unused_productive_password_lifetime' and     LPAD(PARAMETER_VALUE,4,'0') between '0001' and '0180'     </compliant>
+      <noncompliant> 	USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'maximum_unused_productive_password_lifetime' and not LPAD(PARAMETER_VALUE,4,'0') between '0001' and '0180'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (last_used_passwords ≥ 5) (any usergroup)" id="PWDPOL-H_e grp" not_found="ignore" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'last_used_passwords' and     LPAD(PARAMETER_VALUE,4,'0')  &gt;= '0005'      </compliant>
+      <noncompliant> 	USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'last_used_passwords' and not LPAD(PARAMETER_VALUE,4,'0')  &gt;= '0005'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (password_layout = A1a_) (any usergroup)" id="PWDPOL-H_f grp" not_found="ignore" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'password_layout' 
+                        and     (   PARAMETER_VALUE like_regexpr '.*[a-z]{1}.*'
+                                AND PARAMETER_VALUE like_regexpr '.*[A-Z]{1}.*'
+                                AND PARAMETER_VALUE like_regexpr '.*[0-1]{1}.*'
+                                AND PARAMETER_VALUE like_regexpr '.*[[:punct:]]{1}.*' )      </compliant>
+      <noncompliant> 	USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'password_layout'                         
+                        and not (   PARAMETER_VALUE like_regexpr '.*[a-z]{1}.*'
+                                AND PARAMETER_VALUE like_regexpr '.*[A-Z]{1}.*'
+                                AND PARAMETER_VALUE like_regexpr '.*[0-1]{1}.*'
+                                AND PARAMETER_VALUE like_regexpr '.*[[:punct:]]{1}.*' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (maximum_invalid_connect_attempts ≤ 6 not 0) (any usergroup)" id="PWDPOL-H_g grp" not_found="ignore" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'maximum_invalid_connect_attempts' and     LPAD(PARAMETER_VALUE,4,'0') between '0001' and '0006'     </compliant>
+      <noncompliant> 	USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'maximum_invalid_connect_attempts' and not LPAD(PARAMETER_VALUE,4,'0') between '0001' and '0006'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (password_lock_time ≥ 1440) (any usergroup)" id="PWDPOL-H_i grp" not_found="ignore" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'password_lock_time' and     ( LPAD(PARAMETER_VALUE,6,'0') &gt;= '001440' OR PARAMETER_VALUE = '-1' )  </compliant>
+      <noncompliant> 	USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'password_lock_time' and not ( LPAD(PARAMETER_VALUE,6,'0') &gt;= '001440' OR PARAMETER_VALUE = '-1' )  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (minimum_password_lifetime ≥ 1) (any usergroup)" id="PWDPOL-H_j grp" not_found="ignore" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'minimum_password_lifetime' and     LPAD(PARAMETER_VALUE,4,'0')  &gt;= '0001'      </compliant>
+      <noncompliant> 	USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'minimum_password_lifetime' and not LPAD(PARAMETER_VALUE,4,'0')  &gt;= '0001'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Password Policy (password_expire_warning_time ≥ 7) (any usergroup)" id="PWDPOL-H_k grp" not_found="ignore" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'password_expire_warning_time' and     LPAD(PARAMETER_VALUE,4,'0')  &gt;= '0007'   </compliant>
+      <noncompliant> 	USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'password_expire_warning_time' and not LPAD(PARAMETER_VALUE,4,'0')  &gt;= '0007'   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

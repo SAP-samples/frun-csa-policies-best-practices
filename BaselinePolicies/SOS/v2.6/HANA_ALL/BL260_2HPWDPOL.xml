@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      PWDPOL-H: Password Policy – HANA
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Note:
+        Check items must specify file and section. A parameter placed in wrong file or section is not active. Added system_attributes to checkitem, so the correct file is checked in systemdb and tenantdb.
+            system_attributes="DB_TENANT:TRUE       where FILE_NAME = 'indexserver.ini'
+            system_attributes="DB_SYSTEMDB:TRUE"    where FILE_NAME = 'nameserver.ini'
+        Checks enhanced with system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE" to avoid false findings with regard to system replication sites.
+        As CSA doesn’t get data of HANA secondary Database in Disaster Recovery LOGREPLAY mode, we have to exclude those from validation.  Check are only applied to physical (non-virtualized) environments.
+    -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Password Policy (HANA)" id="BL260_2HPWDPOL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="HDB_PARAMETER">
+    <!-- -->
+    <!-- CHECK OF SYSTEM DB PARAMETERS ON THE NAMESERVER.INI file -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Password Policy: force_first_password_change = TRUE (SYSTEMDB, nameserver.ini)" id="PWDPOL-H_b Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy'
+                        and NAME = 'force_first_password_change' and UPPER(VALUE)  = 'TRUE'         </compliant>
+      <noncompliant>    FILE_NAME = 'nameserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy'
+                        and NAME = 'force_first_password_change' and UPPER(VALUE) != 'TRUE'         </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- CHECK OF DB_TENANT PARAMETERS ON THE INDEXSERVER.INI file -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Password Policy: force_first_password_change = TRUE (DB_TENANT, indexserver.ini)" id="PWDPOL-H_b Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy'
+                        and NAME = 'force_first_password_change' and UPPER(VALUE)  = 'TRUE'         </compliant>
+      <noncompliant>    FILE_NAME = 'indexserver.ini' and TENANT like '%' and HOST like '%' and LAYER like '%' and SECT ='password policy'
+                        and NAME = 'force_first_password_change' and UPPER(VALUE) != 'TRUE'         </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- USERGROUP SPECIFIC PASSWORD POLICY PARAMETERS 
+       In this case, the (known) usergroup_names needs to be excluded here {insert the following: and USERGROUP_NAME not in ('...','...') }    -->
+  <!-- -->
+  <configstore name="HDB_USERGROUP_PARAMETERS">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Password Policy: force_first_password_change = TRUE (any usergroup)" id="PWDPOL-H_b grp" not_found="ignore" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'force_first_password_change' and UPPER(PARAMETER_VALUE)  = 'TRUE'     </compliant>
+      <noncompliant> 	USERGROUP_NAME like '%' and PARAMETER_SET_NAME like '%' and IS_PARAMETER_SET_ENABLED like '%' 
+                        and PARAMETER_NAME = 'force_first_password_change' and UPPER(PARAMETER_VALUE) != 'TRUE'     </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

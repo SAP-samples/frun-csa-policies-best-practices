@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          DISCL-H: Information Disclosure – HANA
+        Security level:                             Extended (Level 3)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-06-17      XX-SER-SECCHK   
+
+        Note:
+        Policies are provided for both SYSTEMDB and TENANTDB level; retain the policies that are relevant for your corporate context.  
+        As CSA doesn’t get data of HANA secondary Database in Disaster Recovery LOGREPLAY mode, we have to exclude those from validation.  Check are only applied to physical (non-virtualized) environments.
+-->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Information Disclosure (HANA)" id="BL260_3HDISCL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="HDB_PARAMETER">
+    <!-- -->
+    <!-- FOR HDB_PARAMETER, when a validation is performed, the runtime LAYER is checked.-->
+    <checkitem desc="[p3-EXTENDED] Parameter: persistence_encryption = on (Enable HANA data at rest encryption) (SYSTEMDB)" id="DISCL-H_a.1 Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>	    NAME = 'persistence_encryption' and VALUE  = 'on' and FILE_NAME = 'global.ini' and SECT = 'database_initial_encryption' and LAYER like '%'    </compliant>
+      <noncompliant>    NAME = 'persistence_encryption' and VALUE != 'on' and FILE_NAME = 'global.ini' and SECT = 'database_initial_encryption' and LAYER like '%'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Parameter: log_encryption = on (Enable HANA data at rest encryption) (SYSTEMDB)" id="DISCL-H_a.2 Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>	    NAME = 'log_encryption' and VALUE  = 'on' and FILE_NAME = 'global.ini' and SECT = 'database_initial_encryption' and LAYER like '%'    </compliant>
+      <noncompliant>    NAME = 'log_encryption' and VALUE != 'on' and FILE_NAME = 'global.ini' and SECT = 'database_initial_encryption' and LAYER like '%'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Parameter: backup_encryption = on (Enable HANA data at rest encryption) (SYSTEMDB)" id="DISCL-H_a.3 Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>	    NAME = 'backup_encryption' and VALUE  = 'on' and FILE_NAME = 'global.ini' and SECT = 'database_initial_encryption' and LAYER like '%'    </compliant>
+      <noncompliant>    NAME = 'backup_encryption' and VALUE != 'on' and FILE_NAME = 'global.ini' and SECT = 'database_initial_encryption' and LAYER like '%'    </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <configstore name="HDB_ENCRYPTION">
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Scope PERSISTENCE, IS_ENCRYPTION_ACTIVE = TRUE (Enable HANA data at rest encryption) (SYSTEMDB)" id="DISCL-H_a.4 Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       SCOPE = 'PERSISTENCE' and UPPER(IS_ENCRYPTION_ACTIVE)  = 'TRUE' and LAST_CHANGE_TIME like '%' and CONFIGURATION_CONTROL like '%'  </compliant>
+      <noncompliant>    SCOPE = 'PERSISTENCE' and UPPER(IS_ENCRYPTION_ACTIVE) != 'TRUE' and LAST_CHANGE_TIME like '%' and CONFIGURATION_CONTROL like '%'  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Scope LOG, IS_ENCRYPTION_ACTIVE = TRUE (Enable HANA data at rest encryption) (SYSTEMDB)" id="DISCL-H_a.5 Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       SCOPE = 'LOG' and UPPER(IS_ENCRYPTION_ACTIVE)  = 'TRUE' and LAST_CHANGE_TIME like '%' and CONFIGURATION_CONTROL like '%'  </compliant>
+      <noncompliant>    SCOPE = 'LOG' and UPPER(IS_ENCRYPTION_ACTIVE) != 'TRUE' and LAST_CHANGE_TIME like '%' and CONFIGURATION_CONTROL like '%'  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Scope BACKUP, IS_ENCRYPTION_ACTIVE = TRUE (Enable HANA data at rest encryption) (SYSTEMDB)" id="DISCL-H_a.6 Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       SCOPE = 'BACKUP' and UPPER(IS_ENCRYPTION_ACTIVE)  = 'TRUE' and LAST_CHANGE_TIME like '%' and CONFIGURATION_CONTROL like '%'  </compliant>
+      <noncompliant>    SCOPE = 'BACKUP' and UPPER(IS_ENCRYPTION_ACTIVE) != 'TRUE' and LAST_CHANGE_TIME like '%' and CONFIGURATION_CONTROL like '%'  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Adapt policy to corporate requirements.-->
+    <checkitem desc="[p3-EXTENDED] Scope PERSISTENCE, Key Rotation at least every 2 years (SYSTEMDB)" id="DISCL-H_b.1 Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    SCOPE = 'PERSISTENCE' and     CsaToBigInt(LAST_CHANGE_TIME) &gt;= to_number (replace(add_days(current_date, -730), '-', '')||replace(current_time, ':', '') )   </compliant>
+      <noncompliant>	SCOPE = 'PERSISTENCE' and not CsaToBigInt(LAST_CHANGE_TIME) &gt;= to_number (replace(add_days(current_date, -730), '-', '')||replace(current_time, ':', '') )   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Scope LOG, Key Rotation at least every 2 years (SYSTEMDB)" id="DISCL-H_b.2 Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    SCOPE = 'LOG' and     CsaToBigInt(LAST_CHANGE_TIME) &gt;= to_number (replace(add_days(current_date, -730), '-', '')||replace(current_time, ':', '') )   </compliant>
+      <noncompliant>	SCOPE = 'LOG' and not CsaToBigInt(LAST_CHANGE_TIME) &gt;= to_number (replace(add_days(current_date, -730), '-', '')||replace(current_time, ':', '') )   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Scope BACKUP, Key Rotation at least every 2 years (SYSTEMDB)" id="DISCL-H_b.3 Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    SCOPE = 'BACKUP' and     CsaToBigInt(LAST_CHANGE_TIME) &gt;= to_number (replace(add_days(current_date, -730), '-', '')||replace(current_time, ':', '') )   </compliant>
+      <noncompliant>	SCOPE = 'BACKUP' and not CsaToBigInt(LAST_CHANGE_TIME) &gt;= to_number (replace(add_days(current_date, -730), '-', '')||replace(current_time, ':', '') )   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="HDB_PARAMETER">
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Parameter: persistence_encryption = on (Enable HANA data at rest encryption) (DB_TENANT)" id="DISCL-H_a.1 Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>	    NAME = 'persistence_encryption' and VALUE  = 'on' and FILE_NAME = 'global.ini' and SECT = 'database_initial_encryption' and LAYER like '%'    </compliant>
+      <noncompliant>    NAME = 'persistence_encryption' and VALUE != 'on' and FILE_NAME = 'global.ini' and SECT = 'database_initial_encryption' and LAYER like '%'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Parameter: log_encryption = on (Enable HANA data at rest encryption) (DB_TENANT)" id="DISCL-H_a.2 Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>	    NAME = 'log_encryption' and VALUE  = 'on' and FILE_NAME = 'global.ini' and SECT = 'database_initial_encryption' and LAYER like '%'    </compliant>
+      <noncompliant>    NAME = 'log_encryption' and VALUE != 'on' and FILE_NAME = 'global.ini' and SECT = 'database_initial_encryption' and LAYER like '%'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Parameter: backup_encryption = on (Enable HANA data at rest encryption) (DB_TENANT)" id="DISCL-H_a.3 Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>	    NAME = 'backup_encryption' and VALUE  = 'on' and FILE_NAME = 'global.ini' and SECT = 'database_initial_encryption' and LAYER like '%'    </compliant>
+      <noncompliant>    NAME = 'backup_encryption' and VALUE != 'on' and FILE_NAME = 'global.ini' and SECT = 'database_initial_encryption' and LAYER like '%'    </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <configstore name="HDB_ENCRYPTION">
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Scope PERSISTENCE, IS_ENCRYPTION_ACTIVE = TRUE (Enable HANA data at rest encryption) (DB_TENANT)" id="DISCL-H_a.4 Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       SCOPE = 'PERSISTENCE' and UPPER(IS_ENCRYPTION_ACTIVE)  = 'TRUE' and LAST_CHANGE_TIME like '%' and CONFIGURATION_CONTROL like '%'  </compliant>
+      <noncompliant>    SCOPE = 'PERSISTENCE' and UPPER(IS_ENCRYPTION_ACTIVE) != 'TRUE' and LAST_CHANGE_TIME like '%' and CONFIGURATION_CONTROL like '%'  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Scope LOG, IS_ENCRYPTION_ACTIVE = TRUE (Enable HANA data at rest encryption) (DB_TENANT)" id="DISCL-H_a.5 Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       SCOPE = 'LOG' and UPPER(IS_ENCRYPTION_ACTIVE)  = 'TRUE' and LAST_CHANGE_TIME like '%' and CONFIGURATION_CONTROL like '%'  </compliant>
+      <noncompliant>    SCOPE = 'LOG' and UPPER(IS_ENCRYPTION_ACTIVE) != 'TRUE' and LAST_CHANGE_TIME like '%' and CONFIGURATION_CONTROL like '%'  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Scope BACKUP, IS_ENCRYPTION_ACTIVE = TRUE (Enable HANA data at rest encryption) (DB_TENANT)" id="DISCL-H_a.6 Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       SCOPE = 'BACKUP' and UPPER(IS_ENCRYPTION_ACTIVE)  = 'TRUE' and LAST_CHANGE_TIME like '%' and CONFIGURATION_CONTROL like '%'  </compliant>
+      <noncompliant>    SCOPE = 'BACKUP' and UPPER(IS_ENCRYPTION_ACTIVE) != 'TRUE' and LAST_CHANGE_TIME like '%' and CONFIGURATION_CONTROL like '%'  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Adapt policy to corporate requirements.-->
+    <checkitem desc="[p3-EXTENDED] Scope PERSISTENCE, Key Rotation at least every 2 years (DB_TENANT)" id="DISCL-H_b.1 Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    SCOPE = 'PERSISTENCE' and     CsaToBigInt(LAST_CHANGE_TIME) &gt;= to_number (replace(add_days(current_date, -730), '-', '')||replace(current_time, ':', '') )   </compliant>
+      <noncompliant>	SCOPE = 'PERSISTENCE' and not CsaToBigInt(LAST_CHANGE_TIME) &gt;= to_number (replace(add_days(current_date, -730), '-', '')||replace(current_time, ':', '') )   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Scope LOG, Key Rotation at least every 2 years (DB_TENANT)" id="DISCL-H_b.2 Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    SCOPE = 'LOG' and     CsaToBigInt(LAST_CHANGE_TIME) &gt;= to_number (replace(add_days(current_date, -730), '-', '')||replace(current_time, ':', '') )   </compliant>
+      <noncompliant>	SCOPE = 'LOG' and not CsaToBigInt(LAST_CHANGE_TIME) &gt;= to_number (replace(add_days(current_date, -730), '-', '')||replace(current_time, ':', '') )   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Scope BACKUP, Key Rotation at least every 2 years (DB_TENANT)" id="DISCL-H_b.3 Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant> 	    SCOPE = 'BACKUP' and     CsaToBigInt(LAST_CHANGE_TIME) &gt;= to_number (replace(add_days(current_date, -730), '-', '')||replace(current_time, ':', '') )   </compliant>
+      <noncompliant>	SCOPE = 'BACKUP' and not CsaToBigInt(LAST_CHANGE_TIME) &gt;= to_number (replace(add_days(current_date, -730), '-', '')||replace(current_time, ':', '') )   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

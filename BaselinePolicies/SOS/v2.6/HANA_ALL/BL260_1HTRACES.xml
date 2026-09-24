@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      TRACES-H: Critical Data in trace files – HANA
+        Security level:                         Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-07-17      XX-SER-SECCHK   As CSA doesn’t get data of HANA secondary Database in Disaster Recovery LOGREPLAY mode, we have to exclude those from validation.  Check are only applied to physical (non-virtualized) environments.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Critical Data in trace files (HANA)" id="BL260_1HTRACES" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="HDB_PARAMETER">
+    <!-- -->
+    <!-- Check of HANA (TenantDB) in indexserver.ini since each tenant database runs its own index server (not a name server). -->
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] SQL trace level != ALL_WITH_RESULTS (DB_TENANT, indexserver.ini)" id="TRACES-H_a Ten" system_attributes="DB_TENANT:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'indexserver.ini' and LAYER like '%' and HOST like '%'
+                        and SECT = 'sqltrace' 
+                        and NAME = 'level' 
+                        and LOWER(VALUE) != 'all_with_results' 
+                        </compliant>
+      <noncompliant>    FILE_NAME = 'indexserver.ini' and LAYER like '%' and HOST like '%'
+                        and SECT = 'sqltrace' 
+                        and NAME = 'level' 
+                        and LOWER(VALUE)  = 'all_with_results' 
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Check of HANA (SYSTEMDB) in nameserver.ini -->
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] SQL trace level != ALL_WITH_RESULTS (SYSTEMDB, nameserver.ini)" id="TRACES-H_a Sys" system_attributes="DB_SYSTEMDB:TRUE;DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'nameserver.ini' and LAYER like '%' and HOST like '%'
+                        and SECT = 'sqltrace' 
+                        and NAME = 'level' 
+                        and LOWER(VALUE) != 'all_with_results' 
+                        </compliant>
+      <noncompliant>    FILE_NAME = 'nameserver.ini' and LAYER like '%' and HOST like '%'
+                        and SECT = 'sqltrace' 
+                        and NAME = 'level' 
+                        and LOWER(VALUE)  = 'all_with_results' 
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

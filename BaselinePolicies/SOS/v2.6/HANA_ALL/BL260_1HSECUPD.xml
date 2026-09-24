@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      SECUPD-H: Regular Security Updates – HANA
+        Security level:                         Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-06-17      XX-SER-SECCHK   As CSA doesn’t get data of HANA secondary Database in Disaster Recovery LOGREPLAY mode, we have to exclude those from validation.  Check are only applied to physical (non-virtualized) environments.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Regular Security Updates (HANA)" id="BL260_1HSECUPD" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="HDB_VERSION">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Last detected HANA Update in CCDB: within last 12 months" id="SECUPD-H_a.1" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       NAME = 'VERSION' and VALUE like '%' and CD_HIST_MOD like '%' 
+                        and     TO_DATE(CD_HIST_DATE) &gt;= ADD_DAYS(CURRENT_UTCTIMESTAMP,-365)     </compliant>
+      <noncompliant>    NAME = 'VERSION' and VALUE like '%'  and CD_HIST_MOD like '%' 
+                        and not TO_DATE(CD_HIST_DATE) &gt;= ADD_DAYS(CURRENT_UTCTIMESTAMP,-365)     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Keep in mind to periodically maintain the SPS revision in line with SAP Note 2378962 gets updated. -->
+    <checkitem desc="[p1-CRITICAL] Security Maintenance Status of HANA SPS Version (see Note 2378962)" id="SECUPD-H_a.2" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       NAME = 'VERSION' AND substring(VALUE,0,7) &gt;= '2.00.07'       </compliant>
+      <noncompliant>    NAME = 'VERSION' AND substring(VALUE,0,7) &lt;= '2.00.06'       </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="HDB_HOST_INFORMATION">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] CRYPTOLIB date not older than 365 days" id="SECUPD-H_a.3" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       KEY = 'crypto_provider_version' and HOST like '%'
+                        and not DAYS_BETWEEN(TO_DATE(SUBSTRING_REGEXPR('([A-Za-z]{3} [0-9]{1,2} [0-9]{4})' IN (REPLACE(VALUE, '  ', ' 0'))), 'Mon DD YYYY'),CURRENT_DATE) &gt;= 365     </compliant>
+      <noncompliant>    KEY = 'crypto_provider_version' and HOST like '%'
+                        and     DAYS_BETWEEN(TO_DATE(SUBSTRING_REGEXPR('([A-Za-z]{3} [0-9]{1,2} [0-9]{4})' IN (REPLACE(VALUE, '  ', ' 0'))), 'Mon DD YYYY'),CURRENT_DATE) &gt;= 365     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] CRYPTOLIB version ≥ 8.5.39  (see SAP Note 3051787)" id="SECUPD-H_a.4" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       KEY = 'crypto_provider_version' and HOST like '%' 
+                        and     VALUE like_regexpr '^CommonCryptoLib (8\.5\.39|8\.5\.[456789]\d|8\.[6789]\.\d+|8\.\d{2,}\.\d+)[ ].*'     </compliant>
+      <noncompliant>    KEY = 'crypto_provider_version' and HOST like '%' 
+                        and not VALUE like_regexpr '^CommonCryptoLib (8\.5\.39|8\.5\.[456789]\d|8\.[6789]\.\d+|8\.\d{2,}\.\d+)[ ].*'     </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      NETCF-H: Secure Network Configuration – HANA
+        Security level:                         Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-07-17      XX-SER-SECCHK   As CSA doesn’t get data of HANA secondary Database in Disaster Recovery LOGREPLAY mode, we have to exclude those from validation.  Check are only applied to physical (non-virtualized) environments.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Secure Network Configuration (HANA)" id="BL260_1HNETCF" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="HDB_PARAMETER">
+    <!-- -->
+    <!-- As per Note 2183363, the parameter listeninterface in the section [communication] is required for communication between SAP HANA services (nameserver, indexserver, and so on).
+        In single-host systems, the parameter listeninterface in section [communication] must be set to .local.
+        In a multi-host system, the parameter listeninterface in section [communication] must be set to .internal or contain a CIDR netmask.
+        With listeninterface = .global an insecure configuration is more likely than with settings .internal or .local.
+        At this time in FRUN, it is not possible to distinguish single vs multi-node systems.
+        The parameter listeninterface in the section [system_replication_communication] is used for system replication.-->
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] HANA internal communication (listeninterface != global [COMMUNICATION], see Note 2183363)" id="NETCF-H_a.1 VC" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'global.ini' and SECT = 'communication' and NAME = 'listeninterface' and VALUE != '.global' and LAYER like '%'      </compliant>
+      <noncompliant>    FILE_NAME = 'global.ini' and SECT = 'communication' and NAME = 'listeninterface' and VALUE  = '.global' and LAYER like '%'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The parameter listeninterface in the section [system_replication_communication] is used for system replication.-->
+    <!-- Scale-out systems are usually compliant if internal hostname resolution is configured. -->
+    <!-- In a distributed system, valid <IP address> as key NAME and a valid <hostname> as VALUE. -->
+    <!-- Note: for FRUN CSA, the runtime LAYER is used. -->
+    <checkitem desc="[p1-CRITICAL] HANA internal communication (listeninterface .internal [COMMUNICATION], [INTERNAL_HOSTNAME_RESOLUTION] name and value maintained, see Note 2183363)" id="NETCF-H_a.2 VC" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY;DB_VIRTUAL:FALSE">
+      <compliant>       FILE_NAME = 'global.ini' and SECT = 'internal_hostname_resolution' and ( LENGTH(NAME) != 0 AND LENGTH(VALUE) != 0 ) and LAYER like '%'  </compliant>
+      <complianttext>[COMMUNICATION] parameter listeninterface = .internal and Section [internal_hostname_resolution] is configured</complianttext>
+      <noncompliant>    FILE_NAME = 'global.ini' and SECT = 'internal_hostname_resolution' and ( LENGTH(NAME)  = 0 OR  LENGTH(VALUE)  = 0 ) and LAYER like '%'  </noncompliant>
+      <noncomplianttext>[COMMUNICATION] Parameter listeninterface = .internal but Section [internal_hostname_resolution] is NOT configured</noncomplianttext>
+      <joinstore name="HDB_PARAMETER" no_data_found="No" not_in_output="No">
+        <joincompliant>     FILE_NAME = 'global.ini' and SECT = 'communication' and NAME = 'listeninterface' and VALUE = '.internal'    </joincompliant>
+        <joinnoncompliant>  FILE_NAME = 'global.ini' and SECT = 'communication' and NAME = 'listeninterface' and VALUE = '.internal'    </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>
