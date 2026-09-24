@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          NETENC-A: Encryption of Network Connections – ABAP
+        Security level:                             Extended (Level 3)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Encryption of Network Connections (ABAP)" id="BL260_3ANETENC" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <!-- to assist parameter snc/accept_insecure_gui:
+    0 insecure logons not permitted
+    1 insecure logon permitted
+    U insecure logons are permitted on a user-specific basis, depending on the flag in the user master record.-->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/accept_insecure_gui = U (or 0) (accept insecure SAPGUI logins to SNC-enabled Server)" id="NETENC-A_c.1">
+      <compliant>       NAME = 'snc/accept_insecure_gui' and     (VALUE = '0' or VALUE = 'U')   </compliant>
+      <noncompliant>    NAME = 'snc/accept_insecure_gui' and not (VALUE = '0' or VALUE = 'U')   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/accept_insecure_rfc = U (or 0) (accept insecure incoming RFC-connections on SNC-enabled Server)" id="NETENC-A_c.2a">
+      <compliant>       NAME = 'snc/accept_insecure_rfc' and     (VALUE = '0' or VALUE = 'U')   </compliant>
+      <noncompliant>    NAME = 'snc/accept_insecure_rfc' and not (VALUE = '0' or VALUE = 'U')   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Parameter snc/accept_insecure_r3int_rfc is mentioned in Baseline Template Chapter 3. This parameter is effective only if snc/accept_insecure_rfc = 0.
+    Maintain as per your corporate requirements
+    0: Reject unprotected internal RFCs
+    1: to allow unencrypted internal RFC connections.-->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/accept_insecure_r3int_rfc = 0 or 1 (accept insecure internal RFC-connections on SNC-enabled Server)" id="NETENC-A_c.2b">
+      <compliant>       NAME = 'snc/accept_insecure_r3int_rfc' and     (VALUE = '0' or VALUE = '1')     </compliant>
+      <noncompliant>    NAME = 'snc/accept_insecure_r3int_rfc' and not (VALUE = '0' or VALUE = '1')     </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'snc/accept_insecure_rfc' and VALUE = '0'    </joincompliant>
+        <joinnoncompliant>  NAME = 'snc/accept_insecure_rfc' and VALUE = '0'    </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/only_encrypted_gui = 1 (accept only encrypted GUI connections to SNC-enabled Server)" id="NETENC-A_c.3">
+      <compliant>       NAME = 'snc/only_encrypted_gui' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'snc/only_encrypted_gui' and VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/only_encrypted_rfc = 1 (accept only encrypted RFC connections to SNC-enabled Server)" id="NETENC-A_c.4">
+      <compliant>       NAME = 'snc/only_encrypted_rfc' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'snc/only_encrypted_rfc' and VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/log_unencrypted_rfc = 2 (Security Audit Logging for unencrypted RFC connections)" id="NETENC-A_d">
+      <compliant>       NAME = 'snc/log_unencrypted_rfc' and VALUE  = '2'   </compliant>
+      <noncompliant>    NAME = 'snc/log_unencrypted_rfc' and VALUE != '2'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following set-based approach may be easy to maintain with expected ciphersuite values.  Examples are included in this check, maintain entries as per your corporate ciphersuite parameter values taking into strong consideration the recommended values from SAP Notes 3346659, 3198351 and 510007.-->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: ssl/ciphersuites set as recommended (server inbound default SSL/TLS server ciphersuites, see Notes 3346659, 510007)" id="NETENC-A_f.1">
+      <compliant>      NAME = 'ssl/ciphersuites' and     (     VALUE = '545:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                            OR VALUE = '1159:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                            OR VALUE = '1568:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                            OR VALUE = '1569:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                         )  
+                                                         </compliant>
+      <noncompliant>   NAME = 'ssl/ciphersuites' and not (     VALUE = '545:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                            OR VALUE = '1159:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                            OR VALUE = '1568:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                            OR VALUE = '1569:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                         )   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Alternative appraoch using Regular expression to check multiple acceptable values. Adjust the expression according to your requirements.
+    <checkitem desc="[p3-EXTENDED] Encryption profile parameter: ssl/ciphersuites set as required (default SSL/TLS server cipher suites, see Notes 3346659, 510007)" id="NETENC-A_f.2">
+      <compliant>      NAME = 'ssl/ciphersuites' and     VALUE like_regexpr  '(135|544|545|1159|1568):PFS(:HIGH|)(:-eAES_CBC|)::EC_X25519:EC_P256:EC_HIGH'  </compliant>
+      <noncompliant>   NAME = 'ssl/ciphersuites' and not VALUE like_regexpr  '(135|544|545|1159|1568):PFS(:HIGH|)(:-eAES_CBC|)::EC_X25519:EC_P256:EC_HIGH'  </noncompliant>
+    </checkitem>
+    -->
+    <!-- -->
+    <!-- The following set-based approach may be easy to maintain with expected ciphersuite values.  Examples are included in this check, maintain entries as per your corporate ciphersuite parameter values taking into strong consideration the recommended values from SAP Notes 3346659 and 510007.-->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: ssl/client_ciphersuites set as recommended (client outbound default SSL/TLS client cipher suites, see Notes 3346659, 510007)" id="NETENC-A_g.1">
+      <compliant>      NAME = 'ssl/client_ciphersuites' and     (      VALUE = '560:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                                    OR VALUE = '1174:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                                    OR VALUE = '1584:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                                )
+                                                                 </compliant>
+      <noncompliant>   NAME = 'ssl/client_ciphersuites' and not (      VALUE = '560:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                                    OR VALUE = '1174:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                                    OR VALUE = '1584:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                                ) 
+                                                                </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Alternative expression to check multiple acceptable values. Adjust the expression according to your requirements.
+    <checkitem desc="[p3-EXTENDED] Encryption profile parameter: ssl/client_ciphersuites set as required (default SSL/TLS client cipher suites, see Notes 3346659, 510007)" id="NETENC-A_g.2">
+      <compliant>      NAME = 'ssl/client_ciphersuites' and     VALUE like_regexpr  '(150|560|1174|1584):PFS(:HIGH|)(:-eAES_CBC|)::EC_X25519:EC_P256:EC_HIGH'  </compliant>
+      <noncompliant>   NAME = 'ssl/client_ciphersuites' and not VALUE like_regexpr  '(150|560|1174|1584):PFS(:HIGH|)(:-eAES_CBC|)::EC_X25519:EC_P256:EC_HIGH'  </noncompliant>
+    </checkitem>
+    -->
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/permit_insecure_start = 0 (permit to start insecure programs when SNC is enabled)" id="NETENC-A_h">
+      <compliant>       NAME = 'snc/permit_insecure_start' and VALUE  = '0'   </compliant>
+      <noncompliant>    NAME = 'snc/permit_insecure_start' and VALUE != '0'   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx-->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <!-- to assist parameter snc/accept_insecure_gui:
+    0 insecure logons not permitted
+    1 insecure logon permitted
+    U insecure logons are permitted on a user-specific basis, depending on the flag in the user master record.-->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/accept_insecure_gui = U (or 0) (accept insecure SAPGUI logins to SNC-enabled Server)" id="NETENC-A_c.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'snc/accept_insecure_gui' and     (VALUE = '0' or VALUE = 'U')   </compliant>
+      <noncompliant>    NAME = 'snc/accept_insecure_gui' and not (VALUE = '0' or VALUE = 'U')   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/accept_insecure_rfc = U (or 0) (accept insecure incoming RFC-connections on SNC-enabled Server)" id="NETENC-A_c.2a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'snc/accept_insecure_rfc' and     (VALUE = '0' or VALUE = 'U')   </compliant>
+      <noncompliant>    NAME = 'snc/accept_insecure_rfc' and not (VALUE = '0' or VALUE = 'U')   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Parameter snc/accept_insecure_r3int_rfc is mentioned in Baseline Template Chapter 3. This parameter is effective only if snc/accept_insecure_rfc = 0.
+    Maintain as per your corporate requirements
+    0: Reject unprotected internal RFCs
+    1: to allow unencrypted internal RFC connections.-->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/accept_insecure_r3int_rfc = 0 or 1 (accept insecure internal RFC-connections on SNC-enabled Server)" id="NETENC-A_c.2b" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'snc/accept_insecure_r3int_rfc' and     (VALUE = '0' or VALUE = '1')     </compliant>
+      <noncompliant>    NAME = 'snc/accept_insecure_r3int_rfc' and not (VALUE = '0' or VALUE = '1')     </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'snc/accept_insecure_rfc' and VALUE = '0'    </joincompliant>
+        <joinnoncompliant>  NAME = 'snc/accept_insecure_rfc' and VALUE = '0'    </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/only_encrypted_gui = 1 (accept only encrypted GUI connections to SNC-enabled Server)" id="NETENC-A_c.3" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'snc/only_encrypted_gui' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'snc/only_encrypted_gui' and VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/only_encrypted_rfc = 1 (accept only encrypted RFC connections to SNC-enabled Server)" id="NETENC-A_c.4" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'snc/only_encrypted_rfc' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'snc/only_encrypted_rfc' and VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/log_unencrypted_rfc = 2 (Security Audit Logging for unencrypted RFC connections)" id="NETENC-A_d" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'snc/log_unencrypted_rfc' and VALUE  = '2'   </compliant>
+      <noncompliant>    NAME = 'snc/log_unencrypted_rfc' and VALUE != '2'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following set-based approach may be easy to maintain with expected ciphersuite values.  Examples are included in this check, maintain entries as per your corporate ciphersuite parameter values taking into strong consideration the recommended values from SAP Notes 3346659, 3198351 and 510007.-->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: ssl/ciphersuites set as recommended (server inbound default SSL/TLS server ciphersuites, see Notes 3346659, 510007)" id="NETENC-A_f.1">
+      <compliant>      NAME = 'ssl/ciphersuites' and     (     VALUE = '545:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                            OR VALUE = '1159:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                            OR VALUE = '1568:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                            OR VALUE = '1569:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                         )  
+                                                         </compliant>
+      <noncompliant>   NAME = 'ssl/ciphersuites' and not (     VALUE = '545:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                            OR VALUE = '1159:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                            OR VALUE = '1568:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                            OR VALUE = '1569:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                         )   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Alternative appraoch using Regular expression to check multiple acceptable values. Adjust the expression according to your requirements.
+    <checkitem desc="[p3-EXTENDED] Encryption profile parameter: ssl/ciphersuites set as required (default SSL/TLS server cipher suites, see Notes 3346659, 510007)" id="NETENC-A_f.2" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>      NAME = 'ssl/ciphersuites' and     VALUE like_regexpr  '(135|544|545|1159|1568):PFS(:HIGH|)(:-eAES_CBC|)::EC_X25519:EC_P256:EC_HIGH'  </compliant>
+      <noncompliant>   NAME = 'ssl/ciphersuites' and not VALUE like_regexpr  '(135|544|545|1159|1568):PFS(:HIGH|)(:-eAES_CBC|)::EC_X25519:EC_P256:EC_HIGH'  </noncompliant>
+    </checkitem>
+    -->
+    <!-- -->
+    <!-- The following set-based approach may be easy to maintain with expected ciphersuite values.  Examples are included in this check, maintain entries as per your corporate ciphersuite parameter values taking into strong consideration the recommended values from SAP Notes 3346659 and 510007.-->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: ssl/client_ciphersuites set as recommended (client outbound default SSL/TLS client cipher suites, see Notes 3346659, 510007)" id="NETENC-A_g.1">
+      <compliant>      NAME = 'ssl/client_ciphersuites' and     (      VALUE = '560:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                                    OR VALUE = '1174:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                                    OR VALUE = '1584:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                                )
+                                                                 </compliant>
+      <noncompliant>   NAME = 'ssl/client_ciphersuites' and not (      VALUE = '560:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                                    OR VALUE = '1174:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                                    OR VALUE = '1584:PFS:HIGH::EC_X25519:EC_P256:EC_HIGH'
+                                                                ) 
+                                                                </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Alternative expression to check multiple acceptable values. Adjust the expression according to your requirements.
+    <checkitem desc="[p3-EXTENDED] Encryption profile parameter: ssl/client_ciphersuites set as required (default SSL/TLS client cipher suites, see Notes 3346659, 510007)" id="NETENC-A_g.2" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>      NAME = 'ssl/client_ciphersuites' and     VALUE like_regexpr  '(150|560|1174|1584):PFS(:HIGH|)(:-eAES_CBC|)::EC_X25519:EC_P256:EC_HIGH'  </compliant>
+      <noncompliant>   NAME = 'ssl/client_ciphersuites' and not VALUE like_regexpr  '(150|560|1174|1584):PFS(:HIGH|)(:-eAES_CBC|)::EC_X25519:EC_P256:EC_HIGH'  </noncompliant>
+    </checkitem>
+    -->
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: snc/permit_insecure_start = 0 (permit to start insecure programs when SNC is enabled)" id="NETENC-A_h" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'snc/permit_insecure_start' and VALUE  = '0'   </compliant>
+      <noncompliant>    NAME = 'snc/permit_insecure_start' and VALUE != '0'   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+</targetsystem>

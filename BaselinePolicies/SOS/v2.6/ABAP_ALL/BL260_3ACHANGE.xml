@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      CHANGE-A: Protect Production System against changes – ABAP
+        Security level:                         Extended (Level 3)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   original for GA
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Change Protection of Prod System (ABAP)" id="BL260_3ACHANGE" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="TRANSPORT_TOOL">
+    <!-- -->
+    <!-- If a version of a proposed check does not suit your corporate requirements, it can be adapted or commented out.-->
+    <checkitem desc="[p3-EXTENDED] Transport Parameter: RECCLIENT maintained and != OFF" id="CHANGE-A_d.1">
+      <compliant>       NAME = 'RECCLIENT' and (VALUE != 'OFF' and length(VALUE) &gt; 0)   </compliant>
+      <noncompliant>    NAME = 'RECCLIENT' and (VALUE  = 'OFF' or  length(VALUE) = 0)      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Transport Parameter: RECCLIENT = ALL (recommended value)" id="CHANGE-A_d.2">
+      <compliant>       NAME = 'RECCLIENT' and VALUE = 'ALL'    </compliant>
+      <noncompliant>    NAME = 'RECCLIENT' and VALUE !='ALL'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- To avail of these checks the IT Admin roles for the managed systems should be defined in the LMDB of the SAP Focused Run system.  This is best practice.
+    Possible values are: "PROD:QA:DEV:TEST:SANDBOX" or undefined.  In sample, underfined system roles are included as precautionary.-->
+    <checkitem desc="[p3-EXTENDED] Transport Parameter: VERS_AT_EXP is activated in DEV (see Note 2296271)" id="CHANGE-A_e.1" system_roles="DEV::">
+      <compliant>       NAME = 'VERS_AT_EXP' and     ( VALUE = '1' or UPPER(VALUE) in ('TRUE', 'ON', 'YES', 'NO_T')  )        </compliant>
+      <noncompliant>    NAME = 'VERS_AT_EXP' and not ( VALUE = '1' or UPPER(VALUE) in ('TRUE', 'ON', 'YES', 'NO_T')  )        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Transport Parameter: VERS_AT_IMP is activated in PROD (see Note 1784800)" id="CHANGE-A_e.2" system_roles="PROD::">
+      <compliant>       NAME = 'VERS_AT_IMP' and VALUE  = 'ALWAYS'      </compliant>
+      <noncompliant>    NAME = 'VERS_AT_IMP' and VALUE != 'ALWAYS'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Transport Parameter: TP_RELEASE ≥ 380.44.90" id="CHANGE-A_g.1">
+      <compliant>       NAME = 'TP_RELEASE' and VALUE &gt;= '380.44.90'     </compliant>
+      <noncompliant>    NAME = 'TP_RELEASE' and VALUE &lt;  '380.44.90'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Transport Parameter: TP_VERSION ≥ 380 (see Note 2671160)" id="CHANGE-A_g.2">
+      <compliant>       NAME = 'TP_VERSION' and VALUE &gt;= '380'   </compliant>
+      <noncompliant>    NAME = 'TP_VERSION' and VALUE &lt;  '380'   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- 
+  SAP Security Baseline tempate v2.6 refers to Validate the Kernel release or the transport parameters TP_RELEASE >= 380.44.90  respective TP_VERSION >= 380 See note 2671160.
+  At this time, Note 2671160 - [CVE-2018-2441] Missing input validation in ABAP Change and Transport System (CTS) is Version: 5, Released On: 21.11.2018.
+  However, SAP Kernels that are in maintenance are reflected in SAP Note 2083594 - SAP Kernel Versions and SAP Kernel Patch Levels which is subject to change.
+  The following checks are provided as a courtesy and reflect the minimum SAP Kernel Version and Patch Level as per SAP Note 2083594 Version: 155, Released On: 10.09.2026.
+  Please keep this policy under review and periodic maintenance.
+  -->
+  <configstore name="SAP_KERNEL">
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Kernel versions in maintenance as per Note 2083594" id="CHANGE-A_g.3">
+      <compliant>    NAME = 'KERN_REL' and 
+                   ( ( substring(VALUE,0,3) = '722' ) or
+                     ( substring(VALUE,0,3) = '753' ) or
+                     ( substring(VALUE,0,3) = '754' ) or
+                     ( substring(VALUE,0,3) = '777' ) or
+                     ( substring(VALUE,0,3) = '793' ) or
+                     ( substring(VALUE,0,3) = '916' )
+                     )      </compliant>
+      <noncompliant>    NAME = 'KERN_REL' and not
+                   ( ( substring(VALUE,0,3) = '722' ) or
+                     ( substring(VALUE,0,3) = '753' ) or
+                     ( substring(VALUE,0,3) = '754' ) or
+                     ( substring(VALUE,0,3) = '777' ) or
+                     ( substring(VALUE,0,3) = '793' ) or
+                     ( substring(VALUE,0,3) = '916' )
+                     )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following checks are deliberately gives the same check ID so that the results appear on the same validation row. -->
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Minimum Kernel patchlevel which Note 2083594 recommends" id="CHANGE-A_g.4">
+      <compliant>    NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1600'    </compliant>
+      <noncompliant> NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt;  '1600'    </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>      NAME = 'KERN_REL' and VALUE = '722_REL'</joincompliant>
+        <joinnoncompliant>   NAME = 'KERN_REL' and VALUE = '722_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Minimum Kernel patchlevel which Note 2083594 recommends" id="CHANGE-A_g.4">
+      <compliant>    NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '1600'    </compliant>
+      <noncompliant> NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt;  '1600'    </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>      NAME = 'KERN_REL' and VALUE = '753_REL'</joincompliant>
+        <joinnoncompliant>   NAME = 'KERN_REL' and VALUE = '753_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Minimum Kernel patchlevel which Note 2083594 recommends" id="CHANGE-A_g.4">
+      <compliant>    NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0700'    </compliant>
+      <noncompliant> NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt;  '0700'    </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>      NAME = 'KERN_REL' and VALUE = '754_REL'</joincompliant>
+        <joinnoncompliant>   NAME = 'KERN_REL' and VALUE = '754_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Minimum Kernel patchlevel which Note 2083594 recommends" id="CHANGE-A_g.4">
+      <compliant>    NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0900'    </compliant>
+      <noncompliant> NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt;  '0900'    </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>      NAME = 'KERN_REL' and VALUE = '777_REL'</joincompliant>
+        <joinnoncompliant>   NAME = 'KERN_REL' and VALUE = '777_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Minimum Kernel patchlevel which Note 2083594 recommends" id="CHANGE-A_g.4">
+      <compliant>    NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0401'    </compliant>
+      <noncompliant> NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt;  '0401'    </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>      NAME = 'KERN_REL' and VALUE = '793_REL'</joincompliant>
+        <joinnoncompliant>   NAME = 'KERN_REL' and VALUE = '793_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Minimum Kernel patchlevel which Note 2083594 recommends" id="CHANGE-A_g.4">
+      <compliant>    NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &gt;= '0100'    </compliant>
+      <noncompliant> NAME = 'KERN_PATCHLEVEL' and lpad(VALUE,4,'0') &lt;  '0100'    </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>      NAME = 'KERN_REL' and VALUE = '916_REL'</joincompliant>
+        <joinnoncompliant>   NAME = 'KERN_REL' and VALUE = '916_REL'</joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

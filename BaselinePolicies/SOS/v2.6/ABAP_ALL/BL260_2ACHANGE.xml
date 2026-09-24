@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      CHANGE-A: Protect Production System against changes – ABAP
+        Security level:                         Critical (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-07-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem desc="[BL2.6.0] Change Protection of Prod System (ABAP)" id="BL260_2ACHANGE" multisql="Yes" version="0000">
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <!-- Choose the version of check for rec/client as suits your corporate requirements, it can be adapted or commented out.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rec/client maintained and != OFF (for client-specific tables, see Note 1916)" id="CHANGE-A_c.1">
+      <compliant>       NAME = 'rec/client' and ( VALUE != 'OFF' and LENGTH(VALUE) &gt; 0 )    </compliant>
+      <noncompliant>    NAME = 'rec/client' and ( VALUE  = 'OFF' or  LENGTH(VALUE) = 0    )    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rec/client = ALL (recommended value) (see Note 1916)" id="CHANGE-A_c.2">
+      <compliant>       NAME = 'rec/client' and UPPER(VALUE)  = 'ALL'     </compliant>
+      <noncompliant>    NAME = 'rec/client' and UPPER(VALUE) != 'ALL'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: abap/ext_debugging_possible = 2 (requests of other users cannot be debugged using external debugging)" id="CHANGE-A_h">
+      <compliant>       NAME = 'abap/ext_debugging_possible' and VALUE  = '2'   </compliant>
+      <noncompliant>    NAME = 'abap/ext_debugging_possible' and VALUE != '2'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Note: dbs/dba/ccms_maintenance = 0 block all administrative activities.  This was provided for a specific and very restrictive use case.
+    Profile Parameter dbs/dba/ccms_maintenance = 1 means that SAP authorizations are evaluated re Authorization Object S_RZL_ADM, and this is the expected use case.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: dbs/dba/ccms_maintenance = 1 (for DBA Cockpit: CCMS Maintenance Enabling respective S_RZL_ADM)" id="CHANGE-A_i">
+      <compliant>       NAME = 'dbs/dba/ccms_maintenance' and VALUE  = '1'      </compliant>
+      <noncompliant>    NAME = 'dbs/dba/ccms_maintenance' and VALUE != '1'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Note: dbs/dba/ccms_security_level activates/deactivates the evaluation of S_DBCON authorities.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: dbs/dba/ccms_security_level = 1 (for DBA Cockpit: Granularity of CCMS Maintenance Security Check respective S_DBCON)" id="CHANGE-A_j">
+      <compliant>       NAME = 'dbs/dba/ccms_security_level' and VALUE  = '1'   </compliant>
+      <noncompliant>    NAME = 'dbs/dba/ccms_security_level' and VALUE != '1'   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <!-- Choose the version of check for rec/client as suits your corporate requirements, it can be adapted or commented out.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rec/client maintained and != OFF (for client-specific tables, see Note 1916)" id="CHANGE-A_c.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rec/client' and ( VALUE != 'OFF' and LENGTH(VALUE) &gt; 0 )    </compliant>
+      <noncompliant>    NAME = 'rec/client' and ( VALUE  = 'OFF' or  LENGTH(VALUE) = 0    )    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rec/client = ALL (recommended value) (see Note 1916)" id="CHANGE-A_c.2" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rec/client' and UPPER(VALUE)  = 'ALL'     </compliant>
+      <noncompliant>    NAME = 'rec/client' and UPPER(VALUE) != 'ALL'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: abap/ext_debugging_possible = 2 (requests of other users cannot be debugged using external debugging)" id="CHANGE-A_h" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'abap/ext_debugging_possible' and VALUE  = '2'   </compliant>
+      <noncompliant>    NAME = 'abap/ext_debugging_possible' and VALUE != '2'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Note: dbs/dba/ccms_maintenance = 0 block all administrative activities.  This was provided for a specific and very restrictive use case.
+    Profile Parameter dbs/dba/ccms_maintenance = 1 means that SAP authorizations are evaluated re Authorization Object S_RZL_ADM, and this is the expected use case.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: dbs/dba/ccms_maintenance = 1 (for DBA Cockpit: CCMS Maintenance Enabling respective S_RZL_ADM)" id="CHANGE-A_i" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'dbs/dba/ccms_maintenance' and VALUE  = '1'      </compliant>
+      <noncompliant>    NAME = 'dbs/dba/ccms_maintenance' and VALUE != '1'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Note: dbs/dba/ccms_security_level activates/deactivates the evaluation of S_DBCON authorities.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: dbs/dba/ccms_security_level = 1 (for DBA Cockpit: Granularity of CCMS Maintenance Security Check respective S_DBCON)" id="CHANGE-A_j" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'dbs/dba/ccms_security_level' and VALUE  = '1'   </compliant>
+      <noncompliant>    NAME = 'dbs/dba/ccms_security_level' and VALUE != '1'   </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="TRANSPORT_TOOL">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Transport Parameter: TLOGOCHECK = 1 (activated to validate the content of transport files)" id="CHANGE-A_f">
+      <compliant>       NAME = 'TLOGOCHECK' and     ( VALUE = '1' or UPPER(VALUE) in ('TRUE', 'ON', 'YES')  )  </compliant>
+      <noncompliant>    NAME = 'TLOGOCHECK' and not ( VALUE = '1' or UPPER(VALUE) in ('TRUE', 'ON', 'YES')  )  </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

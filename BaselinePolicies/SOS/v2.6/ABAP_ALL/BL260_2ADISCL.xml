@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      DISCL-A: Information Disclosure – ABAP
+                                                DISCL-O: Information Disclosure – OTHER (checks also applicable to AS ABAP) 
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+-->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Information Disclosure (ABAP)" id="BL260_2ADISCL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/show_detailed_errors = 0 (disclosure of unnecessary information about versions or from errors)" id="DISCL-A_a">
+      <compliant>       NAME = 'login/show_detailed_errors' and VALUE  = '0'   </compliant>
+      <noncompliant>    NAME = 'login/show_detailed_errors' and VALUE != '0'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- SDEFAULT: Protects more web methods than DEFAULT.  ALL: Protects all web methods, requiring authentication for access.  Keep excluded methods under review.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: service/protectedwebmethods = SDEFAULT or ALL (disclosure of unnecessary information with limited list of exceptions, see Note 1439348)" id="DISCL-A_c">
+      <compliant>       NAME = 'service/protectedwebmethods' and     VALUE like_regexpr '(SDEFAULT.*|ALL.*)'    </compliant>
+      <noncompliant>    NAME = 'service/protectedwebmethods' and not VALUE like_regexpr '(SDEFAULT.*|ALL.*)'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!--  DISCL-O: Information Disclosure – OTHER (checks also applicable to AS ABAP) -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: is/HTTP/show_server_header = FALSE or 0 (see Note 1329326)" id="DISCL-O_a.1">
+      <compliant>       NAME = 'is/HTTP/show_server_header' and     ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )   </compliant>
+      <noncompliant>    NAME = 'is/HTTP/show_server_header' and not ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: is/HTTP/show_detailed_errors = FALSE or 0 (see Note 1616535)" id="DISCL-O_a.2">
+      <compliant>       NAME = 'is/HTTP/show_detailed_errors' and     ( UPPER(VALUE) = 'FALSE' or VALUE = '0' ) </compliant>
+      <noncompliant>    NAME = 'is/HTTP/show_detailed_errors' and not ( UPPER(VALUE) = 'FALSE' or VALUE = '0' ) </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/SMTP/show_server_header = FALSE or 0 (see Note 2045861)" id="DISCL-O_a.3">
+      <compliant>       NAME = 'icm/SMTP/show_server_header' and     ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )  </compliant>
+      <noncompliant>    NAME = 'icm/SMTP/show_server_header' and not ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/auth_NN includes PREFIX=/, FILTER=SAP and PERMFILE (SAP_BASIS ≥ 7.40)" id="DISCL-O_b.1">
+      <compliant>       NAME like 'icm/HTTP/auth_%' and     ( VALUE like 'PREFIX=_/%' ESCAPE '_' and VALUE like '%FILTER=SAP%' and VALUE like '%PERMFILE=%' )   </compliant>
+      <noncompliant>    NAME like 'icm/HTTP/auth_%' and not ( VALUE like 'PREFIX=_/%' ESCAPE '_' and VALUE like '%FILTER=SAP%' and VALUE like '%PERMFILE=%' )   </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and substring(VERSION,0,3) &gt;= '740' </joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and substring(VERSION,0,3) &gt;= '740' </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: wdisp/permission_table has path to permission table file (SAP_BASIS lower 7.40)" id="DISCL-O_b.2">
+      <compliant>       NAME = 'wdisp/permission_table' and LENGTH(VALUE) &gt; 0    </compliant>
+      <noncompliant>    NAME = 'wdisp/permission_table' and LENGTH(VALUE) = 0       </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and substring(VERSION,0,3) &lt; '740'       </joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and substring(VERSION,0,3) &lt; '740'       </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: wdisp/permission_table NOT used for SAP_BASIS ≥ 7.40" id="DISCL-O_b.2">
+      <compliant>       NAME = 'wdisp/permission_table' and LENGTH(VALUE) = 0       </compliant>
+      <noncompliant>    NAME = 'wdisp/permission_table' and LENGTH(VALUE) &gt; 0    </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and substring(VERSION,0,3) &gt;= '740'      </joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and substring(VERSION,0,3) &gt;= '740'      </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/admin_NN contains CLIENTHOST and ALLOWPUB=FALSE (see Note 2260323)" id="DISCL-O_c">
+      <compliant>       NAME like 'icm/HTTP/admin_%' and     ( VALUE like '%CLIENTHOST=%' and VALUE like '%ALLOWPUB=FALSE%' )       </compliant>
+      <noncompliant>    NAME like 'icm/HTTP/admin_%' and not ( VALUE like '%CLIENTHOST=%' and VALUE like '%ALLOWPUB=FALSE%' )       </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Regular expression checks for Linux and Windows-based path.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/error_templ_path set as required for individual error pages for preventing disclosure of unnecessary information" id="DISCL-O_d">
+      <compliant>       NAME = 'icm/HTTP/error_templ_path' 
+                        and     (   VALUE like_regexpr '^\/usr\/sap\/\w{3}\/\w{3,10}\/data\/icmandir\/error_templ' 
+                                 or VALUE like_regexpr '^\w:\\usr\\sap\\\w{3}\\\w{3,10}\\data\\icmandir[\\|\/]error_temp'
+                                )       </compliant>
+      <noncompliant>    NAME =  ('icm/HTTP/error_templ_path') 
+                        and not (   VALUE like_regexpr '^\/usr\/sap\/\w{3}\/\w{3,10}\/data\/icmandir\/error_templ' 
+                                 or VALUE like_regexpr '^\w:\\usr\\sap\\\w{3}\\\w{3,10}\\data\\icmandir[\\|\/]error_temp'
+                                )       </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rdisp/TRACE_HIDE_SEC_DATA = on (see Note 2012562) (SAP Kernel lt 916)" id="DISCL-O_e">
+      <compliant>       NAME = 'rdisp/TRACE_HIDE_SEC_DATA' and     LOWER(VALUE) = 'on' </compliant>
+      <noncompliant>    NAME = 'rdisp/TRACE_HIDE_SEC_DATA' and NOT LOWER(VALUE) = 'on' </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'KERN_REL' and (substring(VALUE,0,3) &lt; '916' ) </joincompliant>
+        <joinnoncompliant>  NAME = 'KERN_REL' and (substring(VALUE,0,3) &lt; '916' ) </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/trace_secured_data = FALSE or 0 (see Note 634262)" id="DISCL-O_f">
+      <compliant>       NAME = 'icm/trace_secured_data' and     ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )       </compliant>
+      <noncompliant>    NAME = 'icm/trace_secured_data' and not ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )       </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/accept_forwarded_cert_via_http = FALSE or 0 (see Note 2656696)" id="DISCL-O_g">
+      <compliant>       NAME = 'icm/accept_forwarded_cert_via_http' and     ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )     </compliant>
+      <noncompliant>    NAME = 'icm/accept_forwarded_cert_via_http' and not ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The check attribute not_found="positive" is appropriate since alternative compliance is that parameter is not existing.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/trusted_reverse_proxy_NN, no wildcards (see Note 2052899)" id="DISCL-O_h" not_found="positive">
+      <compliant>       NAME like 'icm/trusted_reverse_proxy_%' and (VALUE not like '%SUBJECT="*"%' and VALUE not like '%ISSUER="*"%')      </compliant>
+      <noncompliant>    NAME like 'icm/trusted_reverse_proxy_%' and (VALUE     like '%SUBJECT="*"%' or  VALUE     like '%ISSUER="*"%')      </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/show_detailed_errors = 0 (disclosure of unnecessary information about versions or from errors)" id="DISCL-A_a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/show_detailed_errors' and VALUE  = '0'   </compliant>
+      <noncompliant>    NAME = 'login/show_detailed_errors' and VALUE != '0'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- SDEFAULT: Protects more web methods than DEFAULT.  ALL: Protects all web methods, requiring authentication for access.  Keep excluded methods under review.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: service/protectedwebmethods = SDEFAULT or ALL (disclosure of unnecessary information with limited list of exceptions, see Note 1439348)" id="DISCL-A_c" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'service/protectedwebmethods' and     VALUE like_regexpr '(SDEFAULT.*|ALL.*)'    </compliant>
+      <noncompliant>    NAME = 'service/protectedwebmethods' and not VALUE like_regexpr '(SDEFAULT.*|ALL.*)'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!--  DISCL-O: Information Disclosure – OTHER (checks also applicable to AS ABAP) -->
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: is/HTTP/show_server_header = FALSE or 0 (see Note 1329326)" id="DISCL-O_a.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'is/HTTP/show_server_header' and     ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )   </compliant>
+      <noncompliant>    NAME = 'is/HTTP/show_server_header' and not ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: is/HTTP/show_detailed_errors = FALSE or 0 (see Note 1616535)" id="DISCL-O_a.2" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'is/HTTP/show_detailed_errors' and     ( UPPER(VALUE) = 'FALSE' or VALUE = '0' ) </compliant>
+      <noncompliant>    NAME = 'is/HTTP/show_detailed_errors' and not ( UPPER(VALUE) = 'FALSE' or VALUE = '0' ) </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/SMTP/show_server_header = FALSE or 0 (see Note 2045861)" id="DISCL-O_a.3" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'icm/SMTP/show_server_header' and     ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )  </compliant>
+      <noncompliant>    NAME = 'icm/SMTP/show_server_header' and not ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/auth_NN includes PREFIX=/, FILTER=SAP and PERMFILE (SAP_BASIS ≥ 7.40)" id="DISCL-O_b.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME like 'icm/HTTP/auth_%' and     ( VALUE like 'PREFIX=_/%' ESCAPE '_' and VALUE like '%FILTER=SAP%' and VALUE like '%PERMFILE=%' )   </compliant>
+      <noncompliant>    NAME like 'icm/HTTP/auth_%' and not ( VALUE like 'PREFIX=_/%' ESCAPE '_' and VALUE like '%FILTER=SAP%' and VALUE like '%PERMFILE=%' )   </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and substring(VERSION,0,3) &gt;= '740' </joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and substring(VERSION,0,3) &gt;= '740' </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: wdisp/permission_table has path to permission table file (SAP_BASIS lower 7.40)" id="DISCL-O_b.2" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'wdisp/permission_table' and LENGTH(VALUE) &gt; 0    </compliant>
+      <noncompliant>    NAME = 'wdisp/permission_table' and LENGTH(VALUE) = 0       </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and substring(VERSION,0,3) &lt; '740'       </joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and substring(VERSION,0,3) &lt; '740'       </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: wdisp/permission_table NOT used for SAP_BASIS ≥ 7.40" id="DISCL-O_b.2" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'wdisp/permission_table' and LENGTH(VALUE) = 0       </compliant>
+      <noncompliant>    NAME = 'wdisp/permission_table' and LENGTH(VALUE) &gt; 0    </noncompliant>
+      <joinstore name="COMP_LEVEL" no_data_found="No" not_in_output="No" sci_id="S00120">
+        <joincompliant>     COMPONENT = 'SAP_BASIS' and substring(VERSION,0,3) &gt;= '740'      </joincompliant>
+        <joinnoncompliant>  COMPONENT = 'SAP_BASIS' and substring(VERSION,0,3) &gt;= '740'      </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/admin_NN contains CLIENTHOST and ALLOWPUB=FALSE (see Note 2260323)" id="DISCL-O_c" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME like 'icm/HTTP/admin_%' and     ( VALUE like '%CLIENTHOST=%' and VALUE like '%ALLOWPUB=FALSE%' )       </compliant>
+      <noncompliant>    NAME like 'icm/HTTP/admin_%' and not ( VALUE like '%CLIENTHOST=%' and VALUE like '%ALLOWPUB=FALSE%' )       </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- Regular expression checks for Linux and Windows-based path.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/HTTP/error_templ_path set as required for individual error pages for preventing disclosure of unnecessary information" id="DISCL-O_d" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'icm/HTTP/error_templ_path' 
+                        and     (   VALUE like_regexpr '^\/usr\/sap\/\w{3}\/\w{3,10}\/data\/icmandir\/error_templ' 
+                                 or VALUE like_regexpr '^\w:\\usr\\sap\\\w{3}\\\w{3,10}\\data\\icmandir[\\|\/]error_temp'
+                                )       </compliant>
+      <noncompliant>    NAME =  ('icm/HTTP/error_templ_path') 
+                        and not (   VALUE like_regexpr '^\/usr\/sap\/\w{3}\/\w{3,10}\/data\/icmandir\/error_templ' 
+                                 or VALUE like_regexpr '^\w:\\usr\\sap\\\w{3}\\\w{3,10}\\data\\icmandir[\\|\/]error_temp'
+                                )       </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rdisp/TRACE_HIDE_SEC_DATA = on (see Note 2012562) (SAP Kernel lt 916)" id="DISCL-O_e" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rdisp/TRACE_HIDE_SEC_DATA' and     LOWER(VALUE) = 'on' </compliant>
+      <noncompliant>    NAME = 'rdisp/TRACE_HIDE_SEC_DATA' and NOT LOWER(VALUE) = 'on' </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'KERN_REL' and (substring(VALUE,0,3) &lt; '916' ) </joincompliant>
+        <joinnoncompliant>  NAME = 'KERN_REL' and (substring(VALUE,0,3) &lt; '916' ) </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/trace_secured_data = FALSE or 0 (see Note 634262)" id="DISCL-O_f" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'icm/trace_secured_data' and     ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )       </compliant>
+      <noncompliant>    NAME = 'icm/trace_secured_data' and not ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )       </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/accept_forwarded_cert_via_http = FALSE or 0 (see Note 2656696)" id="DISCL-O_g" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'icm/accept_forwarded_cert_via_http' and     ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )     </compliant>
+      <noncompliant>    NAME = 'icm/accept_forwarded_cert_via_http' and not ( UPPER(VALUE) = 'FALSE' or VALUE = '0' )     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The check attribute not_found="positive" is appropriate since alternative compliance is that parameter is not existing.-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: icm/trusted_reverse_proxy_NN, no wildcards (see Note 2052899)" id="DISCL-O_h" not_found="positive" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME like 'icm/trusted_reverse_proxy_%' and (VALUE not like '%SUBJECT="*"%' and VALUE not like '%ISSUER="*"%')      </compliant>
+      <noncompliant>    NAME like 'icm/trusted_reverse_proxy_%' and (VALUE     like '%SUBJECT="*"%' or  VALUE     like '%ISSUER="*"%')      </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

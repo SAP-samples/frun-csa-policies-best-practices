@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      PWDPOL-A: Password Policy – ABAP
+        Security level:                         Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-06-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Password Policy (ABAP)" id="BL260_1APWDPOL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: login/min_password_lng ≥ 12 (Password Policy)" id="PWDPOL-A_a.1">
+      <compliant>      NAME = 'login/min_password_lng' and lpad(VALUE,4,'0') &gt;= '0012'   </compliant>
+      <noncompliant>   NAME = 'login/min_password_lng' and lpad(VALUE,4,'0') &lt;  '0012'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: login/password_max_idle_initial between 1 and 14 (recommended 1 to 7) (Password Policy)" id="PWDPOL-A_b.1">
+      <compliant>      NAME = 'login/password_max_idle_initial' and     lpad(VALUE,4,'0') between '0001' and '0014'     </compliant>
+      <noncompliant>   NAME = 'login/password_max_idle_initial' and not lpad(VALUE,4,'0') between '0001' and '0014'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: login/password_downwards_compatibility = 0 (disable downward compatible passwords, see Note 1023437)" id="PWDPOL-A_d">
+      <compliant>      NAME = 'login/password_downwards_compatibility' and VALUE  = '0'     </compliant>
+      <noncompliant>   NAME = 'login/password_downwards_compatibility' and VALUE != '0'     </noncompliant>
+      <noncomplianttext>login/password_downwards_compatibility = 0. Action Required: Cleanup password hash values</noncomplianttext>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: login/min_password_lng ≥ 12 (Password Policy)" id="PWDPOL-A_a.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>      NAME = 'login/min_password_lng' and lpad(VALUE,4,'0') &gt;= '0012'   </compliant>
+      <noncompliant>   NAME = 'login/min_password_lng' and lpad(VALUE,4,'0') &lt;  '0012'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: login/password_max_idle_initial between 1 and 14 (recommended 1 to 7) (Password Policy)" id="PWDPOL-A_b.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>      NAME = 'login/password_max_idle_initial' and     lpad(VALUE,4,'0') between '0001' and '0014'     </compliant>
+      <noncompliant>   NAME = 'login/password_max_idle_initial' and not lpad(VALUE,4,'0') between '0001' and '0014'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: login/password_downwards_compatibility = 0 (disable downward compatible passwords, see Note 1023437)" id="PWDPOL-A_d" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>      NAME = 'login/password_downwards_compatibility' and VALUE  = '0'     </compliant>
+      <noncompliant>   NAME = 'login/password_downwards_compatibility' and VALUE != '0'     </noncompliant>
+      <noncomplianttext>login/password_downwards_compatibility = 0. Action Required: Cleanup password hash values</noncomplianttext>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!--  -->
+  <configstore name="AUTH_SECURITY_POLICY">
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] SECPOL attribute: MIN_PASSWORD_LENGTH ≥ 12 (security policy attribute)" id="PWDPOL-A_a.2" not_found="ignore">
+      <compliant>       ATTRIB_KEY = 'MIN_PASSWORD_LENGTH' and NAME like '%' and CLIENT != '[XXX]' and     lpad(ATTRIB_VALUE,4,'0') &gt;= '0012'    </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MIN_PASSWORD_LENGTH' and NAME like '%' and CLIENT != '[XXX]' and NOT lpad(ATTRIB_VALUE,4,'0') &gt;= '0012'    </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] SECPOL attribute: MAX_PASSWORD_IDLE_INITIAL between 1 and 14 (recommended 1 to 7) (security policy attribute)" id="PWDPOL-A_b.2" not_found="ignore">
+      <compliant>       ATTRIB_KEY = 'MAX_PASSWORD_IDLE_INITIAL' and NAME like '%' and CLIENT != '[XXX]' and     lpad(ATTRIB_VALUE,4,'0') between '0001' and '0014'     </compliant>
+      <noncompliant>    ATTRIB_KEY = 'MAX_PASSWORD_IDLE_INITIAL' and NAME like '%' and CLIENT != '[XXX]' and NOT lpad(ATTRIB_VALUE,4,'0') between '0001' and '0014'     </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+</targetsystem>

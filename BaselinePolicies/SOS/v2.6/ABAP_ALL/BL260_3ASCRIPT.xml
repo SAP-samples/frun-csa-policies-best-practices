@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          SCRIPT-A: Scripting Protection – ABAP
+        Security level:                             Extended (Level 3)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Scripting Protection (ABAP)" id="BL260_3ASCRIPT" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <!-- SAP GUI profile parameters possible values: TRUE, FALSE, 0, 1, ON, OFF, YES, NO.  See related note: 2163298. -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: sapgui/nwbc_scripting = FALSE (Scripting Protection, see Note 1816392)" id="SCRIPT-A_a.1">
+      <compliant>       NAME = 'sapgui/nwbc_scripting' and UPPER(VALUE)  = 'FALSE'      </compliant>
+      <noncompliant>    NAME = 'sapgui/nwbc_scripting' and UPPER(VALUE) != 'FALSE'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: sapgui/user_scripting = FALSE (Scripting Protection)" id="SCRIPT-A_a.2">
+      <compliant>       NAME = 'sapgui/user_scripting' and UPPER(VALUE)  = 'FALSE'      </compliant>
+      <noncompliant>    NAME = 'sapgui/user_scripting' and UPPER(VALUE) != 'FALSE'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] SAP GUI Scripting Security (IF scripting necessary then sapgui/user_scripting_per_user = TRUE, see Note 2715519, 2565390)" id="SCRIPT-A_a.3" not_found="negative">
+      <compliant>           NAME = 'sapgui/user_scripting_per_user' and VALUE  = 'TRUE' </compliant>
+      <noncompliant>        NAME = 'sapgui/user_scripting_per_user' and VALUE != 'TRUE' </noncompliant>
+      <joinstore name="ABAP_INSTANCE_PAHI" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'sapgui/user_scripting' and VALUE = 'TRUE'   </joincompliant>
+        <joinnoncompliant>  NAME = 'sapgui/user_scripting' and VALUE = 'TRUE'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: sapgui/user_scripting_per_user = TRUE (Scripting Protection)" id="SCRIPT-A_a.4">
+      <compliant>       NAME = 'sapgui/user_scripting_per_user' and UPPER(VALUE)  = 'TRUE'      </compliant>
+      <noncompliant>    NAME = 'sapgui/user_scripting_per_user' and UPPER(VALUE) != 'TRUE'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: sapgui/user_scripting_disable_recording = TRUE (Scripting Protection)" id="SCRIPT-A_a.5">
+      <compliant>       NAME = 'sapgui/user_scripting_disable_recording' and UPPER(VALUE)  = 'TRUE' </compliant>
+      <noncompliant>    NAME = 'sapgui/user_scripting_disable_recording' and UPPER(VALUE) != 'TRUE' </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: sapgui/user_scripting_force_notification = TRUE (Scripting Protection)" id="SCRIPT-A_a.6">
+      <compliant>       NAME = 'sapgui/user_scripting_force_notification' and UPPER(VALUE)  = 'TRUE' </compliant>
+      <noncompliant>    NAME = 'sapgui/user_scripting_force_notification' and UPPER(VALUE) != 'TRUE' </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: sapgui/user_scripting_set_readonly = TRUE (Scripting Protection)" id="SCRIPT-A_a.7">
+      <compliant>       NAME = 'sapgui/user_scripting_set_readonly' and UPPER(VALUE)  = 'TRUE'      </compliant>
+      <noncompliant>    NAME = 'sapgui/user_scripting_set_readonly' and UPPER(VALUE) != 'TRUE'      </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx-->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: sapgui/nwbc_scripting = FALSE (Scripting Protection, see Note 1816392)" id="SCRIPT-A_a.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'sapgui/nwbc_scripting' and UPPER(VALUE)  = 'FALSE'      </compliant>
+      <noncompliant>    NAME = 'sapgui/nwbc_scripting' and UPPER(VALUE) != 'FALSE'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: sapgui/user_scripting = FALSE (Scripting Protection)" id="SCRIPT-A_a.2" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'sapgui/user_scripting' and UPPER(VALUE)  = 'FALSE'      </compliant>
+      <noncompliant>    NAME = 'sapgui/user_scripting' and UPPER(VALUE) != 'FALSE'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] SAP GUI Scripting Security (IF scripting necessary then sapgui/user_scripting_per_user = TRUE, see Note 2715519, 2565390)" id="SCRIPT-A_a.3" not_found="negative" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>           NAME = 'sapgui/user_scripting_per_user' and VALUE  = 'TRUE' </compliant>
+      <noncompliant>        NAME = 'sapgui/user_scripting_per_user' and VALUE != 'TRUE' </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'sapgui/user_scripting' and VALUE = 'TRUE'   </joincompliant>
+        <joinnoncompliant>  NAME = 'sapgui/user_scripting' and VALUE = 'TRUE'   </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: sapgui/user_scripting_per_user = TRUE (Scripting Protection)" id="SCRIPT-A_a.4" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'sapgui/user_scripting_per_user' and UPPER(VALUE)  = 'TRUE'      </compliant>
+      <noncompliant>    NAME = 'sapgui/user_scripting_per_user' and UPPER(VALUE) != 'TRUE'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: sapgui/user_scripting_disable_recording = TRUE (Scripting Protection)" id="SCRIPT-A_a.5" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'sapgui/user_scripting_disable_recording' and UPPER(VALUE)  = 'TRUE' </compliant>
+      <noncompliant>    NAME = 'sapgui/user_scripting_disable_recording' and UPPER(VALUE) != 'TRUE' </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: sapgui/user_scripting_force_notification = TRUE (Scripting Protection)" id="SCRIPT-A_a.6" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'sapgui/user_scripting_force_notification' and UPPER(VALUE)  = 'TRUE' </compliant>
+      <noncompliant>    NAME = 'sapgui/user_scripting_force_notification' and UPPER(VALUE) != 'TRUE' </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: sapgui/user_scripting_set_readonly = TRUE (Scripting Protection)" id="SCRIPT-A_a.7" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'sapgui/user_scripting_set_readonly' and UPPER(VALUE)  = 'TRUE'      </compliant>
+      <noncompliant>    NAME = 'sapgui/user_scripting_set_readonly' and UPPER(VALUE) != 'TRUE'      </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

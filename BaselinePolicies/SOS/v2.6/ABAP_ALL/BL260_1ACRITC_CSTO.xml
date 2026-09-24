@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      CRITAU-A: 1-CRITICAL Authorizations (USERS)– ABAP
+        Security level:                         Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   original for GA
+
+        NOTE:   This Policy requires the creation and maintenance of a customized store. 
+        Custom Store variant definition can be performed in CSA-Administration application (Related Links > Template Configuration > Store Customizing) based on samples from the Configuration Validation Template from the above zip folder reference, or own requirements. 
+        Then create an associated collector template (Related Links > Template Configuration > Template Management) and note the sci_id. Configstore name is up to your choice, description is beneficial, the sci_id must commence with Znnnnn. 
+        Then in the policy below, update the configstore name and sci-ID so the checks are inspecting the correct store.
+        This store MUST exist before the policy can be generated into SQL version.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Critical Authorizations (ABAP)" id="BL260_1ACRITC_CSTO" multisql="Yes" not_found="positive" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <!-- This Policy requires creation of a customized store maintain configstore name and sci_id. -->
+  <!-- The following checks look for Return Code NONE (no users assigned) or OBJECT_NOT_EXISTING (COMB_ID not existing), and focuses on unlocked user accounts that are in date i.e. active user accounts. -->
+  <!-- Checks that have suffix 'a' relate to users, and have companion checks with suffic 'b' to identify roles.  -->
+  <configstore name="USER_AUTH_COMB" sci_id="Z00027">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with CHANGE ALL TABLES authorization (S_TABU_DIS)" id="CRITAU-A_c.01a" not_found="positive">
+      <compliant>       COMB_ID = 'CHANGE_ALL_TABLES' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'CHANGE_ALL_TABLES' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with CHANGE ALL TABLES authorization (S_TABU_NAM)" id="CRITAU-A_c.17a" not_found="positive">
+      <compliant>       COMB_ID = 'CHANGE_ALL_TABLES1' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'CHANGE_ALL_TABLES1' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with READ ALL TABLE GROUPS authorization" id="CRITAU-A_c.02a" not_found="positive">
+      <compliant>       COMB_ID = 'READALLTABGRP' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'READALLTABGRP' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with READ ALL TABLES authorization" id="CRITAU-A_c.03a" not_found="positive">
+      <compliant>       COMB_ID = 'READALLTABLES' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'READALLTABLES' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with ALL TRANSACTIONS start authorization" id="CRITAU-A_c.04a" not_found="positive">
+      <compliant>       COMB_ID = 'STCODE_TCD_STAR' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'STCODE_TCD_STAR' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with S_START ALL authorization" id="CRITAU-A_c.16a" not_found="positive">
+      <compliant>       COMB_ID = 'S_START_STAR' and USER like '%' 
+                        and     ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )     </compliant>
+      <noncompliant>    COMB_ID = 'S_START_STAR' and USER like '%' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with ALL SERVICES authorization" id="CRITAU-A_c.05a" not_found="positive">
+      <compliant>       COMB_ID = 'S_SERVICE_STAR' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'S_SERVICE_STAR' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with START ALL REPORTS authorization" id="CRITAU-A_c.06a" not_found="positive">
+      <compliant>       COMB_ID = 'START_ALL_REPORTS' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'START_ALL_REPORTS' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with DEBUG / REPLACE authorization" id="CRITAU-A_c.07a" not_found="positive">
+      <compliant>       COMB_ID = 'DEBUG_REPLACE' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'DEBUG_REPLACE' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with DEBUG / REPLACE authorization (S_BDG)" id="CRITAU-A_c.20a" not_found="positive">
+      <compliant>       COMB_ID = 'DEBUG_REPLACE2' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'DEBUG_REPLACE2' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with DISPLAY ALL SPOOL REQUESTS authorization" id="CRITAU-A_c.08a" not_found="positive">
+      <compliant>       COMB_ID = 'DISPLAY_SPOOL' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'DISPLAY_SPOOL' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with RFC ADMIN authorization" id="CRITAU-A_c.09a" not_found="positive">
+      <compliant>       COMB_ID = 'ADMIN_RFC' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'ADMIN_RFC' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with EXECUTE ALL FUNCTION MODULES authorization" id="CRITAU-A_c.10a" not_found="positive">
+      <compliant>       COMB_ID = 'EXECUTE_ALL_FUNC' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'EXECUTE_ALL_FUNC' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with EXECUTE ALL CLASSES authorization" id="CRITAU-A_c.11a" not_found="positive">
+      <compliant>       COMB_ID = 'EXECUTE_ALL_CLASS' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'EXECUTE_ALL_CLASS' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with CHANGE OTHER USERS PASSWORD authorization" id="CRITAU-A_c.12a" not_found="positive">
+      <compliant>       COMB_ID = 'CHANGE_PASSWORD' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'CHANGE_PASSWORD' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with CHANGE OTHER USERS authorization" id="CRITAU-A_c.19a" not_found="positive">
+      <compliant>       COMB_ID = 'CHANGE_USER' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'CHANGE_USER' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with CHANGE TABLE GROUP authorization (S_TABU_DIS)" id="CRITAU-A_c.13a" not_found="positive">
+      <compliant>       COMB_ID = 'CHANGE_TABLE_GROUP' and  USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'CHANGE_TABLE_GROUP' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with CHANGE TABLE GROUP authorization (S_TABU_NAM)" id="CRITAU-A_c.18a" not_found="positive">
+      <compliant>       COMB_ID = 'CHANGE_TABLE_GROUP1' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'CHANGE_TABLE_GROUP1' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with ADMIN QUERY authorization" id="CRITAU-A_c.14a" not_found="positive">
+      <compliant>       COMB_ID = 'ADMIN_QUERY' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'ADMIN_QUERY' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with RUN ANY RFC authorization" id="CRITAU-A_c.15a" not_found="positive">
+      <compliant>       COMB_ID = 'AUTH_RUN_ANY_RFC' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'AUTH_RUN_ANY_RFC' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with DBACOCKPIT_UPDATE authorization (S_DBCON 36)" id="CRITAU-A_c.21a" not_found="positive">
+      <compliant>       COMB_ID = 'DBACOCKPIT_UPDATE' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'DBACOCKPIT_UPDATE' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Active users with DBACOCKPIT_SELECT authorization (S_TABU_SQL 33)" id="CRITAU-A_c.22a" not_found="positive">
+      <compliant>       COMB_ID = 'DBACOCKPIT_SELECT' and USER like '%' 
+                        and     ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </compliant>
+      <noncompliant>    COMB_ID = 'DBACOCKPIT_SELECT' and USER like '%' 
+                        and not ( RC = 'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- non-SAP ROLES -->
+  <!-- -->
+  <!-- This Policy requires creation of a customized store, maintain configstore name and sci_id. -->
+  <configstore name="USER_AUTH_COMB" sci_id="Z00031">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with CHANGE ALL TABLES authorization (S_TABU_DIS)" id="CRITAU-A_c.01b" not_found="positive">
+      <compliant>       COMB_ID = 'CHANGE_ALL_TABLES' 
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'CHANGE_ALL_TABLES' 
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with CHANGE ALL TABLES authorization (S_TABU_NAM)" id="CRITAU-A_c.17b" not_found="positive">
+      <compliant>       COMB_ID = 'CHANGE_ALL_TABLES1'
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                             or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                             )
+                             </compliant>
+      <noncompliant>    COMB_ID = 'CHANGE_ALL_TABLES1'
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with READ ALL TABLE GROUPS authorization" id="CRITAU-A_c.02b" not_found="positive">
+      <compliant>       COMB_ID = 'READALLTABGRP' 
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'READALLTABGRP' 
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with READ ALL TABLES  authorization" id="CRITAU-A_c.03b" not_found="positive">
+      <compliant>       COMB_ID = 'READALLTABLES' 
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'READALLTABLES'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with ALL TRANSACTIONS start authorization" id="CRITAU-A_c.04b" not_found="positive">
+      <compliant>       COMB_ID = 'STCODE_TCD_STAR' 
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'STCODE_TCD_STAR'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with S_START ALL authorization" id="CRITAU-A_c.16b" not_found="positive">
+      <compliant>       COMB_ID = 'S_START_STAR' 
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'S_START_STAR'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with ALL SERVICES authorization" id="CRITAU-A_c.05b" not_found="positive">
+      <compliant>       COMB_ID = 'S_SERVICE_STAR'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'S_SERVICE_STAR'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with START ALL REPORTS authorization" id="CRITAU-A_c.06b" not_found="positive">
+      <compliant>       COMB_ID = 'START_ALL_REPORTS'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'START_ALL_REPORTS'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with DEBUG / REPLACE authorization" id="CRITAU-A_c.07b" not_found="positive">
+      <compliant>       COMB_ID = 'DEBUG_REPLACE'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'DEBUG_REPLACE'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with DEBUG / REPLACE authorization (S_BDG)" id="CRITAU-A_c.20b" not_found="positive">
+      <compliant>       COMB_ID = 'DEBUG_REPLACE2'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'DEBUG_REPLACE2'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with DISPLAY ALL SPOOL REQUESTS authorization" id="CRITAU-A_c.08b" not_found="positive">
+      <compliant>       COMB_ID = 'DISPLAY_SPOOL'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'DISPLAY_SPOOL'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with RFC ADMIN authorization" id="CRITAU-A_c.09b" not_found="positive">
+      <compliant>       COMB_ID = 'ADMIN_RFC'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'ADMIN_RFC'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with EXECUTE ALL FUNCTION MODULES authorization" id="CRITAU-A_c.10b" not_found="positive">
+      <compliant>       COMB_ID = 'EXECUTE_ALL_FUNC'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'EXECUTE_ALL_FUNC'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with EXECUTE ALL CLASSES authorization" id="CRITAU-A_c.11b" not_found="positive">
+      <compliant>       COMB_ID = 'EXECUTE_ALL_CLASS'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'EXECUTE_ALL_CLASS'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with CHANGE OTHER USERS PASSWORD authorization" id="CRITAU-A_c.12b" not_found="positive">
+      <compliant>       COMB_ID = 'CHANGE_PASSWORD'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'CHANGE_PASSWORD'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with CHANGE OTHER USERS authorization" id="CRITAU-A_c.19b" not_found="positive">
+      <compliant>       COMB_ID = 'CHANGE_USER'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'CHANGE_USER'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with CHANGE TABLE GROUP authorization (S_TABU_DIS)" id="CRITAU-A_c.13b" not_found="positive">
+      <compliant>       COMB_ID = 'CHANGE_TABLE_GROUP'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'CHANGE_TABLE_GROUP'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with CHANGE TABLE GROUP authorization (S_TABU_NAM)" id="CRITAU-A_c.18b" not_found="positive">
+      <compliant>       COMB_ID = 'CHANGE_TABLE_GROUP1'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'CHANGE_TABLE_GROUP'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with ADMIN QUERY authorization" id="CRITAU-A_c.14b" not_found="positive">
+      <compliant>       COMB_ID = 'ADMIN_QUERY'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'ADMIN_QUERY'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with RUN ANY RFC authorization" id="CRITAU-A_c.15b" not_found="positive">
+      <compliant>       COMB_ID = 'AUTH_RUN_ANY_RFC'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'AUTH_RUN_ANY_RFC'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with DBACOCKPIT_UPDATE authorization (S_DBCON 36)" id="CRITAU-A_c.21b" not_found="positive">
+      <compliant>       COMB_ID = 'DBACOCKPIT_UPDATE'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'DBACOCKPIT_UPDATE'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Roles with DBACOCKPIT_SELECT authorization (S_TABU_SQL 33)" id="CRITAU-A_c.22b" not_found="positive">
+      <compliant>       COMB_ID = 'DBACOCKPIT_SELECT'  
+                        and ( not ROLE like_regexpr '^(?!SAP).*' 
+                              or ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' ) 
+                            )
+                            </compliant>
+      <noncompliant>    COMB_ID = 'DBACOCKPIT_SELECT'  
+                        and ROLE like_regexpr '^(?!SAP).*' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

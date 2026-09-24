@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          CRITAU-A: 1-CRITICAL Authorizations – ABAP
+        Security level:                             Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-07-17      XX-SER-SECCHK   
+
+        NOTE:   This Policy is based on the standard shipped store AUTH_PROFILE_USER with sci_id S00046 which gathers only users with the SAP_ALL profile in its definition.
+        This check will function without needing a customized store.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] No use of critical auth. profile SAP_ALL (ABAP)" id="BL260_1ACRITA" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <!-- As per SAP Help documentation, DDIC user requires SAP_ALL and SAP_NEW for installation and upgrade tasks and its profiles should not be removed, and this account should be otherwise safeguarded.  Hence this user is excluded from the following checks instead of using USERNAME with a wildcard. -->
+  <!-- If there are no users detected with the profile assigned, then the return code STATUS = NONE will be written to the Configuration Store.  If the profile does not exist in the managed system, the return code of STATUS = NOT_EXISTING will be written to the Configuration Store.  The rules can leverage these return codes. -->
+  <!--  -->
+  <configstore name="AUTH_PROFILE_USER" sci_id="S00046">
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] No users assigned the critical authorization profile SAP_ALL" id="CRITAU-A_a.1" not_found="positive">
+      <compliant>       PROFILE = 'SAP_ALL' AND STATUS  = 'NONE'
+                        and USERNAME != 'DDIC' 
+                        and USER_TYPE like '%' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'  
+                        </compliant>
+      <noncompliant>    PROFILE = 'SAP_ALL' AND STATUS != 'NONE'
+                        and USERNAME != 'DDIC' 
+                        and USER_TYPE like '%' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'
+                        </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!-- The following checks are provided as samples to give insight on the different user-types.  -->
+    <!-- Maintain as per your corporate needs.-->
+    <checkitem desc="[p1-CRITICAL] No DIALOG users assigned the critical authorization profile SAP_ALL" id="CRITAU-A_a.1 A" not_found="positive">
+      <compliant>       PROFILE = 'SAP_ALL' AND STATUS  = 'NONE'
+                        and USERNAME != 'DDIC' 
+                        and USER_TYPE ='DIALOG' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'  
+                        </compliant>
+      <noncompliant>    PROFILE = 'SAP_ALL' AND STATUS != 'NONE'
+                        and USERNAME != 'DDIC' 
+                        and USER_TYPE ='DIALOG' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'  
+                        </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] No SYSTEM users assigned the critical authorization profile SAP_ALL" id="CRITAU-A_a.1 B" not_found="positive">
+      <compliant>       PROFILE = 'SAP_ALL' AND STATUS  = 'NONE'
+                        and USERNAME != 'DDIC' 
+                        and USER_TYPE ='SYSTEM' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'  
+                        </compliant>
+      <noncompliant>    PROFILE = 'SAP_ALL' AND STATUS != 'NONE'
+                        and USERNAME != 'DDIC' 
+                        and USER_TYPE ='SYSTEM' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'  
+                        </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] No COMMUNICATION users assigned the critical authorization profile SAP_ALL" id="CRITAU-A_a.1 C" not_found="positive">
+      <compliant>       PROFILE = 'SAP_ALL' AND STATUS  = 'NONE'
+                        and USERNAME != 'DDIC' 
+                        and USER_TYPE ='COMMUNICATION' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'  
+                        </compliant>
+      <noncompliant>    PROFILE = 'SAP_ALL' AND STATUS != 'NONE'
+                        and USERNAME != 'DDIC' 
+                        and USER_TYPE ='COMMUNICATION' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'  
+                        </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] No REFERENCE users assigned the critical authorization profile SAP_ALL" id="CRITAU-A_a.1 L" not_found="positive">
+      <compliant>       PROFILE = 'SAP_ALL' AND STATUS  = 'NONE'
+                        and USERNAME != 'DDIC' 
+                        and USER_TYPE ='REFERENCE' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'  
+                        </compliant>
+      <noncompliant>    PROFILE = 'SAP_ALL' AND STATUS != 'NONE'
+                        and USERNAME != 'DDIC' 
+                        and USER_TYPE ='REFERENCE' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'  
+                        </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p1-CRITICAL] No SERVICE users assigned the critical authorization profile SAP_ALL" id="CRITAU-A_a.1 S" not_found="positive">
+      <compliant>       PROFILE = 'SAP_ALL' AND STATUS  = 'NONE'
+                        and USERNAME != 'DDIC' 
+                        and USER_TYPE ='SERVICE' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'  
+                        </compliant>
+      <noncompliant>    PROFILE = 'SAP_ALL' AND STATUS != 'NONE'
+                        and USERNAME != 'DDIC' 
+                        and USER_TYPE ='SERVICE' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'  
+                        </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+  <!-- Alternative check with some exempted user names if required (such exemptions should be regularly reviewed with risk assessment and sign off in a risk register. -->
+  <!--
+  <configstore name="AUTH_PROFILE_USER" sci_id="S00046">
+    <checkitem desc="[p1-CRITICAL] No unknown users assigned critical profile SAP_ALL (exempted users not counted)" id="CRITAU-A_a.1 2" not_found="positive">
+      <compliant>       PROFILE = 'SAP_ALL' and USER_TYPE like '%' and STATUS != 'USER_IS_AUTHORIZED' 
+                        and not ( USERNAME in ('DDIC') or USERNAME like 'FFID_%'  )       </compliant>
+      <noncompliant>    PROFILE = 'SAP_ALL' and USER_TYPE like '%' and STATUS  = 'USER_IS_AUTHORIZED' 
+                        and not ( USERNAME in ('DDIC') or USERNAME like 'FFID_%'  )       </noncompliant>
+    </checkitem>
+  </configstore>
+  -->
+  <!--
+    <configstore name="AUTH_PROFILE_USER" sci_id="S00046">
+    <checkitem desc="[p1-CRITICAL] No unknown users assigned critical profile SAP_ALL (exempted users not counted, inactive accounts not counted)" id="CRITAU-A_a.1 3" not_found="positive">
+      <compliant>       PROFILE = 'SAP_ALL' and USER_TYPE like '%' and STATUS != 'USER_IS_AUTHORIZED' 
+                        and not ( 
+                                    (USERNAME in ('DDIC') or USERNAME like 'FFID_%')
+                                    or
+                                    (USER_LOCKED = 'TRUE' or USER_INVALID = 'TRUE')
+                                )       </compliant>
+      <noncompliant>    PROFILE = 'SAP_ALL' and USER_TYPE like '%' and STATUS  = 'USER_IS_AUTHORIZED' 
+                        and not ( 
+                                    (USERNAME in ('DDIC') or USERNAME like 'FFID_%')
+                                    or
+                                    (USER_LOCKED = 'TRUE' or USER_INVALID = 'TRUE')
+                                )       </noncompliant>
+    </checkitem>
+  </configstore>
+  -->
+  <!-- -->
+</targetsystem>

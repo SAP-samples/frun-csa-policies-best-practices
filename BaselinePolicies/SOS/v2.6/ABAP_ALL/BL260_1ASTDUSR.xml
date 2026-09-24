@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          STDUSR-A: STANDARD Users in ABAP
+        Security level:                             Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-06-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Standard Users (ABAP)" id="BL260_1ASTDUSR" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: login/no_automatic_user_sapstar = 1 (no login with hardcoded automatic user SAP*)" id="STDUSR-A_a.6">
+      <compliant>       NAME = 'login/no_automatic_user_sapstar' and VALUE  = '1'   </compliant>
+      <noncompliant>    NAME = 'login/no_automatic_user_sapstar' and VALUE != '1'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- You can control the activation option of the time-limited client-specific virtual super-user SAP* with the new static profile parameter login/create_virtual_user_sapstar as per SAP Note 3303172 and 3633474. The default value is 1 which enables the creation of the virtual super-user SAP* using dpmon, as described in SAP Note 3303172. Set to 0 only if your security policy explicitly prohibits the virtual SAP mechanism and requires the old mechanism which requires two separate system downtimes for activation. -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: login/create_virtual_user_sapstar = 1 (Kernel ≥ 790) (see Note 3303172, 3633474)" id="STDUSR-A_a.7">
+      <compliant>       NAME = 'login/create_virtual_user_sapstar' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'login/create_virtual_user_sapstar' and VALUE != '1'     </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'KERN_REL' and (substring(VALUE,0,3) &gt;= '790' ) </joincompliant>
+        <joinnoncompliant>  NAME = 'KERN_REL' and (substring(VALUE,0,3) &gt;= '790' ) </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: login/no_automatic_user_sapstar = 1 (no login with hardcoded automatic user SAP*)" id="STDUSR-A_a.6" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/no_automatic_user_sapstar' and VALUE  = '1'   </compliant>
+      <noncompliant>    NAME = 'login/no_automatic_user_sapstar' and VALUE != '1'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- You can control the activation option of the time-limited client-specific virtual super-user SAP* with the new static profile parameter login/create_virtual_user_sapstar. The default value is 1 which enables the creation of the virtual super-user SAP* using dpmon, as described in SAP Note 3303172 and 3633474. Set to 0 only if your security policy explicitly prohibits the virtual SAP mechanism. -->
+    <checkitem desc="[p1-CRITICAL] Profile parameter: login/create_virtual_user_sapstar = 1 (Kernel ≥ 790) (see Note 3303172)" id="STDUSR-A_a.7" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/create_virtual_user_sapstar' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'login/create_virtual_user_sapstar' and VALUE != '1'     </noncompliant>
+      <joinstore name="SAP_KERNEL" no_data_found="No" not_in_output="No">
+        <joincompliant>     NAME = 'KERN_REL' and (substring(VALUE,0,3) &gt;= '790' ) </joincompliant>
+        <joinnoncompliant>  NAME = 'KERN_REL' and (substring(VALUE,0,3) &gt;= '790' ) </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="STANDARD_USERS">
+    <!-- -->
+    <!-- SAP recommendation is that Standard Users should be assigned to a user group to restrict who can maintain the users; historically the group would be named SUPER.  If your organization or operations partner  requires standard users be assigned to another nominiated user group for restricted administration, then the name of the accepted group can be included in a set, the following example includes group SAPTECH.  Maintain as per your corporate requirements.-->
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: User SAP* is safeguarded overall" id="STDUSR-A_a.0" not_found="negative">
+      <compliant>       CLIENT like '%' and USERNAME = 'SAP*' and     ( EXISTING = 'X' and PASSWORD_STATUS = 'CHANGED' and LOCKED = 'X' and USERGROUP in ('SUPER','SAPTECH') )   </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'SAP*' and not ( EXISTING = 'X' and PASSWORD_STATUS = 'CHANGED' and LOCKED = 'X' and USERGROUP in ('SUPER','SAPTECH') )   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: SAP* must exist in all clients" id="STDUSR-A_a.1" not_found="negative">
+      <compliant>       CLIENT like '%' and USERNAME = 'SAP*' and EXISTING  = 'X'   </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'SAP*' and EXISTING != 'X'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: SAP* must be locked in all clients" id="STDUSR-A_a.2" not_found="negative">
+      <compliant>       CLIENT like '%' and USERNAME = 'SAP*' and LOCKED  = 'X'     </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'SAP*' and LOCKED != 'X'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: SAP* password must be changed from default" id="STDUSR-A_a.3" not_found="negative">
+      <!-- Tip: if the report outputs PASSWORD_STATUS = UNKNOWN, refer to SAP Note 1768995 - CCDB: ConfigStore STANDARD_USERS.  -->
+      <compliant>       CLIENT like '%' and USERNAME = 'SAP*' and PASSWORD_STATUS  = 'CHANGED'      </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'SAP*' and PASSWORD_STATUS != 'CHANGED'      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: SAP* must be in usergroup SUPER (or other designated usergroup)" id="STDUSR-A_a.4" not_found="negative">
+      <compliant>       CLIENT like '%' and USERNAME = 'SAP*' and USERGROUP     in ('SUPER','SAPTECH')          </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'SAP*' and USERGROUP not in ('SUPER','SAPTECH')          </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: DDIC is safeguarded overall" id="STDUSR-A_b.0" not_found="positive">
+      <compliant>       CLIENT like '%' and USERNAME = 'DDIC' and     ( (PASSWORD_STATUS = 'CHANGED' and USERGROUP in ('SUPER','SAPTECH') ) or EXISTING != 'X' )       </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'DDIC' and not ( (PASSWORD_STATUS = 'CHANGED' and USERGROUP in ('SUPER','SAPTECH') ) or EXISTING != 'X' )       </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: DDIC password must be changed where user exists" id="STDUSR-A_b.1" not_found="positive">
+      <!-- Tip: if the report outputs PASSWORD_STATUS = UNKNOWN, refer to SAP Note 1768995 - CCDB: ConfigStore STANDARD_USERS. -->
+      <compliant>       CLIENT like '%' and USERNAME = 'DDIC' and     ( PASSWORD_STATUS = 'CHANGED' or EXISTING != 'X' )    </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'DDIC' and not ( PASSWORD_STATUS = 'CHANGED' or EXISTING != 'X' )    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: DDIC must be in usergroup SUPER (or other designated usergroup) where user exists" id="STDUSR-A_b.2" not_found="positive">
+      <compliant>       CLIENT like '%' and USERNAME = 'DDIC' and     ( USERGROUP in ('SUPER','SAPTECH') or EXISTING != 'X' )     </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'DDIC' and not ( USERGROUP in ('SUPER','SAPTECH') or EXISTING != 'X' )     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: SAPCPIC is safeguarded overall" id="STDUSR-A_c.0" not_found="positive">
+      <compliant>       CLIENT like '%' and USERNAME = 'SAPCPIC' and     ( (PASSWORD_STATUS = 'CHANGED' and USERGROUP in ('SUPER','SAPTECH') ) or EXISTING != 'X' )    </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'SAPCPIC' and not ( (PASSWORD_STATUS = 'CHANGED' and USERGROUP in ('SUPER','SAPTECH') ) or EXISTING != 'X' )    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: SAPCPIC should be deleted if not needed (legacy user, see Note 3459484)" id="STDUSR-A_c.1" not_found="positive">
+      <compliant>       CLIENT like '%' and USERNAME = 'SAPCPIC' and EXISTING != 'X'    </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'SAPCPIC' and EXISTING  = 'X'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: SAPCPIC password must be changed where user exists" id="STDUSR-A_c.2" not_found="positive">
+      <compliant>       CLIENT like '%' and USERNAME = 'SAPCPIC' and     ( PASSWORD_STATUS = 'CHANGED' or EXISTING != 'X' )     </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'SAPCPIC' and not ( PASSWORD_STATUS = 'CHANGED' or EXISTING != 'X' )     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: SAPCPIC must be in usergroup SUPER (or other designated usergroup) where user exists" id="STDUSR-A_c.3" not_found="positive">
+      <compliant>       CLIENT like '%' and USERNAME = 'SAPCPIC' and     ( USERGROUP in ('SUPER','SAPTECH') or EXISTING != 'X' )     </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'SAPCPIC' and not ( USERGROUP in ('SUPER','SAPTECH') or EXISTING != 'X' )     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: TMSADM in client 000 is safeguarded overall" id="STDUSR-A_d.0" not_found="positive">
+      <compliant>       CLIENT = '000'  and USERNAME = 'TMSADM' and     ( PASSWORD_STATUS = 'CHANGED' and USERGROUP in ('SUPER','SAPTECH') ) and EXISTING like '%'     </compliant>
+      <noncompliant>    CLIENT = '000'  and USERNAME = 'TMSADM' and not ( PASSWORD_STATUS = 'CHANGED' and USERGROUP in ('SUPER','SAPTECH') ) and EXISTING like '%'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: TMSADM password must be changed" id="STDUSR-A_d.1" not_found="positive">
+      <compliant>       CLIENT like '%' and USERNAME = 'TMSADM' and     ( PASSWORD_STATUS = 'CHANGED' or EXISTING != 'X' )  </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'TMSADM' and not ( PASSWORD_STATUS = 'CHANGED' or EXISTING != 'X' )  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: TMSADM must not exist in clients other than 000" id="STDUSR-A_d.2" not_found="positive">
+      <compliant>       CLIENT != '000' and USERNAME = 'TMSADM' and EXISTING != 'X'         </compliant>
+      <noncompliant>    CLIENT != '000' and USERNAME = 'TMSADM' and EXISTING  = 'X'         </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: TMSADM must be in usergroup SUPER (or other designated usergroup) where user exists" id="STDUSR-A_d.3" not_found="positive">
+      <compliant>       CLIENT like '%' and USERNAME = 'TMSADM' and     ( USERGROUP in ('SUPER','SAPTECH') or EXISTING != 'X' )      </compliant>
+      <noncompliant>    CLIENT like '%' and USERNAME = 'TMSADM' and not ( USERGROUP in ('SUPER','SAPTECH') or EXISTING != 'X' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: EARLYWATCH must not exist in obsolete client = 066" id="STDUSR-A_e.1" not_found="positive">
+      <compliant>       CLIENT  = '066' and USERNAME = 'EARLYWATCH' and EXISTING != 'X'     </compliant>
+      <noncompliant>    CLIENT  = '066' and USERNAME = 'EARLYWATCH' and EXISTING  = 'X'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Standard User: EARLYWATCH must not exist in other clients" id="STDUSR-A_e.2" not_found="positive">
+      <compliant>       CLIENT != '066' and USERNAME = 'EARLYWATCH' and EXISTING != 'X'     </compliant>
+      <noncompliant>    CLIENT != '066' and USERNAME = 'EARLYWATCH' and EXISTING  = 'X'     </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- Refer to Policy 2AAUDIT for checks related to the ABAP Security Audit Log for Standard Users -->
+  <!-- -->
+  <!-- Regarding Standard Users created by the SAP Solution Manager -->
+  <!-- Configuration Stores NOT YET AVAILABLE as of 2026-03 for 2ASTDUSR for Technical and Configuration users created by SAP Solution Manager, thus continue to check manually.. -->
+  <!-- -->
+</targetsystem>

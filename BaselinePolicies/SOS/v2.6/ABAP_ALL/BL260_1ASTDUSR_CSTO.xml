@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          STDUSR-A: STANDARD Users in ABAP
+        Security level:                             Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   original for GA
+
+        NOTE:   This Policy may require the creation and maintenance of a customized store. 
+        Custom Store variant definition can be performed in CSA-Administration application (Related Links > Template Configuration > Store Customizing) based on samples from the Configuration Validation Template from the above zip folder reference, or own requirements. 
+        Then create an associated collector template (Related Links > Template Configuration > Template Management) and note the sci_id. Configstore name is up to your choice, description is beneficial,the sci_id must commence with Znnnnn. 
+        Then in the policy below, update the configstore name and sci-ID so the checks are inspecting the correct store. This store must exist before the policy can be generated into SQL version.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Standard Users (ABAP)" id="BL260_1ASTDUSR_CSTO" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="AUTH_PROFILE_USER" sci_id="S00046">
+    <!-- -->
+    <!-- This sample check uses the shipped store AUTH_PROFILE USER which by default gathers users assigned the SAP_ALL profile only.  If other critical profiles should be checked, then create a customized Configuation Store Z-variant, assign to a collector, then define additional rules in the CSA policy on the custom Z Configuration Store sci-id. Generate policy to cross check existance of new store reference in updated SQL. See example further below.  -->
+    <checkitem desc="[p1-CRITICAL] Standard User: SAP* not assigned critical authorization profile (partial check - checks for SAP_ALL profile only)" id="STDUSR-A_a.5.1" operator="NOT_EXIST">
+      <compliant>       PROFILE like '%' and USERNAME = 'SAP*' and STATUS like '%' and USER_TYPE like '%' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'    </compliant>
+      <noncompliant>    PROFILE like '%' and USERNAME = 'SAP*' and STATUS like '%' and USER_TYPE like '%' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'    </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- If further critical profiles need to be checked, then add them to a customized store variant.  Examples might include:
+  S_A.ADMIN
+  S_A.CUSTOMIZ
+  S_A.DEVELOP
+  S_A.SYSTEM
+  S_A.USER
+  S_A.TMSADM
+  S_A.TMSCFG
+  S_A.TMSWF
+  or other legacy profiles. -->
+  <!-- Check Example:
+    <configstore name="Z_AUTH_PROFILE_USER" sci_id="Z00107">
+    <checkitem desc="[p1-CRITICAL] Standard User: SAP* not assigned critical authorization profiles (partial check - checks for other critical profiles as per store customizing)" id="STDUSR-A_a.5.2" operator="NOT_EXIST">
+      <compliant>       length(PROFILE) &gt; '0' and USERNAME = 'SAP*' and STATUS like '%' and USER_TYPE like '%' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'      </compliant>
+      <noncompliant>    length(PROFILE) &gt; '0' and USERNAME = 'SAP*' and STATUS like '%' and USER_TYPE like '%' and USER_GROUP like '%' and USER_LOCKED like '%' and USER_INVALID like '%'      </noncompliant>
+    </checkitem>
+    </configstore>
+    -->
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- Refer to Policy 2AAUDIT for checks related to the ABAP Security Audit Log for Standard Users.  They are not duplicated here. -->
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- Standard Users created by the SAP Solution Manager -->
+  <!-- Configuration Stores NOT YET AVAILABLE as of 2025-27 for 2ASTDUSR for Technical and Configuration users created by SAP Solution Manager, thus continue to check manually. -->
+  <!-- -->
+</targetsystem>

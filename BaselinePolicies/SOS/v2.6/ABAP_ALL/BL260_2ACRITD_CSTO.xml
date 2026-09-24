@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          CRITAU-A: Critical Authorizations – ABAP
+        Security level:                             Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   original for GA
+
+        NOTE:   This Policy requires the creation and maintenance of a customized store. 
+        Custom Store variant definition can be performed in CSA-Administration application (Related Links > Template Configuration > Store Customizing) based on samples from the Configuration Validation Template from the above zip folder reference, or own requirements. 
+        Then create an associated collector template (Related Links > Template Configuration > Template Management) and note the sci_id. Configstore name is up to your choice, description is beneficial, the sci_id must commence with Znnnnn. 
+        Then in the policy below, update the configstore name and sci-ID so the checks are inspecting the correct store.
+        This store MUST exist before the policy can be generated into SQL version.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Protection of Password Hashes (ABAP)" id="BL260_2ACRITD_CSTO" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <!-- This Policy requires creation of a customized store maintain configstore name and sci_id. -->
+  <!-- The following checks look for Return Code NONE (no users assigned) or OBJECT_NOT_EXISTING (COMB_ID not existing), and focuses on unlocked user accounts that are in date i.e. active user accounts. -->
+  <!-- Checks that have suffix a relate to users, and have companion checks with suffic b to identify roles.  -->
+  <configstore name="USER_AUTH_COMB" sci_id="Z00027">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Limit users with READHASHTABGRP authorization" id="CRITAU-A_d.2.1a" not_found="positive">
+      <compliant>       COMB_ID = 'READHASHTABGRP' and USER like '%'
+                        and     ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )     </compliant>
+      <noncompliant>    COMB_ID = 'READHASHTABGRP' and USER like '%' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Limit users with READHASHTABLES authorization" id="CRITAU-A_d.2.2a" not_found="positive">
+      <compliant>       COMB_ID = 'READHASHTABLES' and USER like '%' 
+                        and     ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )     </compliant>
+      <noncompliant>    COMB_ID = 'READHASHTABLES' and USER like '%' 
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' or LOCKED = 'X' or INVALID = 'X' )     </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- This Policy requires creation of a customized store, maintain configstore name and sci_id. -->
+  <configstore name="USER_AUTH_COMB" sci_id="Z00031">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Custom roles with READ HASH TABLE GROUP authorization" id="CRITAU-A_d.2.1b" not_found="positive">
+      <compliant>       COMB_ID = 'READHASHTABGRP' and ROLE like_regexpr '^(?!SAP).*' and ROLE_TYPE = 'S'
+                        and     ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )      </compliant>
+      <noncompliant>    COMB_ID = 'READHASHTABGRP' and ROLE like_regexpr '^(?!SAP).*' and ROLE_TYPE = 'S'
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Custom roles with READ HASH TABLES authorization" id="CRITAU-A_d.2.2b" not_found="positive">
+      <compliant>       COMB_ID = 'READHASHTABLES' and ROLE like_regexpr '^(?!SAP).*' and ROLE_TYPE = 'S'
+                        and     ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )      </compliant>
+      <noncompliant>    COMB_ID = 'READHASHTABLES' and ROLE like_regexpr '^(?!SAP).*' and ROLE_TYPE = 'S'
+                        and not ( RC =  'NONE' or RC = 'OBJECT_NOT_EXISTING' )      </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

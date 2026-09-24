@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      CHANGE-A: Protect Production System against changes – ABAP
+        Security level:                         Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-06-17      XX-SER-SECCHK   original for GA
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem desc="[BL2.6.0] Change Protection of Prod System (ABAP)" id="BL260_1ACHANGE" multisql="Yes" version="0000">
+  <!-- -->
+  <configstore name="GLOBAL">
+    <!-- -->
+    <!-- To avail of these checks the IT Admin roles for the managed systems should be defined in the LMDB of the SAP Focused Run system.  This is best practice.-->
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Global System Change Option (SE06) NOT MODIFIABLE for Production Systems" id="CHANGE-A_a.1" system_roles="PROD">
+      <compliant>       NAME = 'GLOBAL_SETTING' and VALUE  = 'NOT MODIFIABLE'    </compliant>
+      <noncompliant>    NAME = 'GLOBAL_SETTING' and VALUE != 'NOT MODIFIABLE'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- If you would like to extend the check to cover specific systems roles, please adapt the system_roles check attribute as required.  Possible values are: "PROD:QA:DEV:TEST:SANDBOX" or undefined"::".  Maintain as per your corporate needs. -->
+    <checkitem desc="[p1-CRITICAL] Global System Change Option (SE06) NOT MODIFIABLE for all other Systems (excl DEV)" id="CHANGE-A_a.2" system_roles="QA:TEST:SANDBOX::">
+      <compliant>       NAME = 'GLOBAL_SETTING' and VALUE  = 'NOT MODIFIABLE'    </compliant>
+      <noncompliant>    NAME = 'GLOBAL_SETTING' and VALUE != 'NOT MODIFIABLE'    </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="CLIENTS">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Client Change Option (SCC4) has no changes for Production Clients" id="CHANGE-A_b">
+      <compliant>       MANDT like '%'  
+                    and (   ( CCCATEGORY = 'P'  and     (CCCORACTIV = '2' and CCNOCLIIND = '3' and (CCCOPYLOCK ='X' or CCCOPYLOCK = 'L') ) )
+                         OR ( CCCATEGORY != 'P' )
+                        )       </compliant>
+      <noncompliant>    MANDT like '%'  
+                    and     ( CCCATEGORY = 'P'  and not (CCCORACTIV = '2' and CCNOCLIIND = '3' and (CCCOPYLOCK ='X' or CCCOPYLOCK = 'L') ) )  
+                                </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- You may want to add further corporate checks on the following event-type configuration stores:
+        GLOBAL_CHANGE_LOG	Change Log of System Change Option - Global Setting
+        COMPONENTS_CHANGE_LOG	Change Log of System Change Option - Software Component
+        NAMESPACES_CHANGE_LOG	Change Log of System Change Option - Namespace/Name Range
+        CLIENTS_CHANGE_LOG	Change Log of Client settings 
+
+    An example follows:
+
+    <configstore name="GLOBAL_CHANGE_LOG">
+    <checkitem desc="[p1-CRITICAL] Global System Change Option (SE06) - Changed to Modifiable within the last 7 days (Production and Quality Systems)" id="GLOBAL VC" not_found="positive" system_roles="PROD:QA::">
+      <compliant>  
+        COMPONENT like '%' and PREVIOUS like '%'
+        and AFTERWARDS = 'Modifiable'
+        and CHANGEUSER like '%' and CD_HIST_MOD like '%' 
+        and     CD_HIST_DATE &gt; to_decimal(to_varchar(add_seconds(CURRENT_UTCTIMESTAMP,-86400*7), 'YYYYMMDDHH24MISS')) 
+        </compliant>
+      <noncompliant> 
+        COMPONENT like '%' and PREVIOUS like '%'
+        and AFTERWARDS = 'Modifiable'
+        and CHANGEUSER like '%' and CD_HIST_MOD like '%' 
+        and not CD_HIST_DATE &gt; to_decimal(to_varchar(add_seconds(CURRENT_UTCTIMESTAMP,-86400*7), 'YYYYMMDDHH24MISS')) 
+        </noncompliant>
+    </checkitem>
+  </configstore>
+  -->
+  <!-- -->
+</targetsystem>

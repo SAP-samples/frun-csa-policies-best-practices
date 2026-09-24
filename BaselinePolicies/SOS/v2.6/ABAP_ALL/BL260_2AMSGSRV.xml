@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      MSGSRV-A: Message Server Security
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Message Server Security (ABAP)" id="BL260_2AMSGSRV" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <!-- This check looks for value of parameter which should be maintained to reference port number and not equal to 0. Value of 0 means no separate internal port).-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rdisp/msserv_internal maintained (Message Server Security, for internal port for server communication)" id="MSGSRV-A_a">
+      <compliant>       NAME = 'rdisp/msserv_internal'  and     lpad(VALUE,6,'0') &gt; '000000'  </compliant>
+      <noncompliant>    NAME = 'rdisp/msserv_internal'  and not lpad(VALUE,6,'0') &gt; '000000'  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: ms/monitor = 0 (Message Server Security, to prohibit external monitor)" id="MSGSRV-A_b">
+      <compliant>       NAME = 'ms/monitor' and VALUE  = '0'   </compliant>
+      <noncompliant>    NAME = 'ms/monitor' and VALUE != '0'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The rule about ms/admin_port covers compliance equal to 0 as well as an empty value (default is then 0). -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: ms/admin_port = 0 (Message Server Security, deactivated administration port for external clients)" id="MSGSRV-A_c">
+      <compliant>       NAME = 'ms/admin_port' and VALUE &lt;= '0' </compliant>
+      <noncompliant>    NAME = 'ms/admin_port' and VALUE &gt;  '0' </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <!-- This check looks for value of parameter which should be maintained to reference port number and not equal to 0. Value of 0 means no separate internal port).-->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rdisp/msserv_internal maintained (Message Server Security, for internal port for server communication)" id="MSGSRV-A_a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rdisp/msserv_internal'  and     lpad(VALUE,6,'0') &gt; '000000'  </compliant>
+      <noncompliant>    NAME = 'rdisp/msserv_internal'  and not lpad(VALUE,6,'0') &gt; '000000'  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: ms/monitor = 0 (Message Server Security, to prohibit external monitor)" id="MSGSRV-A_b" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'ms/monitor' and VALUE  = '0'   </compliant>
+      <noncompliant>    NAME = 'ms/monitor' and VALUE != '0'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The rule about ms/admin_port covers compliance equal to 0 as well as an empty value (default is then 0). -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: ms/admin_port = 0 (Message Server Security, deactivated administration port for external clients)" id="MSGSRV-A_c" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'ms/admin_port' and VALUE &lt;= '0' </compliant>
+      <noncompliant>    NAME = 'ms/admin_port' and VALUE &gt;  '0' </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

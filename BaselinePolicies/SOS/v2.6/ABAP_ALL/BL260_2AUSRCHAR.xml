@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          USRCHAR-A: Allowed character sets for user names in ABAP
+        Security level:                             Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   original for GA
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Allowed character sets for user names (ABAP)" id="BL260_2AUSRCHAR" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="PRGN_CUST">
+    <!-- -->
+    <!-- The following example uses a set-based approach to allow either XXX or ALL for BNAME_RESTRICT as per SAP Note 1731549.  The SAP Security Baseline Template identifies that this is particularly important for development systems, hence system attributes are used and the check is split to support transparency.
+    SAP Note 1731549 sets out that the switch value ALL reduces the character repertoire for a new user name the most.
+    With the switch setting XXX, you prevent nonallowed characters in the user name, regardless of where they are located.  Hence both are checked.
+    Adjust the sample rules to reflect your corporate policy.
+-->
+    <checkitem desc="[p2-STANDARD] Prohibit that user names can contain ‘wide’ spaces in DEV (Customizing switch BNAME_RESTRICT = XXX or ALL in table PRGN_CUST, see Note 1731549)" id="USRCHAR-A_a.1" system_roles="DEV">
+      <compliant>       ID = 'BNAME_RESTRICT' and     PATH in ('XXX', 'ALL')    </compliant>
+      <noncompliant>    ID = 'BNAME_RESTRICT' and not PATH in ('XXX', 'ALL')    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Prohibit that user names can contain ‘wide’ spaces in nonDEV (Customizing switch BNAME_RESTRICT = XXX or ALL in table PRGN_CUST, see Note 1731549)" id="USRCHAR-A_a.2" system_roles="PROD:QA:TEST:SANDBOX::">
+      <compliant>       ID = 'BNAME_RESTRICT' and     PATH in ('XXX', 'ALL')    </compliant>
+      <noncompliant>    ID = 'BNAME_RESTRICT' and not PATH in ('XXX', 'ALL')    </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

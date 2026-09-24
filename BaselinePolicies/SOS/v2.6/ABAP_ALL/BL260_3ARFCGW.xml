@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      RFCGW-A: RFC Gateway Security (part of application server ABAP)
+        Security level:                         Extended (Level 3)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] RFC Gateway Security (ABAP)" id="BL260_3ARFCGW" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!-- -->
+    <!-- In Note 2776748, as of kernel release 789, the default for gw/rem_start is DISABLED.-->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: gw/rem_start = DISABLED or SSH_SHELL (acceptable method to start programs via the RFC Gateway, see Note 2776748)" id="RFCGW-A_g">
+      <compliant>      NAME = 'gw/rem_start' and     (VALUE = 'DISABLED' or VALUE = 'SSH_SHELL' )   </compliant>
+      <noncompliant>   NAME = 'gw/rem_start' and not (VALUE = 'DISABLED' or VALUE = 'SSH_SHELL' )   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: gw/acl_mode_proxy = 1 (activates the default content of this ACL, if there is no such file already)" id="RFCGW-A_h.1">
+      <compliant>      NAME = 'gw/acl_mode_proxy' and VALUE  = '1'  </compliant>
+      <noncompliant>   NAME = 'gw/acl_mode_proxy' and VALUE != '1'  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: gw/prxy_info (global path defined to central directory)" id="RFCGW-A_h.2">
+      <compliant>       NAME = 'gw/prxy_info' and     ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/prxy[_]?info$' 
+                                                    or VALUE like_regexpr '^(\w{1}):\\usr\\sap\\(\w{3})\\SYS\\global\\sec[_]?info(|\.DAT|\.dat|\.txt)?$' 
+                                                    )      </compliant>
+      <noncompliant>    NAME = 'gw/prxy_info' and NOT ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/prxy[_]?info$' 
+                                                    or VALUE like_regexpr '^(\w{1}):\\usr\\sap\\(\w{3})\\SYS\\global\\sec[_]?info(|\.DAT|\.dat|\.txt)?$' 
+                                                    )      </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <!-- In Note 2776748, as of kernel release 789, the default for gw/rem_start is DISABLED.-->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: gw/rem_start = DISABLED or SSH_SHELL (acceptable method to start programs via the RFC Gateway, see Note 2776748)" id="RFCGW-A_g" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>      NAME = 'gw/rem_start' and     (VALUE = 'DISABLED' or VALUE = 'SSH_SHELL' )   </compliant>
+      <noncompliant>   NAME = 'gw/rem_start' and not (VALUE = 'DISABLED' or VALUE = 'SSH_SHELL' )   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: gw/acl_mode_proxy = 1 (activates the default content of this ACL, if there is no such file already)" id="RFCGW-A_h.1" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>      NAME = 'gw/acl_mode_proxy' and VALUE  = '1'  </compliant>
+      <noncompliant>   NAME = 'gw/acl_mode_proxy' and VALUE != '1'  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Profile parameter: gw/prxy_info (global path defined to central directory)" id="RFCGW-A_h.2" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'gw/prxy_info' and     ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/prxy[_]?info$' 
+                                                    or VALUE like_regexpr '^(\w{1}):\\usr\\sap\\(\w{3})\\SYS\\global\\sec[_]?info(|\.DAT|\.dat|\.txt)?$' 
+                                                    )      </compliant>
+      <noncompliant>    NAME = 'gw/prxy_info' and NOT ( VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/prxy[_]?info$' 
+                                                    or VALUE like_regexpr '^(\w{1}):\\usr\\sap\\(\w{3})\\SYS\\global\\sec[_]?info(|\.DAT|\.dat|\.txt)?$' 
+                                                    )      </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="GW_PRXINFO">
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] RFC Gateway ACL: reflects gw/prxy_info file not found" id="RFCGW-A_h prxinfo.1" operator="NOT_EXIST">
+      <compliant>       LINE like '%' and TEXT like_regexpr '^gw/prxy_info file not found'   </compliant>
+      <noncompliant>    LINE like '%' and TEXT like_regexpr '^gw/prxy_info file not found'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The following rule checks the line entries that commence with P, it does not consider the line entries that commence with D or #.-->
+    <!-- The following non-compliant rule checks the entry SOURCE and DEST are present and that either does not have full generic value. This is an example. The compliance rule is the inverse of the non-compliant rule. -->
+    <!-- Tip: be careful when defining rules that combine multiple conditions with logical AND and ORs with NOTs, and keep De Morgan's law in mind.  The following rule caters for the entries to be in any order. -->
+    <checkitem desc="[p3-EXTENDED] RFC gateway ACL: prxyinfo file entries not fully generic (RFC Gateway hardening)" id="RFCGW-A_h prxinfo.2">
+      <compliant>       line like '%' 
+                        and TEXT like_regexpr '^P.*' 
+                        and not (
+                                    ( text like_regexpr 'SOURCE=[\*](?![[:alnum:].]+)' or not text like '%SOURCE=%' )
+                                and ( text like_regexpr 'DEST=[\*](?![[:alnum:].]+)' or not text like '%DEST=%' ) 
+                                )
+                                </compliant>
+      <noncompliant>    line like '%' 
+                        and TEXT like_regexpr '^P.*' 
+                        and     (
+                                    ( text like_regexpr 'SOURCE=[\*](?![[:alnum:].]+)' or not text like '%SOURCE=%' )
+                                and ( text like_regexpr 'DEST=[\*](?![[:alnum:].]+)' or not text like '%DEST=%' ) 
+                                )
+                                </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

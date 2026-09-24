@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      NETCF-A: Secure Network Configuration – ABAP
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-07-17      XX-SER-SECCHK   
+
+        Note: Configuration Store ABAP_INSTANCE_PAHI reflects runtime configuration of Dialog Instances.  Runtime Configuration of ASCS instance and ERS instance is in Parameters Store with separate sci_ids, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.  Rules for all are provided so customer can select the rule relevative to their context including single-instance systems.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem desc="[BL2.6.0] Secure Network Configuration (ABAP)" id="BL260_2ANETCF" multisql="Yes" version="0000">
+  <!--  -->
+  <configstore name="ABAP_INSTANCE_PAHI">
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: auth/rfc_authority_check = 1 6 or 9 (Secure Network Configuration, execution option for the RFC authority check, see Note 2216306)" id="NETCF-A_a">
+      <compliant>       NAME = 'auth/rfc_authority_check' and     VALUE in ('1', '6', '9')     </compliant>
+      <noncompliant>    NAME = 'auth/rfc_authority_check' and not VALUE in ('1', '6', '9')     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rfc/callback_security_method = 3 (Secure Network Configuration, block unauthorized remote RFC callbacks, see Note 2678501)" id="NETCF-A_b">
+      <compliant>       NAME = 'rfc/callback_security_method' and VALUE  = '3'     </compliant>
+      <noncompliant>    NAME = 'rfc/callback_security_method' and VALUE != '3'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rfc/selftrust = 0 (Secure Network Configuration, see Notes 2449757, 2614667)" id="NETCF-A_c">
+      <compliant>       NAME = 'rfc/selftrust' and VALUE  = '0'     </compliant>
+      <noncompliant>    NAME = 'rfc/selftrust' and VALUE != '0'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: ixml/dtd_restriction = expansion or prohibited (Secure Network Configuration) (see Notes 2308217, 1712860)" id="NETCF-A_e">
+      <compliant>       NAME = 'ixml/dtd_restriction' and     ( VALUE = 'expansion' or VALUE = 'prohibited' )   </compliant>
+      <noncompliant>    NAME = 'ixml/dtd_restriction' and not ( VALUE = 'expansion' or VALUE = 'prohibited' )   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/disable_cpic = 1 (Secure Network Configuration, see Note 2926224)" id="NETCF-A_f">
+      <compliant>       NAME = 'login/disable_cpic' and VALUE  = '1'    </compliant>
+      <noncompliant>    NAME = 'login/disable_cpic' and VALUE != '1'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: wdisp/add_xforwardedfor_header = 1 or TRUE (Secure Network Configuration, see Note 2788140)" id="NETCF-A_g">
+      <compliant>       NAME = 'wdisp/add_xforwardedfor_header' and     ( VALUE = '1' or UPPER(VALUE) = 'TRUE' )       </compliant>
+      <noncompliant>    NAME = 'wdisp/add_xforwardedfor_header' and not ( VALUE = '1' or UPPER(VALUE) = 'TRUE' )       </noncompliant>
+    </checkitem>
+    <!--   -->
+  </configstore>
+  <!--   -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!--   -->
+  <configstore name="Parameters">
+    <!--  -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: auth/rfc_authority_check = 1 6 or 9 (Secure Network Configuration, execution option for the RFC authority check, see Note 2216306)" id="NETCF-A_a" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'auth/rfc_authority_check' and     VALUE in ('1', '6', '9')     </compliant>
+      <noncompliant>    NAME = 'auth/rfc_authority_check' and not VALUE in ('1', '6', '9')     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rfc/callback_security_method = 3 (Secure Network Configuration, block unauthorized remote RFC callbacks, see Note 2678501)" id="NETCF-A_b" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rfc/callback_security_method' and VALUE  = '3'     </compliant>
+      <noncompliant>    NAME = 'rfc/callback_security_method' and VALUE != '3'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: rfc/selftrust = 0 (Secure Network Configuration, see Notes 2449757, 2614667)" id="NETCF-A_c" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'rfc/selftrust' and VALUE  = '0'     </compliant>
+      <noncompliant>    NAME = 'rfc/selftrust' and VALUE != '0'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: ixml/dtd_restriction = expansion or prohibited (Secure Network Configuration) (see Notes 2308217, 1712860)" id="NETCF-A_e" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'ixml/dtd_restriction' and     ( VALUE = 'expansion' or VALUE = 'prohibited' )   </compliant>
+      <noncompliant>    NAME = 'ixml/dtd_restriction' and not ( VALUE = 'expansion' or VALUE = 'prohibited' )   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: login/disable_cpic = 1 (Secure Network Configuration, see Note 2926224)" id="NETCF-A_f" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'login/disable_cpic' and VALUE  = '1'    </compliant>
+      <noncompliant>    NAME = 'login/disable_cpic' and VALUE != '1'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Profile parameter: wdisp/add_xforwardedfor_header = 1 or TRUE (Secure Network Configuration, see Note 2788140)" id="NETCF-A_g" system_attributes="SYSTEM_TYPE:ABAP">
+      <compliant>       NAME = 'wdisp/add_xforwardedfor_header' and     ( VALUE = '1' or UPPER(VALUE) = 'TRUE' )       </compliant>
+      <noncompliant>    NAME = 'wdisp/add_xforwardedfor_header' and not ( VALUE = '1' or UPPER(VALUE) = 'TRUE' )       </noncompliant>
+    </checkitem>
+    <!--   -->
+  </configstore>
+  <!--   -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!--   -->
+  <configstore name="SICF_SERVICES">
+    <!--   -->
+    <checkitem desc="[p2-STANDARD] Deactivate WebService FormToRfc" id="NETCF-A_d.01" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/FormToRfc/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/FormToRfc/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService IDoc_XML" id="NETCF-A_d.02" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/idoc_xml/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/idoc_xml/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService bsp_veri" id="NETCF-A_d.03" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/bsp_veri/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/bsp_veri/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService certmap" id="NETCF-A_d.04" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/certmap/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/certmap/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService certreq" id="NETCF-A_d.05" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/certreq/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/certreq/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService icf" id="NETCF-A_d.06" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/icf/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/icf/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService echo" id="NETCF-A_d.07" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/echo/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/echo/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService error" id="NETCF-A_d.08" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/error/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/error/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService CERTMAP" id="NETCF-A_d.09" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/its/CERTMAP/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/its/CERTMAP/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService CERTREQ" id="NETCF-A_d.10" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/its/CERTREQ/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/its/CERTREQ/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService report" id="NETCF-A_d.11" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/report/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/report/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService rfc" id="NETCF-A_d.12" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/soap/rfc/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/soap/rfc/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService IDoc" id="NETCF-A_d.13" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/srt/IDoc/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/srt/IDoc/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService webrfc" id="NETCF-A_d.14" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/webrfc/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/webrfc/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService xrfc" id="NETCF-A_d.15" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/xrfc/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/xrfc/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService xrfc_test" id="NETCF-A_d.16" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/xrfc_test/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/xrfc_test/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/htmlb_samples/" id="NETCF-A_d.17" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/htmlb_samples/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/htmlb_samples/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/bsp_model/" id="NETCF-A_d.18" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/bsp_model/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/bsp_model/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/it00/" id="NETCF-A_d.19" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it00/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it00/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/it01/" id="NETCF-A_d.20" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it01/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it01/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/it02/" id="NETCF-A_d.21" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it02/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it02/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/it03/" id="NETCF-A_d.22" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it03/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it03/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/it04/" id="NETCF-A_d.23" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it04/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it04/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/it05/" id="NETCF-A_d.24" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it05/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/it05/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/itmvc2/" id="NETCF-A_d.25" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/itmvc2/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/itmvc2/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/itsm/" id="NETCF-A_d.26" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/itsm/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/itsm/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/sbspext_htmlb" id="NETCF-A_d.27" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_htmlb/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_htmlb/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/sbspext_phtmlb/" id="NETCF-A_d.28" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_phtmlb/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_phtmlb/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/sbspext_table/" id="NETCF-A_d.29" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_table/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_table/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/sbspext_xhtmlb/" id="NETCF-A_d.30" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_xhtmlb/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/sbspext_xhtmlb/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/system_private/" id="NETCF-A_d.31" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/system_private/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/system_private/' </noncompliant>
+    </checkitem>
+    <checkitem desc="[p2-STANDARD] Deactivate WebService /sap/bc/bsp/sap/system_public/" id="NETCF-A_d.32" operator="not_exist:URL">
+      <compliant>    ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/system_public/' </compliant>
+      <noncompliant> ICF_NAME like '%'  and URL = '/sap/bc/bsp/sap/system_public/' </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="ABAP_UCON_HTTP_WHITE_LIST">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] UCON HTTP allowlist 01 Trusted Network Zone is active (= final)" id="NETCF-A_h.1">
+      <compliant>       NAME like '01%' and LOWER(VALUE)  = 'final'    </compliant>
+      <noncompliant>    NAME like '01%' and LOWER(VALUE) != 'final'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] UCON HTTP allowlist 02 ClickJacking Framing Protection is active (= final)" id="NETCF-A_h.2">
+      <compliant>       NAME like '02%' and LOWER(VALUE)  = 'final'    </compliant>
+      <noncompliant>    NAME like '02%' and LOWER(VALUE) != 'final'    </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] UCON HTTP allowlist 03 CSS Style Sheet is active (= final)" id="NETCF-A_h.3">
+      <compliant>       NAME like '03%' and LOWER(VALUE)  = 'final'    </compliant>
+      <noncompliant>    NAME like '03%' and LOWER(VALUE) != 'final'    </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

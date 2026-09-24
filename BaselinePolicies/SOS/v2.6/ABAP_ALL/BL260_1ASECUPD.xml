@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      SECUPD-A: Regular Security Updates – ABAP
+        Security level:                         Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+                Configuration Store COMP_LEVEL (S00120) contains Software Component versions of ABAP, Web Dispatcher, and JAVA type systems, hence system_attributes="SYSTEM_TYPE:ABAP" used at check level.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Regular Security Updates (ABAP)" id="BL260_1ASECUPD" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="COMP_LEVEL" sci_id="S00120">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Software component level last reported change in CCDB: within last 12 months" id="SECUPD-A_a.1" not_found="ignore" system_attributes="SYSTEM_TYPE:ABAP">
+      <!-- system type should be qualified as store COMP_LEVEL relevant to multiple technologies.-->
+      <!-- CD_HIST_DATE is a column associated with the Configuration Store reflecting timestamp of change pointer.-->
+      <compliant>       COMPONENT like '%' and VERSION like '%' and SP like '%' and SP_REL_DATE like '%' 
+                        and     TO_DATE(CD_HIST_DATE) &gt;= ADD_DAYS(CURRENT_UTCTIMESTAMP,-365)       </compliant>
+      <noncompliant>    COMPONENT like '%' AND VERSION like '%' and SP like '%' and SP_REL_DATE like '%' 
+                        and not TO_DATE(CD_HIST_DATE) &gt;= ADD_DAYS(CURRENT_UTCTIMESTAMP,-365)       </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Software component level SP_REL_DATE not older than 24 months" id="SECUPD-A_a.2" not_found="ignore" system_attributes="SYSTEM_TYPE:ABAP">
+      <!-- system type should be qualified as store COMP_LEVEL relevant to multiple technologies.-->
+      <!-- The column SP_REL_DATE of store COMP_LEVEL is not always updated, hence this compliant check compares 8 digit date when available for SP_REL_DAT, if SP_REL_DATE is NEWER then condition as expressed is TRUE as current date used, otherwise outcome of date check is FALSE as date 0 used.  This approach attempts to handle different behaviours.-->
+      <compliant>       COMPONENT like '%' and VERSION like '%' and SP like '%' and SP_REL_DATE != '' 
+                        and     (add_days(current_date,-730)) &lt; (CASE WHEN SP_REL_DATE like_regexpr '^\d{8,8}$' THEN SP_REL_DATE WHEN SP_REL_DATE = 'NEWER' THEN CURRENT_DATE ELSE '00000000' END)     </compliant>
+      <noncompliant>    COMPONENT like '%' AND VERSION like '%' and SP like '%' AND SP_REL_DATE != ''
+                        and not (add_days(current_date,-730)) &lt; (CASE WHEN SP_REL_DATE like_regexpr '^\d{8,8}$' THEN SP_REL_DATE WHEN SP_REL_DATE = 'NEWER' THEN CURRENT_DATE ELSE '00000000' END)     </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="SAP_KERNEL" sci_id="S00001">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] SAP Kernel date not older than 365 days" id="SECUPD-A_a.3">
+      <!-- the date written to the table under the Configuration Store has double space when the date is in the first nine days of the month, hence the replace function inserts ' 0' to facilitate subsequent conversion to date format and avoiding No Data Found result in output.-->
+      <compliant>   NAME = 'KERN_COMP_TIME' 
+                    and not DAYS_BETWEEN(TO_DATE(SUBSTRING_REGEXPR('([A-Za-z]{3} [0-9]{1,2} [0-9]{4})' IN (REPLACE(VALUE, '  ', ' 0'))), 'Mon DD YYYY'),CURRENT_UTCDATE) &gt;= 365     </compliant>
+      <noncompliant>NAME = 'KERN_COMP_TIME' 
+                    and     DAYS_BETWEEN(TO_DATE(SUBSTRING_REGEXPR('([A-Za-z]{3} [0-9]{1,2} [0-9]{4})' IN (REPLACE(VALUE, '  ', ' 0'))), 'Mon DD YYYY'),CURRENT_UTCDATE) &gt; 365      </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="CRYPTOLIB" sci_id="S00053">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] CRYPTOLIB date not older than 365 days" id="SECUPD-A_a.4">
+      <compliant>   NAME = 'CCL' 
+                    and not DAYS_BETWEEN(TO_DATE(SUBSTRING_REGEXPR('([A-Za-z]{3} [0-9]{1,2} [0-9]{4})' IN (REPLACE(VALUE, '  ', ' 0'))), 'Mon DD YYYY'),CURRENT_DATE) &gt;= 365     </compliant>
+      <noncompliant>NAME = 'CCL' 
+                    and     DAYS_BETWEEN(TO_DATE(SUBSTRING_REGEXPR('([A-Za-z]{3} [0-9]{1,2} [0-9]{4})' IN (REPLACE(VALUE, '  ', ' 0'))), 'Mon DD YYYY'),CURRENT_DATE) &gt; 365      </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] CRYPTOLIB version ≥ 8.5.39 (see SAP Note 3051787)" id="SECUPD-A_a.5">
+      <compliant>       NAME = 'CCL' and     VALUE like_regexpr '^(8\.5\.39|8\.5\.[456789]\d|8\.[6789]\.\d+|8\.\d{2,}\.\d+)[ ].*'     </compliant>
+      <noncompliant>    NAME = 'CCL' and not VALUE like_regexpr '^(8\.5\.39|8\.5\.[456789]\d|8\.[6789]\.\d+|8\.\d{2,}\.\d+)[ ].*'     </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>
