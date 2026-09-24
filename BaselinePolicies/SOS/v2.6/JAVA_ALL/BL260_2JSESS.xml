@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          SESS-J: Session Protection – Java
+        Security level:                             Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        There is Configuration Store http for Technical System which is separate to the http Store for instances. As these stores only exist for JAVA systems, it is only necessary to name the store once, the sci_id is not necessary.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Session Protection (JAVA)" id="BL260_2JSESS" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="http">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Java property: SystemCookiesDataProtection = true (HTTP Service property, Session Protection, see Note 2068872)" id="SESS-J_a">
+      <compliant>       NAME = 'SystemCookiesDataProtection' and LOWER(VALUE)  = 'true'     </compliant>
+      <noncompliant>    NAME = 'SystemCookiesDataProtection' and LOWER(VALUE) != 'true'     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Java property: SystemCookiesHTTPSProtection = true (HTTP Service property, Session Protection, see Note 2068872)" id="SESS-J_b">
+      <compliant>       NAME = 'SystemCookiesHTTPSProtection' and LOWER(VALUE)  = 'true'    </compliant>
+      <noncompliant>    NAME = 'SystemCookiesHTTPSProtection' and LOWER(VALUE) != 'true'    </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

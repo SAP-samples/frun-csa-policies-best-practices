@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      SSO-J: Single Sign-On – Java
+        Security level:                         Extended (Level 3)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Note: There is Configuration Store com.sap.security.core.ume.service for Technical System which is separate to the com.sap.security.core.ume.service store for Server node instances. As these stores only exist for JAVA systems, it is only necessary to name the store once, the sci_id is not necessary.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Single Sign-On (JAVA)" id="BL260_3JSSO" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <configstore name="com.sap.security.core.ume.service">
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Java property: ume.logon.security.enforce_secure_cookie = TRUE (send SAP logon ticket only via HTTPS, see Note 2068872)" id="SSO-J_a">
+      <compliant>    NAME = 'ume.logon.security.enforce_secure_cookie' and UPPER(VALUE)  = 'TRUE'   </compliant>
+      <noncompliant> NAME = 'ume.logon.security.enforce_secure_cookie' and UPPER(VALUE) != 'TRUE'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Java property: ume.logon.httponlycooki = TRUE (SAP logon ticket set to HttpOnly, see Note 2068872)" id="SSO-J_b">
+      <compliant>    NAME = 'ume.logon.httponlycookie' and UPPER(VALUE)  = 'TRUE'       </compliant>
+      <noncompliant> NAME = 'ume.logon.httponlycookie' and UPPER(VALUE) != 'TRUE'       </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!-- depending on release, parameter can be set in hours or hh:mm).-->
+    <checkitem desc="[p3-EXTENDED] Java property: login.ticket_lifetime ≤ 8 hours (SAP logon ticket lifetime hh:mm)" id="SSO-J_c">
+      <compliant>    NAME = 'login.ticket_lifetime' and     ( (lpad(VALUE,4,'0') &lt;= '0008') OR (SUBSTR_REGEXPR('(\d+)(:?)' in VALUE GROUP 1 ) &lt;= '8') )   </compliant>
+      <noncompliant> NAME = 'login.ticket_lifetime' and not ( (lpad(VALUE,4,'0') &lt;= '0008') OR (SUBSTR_REGEXPR('(\d+)(:?)' in VALUE GROUP 1 ) &lt;= '8') )   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <!-- At this time, there is no store for UME property portal.alias.security.enforce_secure_cookie, hence this must be checked via alternative means. -->
+    <!--  -->
+  </configstore>
+  <!--  -->
+</targetsystem>

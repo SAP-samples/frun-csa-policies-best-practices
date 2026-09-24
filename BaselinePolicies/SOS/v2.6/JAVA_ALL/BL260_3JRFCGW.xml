@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      RFCGW-J: RFC Gateway Security (part of application server JAVA)
+        Security level:                         Extended (Level 3)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-06-17      XX-SER-SECCHK   
+
+        Note: Parameters Store S00439 is for JAVA SCS instance.  Java SCS instance hosts the message server, the enqueue server, and a Gateway process as its core components.  Rules are not defined for the Parameters store S00165 for server nodes.
+ -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] RFC Gateway Security (JAVA)" id="BL260_3JRFCGW" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="Parameters" sci_id="S00439">
+    <!-- -->
+    <!-- In Note 2776748, as of kernel release 789, the default for gw/rem_start is DISABLED.-->
+    <checkitem desc="[p3-EXTENDED] Java property: gw/rem_start = DISABLED or SSH_SHELL (acceptable method to start programs via the RFC Gateway, see Note 2776748)" id="RFCGW-J_g">
+      <compliant>       NAME = 'gw/rem_start' and     (VALUE = 'DISABLED' or VALUE = 'SSH_SHELL' )     </compliant>
+      <noncompliant>    NAME = 'gw/rem_start' and not (VALUE = 'DISABLED' or VALUE = 'SSH_SHELL' )     </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p3-EXTENDED] Java property: gw/acl_mode_proxy = 1 (activates the default content of this ACL, if there is no such file already)" id="RFCGW-J_h">
+      <compliant>       NAME = 'gw/acl_mode_proxy' and VALUE  = '1'     </compliant>
+      <noncompliant>    NAME = 'gw/acl_mode_proxy' and VALUE != '1'     </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!--  At this time in FRUN, it is not possible to validate the contents of the Access Control Lists for Java-based systems.  This must be done manually or in another way. -->
+  <!-- -->
+</targetsystem>

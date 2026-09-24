@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      MSGSRV-J: Message Server Security
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-09-17      XX-SER-SECCHK   
+
+        Note: Parameters Store S00439 is for JAVA SCS instance.  Java SCS instance hosts the message server, the enqueue server, and a Gateway process as its core components.  
+        Parameters Store S0016 is for ordinary server nodes.  Where relevant, restrictions are assigned at check level for system_attributes="SYSTEM_TYPE:JAVA", as Parameters Store exists for other technologies. Elsewhere, the sci_id is defined where only a specific store is in scope.
+
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Message Server Security (JAVA)" id="BL260_2JMSGSRV" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <!-- This check looks for value of parameter which should be maintained to reference port number and not equal to 0. Value of 0 means no separate internal port).-->
+    <!-- The parameter is relevant to ordinary server nodes — but in a different way than on the SCS instance. For ordinary server nodes it ensures the application server node connects to the message server via the dedicated internal port.  For SCS instance, it defines the port on which the message server itself listens for internal communication from application servers.  Hence all JAVA nodes are checked. -->
+    <checkitem desc="[p2-STANDARD] Java property: rdisp/msserv_internal maintained (!= 0) (Message Server Security, for internal port for server communication)" id="MSGSRV-J_a" system_attributes="SYSTEM_TYPE:JAVA">
+      <compliant>       NAME = 'rdisp/msserv_internal'  and     lpad(VALUE,6,'0') &gt; '000000'  </compliant>
+      <noncompliant>    NAME = 'rdisp/msserv_internal'  and not lpad(VALUE,6,'0') &gt; '000000'  </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters" sci_id="S00439">
+    <!-- -->
+    <!-- The parameter is only meaningful where the message server is hosted. -->
+    <checkitem desc="[p2-STANDARD] Java property: ms/monitor = 0 (Message Server Security, to prohibit external monitor)" id="MSGSRV-J_b" system_attributes="SYSTEM_TYPE:JAVA">
+      <compliant>       NAME = 'ms/monitor' and VALUE  = '0'   </compliant>
+      <noncompliant>    NAME = 'ms/monitor' and VALUE != '0'   </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- The parameter is only meaningful where the message server is hosted. -->
+    <!-- The rule about ms/admin_port covers compliance equal to 0 as well as an empty value (default is then 0). -->
+    <checkitem desc="[p2-STANDARD] Java property: ms/admin_port = 0 (Message Server Security, deactivated administration port for external clients" id="MSGSRV-J_c" system_attributes="SYSTEM_TYPE:JAVA">
+      <compliant>       NAME = 'ms/admin_port' and VALUE &lt;= '0' </compliant>
+      <noncompliant>    NAME = 'ms/admin_port' and VALUE &gt;  '0' </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

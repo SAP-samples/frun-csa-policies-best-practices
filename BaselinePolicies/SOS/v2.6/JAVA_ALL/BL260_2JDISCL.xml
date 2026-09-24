@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          DISCL-J: Information Disclosure – JAVA
+        Security level:                             Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Note: There is Configuration Store http for Technical System which is separate to the http for each Server node instance. As these stores only exist for JAVA systems, it is only necessary to name the store once, the sci_id is not necessary.  For the Parameters store, the check attribute system_attributes="SYSTEM_TYPE:JAVA" is used to distinguish from other Parameters stores.
+-->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Information Disclosure (JAVA)" id="BL260_2JDISCL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="http">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Java property: UseServerHeader = FALSE (server header must be disabled in the HTTP Provider Service)" id="DISCL-J_a">
+      <compliant>       NAME = 'UseServerHeader' and UPPER(VALUE)  = 'FALSE'    </compliant>
+      <noncompliant>    NAME = 'UseServerHeader' and UPPER(VALUE) != 'FALSE'    </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <configstore name="Parameters">
+    <!-- -->
+    <!-- SDEFAULT: Protects more web methods than DEFAULT.  ALL: Protects all web methods, requiring authentication for access.  Keep excluded methods under review.-->
+    <checkitem desc="[p2-STANDARD] Java property: service/protectedwebmethods = SDEFAULT or ALL (disclosure of unnecessary information with limited list of exceptions, see Note 1439348)" id="DISCL-J_b" system_attributes="SYSTEM_TYPE:JAVA">
+      <compliant>       NAME = 'service/protectedwebmethods' and     ( VALUE like 'SDEFAULT%' or VALUE like 'ALL%' )    </compliant>
+      <noncompliant>    NAME = 'service/protectedwebmethods' and not ( VALUE like 'SDEFAULT%' or VALUE like 'ALL%' )    </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      PWDPOL-J: Password Policy – JAVA
+        Security level:                         Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Note: There is Configuration Store com.sap.security.core.ume.service for Technical System which is separate to the com.sap.security.core.ume.service for each Server node instance. As these stores only exist for JAVA systems, it is only necessary to name the store once, the sci_id is not necessary.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Password Policy (JAVA)" id="BL260_1JPWDPOL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <configstore name="com.sap.security.core.ume.service">
+    <!-- -->
+    <checkitem desc="[p1-CRITICAL] Java property: Minimum Password Length ≥ 12 (Password Policy)" id="PWDPOL-J_a">
+      <compliant>       NAME = 'ume.logon.security_policy.password_min_length' and     lpad(VALUE,4,'0') &gt;= '0012'   </compliant>
+      <noncompliant>    NAME = 'ume.logon.security_policy.password_min_length' and not lpad(VALUE,4,'0') &gt;= '0012'   </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+</targetsystem>
