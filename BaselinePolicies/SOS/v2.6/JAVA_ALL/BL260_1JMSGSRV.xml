@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      MSGSRV-J: Message Server Security
+        Security level:                         Critical (Level 1)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-06-17      XX-SER-SECCHK   
+
+        Note: Parameters Store S00439 is for JAVA SCS instance.  Java SCS instance hosts the message server, the enqueue server, and a Gateway process as its core components.  Rules are not defined for the Parameters store S00165 for server nodes.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem desc="[BL2.6.0] Message Server Security (JAVA)" id="BL260_1JMSGSRV" multisql="Yes" version="0000">
+  <!-- -->
+  <configstore name="Parameters" sci_id="S00439">
+    <!-- -->
+    <!-- Note parameter system/secure_communication is not considered since it is relevant for pure ABAP systems only as per SAP Note 2040644.  Hence there is no Extended p3 equivalent check.-->
+    <!-- -->
+    <!-- The parameter is only meaningful where the message server is hosted. On ordinary server nodes, the parameter itself has no enforcement effect. -->
+    <checkitem desc="[p1-CRITICAL] Java property: ms/acl_info path is maintained (Message Server Security, pointing to access control list file for Message Server (SCS instance)" id="MSGSRV-J_d.1">
+      <compliant>       NAME = 'ms/acl_info' 
+                        and     VALUE like_regexpr '(\w:)?([\/\\]usr[\/\\]sap|[\/\\]sapmnt)[\/\\](\w{3})([\/\\]SYS)?[\/\\]global[\/\\]ms_acl(_info)?(\.DAT|\.dat|\.txt)?'  </compliant>
+      <noncompliant>    NAME = 'ms/acl_info' 
+                        and not VALUE like_regexpr '(\w:)?([\/\\]usr[\/\\]sap|[\/\\]sapmnt)[\/\\](\w{3})([\/\\]SYS)?[\/\\]global[\/\\]ms_acl(_info)?(\.DAT|\.dat|\.txt)?'  </noncompliant>
+    </checkitem>
+    <!-- -->
+    <!-- OLD SYNTAX retained for reference:
+    <checkitem desc="[p1-CRITICAL] Java property: ms/acl_info is maintained (Message Server Security, pointing to access control list file for Message Server (SCS instance)" id="MSGSRV-J_d.1">
+      <compliant>       NAME = 'ms/acl_info' 
+                        and     (  VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/ms_acl_info'
+                                or VALUE like_regexpr '^/sapmnt/(\w{3})/SYS/global/ms_acl_info'
+                                or VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' )         </compliant>
+      <noncompliant>    NAME = 'ms/acl_info' 
+                        and not (  VALUE like_regexpr '^/usr/sap/(\w{3})/SYS/global/ms_acl_info'
+                                or VALUE like_regexpr '^/sapmnt/(\w{3})/SYS/global/ms_acl_info'
+                                or VALUE like_regexpr '^\w:\\usr\\sap\\(\w{3})\\SYS\\global\\ms_acl_info(\.DAT|\.dat)?' )         </noncompliant>
+    </checkitem>
+    -->
+    <!-- -->
+    <!-- The parameter is only meaningful where the message server is hosted. -->
+    <!-- Join avoids situations where INF or No data found for this indexed parameter. Compliance check looks for either expected suboptions are maintained, or parameter has empty value. -->
+    <checkitem desc="[p1-CRITICAL] Java property: ms/server_port_nn uses ACLFILE sub-parameter if it exists (Message Server Security, see Note 3272585) (SCS instance)" id="MSGSRV-J_f.1">
+      <compliant>       s0.NAME = s1.NAME 
+                        and     (   ( VALUE like '%ACLFILE=%' and VALUE like '%HTTP%' ) 
+                                 or ( length(VALUE) = 0 )
+                                )
+                                </compliant>
+      <noncompliant>    s0.NAME = s1.NAME 
+                        and not (   ( VALUE like '%ACLFILE=%' and VALUE like '%HTTP%' ) 
+                                 or ( length(VALUE) = 0 )
+                                )
+                                </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="Yes" sci_id="S00439">
+        <joincompliant>     NAME like 'ms/server_port_%' and VALUE like '%'     </joincompliant>
+        <joinnoncompliant>  NAME like 'ms/server_port_%' and VALUE like '%'     </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+  <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+  <!-- -->
+  <!-- Note: It is not possible at this time to analyse via shipped CCDB stores the contents of the Message Server ACL file for Java-based systems.  This must be done manually or another way.-->
+  <!-- -->
+</targetsystem>
