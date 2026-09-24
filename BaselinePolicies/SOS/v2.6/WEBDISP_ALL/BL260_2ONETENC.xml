@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:          NETENC-O: Encryption of Network Connections – Web Dispatcher
+        Security level:                             Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   
+
+        Note: There are multiple Parameters Configuration Stores, hence sci_id added to restrict to Web Dispatcher component-specific Parameters Store.
+
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Encryption of Network Connections (WebDispatcher)" id="BL260_2ONETENC" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <configstore name="Parameters" sci_id="S00444">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Parameter: icm/server_port_nn uses HTTPS (protect information communicated via ICM Web Dispatcher)" id="NETENC-O_a.1" not_found="ignore">
+      <compliant>       NAME like 'icm/server_port_%' and VALUE like '%PROT=HTTP%' and     VALUE like '%PROT=HTTPS%'        </compliant>
+      <noncompliant>    NAME like 'icm/server_port_%' and VALUE like '%PROT=HTTP%' and not VALUE like '%PROT=HTTPS%'        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Parameter: icm/HTTP/admin_nn has PORT defined (allow Web Dispatcher administration only on certain port)" id="NETENC-O_b.1" not_found="ignore">
+      <compliant>       NAME like 'icm/HTTP/admin_%' and     VALUE like '%PORT%'        </compliant>
+      <noncompliant>    NAME like 'icm/HTTP/admin_%' and not VALUE like '%PORT%'        </noncompliant>
+    </checkitem>
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Parameter: icm/HTTP/admin_nn has PORT qualified, and HTTPS on that PORT (via icm/server_port_nn)" id="NETENC-O_b.2">
+      <compliant>       NAME like 'icm/server_port_%' and 
+                            VALUE like '%PROT=HTTPS%' and SUBSTR_REGEXPR('(PORT=)(\d+)' in VALUE GROUP 2) = SUBSTR_REGEXPR('(PORT=)(\d+)' in s1.VALUE GROUP 2)  </compliant>
+      <noncompliant>    NAME like 'icm/server_port_%' and 
+                        not VALUE like '%PROT=HTTPS%' and SUBSTR_REGEXPR('(PORT=)(\d+)' in VALUE GROUP 2) = SUBSTR_REGEXPR('(PORT=)(\d+)' in s1.VALUE GROUP 2)  </noncompliant>
+      <joinstore name="Parameters" no_data_found="No" not_in_output="No">
+        <joincompliant>      NAME like 'icm/HTTP/admin_%' and VALUE like '%PORT=%'  </joincompliant>
+        <joinnoncompliant>   NAME like 'icm/HTTP/admin_%' and VALUE like '%PORT=%'  </joinnoncompliant>
+      </joinstore>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>
