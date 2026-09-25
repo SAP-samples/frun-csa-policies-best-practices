@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      PWDPOL-J: Password Policy – JAVA
+        Security level:                         Extended (Level 3)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-06-17      XX-SER-SECCHK   
+
+        There is Configuration Store com.sap.security.core.ume.service for Technical System which is separate to the com.sap.security.core.ume.service for Server node instances. As these stores only exist for JAVA systems, it is only necessary to name the store once.
+ -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Password Policy (JAVA)" id="BL260_3JPWDPOL" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!--  -->
+  <configstore name="com.sap.security.core.ume.service">
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Java property: ume.logon.security_policy.password_expire_days between 1 and 183 (Password Expiration Days)" id="PWDPOL-J_b">
+      <compliant>       NAME = 'ume.logon.security_policy.password_expire_days' and     lpad(VALUE,4,'0') between '0001' and '0183' </compliant>
+      <noncompliant>    NAME = 'ume.logon.security_policy.password_expire_days' and not lpad(VALUE,4,'0') between '0001' and '0183' </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Java property: ume.logon.security_policy.userid_in_password_allowed = FALSE (Disable user ID as part of password)" id="PWDPOL-J_c">
+      <compliant>       NAME = 'ume.logon.security_policy.userid_in_password_allowed' and     UPPER(VALUE) = 'FALSE'   </compliant>
+      <noncompliant>    NAME = 'ume.logon.security_policy.userid_in_password_allowed' and not UPPER(VALUE) = 'FALSE'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Java property: ume.logon.security_policy.oldpass_in_newpass_allowed = FALSE (Disable old password in password allowed)" id="PWDPOL-J_d">
+      <compliant>       NAME = 'ume.logon.security_policy.oldpass_in_newpass_allowed' and     UPPER(VALUE) = 'FALSE'   </compliant>
+      <noncompliant>    NAME = 'ume.logon.security_policy.oldpass_in_newpass_allowed' and not UPPER(VALUE) = 'FALSE'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Java property: ume.logon.security_policy.password_alpha_numeric_required ≥ 1 (Minimum number of letters and numbers in password)" id="PWDPOL-J_e.1">
+      <compliant>       NAME = 'ume.logon.security_policy.password_alpha_numeric_required' and     lpad(VALUE,4,'0') &gt;= '0001'  </compliant>
+      <noncompliant>    NAME = 'ume.logon.security_policy.password_alpha_numeric_required' and not lpad(VALUE,4,'0') &gt;= '0001'  </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Java property: ume.logon.security_policy.password_mix_case_required ≥ 1 (Minimum number of uppercase and lowercase letters in password required)" id="PWDPOL-J_e.2">
+      <compliant>       NAME = 'ume.logon.security_policy.password_mix_case_required' and     lpad(VALUE,4,'0') &gt;= '0001'   </compliant>
+      <noncompliant>    NAME = 'ume.logon.security_policy.password_mix_case_required' and not lpad(VALUE,4,'0') &gt;= '0001'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Java property: ume.logon.security_policy.password_special_char_required ≥ 1 (Minimum number of special characters in passwords)" id="PWDPOL-J_e.3">
+      <compliant>       NAME = 'ume.logon.security_policy.password_special_char_required' and     lpad(VALUE,4,'0') &gt;= '0001'   </compliant>
+      <noncompliant>    NAME = 'ume.logon.security_policy.password_special_char_required' and not lpad(VALUE,4,'0') &gt;= '0001'   </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Java property: ume.logon.security_policy.password_history ≥ 5 (Minimum number of password history)" id="PWDPOL-J_f">
+      <compliant>       NAME = 'ume.logon.security_policy.password_history' and     lpad(VALUE,4,'0') &gt;= '0005'     </compliant>
+      <noncompliant>    NAME = 'ume.logon.security_policy.password_history' and not lpad(VALUE,4,'0') &gt;= '0005'     </noncompliant>
+    </checkitem>
+    <!--  -->
+    <checkitem desc="[p3-EXTENDED] Java property: ume.logon.security_policy.password_max_idle_time between 1 and 180 (Maximum password idle time)" id="PWDPOL-J_g">
+      <compliant>       NAME = 'ume.logon.security_policy.password_max_idle_time' and     lpad(VALUE,4,'0') between '0001' and '0180'  </compliant>
+      <noncompliant>    NAME = 'ume.logon.security_policy.password_max_idle_time' and not lpad(VALUE,4,'0') between '0001' and '0180'  </noncompliant>
+    </checkitem>
+    <!--  -->
+  </configstore>
+  <!--  -->
+</targetsystem>

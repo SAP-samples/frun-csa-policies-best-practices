@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Source:             This policy corresponds to SAP Security Baseline Template v2.6.
+                    It is provided as a sample for customers to use to get an accelerated start for analysing the landscape using SAP Focused Run (FRUN) Configuration and Security Analysis (CSA) application.  It shows how rules can be defined for a variety of requirements.  Customers can take these rules and adapt to their corporate needs.
+
+Source Reference:   SAP Security Baseline Template v2.6 (2025/07), as signposted by SAP KBA 2253549.
+Source Link:        https://support.sap.com/content/dam/support/en_us/library/ssp/offerings-and-programs/support-services/sap-security-optimization-services-portfolio/Security_Baseline_Template_V2.zip
+-->
+<!-- -->
+<!--    SAP Security Baseline requirement:      CRITAU-J: Critical Authorizations – Java (for dual stack system i.e. check is on ABAP stack)
+        Security level:                         Standard (Level 2)
+
+        Policy Version:     Date:           Owner:          Comment:
+        v2.6.0              2026-03-17      XX-SER-SECCHK   original for GA
+
+        NOTE:   This Policy requires the creation and maintenance of a customized store. 
+        Custom Store variant definition can be performed in CSA-Administration application (Related Links > Template Configuration > Store Customizing) based on samples from the Configuration Validation Template from the above zip folder reference, or own requirements. 
+        Then create an associated collector template (Related Links > Template Configuration > Template Management) and note the sci_id. Configstore name is up to your choice, description is beneficial, the sci_id must commence with Znnnnn. 
+        Then in the policy below, update the configstore name and sci-ID so the checks are inspecting the correct store.
+        This store MUST exist before the policy can be generated into SQL version.
+
+        This policy should be run against ABAP-based systems associated with the J2EE. -->
+<!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
+<!-- -->
+<targetsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" desc="[BL2.6.0] Critical Authorizations (JAVA) (via ABAP)" id="BL260_2JCRITAU_CSTO" multisql="Yes" version="0000" xsi:schemaLocation="csa_policy.xsd">
+  <!-- -->
+  <!-- This Policy requires creation of a customized store, maintain configstore name and sci_id. -->
+  <configstore name="AUTH_ROLE_USER" sci_id="ZBL003">
+    <!-- -->
+    <checkitem desc="[p2-STANDARD] Role SAP_J2EE_ADMIN must not be assigned to users other than standard users (run against ABAP system of dual stack)" id="CRITAU-J_a.1" not_found="positive">
+      <compliant>       CHECK_ID = 'SAP_J2EE_ADMIN'
+                        and ROLE = 'SAP_J2EE_ADMIN' 
+                        and not USER in ('J2EE_ADMIN','PISUPER')
+                        and lpad(USER_COUNT,4,'0') &lt;= '0000'
+                        </compliant>
+      <noncompliant>    CHECK_ID = 'SAP_J2EE_ADMIN'
+                        and ROLE = 'SAP_J2EE_ADMIN' 
+                        and not USER in ('J2EE_ADMIN','PISUPER')
+                        and lpad(USER_COUNT,4,'0') &gt;= '0001' 
+                        </noncompliant>
+    </checkitem>
+    <!-- -->
+  </configstore>
+  <!-- -->
+</targetsystem>
