@@ -12,6 +12,7 @@ Source Link:        https://support.sap.com/content/dam/support/en_us/library/ss
 
         Policy Version:     Date:           Owner:          Comment:
         v2.6.0              2026-06-17      XX-SER-SECCHK   original for GA
+        v2.6.0              2026-10-01      XX-SER-SECCHK   Small amendment: Item_not_found="positive" included in check TRUST-A_c.
  -->
 <!-- xxxxxxxxxxxxxxxxxxxx END OF INTRODUCTION xxxxxxxxxxxxxxxxxxxx -->
 <!-- -->
@@ -23,7 +24,7 @@ Source Link:        https://support.sap.com/content/dam/support/en_us/library/ss
       Fields RFCTRUSTSY and LLICENSE_NR describe the trusting called system. Field RFCREGDEST relates to trusting system target host.
       Field  RFCSLOPT = 3 indicates using the latest security method. In this case field RFCSECKEY is empty. -->
     <!--  -->
-    <checkitem desc="[p1-CRITICAL] Migrated trust relationships should use the latest security method: RFCSLOPT = 3 (see SAP Notes 3157268, 3089413)" id="TRUST-A_c">
+    <checkitem desc="[p1-CRITICAL] Migrated trust relationships should use the latest security method: RFCSLOPT = 3 (see SAP Notes 3157268, 3089413)" id="TRUST-A_c" not_found="positive">
       <compliant>       RFCSYSID like '%' and TLICENSE_NR like '%' and RFCTRUSTSY like '%' and RFCDEST like '%' and RFCTCDCHK like '%' and RFCSNC like '%' 
                         and     RFCSLOPT like '3%'
                         </compliant>
