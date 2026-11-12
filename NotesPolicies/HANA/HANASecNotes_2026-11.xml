@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This FRUN CSA policy contains rules to check the following HANA Security Notes published on PatchDay 2026-11:
+
+SAP HANA + XSA
+[p1-CVSS 10.0] 0003778556 BC-CST-WDP - [CVE-2026-89126] Memory Corruption vulnerability in SAP Web Dispatcher (Version 13)
+
+SAP HANA XSA
+[p1-CVSS 9.6] 0003804858 BC-CST-WDP - [CVE-2026-89119] Cross-Site Request Forgery (CSRF) vulnerability in SAP Web Dispatcher and Internet Communication Manager (Version 5)
+[p2-CVSS 7.5] 0003805681 BC-CST-IC - [CVE-2026-109794] Denial of Service vulnerability in SAP NetWeaver Application Server ABAP, ABAP Platform and SAP Web Dispatcher (Version 3)
+
+SAP HANA
+[p3-CVSS 4.4] 0003740168 BC-CST-STS - [CVE-2026-89115] Information Disclosure vulnerability in SAP Start Service and SAP Microsoft Management Console (Version 7)
+
+SAP Security: PatchDay_2026-11
+Version: 001
+Date:    12.11.2026
+-->
+<targetsystem desc="SNotes of PatchDay: 2026-11 (HANA)" id="HPATCHDAY_2026-11" multisql="Yes" version="0000">
+  <!-- PRIO HOTNEWS -->
+  <!-- [p1-CVSS 10.0] BC-CST-WDP 0003778556 - [CVE-2026-89126] Memory Corruption vulnerability in SAP Web Dispatcher (Version 13) -->
+  <!-- Note: Secondary CVE CVE-2026-89127 affects HANA XSC. See SAP Notes 3780464 (SPS07) and 3764914 (SPS08) for HANA DB fix details. -->
+  <!-- SAP HANA Database (XSC web dispatcher) -->
+  <configstore name="HDB_VERSION">
+    <checkitem desc="[p1-CVSS 10.0] [CVE-2026-89126] BC-CST-WDP - HANA revision update required for SNote 3778556v13" id="0003778556_hdb" not_found="ignore" system_attributes="DB_REPL_OP_MODE:!LOGREPLAY">
+      <compliant>
+                 (  (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,11) &gt;= '2.00.079.11')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND substring(VALUE,0,11) &gt;= '2.00.089.05')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &gt; '2.00.08' ))
+      </compliant>
+      <noncompliant>
+                 ( (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,11) &lt; '2.00.079.11')
+                 OR(NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND substring(VALUE,0,11) &lt; '2.00.089.05')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &lt; '2.00.07' )
+                 )
+      </noncompliant>
+    </checkitem>
+  </configstore>
+  <!-- SAP Extended Application Services Advanced (XSA) - see SAP Note 3800261 for details (target version 1.5.4) -->
+  <configstore name="COMP_LEVEL">
+    <checkitem desc="[p1-CVSS 10.0] [CVE-2026-89126] BC-CST-WDP - XSA patch required for SNote 3778556v13" id="0003778556_xsa" not_found="ignore">
+      <compliant>   (( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') = '0005' and lpad(PATCH,4,'0') &gt;= '0004' )
+                     or (COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') &gt;= '0006' ))
+      </compliant>
+      <complianttext/>
+      <noncompliant>   (( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') = '0005' and lpad(PATCH,4,'0') &lt; '0004' )
+                     or (COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') &lt; '0005' ))
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <!-- PRIO HIGH -->
+  <!-- [p1-CVSS 9.6] BC-CST-WDP 0003804858 - [CVE-2026-89119] Cross-Site Request Forgery (CSRF) vulnerability in SAP Web Dispatcher and Internet Communication Manager (Version 5) -->
+  <!-- Note: Secondary CVE CVE-2026-120014 (CVSS 7.6) affects HANA XSA Web Dispatcher component only. See SAP Note 3835748 for XSA fix details. -->
+  <!-- SAP Extended Application Services Advanced (XSA) - see SAP Note 3835748 for details (target version 1.5.5) -->
+  <configstore name="COMP_LEVEL">
+    <checkitem desc="[p1-CVSS 9.6] [CVE-2026-89119] BC-CST-WDP - XSA patch required for SNote 3804858v5" id="0003804858_xsa" not_found="ignore">
+      <compliant>   (( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') = '0005' and lpad(PATCH,4,'0') &gt;= '0005' )
+                     or (COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') &gt;= '0006' ))
+      </compliant>
+      <complianttext/>
+      <noncompliant>   (( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') = '0005' and lpad(PATCH,4,'0') &lt; '0005' )
+                     or (COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') &lt; '0005' ))
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <!-- [p2-CVSS 7.5] BC-CST-IC 0003805681 - [CVE-2026-109794] Denial of Service vulnerability in SAP NetWeaver Application Server ABAP, ABAP Platform and SAP Web Dispatcher (Version 3) -->
+  <!-- Note: HANA XSC (classical, non-ICM-based) is NOT affected. HANA XSA (advanced, uses ABAP ICM binary) IS affected. Workaround: set ict/disable_brotli=TRUE. See SAP Note 3835748. -->
+  <!-- SAP Extended Application Services Advanced (XSA) - see SAP Note 3835748 for details (target version 1.5.5) -->
+  <configstore name="COMP_LEVEL">
+    <checkitem desc="[p2-CVSS 7.5] [CVE-2026-109794] BC-CST-IC - XSA patch required for SNote 3805681v3" id="0003805681_xsa" not_found="ignore">
+      <compliant>   (( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') = '0005' and lpad(PATCH,4,'0') &gt;= '0005' )
+                     or (COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') &gt;= '0006' ))
+      </compliant>
+      <complianttext/>
+      <noncompliant>   (( COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') = '0005' and lpad(PATCH,4,'0') &lt; '0005' )
+                     or (COMPONENT = 'SAP_EXTENDED_APP_SERVICES' and VERSION = '1' and lpad(SP,4,'0') &lt; '0005' ))
+      </noncompliant>
+      <noncomplianttext/>
+    </checkitem>
+  </configstore>
+  <!-- PRIO MEDIUM -->
+  <!-- [p3-CVSS 4.4] BC-CST-STS 0003740168 - [CVE-2026-89115] Information Disclosure vulnerability in SAP Start Service and SAP Microsoft Management Console (Version 7) -->
+  <!-- Note: SAP MMC fix (MSI package SAP_MMC.MSI) is not checkable via FRUN CSA. FAQ: SAP Note 3807355. -->
+  <!-- HANA DB Start Service fix: SPS079 rev 11 and SPS089 rev 04 -->
+  <configstore name="HDB_VERSION">
+    <checkitem desc="[p3-CVSS 4.4] [CVE-2026-89115] BC-CST-STS - HANA revision update required for SNote 3740168v7" id="0003740168_hdb" not_found="ignore">
+      <compliant>
+                 (  (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,11) &gt;= '2.00.079.11')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND substring(VALUE,0,11) &gt;= '2.00.089.04')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &gt; '2.00.08' ))
+      </compliant>
+      <noncompliant>
+                 ( (NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.07' AND substring(VALUE,0,11) &lt; '2.00.079.11')
+                 OR(NAME = 'VERSION' AND substring(VALUE,0,7) = '2.00.08' AND substring(VALUE,0,11) &lt; '2.00.089.04')
+                 OR (NAME = 'VERSION' AND substring(VALUE,0,7) &lt; '2.00.07'))
+      </noncompliant>
+    </checkitem>
+  </configstore>
+
+</targetsystem>
