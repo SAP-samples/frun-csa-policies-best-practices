@@ -23,7 +23,7 @@ Date:        2023-04-28
     <checkitem desc="[p2-STANDARD] auth/check/calltransaction (User Control Profile Parameter)" id="USRCTR-A_b">
       <compliant>    NAME = 'auth/check/calltransaction'  and ( VALUE = '2'  or VALUE = '3' )</compliant>
       <complianttext/>
-      <noncompliant> NAME = 'auth/check/calltransaction'  and not  ( VALUE = '2' and VALUE = '3' )</noncompliant>
+      <noncompliant> NAME = 'auth/check/calltransaction'  and not  ( VALUE = '2' or VALUE = '3' )</noncompliant>
       <noncomplianttext/>
     </checkitem>
     <checkitem desc="[p2-STANDARD] auth/no_check_in_some_cases (note 1723881, User Control Profile Parameter)" id="USRCTR-A_c">
