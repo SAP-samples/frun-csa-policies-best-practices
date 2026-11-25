@@ -58,8 +58,8 @@ The policy does not check the following Security Notes:
 [p3-CVSS 4.3] 0003801587 EP-PIN-NAV - [CVE-2026-89131] Cross Site Request Forgery (CSRF) vulnerability in SAP NetWeaver Enterprise Portal (Version 4)
 
 SAP Security: PatchDay_2026-11
-Version: 001
-Date:    12.11.2026
+Version: 002
+Date:    23.11.2026
 -->
 <targetsystem desc="SNotes of PatchDay: 2026-11" id="PatchDay_2026-11" multisql="Yes" version="0000">
   <!-- PRIO HOTNEWS -->
@@ -73,7 +73,7 @@ Date:    12.11.2026
     </checkitem>
   </configstore>
   <configstore name="COMP_LEVEL">
-    <checkitem desc="[p1-CVSS 10.0] [CVE-2026-120017] BC-SEC-LGN-SML - Note 0003849308 missing and solution with SP available" id="0003849308" operator="check_note:0003849308">
+    <checkitem desc="[p1-CVSS 10.0] [CVE-2026-120017] BC-SEC-LGN-SML - Note 0003849308 missing and solution with SP available" id="0003849308" operator="check_note:0003849308" not_found="ignore">
       <compliant>(
       ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and not( (lpad(SP,4,'0'))  &lt; '0040' )   )
         <!-- SAP_BASIS 731 SAPKB73140 -->
@@ -122,11 +122,11 @@ Date:    12.11.2026
      )
       </compliant>
       <noncompliant>(
-      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and (lpad(SP,4,'0'))  &lt; '0040' )
-        <!-- SAP_BASIS 731 SAPKB73140 -->
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '731' and lpad(SP,4,'0') between '0013' and '0039' )
+        <!-- SAP_BASIS 731 SAPKB73113 - SAPKB73139 -->
           or
-      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and (lpad(SP,4,'0'))  &lt; '0037' )
-        <!-- SAP_BASIS 740 SAPKB74037 -->
+      ( COMPONENT = 'SAP_BASIS' and VERSION = '740' and lpad(SP,4,'0') between '0007' and '0036' )
+        <!-- SAP_BASIS 740 SAPKB74007 - SAPKB74037 -->
           or
       ( COMPONENT = 'SAP_BASIS' and VERSION = '750' and (lpad(SP,4,'0'))  &lt; '0038' )
         <!-- SAP_BASIS 750 SAPK-75038INSAPBASIS -->
@@ -810,10 +810,10 @@ Date:    12.11.2026
         <joinnoncompliant>LINE like '%' and TEXT = 'igs release: 754'</joinnoncompliant>
       </joinstore>
     </checkitem>
-    <!-- IGS 7.81: SP000/PL000000 already contains the fix - any 7.81 patch level is compliant -->
+    <!-- IGS 7.81: only PL0009 contains the fix; SP00/PL0000 is vulnerable  -->
     <checkitem desc="[p2-CVSS 8.2] [CVE-2026-120008] BC-FES-IGS - IGS patch required for SNote 3809953v5 (Release 7.81)" id="0003809953" not_found="ignore">
-      <compliant>LINE like '%' and (TEXT like 'igs patch number:%' and (lpad(SUBSTRING(TEXT,19,4),4,'0')) &gt;= '0000')</compliant>
-      <noncompliant>LINE like '%' and (TEXT like 'igs patch number:%' and (lpad(SUBSTRING(TEXT,19,4),4,'0')) &lt; '0000')</noncompliant>
+      <compliant>LINE like '%' and (TEXT like 'igs patch number:%' and (lpad(SUBSTRING(TEXT,19,4),4,'0')) &gt;= '0009')</compliant>
+      <noncompliant>LINE like '%' and (TEXT like 'igs patch number:%' and (lpad(SUBSTRING(TEXT,19,4),4,'0')) &lt; '0009')</noncompliant>
       <joinstore name="igsmanifest.mf" no_data_found="Yes">
         <joincompliant>LINE like '%' and TEXT = 'igs release: 781'</joincompliant>
         <joinnoncompliant>LINE like '%' and TEXT = 'igs release: 781'</joinnoncompliant>
@@ -1086,10 +1086,10 @@ Date:    12.11.2026
         <joinnoncompliant>LINE like '%' and TEXT = 'igs release: 754'</joinnoncompliant>
       </joinstore>
     </checkitem>
-    <!-- IGS 7.81: SP000/PL000000 already contains the fix - any 7.81 patch level is compliant -->
+    <!-- IGS 7.81: only PL0009 contains the fix; SP00/PL0000 is vulnerable -->
     <checkitem desc="[p2-CVSS 7.5] [CVE-2026-109807, CVE-2026-109806] BC-FES-IGS - IGS patch required for SNote 3809934v6 (Release 7.81)" id="0003809934" not_found="ignore">
-      <compliant>LINE like '%' and (TEXT like 'igs patch number:%' and (lpad(SUBSTRING(TEXT,19,4),4,'0')) &gt;= '0000')</compliant>
-      <noncompliant>LINE like '%' and (TEXT like 'igs patch number:%' and (lpad(SUBSTRING(TEXT,19,4),4,'0')) &lt; '0000')</noncompliant>
+      <compliant>LINE like '%' and (TEXT like 'igs patch number:%' and (lpad(SUBSTRING(TEXT,19,4),4,'0')) &gt;= '0009')</compliant>
+      <noncompliant>LINE like '%' and (TEXT like 'igs patch number:%' and (lpad(SUBSTRING(TEXT,19,4),4,'0')) &lt; '0009')</noncompliant>
       <joinstore name="igsmanifest.mf" no_data_found="Yes">
         <joincompliant>LINE like '%' and TEXT = 'igs release: 781'</joincompliant>
         <joinnoncompliant>LINE like '%' and TEXT = 'igs release: 781'</joinnoncompliant>
